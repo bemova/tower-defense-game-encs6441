@@ -12,21 +12,21 @@ public class MapDesign {
 		for (int i = 0; i <= sizeX - 1; i++) {
 			for (int j = 0; j <= sizeY - 1; j++) {
 
-				String curentNode = Integer.toString(i) + Integer.toString(j);
+				String curentNode = Integer.toString(i) + " "  + Integer.toString(j);
 				if (GraphMap.get(curentNode) == null)
 					GraphMap.put(curentNode, new GraphNode(curentNode, i, j));
 
 				GraphNode universalGrafNode;
 				if (i - 1 >= 0) {
 					if ((universalGrafNode = GraphMap.get(Integer
-							.toString(i - 1) + Integer.toString(j))) != null) {
+							.toString(i - 1) + " "  + Integer.toString(j))) != null) {
 						GraphMap.get(curentNode).neighbors
 								.add(universalGrafNode);
 
 					} else {
 
 						universalGrafNode = new GraphNode(
-								Integer.toString(i - 1) + Integer.toString(j), i-1, j);
+								Integer.toString(i - 1) + " "  + Integer.toString(j), i-1, j);
 						GraphMap.put(universalGrafNode.name, universalGrafNode);
 						GraphMap.get(curentNode).neighbors
 								.add(universalGrafNode);
@@ -34,12 +34,12 @@ public class MapDesign {
 				}
 
 				if (j - 1 >= 0) {
-					if ((universalGrafNode = GraphMap.get(Integer.toString(i)
+					if ((universalGrafNode = GraphMap.get(Integer.toString(i) + " " 
 							+ Integer.toString(j - 1))) != null) {
 						GraphMap.get(curentNode).neighbors
 								.add(universalGrafNode);
 					} else {
-						universalGrafNode = new GraphNode(Integer.toString(i)
+						universalGrafNode = new GraphNode(Integer.toString(i) + " " 
 								+ Integer.toString(j - 1), i, j-1);
 						GraphMap.put(universalGrafNode.name, universalGrafNode);
 						GraphMap.get(curentNode).neighbors
@@ -50,14 +50,14 @@ public class MapDesign {
 
 				if (i + 1 < sizeX) {
 					if ((universalGrafNode = GraphMap.get(Integer
-							.toString(i + 1) + Integer.toString(j))) != null) {
+							.toString(i + 1) + " "  + Integer.toString(j))) != null) {
 						GraphMap.get(curentNode).neighbors
 								.add(universalGrafNode);
 
 					} else {
 
 						universalGrafNode = new GraphNode(
-								Integer.toString(i + 1) + Integer.toString(j), i+1, j);
+								Integer.toString(i + 1) + " "  + Integer.toString(j), i+1, j);
 						GraphMap.put(universalGrafNode.name, universalGrafNode);
 						GraphMap.get(curentNode).neighbors
 								.add(universalGrafNode);
@@ -68,13 +68,13 @@ public class MapDesign {
 				if (j + 1 < sizeY) {
 
 					if ((universalGrafNode = GraphMap.get(Integer
-							.toString(i) + Integer.toString(j+1))) != null) {
+							.toString(i) + " "  + Integer.toString(j+1))) != null) {
 						GraphMap.get(curentNode).neighbors
 								.add(universalGrafNode);
 
 					} else {
 
-						universalGrafNode = new GraphNode(Integer.toString(i)
+						universalGrafNode = new GraphNode(Integer.toString(i) + " " 
 								+ Integer.toString(j +1), i, j+1);
 						GraphMap.put(universalGrafNode.name, universalGrafNode);
 						GraphMap.get(curentNode).neighbors
