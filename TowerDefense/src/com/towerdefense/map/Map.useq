@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.6" icons="true">  
+  <object id="1" language="java" name="com.towerdefense.map.Map" project="TowerDefense" 
+    file="/TowerDefense/src/com/towerdefense/map/Map.java" binary="false" label="map" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="363" y="0"/>  
+  </object>  
+  <object id="2" language="java" name="com.towerdefense.map.Grid" project="TowerDefense" 
+    file="/TowerDefense/src/com/towerdefense/map/Grid.java" binary="false" label="grid" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="363" y="0"/>  
+  </object>  
+  <object id="3" language="java" name="com.towerdefense.map.Cell" project="TowerDefense" 
+    file="/TowerDefense/src/com/towerdefense/map/Cell.java" binary="false" label="cell" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="363" y="0"/>  
+  </object>
+</sequence-diagram>
