@@ -6,6 +6,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -46,15 +51,86 @@ public class GameMap extends Canvas {
 		//imageGraphic = image.getGraphics();
 	};
 	
+	public void  loadMapFromFile(String fileName) {
+		
+	    BufferedReader br = null;
+	    ArrayList<String> containerForMap = new ArrayList<String>();
+	    
+	    try {
+	    	br = new BufferedReader(new FileReader(fileName));
+	    //    StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+	        
+	        while (line != null) {
+	        	containerForMap.add(line);
+	            line = br.readLine();
+	        }
+	        
+	        
+	        String[] parts =  containerForMap.get(0).split(" ");
+	        wdth_ = parts.length;
+	        height_ = containerForMap.size();
+	        
+	        pathInMatrix = new int [height_][wdth_];
+	        int i = 0;
+	        for(String lineComponent : containerForMap)
+	        {
+	        	parts = lineComponent.split(" ");
+	        	for(int j = 0; j<wdth_; j++)
+	        		pathInMatrix[i][j] =Integer.parseInt( parts[j]);
+	        	i++;
+	        }
+	        
+	        //  String everything = sb.toString();
+	        br.close();
+	    } catch(FileNotFoundException e){
+	    	System.out.print("Exception");
+	    	
+	    }
+	    catch(IOException e){
+	    	
+	    	System.out.print("Exception");
+	    }
+	
+		
+	} 
+	
+	
+	public void SaveMapIntoFle(String FileName){
+		try {
+			PrintWriter out = new PrintWriter(FileName );
+
+			for (int i = 0; i < height_ ; i++) {
+				String line = "";
+				for (int j = 0; j < wdth_; j++) {
+					if(j < wdth_-1)
+						line = line + pathInMatrix[i][j] + " ";
+					else 
+						line = line + pathInMatrix[i][j];	
+
+				}
+				out.println(line);
+			}
+			out.close();
+
+		} catch (IOException e) {
+			System.out.print("Exception");
+
+		}
+		
+		
+	}
+	
+	
 		@Override
 	public void paint(Graphics graphics) {
 			//update( graphics );
 			
-	////////////////	drawMapObjects(imageGraphic);
+		drawMapObjects(graphics);
 
 }
 		
-	@Override	
+/*	@Override	
 	
 	public void update(Graphics g){
 		if(image == null){
@@ -70,6 +146,7 @@ public class GameMap extends Canvas {
 	g.drawImage(image, 0, 0, this );
 		
 	}
+	*/
 	
 		void updatePath(){
 			String direction = "";
@@ -119,7 +196,7 @@ public class GameMap extends Canvas {
 		
 // --- draw path on the grid----
 
-Iterator<Position> it = processingPatCordinate.iterator();
+/*Iterator<Position> it = processingPatCordinate.iterator();
 while(it.hasNext())
 {
     Position obj = it.next();
@@ -127,7 +204,26 @@ while(it.hasNext())
     graphics.fillRect(obj.j * sizeOfUnit, obj.i * sizeOfUnit, sizeOfUnit, sizeOfUnit);
    
 }
+*/
 
+for(int i = 0; i<height_; i++)
+	for( int j = 0; j < wdth_; j++){
+		if(pathInMatrix[i][j] !=0){
+		Color color = Color.gray;
+		if( pathInMatrix[i][j] == 1) color = Color.gray;
+		if( pathInMatrix[i][j] == 2) color = Color.green;
+		if( pathInMatrix[i][j] == 3) color = Color.red;
+		if( pathInMatrix[i][j] == 4) color = Color.blue;
+	    graphics.setColor(color);
+	    graphics.fillRect(j * sizeOfUnit, i * sizeOfUnit, sizeOfUnit, sizeOfUnit);
+	
+		}	
+		
+		
+	}
+		
+		
+/*
 Iterator<Enemy> iterator = listOfEnemies.iterator();
 while(iterator.hasNext()){
 	Enemy enemy;
@@ -136,7 +232,7 @@ while(iterator.hasNext()){
 	enemy = iterator.next();
 	graphics.setColor(Color.red);
 	graphics.fillRect(enemy.realCoordinatX, enemy.realCoordinatY, 15, 15);
-}
+}  */
 		
 // ---end drawing path---
 		
