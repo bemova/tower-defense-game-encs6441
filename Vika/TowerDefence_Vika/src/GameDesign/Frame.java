@@ -1,8 +1,12 @@
+package GameDesign;
+import ThreadPul.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
-public class ClassFrame extends JFrame {
+public class Frame extends JFrame {
 	int width = 0;
 	int height = 0;
 	
@@ -13,15 +17,17 @@ public class ClassFrame extends JFrame {
 	JButton startButton = new JButton("Ok");
 	JButton startMapButton = new JButton("Draw");
 	
-	GeneralAlgorithms algorithm = new GeneralAlgorithms();
-	MainCanva canva = new MainCanva();
-	
+	//GeneralAlgorithms algorithm = new GeneralAlgorithms();
+	GameMap canva = new GameMap(); 
+	FindingPathAlgorithm pathAlgorithm = new FindingPathAlgorithm();
 
 	JPanel lower = new JPanel();
 	JPanel entryP = new JPanel();
+	CreatEnemy enimyCreaterThread = null;
+	DrawThread drawEnemyThread = null;
 	
 	
-	ClassFrame(){
+	Frame(){
 		
 		JPanel upper = new JPanel();
 		
@@ -33,7 +39,10 @@ public class ClassFrame extends JFrame {
 		upper.add(yField);
 		upper.add(startButton);
 		
-		startMapButton.addActionListener(new java.awt.event.ActionListener()
+	//	canva = new GameMap();
+		
+		
+		startMapButton.addActionListener(new java.awt.event.ActionListener() 
 		{
 			  public void actionPerformed(ActionEvent e)
 			  {
@@ -42,8 +51,16 @@ public class ClassFrame extends JFrame {
 			    	if(canva.entryPoint.isEmpty() || canva.exitPoint.isEmpty())
 			    		throw new Exception("Entry and exit points are not defined");
 			    	
-			    	algorithm.Start(width, height, canva);
+			    	pathAlgorithm.Start(canva.entryPoint, canva.exitPoint, canva.pathInMatrix);
+			    	canva.updatePath();
 			    	canva.repaint();
+			    	
+			    	enimyCreaterThread = new CreatEnemy(canva.listOfEnemies, canva.processingPatCordinate.get(0),0.5);
+			    	 drawEnemyThread = new DrawThread(canva.listOfEnemies, canva.getGraphics(), canva.processingPatCordinate, canva); // ArrayList<Enemy> listOfMapObjects, Graphics graphics, ArrayList<Position> processingPatCordinate
+			    	 
+			    	 enimyCreaterThread.start();
+			    	 drawEnemyThread.start();
+			    	
 			    }
 			    catch(java.lang.Exception ex)
 			    {
@@ -63,15 +80,26 @@ public class ClassFrame extends JFrame {
 			    	height = Integer.parseInt(yField.getText());
 			    	if(width > 60 || width < 5 || height > 60 || height < 5)
 			    		throw new java.lang.Exception("Error size max size: ....., min size: ....");
-			    	//algorithm.Start(width, height, canva);
-			    	//canva.repaint();
-			    	//canva.path = algorithm.mapInMatric;
+					
+			    	//canva = new GameMap(height,width );
+				//	pathAlgorithm = new FindingPathAlgorithm(height,width);
+
+			    	canva.wdth_ = width;
+			    	canva.height_ = height;
+			    	canva.pathInMatrix = new int[height][width];
 			    	
-			    	canva.path = new int[height][width];
-			    	lower.setSize(width *20, height * 20);
-			    	canva.setSize(width *20, height * 20);
+			    	
+			    	pathAlgorithm.testingX = height;
+			    	pathAlgorithm.testingY  = width;
+			    	
+					
+			    	// canva.pathInMatrix  = new int[height][width];
+			    	lower.setSize(width *canva.sizeOfUnit, height * canva.sizeOfUnit);
+			    	canva.setSize(width *canva.sizeOfUnit, height * canva.sizeOfUnit);
+			    	
 			    	add(entryP, BorderLayout.CENTER);
 			    	pack();
+			    	
 			        setLocationRelativeTo(null);
 			        startButton.setEnabled(false);
 			        
@@ -86,23 +114,27 @@ public class ClassFrame extends JFrame {
 		  canva.addMouseListener(new MouseAdapter() {
 			     @Override
 			     public void mousePressed(MouseEvent e) {
-			      int x =   e.getPoint().x/20;
-			      int y =  e.getPoint().y/20;
-			     if( canva.path[y][x] == 1)
-			    	 canva.path[y][x] = 0;
+			      int x =   e.getPoint().x/canva.sizeOfUnit;
+			      int y =  e.getPoint().y/canva.sizeOfUnit;
+			     if( canva.pathInMatrix[y][x] == 1){
+			    	 canva.pathInMatrix[y][x] = 0;
+			    	 canva.updatePath(); // update the path coordinates
+			    	 
+			     }
 			     else{
-			    	 canva.path[y][x] = 1;
+			    	 canva.pathInMatrix[y][x] = 1;
 			    	 if(x == 0) 
 			    		 canva.entryPoint = Integer.toString(y) + " " + Integer.toString(x);
 			    	 else if(x == width -1) 
 			    		 canva.exitPoint = Integer.toString(y) + " " + Integer.toString(x);
+			    	 canva.updatePath(); // update the path coordinates
 			     }
 			      canva.repaint();
 			     }
 			  });
 		
 		
-		canva.setSize(200, 200);
+		canva.setSize(210, 210);
 		lower.add(canva);
 		
 		add(upper, BorderLayout.NORTH);
@@ -120,9 +152,10 @@ public class ClassFrame extends JFrame {
 	
 	void setMapSize(int width, int height)
 	{
-		lower.setSize(width *20, height * 20);
-    	canva.setSize(width *20, height * 20);
+		lower.setSize(width *canva.sizeOfUnit, height * canva.sizeOfUnit);
+    	canva.setSize(width *canva.sizeOfUnit, height * canva.sizeOfUnit);
     	pack();
         setLocationRelativeTo(null);
 	}
 }
+
