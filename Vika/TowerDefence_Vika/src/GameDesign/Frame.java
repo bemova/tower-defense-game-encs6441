@@ -22,12 +22,14 @@ public class Frame extends JFrame {
 	JButton exp = new JButton("exitP");
 	JButton save = new JButton("Save Map");
 	JButton load = new JButton("Load Map");
+	JButton designMap = new JButton("Design Map");;
 	Color colorToDrawGreed = Color.green;
 	int colorInInteger = 1; // 1 = gray , 2 = green, 3 = red, 4 = blue
 	
 	
 	//GeneralAlgorithms algorithm = new GeneralAlgorithms();
 	GameMap canva = new GameMap(); 
+	BuildPath pathBuilder = null;
 	FindingPathAlgorithm pathAlgorithm = new FindingPathAlgorithm();
 
 	JPanel lower = new JPanel();
@@ -57,10 +59,98 @@ public class Frame extends JFrame {
 		upper.add(ep);
 		upper.add(save);
 		upper.add(load);
-		
-		
-		
+		upper.add(designMap);
 	
+		// make part of interface invisible to a user	
+		startMapButton.setVisible(false);
+		
+	sinary.setEnabled(false);
+	startButton.setVisible(false);
+	path.setEnabled(false);
+	exp.setEnabled(false);
+	ep.setEnabled(false);
+	save.setEnabled(false);
+	xField.setEnabled(false);
+	yField.setEnabled(false);
+	
+	sinary.setVisible(false);
+	path.setVisible(false);
+	exp.setVisible(false);
+	ep.setVisible(false);
+	save.setVisible(false);
+	xField.setVisible(false);
+	yField.setVisible(false);
+	
+	
+	
+	xField.addActionListener(new java.awt.event.ActionListener() {
+	    public void actionPerformed(java.awt.event.ActionEvent e) {
+	    	if( ! startButton.isVisible())
+	    		startButton.setVisible(true);
+	    	startButton.setVisible(true);
+	    	pack();
+	    }
+	});
+	
+
+	
+	xField.addKeyListener(new KeyAdapter()
+    {
+        public void keyPressed(KeyEvent ke)
+        {
+	    	if( ! startButton.isVisible())
+	    		startButton.setVisible(true);
+	    	startButton.setVisible(true);
+	    	pack();
+        	
+        }
+    });
+	
+	yField.addKeyListener(new KeyAdapter()
+    {
+        public void keyPressed(KeyEvent ke)
+        {
+	    	if( ! startButton.isVisible())
+	    		startButton.setVisible(true);
+	    	startButton.setVisible(true);
+	    	pack();
+        	
+        }
+    });
+	
+	
+	yField.addActionListener(new java.awt.event.ActionListener() {
+	    public void actionPerformed(java.awt.event.ActionEvent e) {
+	    	if( !startButton.isVisible())
+	    		startButton.setVisible(true);
+	    	startButton.setVisible(true);
+	    	pack();
+       
+	    }
+	});
+	
+	designMap.addActionListener( new java.awt.event.ActionListener() {
+		  public void actionPerformed(ActionEvent e)
+		  {
+		    try
+		    {
+		    	xField.setVisible(true);
+		    	yField.setVisible(true);
+		    	xField.setEnabled(true);
+		    	yField.setEnabled(true);
+		    	load.setEnabled(false);
+		    	designMap.setVisible(false);
+		    	 pack();
+ 		    }
+		    catch(java.lang.Exception ex)
+		    {
+		    	JOptionPane.showMessageDialog(null, ex.getMessage());
+		    }
+		   
+		  }
+		
+	});
+		
 		load.addActionListener( new java.awt.event.ActionListener() {
 			  public void actionPerformed(ActionEvent e)
 			  {
@@ -75,8 +165,15 @@ public class Frame extends JFrame {
 		                height = canva.height_;
 				    	lower.setSize(width *canva.sizeOfUnit, height * canva.sizeOfUnit);
 				    	canva.setSize(width *canva.sizeOfUnit, height * canva.sizeOfUnit);
+				    	//designMap.setEnabled(false);
 				    	
 				    	add(entryP, BorderLayout.CENTER);
+				    	pathBuilder = new BuildPath(width,height, canva.pathInMatrix ); // content of constructor int width, int height, int[][] map
+				    	
+				    	String message =  "";
+				    	if(! (message = pathBuilder.mapManager()).isEmpty())
+				    		JOptionPane.showMessageDialog(null, message);
+				    	//JOptionPane.showMessageDialog(null, "............................");
 				    	pack();
 				    	
 				        setLocationRelativeTo(null);
@@ -101,8 +198,28 @@ public class Frame extends JFrame {
 	                JFileChooser saveFile = new JFileChooser();
 	                
 	               
-	                if( saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+	                if( saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
+	                	
+	                	
 	                canva.SaveMapIntoFle(saveFile.getSelectedFile().getAbsolutePath());
+	                
+	            	sinary.setVisible(false);
+	            	path.setVisible(false);
+	            	exp.setVisible(false);
+	            	ep.setVisible(false);
+	            	save.setVisible(false);
+	            	xField.setVisible(false);
+	            	yField.setVisible(false);
+	            	save.setVisible(false);
+	            	startButton.setVisible(false);
+	            	
+	            	
+	            	load.setEnabled(true);
+	            	designMap.setEnabled(true);
+	            	
+	            	pack();
+	                
+	                }
 			    }
 			    catch(java.lang.Exception ex)
 			    {
@@ -221,6 +338,20 @@ public class Frame extends JFrame {
 			  {
 			    try
 			    {
+			    	
+			    	path.setVisible(true);
+			    	sinary.setVisible(true);
+			    	exp.setVisible(true);
+			    	ep.setVisible(true);
+			    	save.setVisible(true);
+			    	
+			    	
+			    	path.setEnabled(true);
+			    	sinary.setEnabled(true);
+			    	exp.setEnabled(true);
+			    	ep.setEnabled(true);
+			    	save.setEnabled(true);
+			    	
 			    	width = Integer.parseInt(xField.getText());
 			    	height = Integer.parseInt(yField.getText());
 			    	if(width > 60 || width < 5 || height > 60 || height < 5)
@@ -259,6 +390,7 @@ public class Frame extends JFrame {
 		  canva.addMouseListener(new MouseAdapter() {
 			     @Override
 			     public void mousePressed(MouseEvent e) {
+			    	 if(designMap.isEnabled()){
 				      int i =   e.getY()/canva.sizeOfUnit;
 				      int j =  e.getX()/canva.sizeOfUnit;
 				      if((i < canva.height_) && (j < canva.wdth_) && (canva.pathInMatrix[i][j] != colorInInteger)){
@@ -266,13 +398,15 @@ public class Frame extends JFrame {
 		    		      canva.repaint();
 		    		      
 					      }
+			     }
     		      
 			     }
 			     
 			     
 			     @Override
 			     public void mouseMoved( MouseEvent e ){
-			    	 
+			    	 if(designMap.isEnabled()){
+			    		 
 				      int i =   e.getY()/canva.sizeOfUnit;
 				      int j =  e.getX()/canva.sizeOfUnit;
 				      if((i < canva.height_) && (j < canva.wdth_) && (canva.pathInMatrix[i][j] != colorInInteger)){
@@ -280,6 +414,7 @@ public class Frame extends JFrame {
 		    		      canva.repaint();
 		    		      
 					      }
+			    	 }
 				     
 			     } 
 			     
@@ -290,6 +425,7 @@ public class Frame extends JFrame {
 			  
 			     @Override
 			     public void mouseDragged( MouseEvent e ){
+			    	 if(designMap.isEnabled()){
 				      int i =   e.getY()/canva.sizeOfUnit;
 				      int j =  e.getX()/canva.sizeOfUnit;
 				      if((i < canva.height_) && (j < canva.wdth_) && (canva.pathInMatrix[i][j] != colorInInteger)){
@@ -297,6 +433,7 @@ public class Frame extends JFrame {
 		    		      canva.repaint();
 		    		      
 					      }
+			    	 }
 			     } 
 		  });
 		

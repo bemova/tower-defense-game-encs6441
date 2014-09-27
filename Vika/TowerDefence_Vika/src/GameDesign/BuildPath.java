@@ -5,30 +5,171 @@ import java.util.*;
 
 public class BuildPath {
 	
-
+//	mapInMatric[i][j]  => 0 -> nothing , 1-> part of a path, 2-> part of sineri, 3-> entry point, 4-> exit point
 	
-
-	
-
-		int testingX = 0; // width and height for testing purpose in squares 
-		int testingY = 0;
+		int sizeX = 0; // width and height in number of cells 
+		int sizeY = 0;
+		String source = "";
+		String destination = "";
 		
 		HashMap<String, GraphNode> GraphMap = new HashMap<String, GraphNode>(); // contains the map structure 
 		
-		int[][] mapInMatric =  new int[testingX][testingY];// 
+		int[][] map =  new int[sizeX][sizeY];// 
 		
 		BuildPath(){
-			mapInMatric =  new int[testingX][testingY];
+			map =  new int[sizeX][sizeY];
 		}; // default contructor
 		
-		BuildPath(int width, int height){
-			testingX = height;
-			testingY = width;
-			mapInMatric = new int[testingX][testingY];
+		BuildPath(int width, int height, int[][] map){
+			sizeX = height;
+			sizeY = width;
+			this.map = new int[sizeX][sizeY];
+			this.map = map;
 		};
 		
+		
+		String fillGraph(){ // based on the size, creates a Graph structure
+			String message = "";
 
-		void shortestPathfinding(String source, String destination) {
+				for (int i = 0; i <= sizeX - 1; i++) {
+					for (int j = 0; j <= sizeY - 1; j++) {
+						
+						if( map[i][j] == 3){
+							if( j != 0){
+							message = "Invalid map: Invalid Entry point";
+							break;
+						}
+							else{
+								
+								source = Integer.toString(i) + " "  + Integer.toString(j);
+							}
+						}
+						else
+							if(map[i][j] == 4){
+							if( j != sizeY-1){
+							
+							message = "Invalid map: Invalid Exit point";
+							break;
+						}
+							else {
+								destination = Integer.toString(i) + " "  + Integer.toString(j);
+								
+							}
+							}
+
+						String curentNode = Integer.toString(i) + " "  + Integer.toString(j);
+						if (GraphMap.get(curentNode) == null)
+							GraphMap.put(curentNode, new GraphNode(curentNode, i, j));
+
+						GraphNode universalGrafNode;
+						if (i - 1> 0) {
+							if(( map[i][j] == 1 || map[i][j] == 3 || map[i][j] == 4) && (map[i - 1][j] == 1 || map[i -1 ][j] == 3 || map[i -1 ][j] == 4)){
+							if ((universalGrafNode = GraphMap.get(Integer
+									.toString(i - 1) + " "  + Integer.toString(j))) != null) {
+								GraphMap.get(curentNode).neighbors
+										.add(universalGrafNode);
+
+							} else {
+
+								universalGrafNode = new GraphNode(
+										Integer.toString(i - 1) + " "  + Integer.toString(j), i-1, j);
+								GraphMap.put(universalGrafNode.name, universalGrafNode);
+								GraphMap.get(curentNode).neighbors
+										.add(universalGrafNode);
+							}
+						}
+						}
+
+						if (j - 1 > 0) {
+							if(( map[i][j] == 1 || map[i][j] == 3 || map[i][j] == 4) && (map[i][j - 1] == 1 || map[i][j - 1] == 3 || map[i][j - 1] == 4)){
+							if ((universalGrafNode = GraphMap.get(Integer.toString(i) + " " 
+									+ Integer.toString(j - 1))) != null) {
+								GraphMap.get(curentNode).neighbors
+										.add(universalGrafNode);
+							} else {
+								universalGrafNode = new GraphNode(Integer.toString(i) + " " 
+										+ Integer.toString(j - 1), i, j-1);
+								GraphMap.put(universalGrafNode.name, universalGrafNode);
+								GraphMap.get(curentNode).neighbors
+										.add(universalGrafNode);
+							}
+
+						}
+						}
+
+						if (i + 1 < sizeX) {
+							if( (map[i][j] == 1 || map[i][j] == 3 || map[i][j] == 4) && (map[i + 1][j] == 1 || map[i + 1][j] == 3 || map[i + 1][j] == 4) ){
+							if ((universalGrafNode = GraphMap.get(Integer
+									.toString(i + 1) + " "  + Integer.toString(j))) != null) {
+								GraphMap.get(curentNode).neighbors
+										.add(universalGrafNode);
+
+							} else {
+
+								universalGrafNode = new GraphNode(
+										Integer.toString(i + 1) + " "  + Integer.toString(j), i+1, j);
+								GraphMap.put(universalGrafNode.name, universalGrafNode);
+								GraphMap.get(curentNode).neighbors
+										.add(universalGrafNode);
+							}
+						}
+
+						}
+
+						if (j + 1 < sizeY) {
+							if(( map[i][j] == 1 || map[i][j] == 3 || map[i][j] == 4) && (map[i][j + 1] == 1 || map[i][j + 1] == 3 || map[i][j + 1] == 4)){
+
+							if ((universalGrafNode = GraphMap.get(Integer
+									.toString(i) + " "  + Integer.toString(j+1))) != null) {
+								GraphMap.get(curentNode).neighbors
+										.add(universalGrafNode);
+
+							} else {
+
+								universalGrafNode = new GraphNode(Integer.toString(i) + " " 
+										+ Integer.toString(j +1), i, j+1);
+								GraphMap.put(universalGrafNode.name, universalGrafNode);
+								GraphMap.get(curentNode).neighbors
+										.add(universalGrafNode);
+							}
+
+						}
+						}
+
+					}
+				}
+	
+				return message;
+
+		}
+		
+		
+		String validateEntryExit(){
+			String  message = "";
+			int numberOfEntry = 0;
+			int numberOfExit = 0;
+			int numberofEmptyCells = 0;
+			int numberOfTowers = 0;
+			for(int i = 0; i < sizeX; i++)
+				for(int j =0; j < sizeY; j++){
+					if(map[i][j] == 0) numberofEmptyCells++;
+					else if(map[i][j] == 3) numberOfEntry++;
+					else if(map[i][j] == 4) numberOfExit++;
+					else if(map[i][j] == 5) numberOfTowers++;
+			
+				}
+			if( numberofEmptyCells >0) message = "Invalid Map: not all the cells are covered";
+			else if( numberOfEntry > 1 || numberOfEntry == 0) message = "Invalis Map: Wrong number of entry points";
+			else if(numberOfExit > 1 || numberOfExit == 0) message = "Invalis Map: Wrong number of exit points";
+			// else if(numberOfTowers == 0) message = "invalid Map: not acceptable number of Towers";
+			
+			
+			return message;
+		}
+		
+		
+
+		boolean shortestPathfinding() {
 			
 			Stack<GraphNode> nodeStack = new Stack<GraphNode>();
 			Stack<GraphNode> nodePath = new Stack<GraphNode>();
@@ -106,166 +247,24 @@ public class BuildPath {
 				}
 			} // close while
 
-			if (pathIsFound) {
-				System.out.println("=========================================1");
-				while (!nodePath.empty()) {
-					System.out.println("===========================2");
-					System.out.println(nodePath.peek());
-					nodePath.peek().outputState = 1;
-					nodePath.pop();
-				}
-			}
+			return pathIsFound ;
 
+		}	
+		
+		
+		public String mapManager(){
+			String ErrorMessage = "";
+		if(	(ErrorMessage = validateEntryExit()).isEmpty()){
+			if((ErrorMessage = fillGraph()).isEmpty())
+				if( !shortestPathfinding()) 
+					ErrorMessage = "Invalid Map: Path does not found between Entry and Exit points";
 		}
-
-		void Start(String fromNode,String  toNode, int resultPathInMatrix[][]) { // starts running algorithm
-
-	//		this.testingY = yy;
-	//		this.testingX = xx;
 			
-			fillGraph();
-
-		//	shortestPathfinding(xx, yy);
+		return 	ErrorMessage;
 			
-			// matrix to keep the path, if the square participates in a path=> it has
-			// a value of 1
-
-
-			for (String keyElement : GraphMap.keySet()) {
-
-				System.out.println("---------" + keyElement + "--------");
-				ArrayList<GraphNode> arrayList = GraphMap.get(keyElement).neighbors;
-				for (int i = 0; i < arrayList.size(); i++) {
-					System.out.println(keyElement + "  " + arrayList.get(i).name);
-				}
-
-			}
-
-			// output path if exists
-			shortestPathfinding(fromNode, toNode);
-
-			// ============output into matrix
-			for (int i = 0; i < testingX; i++)
-				for (int j = 0; j < testingY; j++) {
-
-					resultPathInMatrix[i][j] = GraphMap.get(Integer.toString(i) + " " 
-							+ Integer.toString(j)).outputState;
-
-				}
-
-			// =============================
-
-			// =============output into file=====
-
-			try {
-				PrintWriter out = new PrintWriter(
-						"C:\\Users\\vika\\Desktop\\1111111111.txt");
-				// OutputStream os = new FileOutputStream("Desktop\\test.txt");
-				for (int i = 0; i < testingX; i++) {
-					String line = "";
-					for (int j = 0; j < testingY; j++) {
-						line = line + resultPathInMatrix[i][j];
-
-					}
-					out.println(line);
-				}
-				out.close();
-
-			} catch (IOException e) {
-				System.out.print("Exception");
-
-			}
-
-			// =================================
-
 		}
 		
 		
-		
-		void fillGraph(){ // based on the size, creates a Graph structure
-
-			int sizeX = testingX; //width  and height 
-			int sizeY = testingY;
-				for (int i = 0; i <= sizeX - 1; i++) {
-					for (int j = 0; j <= sizeY - 1; j++) {
-
-						String curentNode = Integer.toString(i) + " "  + Integer.toString(j);
-						if (GraphMap.get(curentNode) == null)
-							GraphMap.put(curentNode, new GraphNode(curentNode, i, j));
-
-						GraphNode universalGrafNode;
-						if (i - 1 >= 0) {
-							if ((universalGrafNode = GraphMap.get(Integer
-									.toString(i - 1) + " "  + Integer.toString(j))) != null) {
-								GraphMap.get(curentNode).neighbors
-										.add(universalGrafNode);
-
-							} else {
-
-								universalGrafNode = new GraphNode(
-										Integer.toString(i - 1) + " "  + Integer.toString(j), i-1, j);
-								GraphMap.put(universalGrafNode.name, universalGrafNode);
-								GraphMap.get(curentNode).neighbors
-										.add(universalGrafNode);
-							}
-						}
-
-						if (j - 1 >= 0) {
-							if ((universalGrafNode = GraphMap.get(Integer.toString(i) + " " 
-									+ Integer.toString(j - 1))) != null) {
-								GraphMap.get(curentNode).neighbors
-										.add(universalGrafNode);
-							} else {
-								universalGrafNode = new GraphNode(Integer.toString(i) + " " 
-										+ Integer.toString(j - 1), i, j-1);
-								GraphMap.put(universalGrafNode.name, universalGrafNode);
-								GraphMap.get(curentNode).neighbors
-										.add(universalGrafNode);
-							}
-
-						}
-
-						if (i + 1 < sizeX) {
-							if ((universalGrafNode = GraphMap.get(Integer
-									.toString(i + 1) + " "  + Integer.toString(j))) != null) {
-								GraphMap.get(curentNode).neighbors
-										.add(universalGrafNode);
-
-							} else {
-
-								universalGrafNode = new GraphNode(
-										Integer.toString(i + 1) + " "  + Integer.toString(j), i+1, j);
-								GraphMap.put(universalGrafNode.name, universalGrafNode);
-								GraphMap.get(curentNode).neighbors
-										.add(universalGrafNode);
-							}
-
-						}
-
-						if (j + 1 < sizeY) {
-
-							if ((universalGrafNode = GraphMap.get(Integer
-									.toString(i) + " "  + Integer.toString(j+1))) != null) {
-								GraphMap.get(curentNode).neighbors
-										.add(universalGrafNode);
-
-							} else {
-
-								universalGrafNode = new GraphNode(Integer.toString(i) + " " 
-										+ Integer.toString(j +1), i, j+1);
-								GraphMap.put(universalGrafNode.name, universalGrafNode);
-								GraphMap.get(curentNode).neighbors
-										.add(universalGrafNode);
-							}
-
-						}
-
-					}
-				}
-
-		
-		}
-
-	}
+}
 
 
