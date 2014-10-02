@@ -1,0 +1,20 @@
+package GameElements;
+
+import java.awt.Graphics;
+
+public class EmptyGrid extends Grid {
+
+	public EmptyGrid(int newheiht, int newwidth){
+		super();
+		height = newheiht;
+		width = newwidth;
+	}
+
+	
+	@Override
+	void draw(Graphics g) {
+		
+
+	}
+
+}

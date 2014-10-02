@@ -1,0 +1,23 @@
+package GameContraller;
+
+import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import GameElements.EmptyGrid;
+import GameElements.Grid;
+import GameContraller.*;
+
+public class MapManager {
+
+String validate(Grid grid){
+	String returnVlue = "";
+	return returnVlue;
+	
+};
+	
+	
+	
+}

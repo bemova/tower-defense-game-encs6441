@@ -1,0 +1,16 @@
+package GameElements;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
+public class Map extends CompleteGrid {
+
+	HashMap<String, GridCell > map;
+	ArrayList<GridCell> path;
+	
+	
+	//contructor's section
+	Map(){};
+	Map(Grid grid){};
+}

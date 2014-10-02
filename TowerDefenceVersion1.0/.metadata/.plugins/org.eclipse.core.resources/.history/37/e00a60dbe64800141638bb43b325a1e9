@@ -1,0 +1,7 @@
+package UserInterfaceClasses;
+
+import JCanvas;
+
+public class Canvas extends JCanvas {
+
+}

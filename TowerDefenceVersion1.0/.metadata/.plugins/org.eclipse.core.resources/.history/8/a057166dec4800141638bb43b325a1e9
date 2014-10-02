@@ -1,0 +1,38 @@
+package GameContraller;
+
+import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import GameElements.Grid;
+import GameContraller.*;
+
+public class MamManager {
+
+	int width = 0;
+	int height = 0;
+	
+	JTextField xField = new JTextField("", 4);
+	JTextField yField = new JTextField("", 4);
+	JLabel entryPoint = new JLabel("Tag Entery Point");
+	JLabel exitPoint = new JLabel("Tag Exit Point");
+	JButton startButton = new JButton("Ok");
+	JButton startMapButton = new JButton("Draw");
+	JButton sinary = new JButton("sinary");
+	JButton path = new JButton("path");
+	JButton ep = new JButton("entryP");
+	JButton exp = new JButton("exitP");
+	JButton save = new JButton("Save Map");
+	JButton load = new JButton("Load Map");
+	JButton designMap = new JButton("Design Map");;
+	Color colorToDrawGreed = Color.green;
+	int colorInInteger = 1; // 1 = gray , 2 = green, 3 = red, 4 = blue
+	
+	Grid grid;
+	MapManager mapManager;
+	
+	
+	
+}

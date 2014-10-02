@@ -1,0 +1,6 @@
+package UserInterfaceClasses;
+
+public class MainClass {
+
+	UserInterface ui = new UserInterface();
+}

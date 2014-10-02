@@ -1,0 +1,108 @@
+package GameContraller;
+
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import GameElements.EmptyGrid;
+import GameElements.Grid;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import GameContraller.*;
+
+public class MapManager {
+
+public String validateMapContent(Grid grid){
+	String returnVlue = "";
+	return returnVlue;
+	
+};
+
+public Grid LoadMapFromFile(String fileName){
+	Grid grid = null;  
+	int wdth_ = 0;
+	int height_ = 0;
+	int[][] pathInMatrix = new int[15][15];
+	
+    BufferedReader br = null;
+    ArrayList<String> containerForMap = new ArrayList<String>();
+    
+    try {
+    	br = new BufferedReader(new FileReader(fileName));
+
+        String line = br.readLine();
+        
+        while (line != null) {
+        	containerForMap.add(line);
+            line = br.readLine();
+        }
+        
+        
+        String[] parts =  containerForMap.get(0).split(" ");
+        wdth_ = parts.length;
+        height_ = containerForMap.size();
+        grid = new EmptyGrid(height_, wdth_);
+        
+        pathInMatrix = new int [height_][wdth_];
+        grid.content = pathInMatrix;
+        
+        int i = 0;
+        for(String lineComponent : containerForMap)
+        {
+        	parts = lineComponent.split(" ");
+        	for(int j = 0; j<wdth_; j++)
+        		pathInMatrix[i][j] =Integer.parseInt( parts[j]);
+        	i++;
+        }
+        
+        //  String everything = sb.toString();
+        br.close();
+    } catch(FileNotFoundException e){
+    	System.out.print("Exception");
+    	
+    }
+    catch(IOException e){
+    	
+    	System.out.print("Exception");
+    }
+return grid;
+	
+};
+
+
+
+public void saveMapINtiFile(){};
+	
+	
+}
+
+
+public void SaveMapIntoFle(Grid grid, String FileName){
+	try {
+		PrintWriter out = new PrintWriter(FileName );
+
+		for (int i = 0; i < grid.getHeight(); i++) {
+			String line = "";
+			for (int j = 0; j < grid.getWidth(); j++) {
+				if(j < wdth_-1)
+					line = line + pathInMatrix[i][j] + " ";
+				else 
+					line = line + pathInMatrix[i][j];	
+
+			}
+			out.println(line);
+		}
+		out.close();
+
+	} catch (IOException e) {
+		System.out.print("Exception");
+
+	}
+	
+	
+}

@@ -1,0 +1,25 @@
+package UserInterfaceClasses;
+
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
+
+public class CanvaObject extends Canvas{
+
+	Dimension d = new Dimension() ;
+	Graphics imageGraphic = null;
+	public void setSize(int i, int j) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+public void paint(Graphics graphics) {
+		//update( graphics );
+		
+	drawMapObjects(graphics);
+
+}
+	
+
+}

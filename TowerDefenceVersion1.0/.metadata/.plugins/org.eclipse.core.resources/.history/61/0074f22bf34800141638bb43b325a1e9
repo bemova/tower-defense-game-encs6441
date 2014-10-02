@@ -1,0 +1,142 @@
+package UserInterfaceClasses;
+
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import GameContraller.FindingPathAlgorithm;
+import GameContraller.MapManager;
+import GameElements.EmptyGrid;
+import GameElements.Grid;
+
+public class UserInterface extends JFrame {
+
+	int width = 10;
+	int height = 10;
+
+	JTextField xField = new JTextField("", 4);
+	JTextField yField = new JTextField("", 4);
+	JLabel entryPoint = new JLabel("Tag Entery Point");
+	JLabel exitPoint = new JLabel("Tag Exit Point");
+	JButton startButton = new JButton("Ok");
+	JButton startMapButton = new JButton("Draw");
+	JButton sinary = new JButton("sinary");
+	JButton path = new JButton("path");
+	JButton ep = new JButton("entryP");
+	JButton exp = new JButton("exitP");
+	JButton save = new JButton("Save Map");
+	JButton load = new JButton("Load Map");
+	JButton designMap = new JButton("Design Map");;
+	Color colorToDrawGreed = Color.green;
+	int colorInInteger = 1; // 1 = gray , 2 = green, 3 = red, 4 = blue
+
+	Grid grid = new EmptyGrid(height, width);
+	MapManager mapManager;
+	FindingPathAlgorithm pathAlgorithm = new FindingPathAlgorithm();
+	JPanel lower = new JPanel();
+	JPanel entryP = new JPanel();
+
+	// CreatEnemy enimyCreaterThread = null;
+	// DrawThread drawEnemyThread = null;
+
+	UserInterface() {
+		JPanel upper = new JPanel();
+
+		entryP.add(entryPoint);
+		entryP.add(exitPoint);
+		entryP.add(startMapButton);
+		upper.add(new JLabel("Set map size"));
+		upper.add(xField);
+		upper.add(yField);
+		upper.add(startButton);
+		sinary.setBackground(Color.green);
+		path.setBackground(Color.gray);
+		ep.setBackground(Color.red);
+		exp.setBackground(Color.blue);
+		upper.add(sinary);
+		upper.add(path);
+		upper.add(exp);
+		upper.add(ep);
+		upper.add(save);
+		upper.add(load);
+		upper.add(designMap);
+
+		// make part of interface invisible to a user
+		startMapButton.setVisible(false);
+
+		sinary.setEnabled(false);
+		startButton.setVisible(false);
+		path.setEnabled(false);
+		exp.setEnabled(false);
+		ep.setEnabled(false);
+		save.setEnabled(false);
+		xField.setEnabled(false);
+		yField.setEnabled(false);
+
+		sinary.setVisible(false);
+		path.setVisible(false);
+		exp.setVisible(false);
+		ep.setVisible(false);
+		save.setVisible(false);
+		xField.setVisible(false);
+		yField.setVisible(false);
+		
+		
+		
+		
+		xField.addActionListener(new java.awt.event.ActionListener() {
+		    public void actionPerformed(java.awt.event.ActionEvent e) {
+		    	if( ! startButton.isVisible())
+		    		startButton.setVisible(true);
+		    	startButton.setVisible(true);
+		    	pack();
+		    }
+		});
+		
+
+		
+		xField.addKeyListener(new KeyAdapter()
+	    {
+	        public void keyPressed(KeyEvent ke)
+	        {
+		    	if( ! startButton.isVisible())
+		    		startButton.setVisible(true);
+		    	startButton.setVisible(true);
+		    	pack();
+	        	
+	        }
+	    });
+		
+		yField.addKeyListener(new KeyAdapter()
+	    {
+	        public void keyPressed(KeyEvent ke)
+	        {
+		    	if( ! startButton.isVisible())
+		    		startButton.setVisible(true);
+		    	startButton.setVisible(true);
+		    	pack();
+	        	
+	        }
+	    });
+		
+		
+		yField.addActionListener(new java.awt.event.ActionListener() {
+		    public void actionPerformed(java.awt.event.ActionEvent e) {
+		    	if( !startButton.isVisible())
+		    		startButton.setVisible(true);
+		    	startButton.setVisible(true);
+		    	pack();
+	       
+		    }
+		});
+		
+
+	}
+
+}

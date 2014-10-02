@@ -1,0 +1,36 @@
+package GameElements;
+
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
+public class Map extends CompleteGrid {
+
+	HashMap<String, GridCell > map;
+	ArrayList<GridCell> path;
+	ArrayList<Tower> towers;
+	String entryPoint = "";
+	String exitPoint = "";
+	
+	
+	//contructor's section
+	Map(){};
+	Map(Grid grid){};
+	
+	@Override
+	void draw(Graphics g){
+		super.draw(g);
+		
+	};
+	
+	public String getEntryPoint(){
+		
+		return entryPoint;
+	};
+	
+	public String getExitPOint(){
+		
+		return exitPoint;
+	};
+}

@@ -1,0 +1,32 @@
+package GameElements;
+
+import java.awt.Graphics;
+
+public class EmptyGrid extends Grid {
+
+	public EmptyGrid(int newheiht, int newwidth){
+		super();
+		height = newheiht;
+		width = newwidth;
+	}
+
+	
+	@Override
+	void draw(Graphics g) {
+		
+		for (int i = 0; i < width; i += sizeOfUnit) {
+			for (int j = 0; j < width; j += sizeOfUnit) {
+				g.drawLine(i, 0, i, height);
+				g.drawLine(0, j, width, j);
+			}
+		}
+
+		g.drawLine(width - 1, height - 1,
+				width - 1, 0); // x1y1 x2y2
+
+		drawLine(0, height - 1, width - 1,
+				height - 1);
+
+	}
+
+}

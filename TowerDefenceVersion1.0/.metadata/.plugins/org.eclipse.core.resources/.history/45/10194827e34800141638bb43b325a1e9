@@ -1,0 +1,7 @@
+package GameElements;
+
+public abstract class Grid {
+	int height = 0;
+	int width = 0;
+	int [][] content = new int[height][width];
+}

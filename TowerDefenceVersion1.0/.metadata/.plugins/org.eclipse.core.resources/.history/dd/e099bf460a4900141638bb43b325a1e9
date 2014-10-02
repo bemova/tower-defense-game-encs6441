@@ -1,0 +1,8 @@
+package UserInterfaceClasses;
+
+import java.awt.Dimension;
+
+public class CanvaObject {
+
+	Dimension d = new Dimension() ;
+}

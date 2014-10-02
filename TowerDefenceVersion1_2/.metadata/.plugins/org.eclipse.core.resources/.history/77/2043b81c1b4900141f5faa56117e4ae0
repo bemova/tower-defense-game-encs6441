@@ -1,0 +1,44 @@
+package UserInterfaceClasses;
+
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
+
+import GameElements.Grid;
+
+public class CanvaObject extends Canvas{
+
+	Grid grid = null;
+	Dimension d = new Dimension() ;
+	Graphics imageGraphic = null;
+	
+	public CanvaObject(Grid newGrid) {
+		grid = newGrid;
+
+	}
+	
+	void UpdateGrid(Grid newGrid){
+		grid = newGrid;
+		
+	};
+	
+	public void setSize(int i, int j) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+public void paint(Graphics graphics) {
+		//update( graphics );
+		
+	grid.draw(graphics);
+
+}
+	
+	void paintMapOnCanvas(Grid grid){
+		
+		
+	}
+	
+
+}
