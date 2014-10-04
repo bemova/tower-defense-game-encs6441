@@ -10,7 +10,7 @@ public class Map extends CompleteGrid {
 
 	HashMap<String, GridCell > map;
 	ArrayList<GridCell> path;
-	public ArrayList<Tower> towers;
+	public HashMap<String,Tower> towers;
 	String entryPoint = "";
 	String exitPoint = "";
 	
@@ -20,7 +20,7 @@ public class Map extends CompleteGrid {
 	public Map(){};
 	public Map(Grid grid){
 		super(grid);
-		towers = new ArrayList<Tower>();
+		towers = new HashMap<String,Tower>();
 		
 	};
 	
@@ -30,7 +30,7 @@ public class Map extends CompleteGrid {
 	public void draw(Graphics g){
 		super.draw(g);
 		
-		for(Tower tower: towers)
+		for(Tower tower: towers.values())
 		{
 			tower.draw(g);
 		}
@@ -69,8 +69,15 @@ public class Map extends CompleteGrid {
 	};
 	
 	
-	public void addTower(Tower newTower){
+	public void addTower(Tower newTower, String positionKey){
 		
-		towers.add(newTower);
+		towers.put(positionKey , newTower);
 	};
+	
+	public void updateLevel(String towerKey, String upOrDown){
+		
+		towers.get(towerKey).levelUpDown(upOrDown);
+		
+	}
+	
 }

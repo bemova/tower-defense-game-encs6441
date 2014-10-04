@@ -16,21 +16,34 @@ public class FactoryTower {
 	
 		
 		if (newParameters.towerType == 10) {
-			newParameters.immagePath = "/tower1.png";
+			newParameters.imagePath = "/tower1.png";
+			newParameters.firingSpeed = 11;
+			newParameters.range = 11;
+			newParameters.towerCurrentLevel = 0;
 			obj = new FreezingTower(newParameters);
 		} else if (newParameters.towerType == 20) {
-			newParameters.immagePath = "/tower2.png";
+			newParameters.imagePath = "/tower2.png";
+			newParameters.firingSpeed = 21;
+			newParameters.range = 21;
+			newParameters.towerCurrentLevel = 0;
 			obj = new FiringTower(newParameters);
 
 		} else if (newParameters.towerType == 30) {
-			newParameters.immagePath = "/tower3.png";
+			newParameters.firingSpeed = 31;
+			newParameters.range = 31;
+			newParameters.imagePath = "/tower3.png";
+			newParameters.towerCurrentLevel = 0;
 			obj = new BasicTower(newParameters);
 		}
 
-		
-		
-		
+	
 		return obj;
 	};
+	
+	
+	public void updateTowerParameters(){
+		
+		
+	}
 
 }

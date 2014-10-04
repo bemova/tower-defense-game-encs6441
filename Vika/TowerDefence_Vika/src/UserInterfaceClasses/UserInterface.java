@@ -58,6 +58,9 @@ public class UserInterface extends JFrame {
 	// StandardAlgorithms pathAlgorithm = new StandardAlgorithms();
 	JPanel lower = new JPanel();
 	JPanel entryP = new JPanel();
+	
+	TowerParameters towerParam = new TowerParameters();
+	
 
 	// CreatEnemy enimyCreaterThread = null;
 	// DrawThread drawEnemyThread = null;
@@ -262,16 +265,7 @@ public class UserInterface extends JFrame {
 	                	
 	                	String errorMessage = mapManager.SaveMapIntoFle(grid,fileName);
 	                
-	           // 	sinary.setVisible(false);
-	           // 	path.setVisible(false);
-	           // 	exp.setVisible(false);
-	           // 	ep.setVisible(false);
-	           // 	save.setVisible(false);
-	           // 	xField.setVisible(false);
-	           // 	yField.setVisible(false);
-	           // 	save.setVisible(false);
-	            //	setMapSizeButten.setVisible(false);
-	            	
+	                  	
 	            	
 	            	load.setEnabled(true);
 	            	 
@@ -453,14 +447,28 @@ public class UserInterface extends JFrame {
 					    	// towerWindow.frame.setLocation(100, 100);
 					    	 towerWindow.setVisible(true);
 					    	 towerWindow.frame.setVisible(true);
+					    	 String position = Integer.toString(i) + " " +Integer.toString(j); 
+					    	 towerParam = ((Map)grid).towers.get(position).parameters;
+					    	 String view = "<html>\n" +
+					                 "Tower characteristics:\n" +
+					                 "<ul>\n" +
+					                 "<li><font color=red>Distance: " + towerParam.range + "</font>\n" +
+					                 "<li><font color=blue>Frequency:" + towerParam.firingSpeed +"</font>\n" +
+					                 "<li><font color=green>Power: x</font>\n" +
+					                 "<li><font color=green>Damage: 3</font>\n" +
+					                 "</ul>\n";
+					    			 
+					    		Point currentPosition = new Point(j,i);	
+					    		towerWindow.updateCurrentPosition(currentPosition);
+					    	 towerWindow.updateView(view);
+					    	 canva.repaint();
 					    	// towerPropertyPanel.setLocation(x, y);
-					    	 pack();
+					    	// pack();
 					     }else {
 				    	  grid.content[i][j] = colorInInteger;
 					     }
 		    		      
-					      
-					      canva.repaint();
+				      canva.repaint();
 		    		      
 					      }
 			     }
@@ -572,19 +580,51 @@ public class UserInterface extends JFrame {
 		{
 			TowerParameters newParams = new TowerParameters();
 			//newParams.towerType = ;
-			newParams.firingSpeed = 100;
-			newParams.range = 1; // number of affected cells
+
+
 			newParams.position = toCanvasCoordinates(point);
 			newParams.towerType = towerType;
+			newParams.towerCurrentLevel = 1;
 			//newParams.immagePath = "/tower1.png";
 			
 			Tower tower = towerFactory.creatTower(newParams);
-			((Map)grid).addTower(tower);
+			 
 			CanvasCoordinate localPoint = toCanvasCoordinates(point);				
 			grid.setCell(localPoint.x, localPoint.y, 5); // @TODO: change the last parameter set proper tower value
+			String position = Integer.toString(localPoint.y) + " " +Integer.toString(localPoint.x);
+
+			((Map)grid).addTower(tower,position );
 			canva.repaint();
 			pack();
 		}
+	}
+	
+	
+	public void towerControler(Point point, String levelUpDown){
+		String position = Integer.toString(point.y) + " " +Integer.toString(point.x);
+		((Map)grid).updateLevel(position, levelUpDown); 
+		
+		
+	    	 towerParam = ((Map)grid).towers.get(position).parameters;
+		
+		
+   	 String view = "<html>\n" +
+             "Tower characteristics:\n" +
+             "<ul>\n" +
+             "<li><font color=red>Distance: " + towerParam.range + "</font>\n" +
+             "<li><font color=blue>Frequency:" + towerParam.firingSpeed +"</font>\n" +
+             "<li><font color=green>Power: x</font>\n" +
+             "<li><font color=green>Damage: 3</font>\n" +
+             "</ul>\n";
+			 
+//		Point currentPosition = new Point(j,i);	
+//		towerWindow.updateCurrentPosition(currentPosition);
+   	 canva.repaint();
+	 towerWindow.updateView(view);
+		
+		canva.repaint();
+		pack();
+				
 	}
 }
 
