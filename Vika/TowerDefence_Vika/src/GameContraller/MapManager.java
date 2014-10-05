@@ -123,7 +123,7 @@ public String SaveMapIntoFle(Grid grid, String FileName){
 	return errorMessage;
 }
 
-String validateEntryExit(Grid grid){
+public String validateEntryExit(Grid grid){
 	String  message = "";
 	int numberOfEntry = 0;
 	int numberOfExit = 0;

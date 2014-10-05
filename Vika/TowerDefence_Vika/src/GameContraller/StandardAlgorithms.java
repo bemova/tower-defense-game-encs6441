@@ -34,14 +34,19 @@ public class StandardAlgorithms {
 		this.map = map;
 	};
 
-	StandardAlgorithms(Grid grid) {
+	public StandardAlgorithms(Grid grid) {
 		sizeX = grid.getHeight();
 		sizeY = grid.getWidth();
 		this.map = new int[sizeX][sizeY];
 		this.map = grid.content;
 	};
 
-	String fillGraph() { // based on the size, creates a Graph structure
+	
+	
+	
+	
+	public String fillGraph() { 
+
 		String message = "";
 
 		for (int i = 0; i <= sizeX - 1; i++) {
