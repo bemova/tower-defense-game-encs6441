@@ -11,7 +11,7 @@ public class Demo {
 	         
 	        //close the context
 	        
-	        ////
+	        System.out.println("test");
 	        context.close();
 	}
 
