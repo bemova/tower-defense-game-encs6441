@@ -8,7 +8,7 @@ public class Demo {
 	        IAplication app = context.getBean(MyApplication.class);
 	         
 	        app.processMessage("Hi Mojtaba", "mojtaba@abc.com");
-	         
+	         //test
 	        //close the context
 	        context.close();
 	}
