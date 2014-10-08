@@ -1,5 +1,7 @@
 package core.domain.maps;
 
+import java.awt.Graphics;
+
 public class EmptyGrid extends Grid {
 
 	public EmptyGrid(int newheiht, int newwidth){

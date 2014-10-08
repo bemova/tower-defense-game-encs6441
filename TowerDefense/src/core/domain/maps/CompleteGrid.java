@@ -1,4 +1,4 @@
-package GameElements;
+package core.domain.maps;
 
 import java.awt.Color;
 import java.awt.Graphics;
