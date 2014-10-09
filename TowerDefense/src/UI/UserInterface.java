@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import UI.FactoryTower;
 import core.applicationService.vikiMapServacs.StandardAlgorithms;
 import core.applicationService.vikiMapServacs.MapManager;
@@ -27,6 +28,7 @@ import core.domain.maps.EmptyGrid;
 import core.domain.maps.Grid;
 import core.domain.maps.Map;
 import core.domain.warriors.defenders.towers.*;
+import core.domain.warriors.defenders.towers.vikiTowers.TowerDataCollection;
 
 public class UserInterface extends JFrame {
 
@@ -39,7 +41,7 @@ public class UserInterface extends JFrame {
 	JLabel entryPoint = new JLabel("Tag Entery Point");
 	JLabel exitPoint = new JLabel("Tag Exit Point");
 	JButton setMapSizeButten = new JButton("Set Size");
-	JButton startMapButton = new JButton("Draw");
+	JButton drowMapButton = new JButton("Draw");
 	JButton sinary = new JButton("sinary");
 	JButton path = new JButton("path");
 	JButton ep = new JButton("entryP");
@@ -48,6 +50,8 @@ public class UserInterface extends JFrame {
 	JButton load = new JButton("Load Map");
 	JButton designMap = new JButton("Design Map");
 	JButton playGame = new JButton("Start Playing");
+	
+	JButton designTowers = new JButton("Design Toers");
 	Color colorToDrawGreed = Color.green;
 	int colorInInteger = 1; // 1 = gray , 2 = green, 3 = red, 4 = blue
 
@@ -60,17 +64,18 @@ public class UserInterface extends JFrame {
 	JPanel entryP = new JPanel();
 	
 	TowerParameters towerParam = new TowerParameters();
+	DesignToweerDialog towerDialogWindow = new DesignToweerDialog(this);
 	
 
 	// CreatEnemy enimyCreaterThread = null;
 	// DrawThread drawEnemyThread = null;
-
+	JPanel upper = new JPanel();
 	UserInterface() {
-		JPanel upper = new JPanel();
+		
 
 		entryP.add(entryPoint);
 		entryP.add(exitPoint);
-		entryP.add(startMapButton);
+		entryP.add(drowMapButton);
 		upper.add(new JLabel("Set map size"));
 		upper.add(xField);
 		upper.add(yField);
@@ -92,7 +97,7 @@ public class UserInterface extends JFrame {
 		towerWindow.setVisible(false);
 		
 		// make part of interface invisible to a user
-		startMapButton.setVisible(false);
+		drowMapButton.setVisible(false);
 
 		sinary.setEnabled(false);
 		setMapSizeButten.setVisible(false);
@@ -174,6 +179,9 @@ public class UserInterface extends JFrame {
 
 			    	if(grid != null ) grid = new Map(grid);
 			    	canva.updateGrid(grid);  
+			    	upper.add(designTowers);
+			    	designTowers.setVisible(true);
+			    	
 			    	//canva.repaint();
 			    	 pack();
 	 		    }
@@ -185,6 +193,26 @@ public class UserInterface extends JFrame {
 			  }
 			
 		});
+		
+		
+		designTowers.addActionListener( new java.awt.event.ActionListener() {
+			  public void actionPerformed(ActionEvent e)
+			  {
+			    try
+			    {
+			    	towerDialogWindow.setVisible(true);
+			    	
+			    	 pack();
+	 		    }
+			    catch(java.lang.Exception ex)
+			    {
+			    	JOptionPane.showMessageDialog(null, ex.getMessage());
+			    }
+			   
+			  }
+			
+		});
+		
 		
 		designMap.addActionListener( new java.awt.event.ActionListener() {
 			  public void actionPerformed(ActionEvent e)
@@ -360,7 +388,7 @@ public class UserInterface extends JFrame {
 			
 		
 		
-		startMapButton.addActionListener(new java.awt.event.ActionListener() 
+		drowMapButton.addActionListener(new java.awt.event.ActionListener() 
 		{
 			  public void actionPerformed(ActionEvent e)
 			  {
