@@ -7,6 +7,7 @@ import core.domain.warriors.defenders.Defender;
 import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.ShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.SoundBehaviour;
+import core.domain.warriors.defenders.towers.vikiTowers.TowerParameters;
 
 
 public abstract class Tower extends Defender {
@@ -46,5 +47,6 @@ public abstract class Tower extends Defender {
 
 	public abstract void display();
 	public abstract double cost();
+//	public abstract TowerParameters returnParameters(); // addd by Vika, needs to be replaced later 
 
 }
