@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
+import core.domain.warriors.defenders.towers.*;
 
 
 public class Map extends CompleteGrid {
@@ -32,7 +33,7 @@ public class Map extends CompleteGrid {
 		
 		for(Tower tower: towers.values())
 		{
-			tower.draw(g);
+			tower.display();//  .draw(g);
 		}
 	
 		//	Dimension dimension = getSize();
@@ -76,7 +77,7 @@ public class Map extends CompleteGrid {
 	
 	public void updateLevel(String towerKey, String upOrDown){
 		
-		towers.get(towerKey).levelUpDown(upOrDown);
+		//towers.get(towerKey).levelUpDown(upOrDown);
 		
 	}
 	
