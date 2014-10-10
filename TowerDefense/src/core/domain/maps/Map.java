@@ -11,7 +11,7 @@ public class Map extends CompleteGrid {
 
 	HashMap<String, GridCell > map;
 	ArrayList<GridCell> path;
-	public HashMap<String,Tower> towers;
+	public HashMap<String,Tower> towers; 
 	String entryPoint = "";
 	String exitPoint = "";
 	

@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 
 import core.domain.maps.Grid;
 import core.domain.maps.Map;
@@ -53,7 +54,7 @@ public class TowerWindowOnMap extends JPanel{
 		frame.add(levelUp);
 		frame.add(levelDown);
 		frame.add(htmlTextArea);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		frame.setVisible(true);
 		
 		

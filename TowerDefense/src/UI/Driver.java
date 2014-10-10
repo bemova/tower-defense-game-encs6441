@@ -1,6 +1,6 @@
 package UI;
 
-public class Driver {
+public class Driver { 
 
 	/**
 	 * @param args
