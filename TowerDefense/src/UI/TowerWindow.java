@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import core.applicationService.vikiMapServacs.MoneyManager;
 import core.domain.maps.CompleteGrid;
 import core.domain.maps.Grid;
 import core.domain.maps.Map;
@@ -34,8 +35,8 @@ public class TowerWindow extends JPanel {
 	final JLabel picLabel3;
 	JPanel upper = new JPanel();
 	JPanel lower = new JPanel();
-	JButton levelUp = new JButton("up");
-	JButton levelDown = new JButton("down");
+	JButton levelUp = new JButton("buy");
+	JButton levelDown = new JButton("sell");
 	String initialTowerView = "";
 
 	JFrame draggedTower = new JFrame();
@@ -46,7 +47,7 @@ public class TowerWindow extends JPanel {
 	JLabel htmlTextArea = new JLabel();
 	
 	Point currentPosition = new Point();
-
+	MoneyManager moneyManager = new MoneyManager();
 	// public TowerWindow(Grid grid)
 	public TowerWindow(UserInterface ui) {
 		userInterface = ui;
@@ -95,7 +96,10 @@ public class TowerWindow extends JPanel {
 		levelUp.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					levelDown.setEnabled(true);
 					userInterface.towerControler(currentPosition, "up");
+					boolean anaibleDisable = userInterface.moneyControler(currentPosition, "buy");
+					if(!anaibleDisable)  levelUp.setEnabled(false);
 
 					// canva.repaint();
 					// pack();
@@ -110,7 +114,12 @@ public class TowerWindow extends JPanel {
 		levelDown.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					levelUp.setEnabled(true);
+					boolean anaibleDisable =  userInterface.moneyControler(currentPosition, "sell");
+					if(!anaibleDisable)  levelDown.setEnabled(false);
 					userInterface.towerControler(currentPosition, "down");
+					
+					//userInterface.mapManager.
 
 					// canva.repaint();
 					// pack();
@@ -122,10 +131,7 @@ public class TowerWindow extends JPanel {
 
 		});
 		
-		
-
-
-		frame.pack();
+	frame.pack();
 
 	}
 
@@ -148,6 +154,8 @@ public class TowerWindow extends JPanel {
 					draggedTower.setVisible(false);
 					userInterface.placeTowerOnMap(e.getLocationOnScreen(),
 							towerType);
+					//userInterface.moneyControler(e.getLocationOnScreen(), "buy");
+					
 				}
 			}
 		});
@@ -223,6 +231,7 @@ public class TowerWindow extends JPanel {
 	public void updateCurrentPosition(Point newPosition ){
 		
 		currentPosition = newPosition;
+		
 		
 	}
 	

@@ -4,10 +4,11 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import UI.TowerParameters;
 
 import javax.imageio.ImageIO;
-
-
 
 public class Tower {
 
@@ -32,40 +33,45 @@ public class Tower {
 	};
 
 	public void draw(Graphics g) {
-		
-
 
 		g.drawImage(image, parameters.position.x * 30,
 				parameters.position.y * 30, null);
 
 	};
 
-	void levelUpDown(String newLevel) {
+	public void levelUpDown(String newLevel) {
 
-		if (newLevel.equals("up")){
-		//	parameters.update(data.towerLevelConfig.get(parameters.towerType).get(
-		//			parameters.towerCurrentLevel + 1));
-			TowerParameters newValues = data.towerLevelConfig.get(parameters.towerType).get(
-							parameters.towerCurrentLevel + 1);
-					parameters.towerType = newValues.towerType; 
-					parameters.firingSpeed = newValues.firingSpeed;
-					parameters.range  = newValues.range; // number of affected cells
-			
-					parameters.imagePath = newValues.imagePath;
-					parameters.towerCurrentLevel = parameters.towerCurrentLevel +1;
-			
-			
-		}
-		else{
-			TowerParameters newValues = data.towerLevelConfig.get(parameters.towerType).get(
-					parameters.towerCurrentLevel - 1);
-			parameters.towerType = newValues.towerType; 
-			parameters.firingSpeed = newValues.firingSpeed;
-			parameters.range  = newValues.range; // number of affected cells
-	
-			parameters.imagePath = newValues.imagePath;
-			parameters.towerCurrentLevel = parameters.towerCurrentLevel - 1;
-	
+		if (newLevel.equals("up")) {
+			// parameters.update(data.towerLevelConfig.get(parameters.towerType).get(
+			// parameters.towerCurrentLevel + 1));
+
+			ArrayList<TowerParameters> levelConfig = data.towerLevelConfig
+					.get(parameters.towerType);
+			if (parameters.towerCurrentLevel + 1 < levelConfig.size()) {
+				TowerParameters newValues = levelConfig.get(parameters.towerCurrentLevel + 1);
+				parameters.towerType = newValues.towerType;
+				parameters.firingSpeed = newValues.firingSpeed;
+				parameters.range = newValues.range; // number of affected cells
+				parameters.salePrice = newValues.salePrice;
+				parameters.buyPrice= newValues.buyPrice;
+				parameters.imagePath = newValues.imagePath;
+				parameters.towerCurrentLevel = parameters.towerCurrentLevel + 1;
+			}
+
+		} else {
+
+			if (parameters.towerCurrentLevel > 0) {
+				TowerParameters newValues = data.towerLevelConfig.get(
+						parameters.towerType).get(
+						parameters.towerCurrentLevel - 1);
+				parameters.towerType = newValues.towerType;
+				parameters.firingSpeed = newValues.firingSpeed;
+				parameters.range = newValues.range; // number of affected cells
+				parameters.salePrice = newValues.salePrice;
+				parameters.buyPrice= newValues.buyPrice;
+				parameters.imagePath = newValues.imagePath;
+				parameters.towerCurrentLevel = parameters.towerCurrentLevel - 1;
+			}
 		}
 
 		try {
@@ -75,7 +81,7 @@ public class Tower {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

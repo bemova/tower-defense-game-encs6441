@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import UI.FactoryTower;
+import core.applicationService.vikiMapServacs.MoneyManager;
 import core.applicationService.vikiMapServacs.StandardAlgorithms;
 import core.applicationService.vikiMapServacs.MapManager;
 import UI.TowerParameters;
@@ -29,8 +30,8 @@ import core.domain.maps.CompleteGrid;
 import core.domain.maps.EmptyGrid;
 import core.domain.maps.Grid;
 import core.domain.maps.Map;
-import core.domain.warriors.defenders.towers.*;
-import core.domain.warriors.defenders.towers.vikiTowers.TowerDataCollection;
+//import core.domain.warriors.defenders.towers.*;
+import core.domain.warriors.defenders.towers.vikiTowers.*;
 
 public class UserInterface extends JFrame {
 
@@ -52,6 +53,9 @@ public class UserInterface extends JFrame {
 	JButton load = new JButton("Load Map");
 	JButton designMap = new JButton("Design Map");
 	JButton playGame = new JButton("Start Playing");
+	JTextField moneyView = new JTextField(); // display of view accumulated
+												// points during the game
+	JLabel acumulatedMoney = new JLabel("POINTS :");
 
 	JButton designTowers = new JButton("Design Towers");
 	Color colorToDrawGreed = Color.green;
@@ -67,6 +71,7 @@ public class UserInterface extends JFrame {
 
 	TowerParameters towerParam = new TowerParameters();
 	DesignToweerDialog towerDialogWindow = new DesignToweerDialog(this);
+	MoneyManager moneyManager = new MoneyManager();
 
 	// CreatEnemy enimyCreaterThread = null;
 	// DrawThread drawEnemyThread = null;
@@ -167,8 +172,11 @@ public class UserInterface extends JFrame {
 					if (grid != null)
 						grid = new Map(grid);
 					canva.updateGrid(grid);
-					upper.add(designTowers);
-					designTowers.setVisible(true);
+					upper.add(acumulatedMoney);
+					upper.add(moneyView);
+					moneyView.setText("200");
+					// upper.add(designTowers);
+					// designTowers.setVisible(true);
 
 					// canva.repaint();
 					pack();
@@ -418,30 +426,22 @@ public class UserInterface extends JFrame {
 							towerWindow.frame.setVisible(true);
 							String position = Integer.toString(i) + " "
 									+ Integer.toString(j);
-							/*
-							 * towerParam =
-							 * ((Map)grid).towers.get(position).parameters;
-							 * String view = "<html>\n" +
-							 * "Tower characteristics:\n" + "<ul>\n" +
-							 * "<li><font color=red>Distance: " +
-							 * towerParam.range + "</font>\n" +
-							 * "<li><font color=blue>Frequency:" +
-							 * towerParam.firingSpeed +"</font>\n" +
-							 * "<li><font color=green>Power: x</font>\n" +
-							 * "<li><font color=green>Damage: 3</font>\n" +
-							 * "</ul>\n";
-							 */
 
-							double price = ((Map) grid).towers.get(position)
-									.cost();
-							// String type =
-							// ((Map)grid).towers.get(position).display();
+							towerParam = ((Map) grid).towers.get(position).parameters;
 							String view = "<html>\n"
 									+ "Tower characteristics:\n" + "<ul>\n"
-									+ "<li><font color=red> price : " + price
-									+ "</font>\n" +
+									+ "<li><font color=red>Distance: "
+									+ towerParam.range + "</font>\n"
+									+ "<li><font color=blue>Frequency:"
+									+ towerParam.firingSpeed + "</font>\n"
+									+ "<li><font color=green>Buy price: "
+									+ towerParam.buyPrice + "</font>\n"
+									+ "<li><font color=green>Sale price: "
+									+ towerParam.salePrice + "</font>\n"
+									+ "</ul>\n";
 
-									"</ul>\n";
+							// ???????? String type =
+							// ((Map)grid).towers.get(position).draw(g);;
 
 							Point currentPosition = new Point(j, i);
 							towerWindow.updateCurrentPosition(currentPosition);
@@ -505,21 +505,15 @@ public class UserInterface extends JFrame {
 		add(lower, BorderLayout.SOUTH);
 
 		// setLayout(new FlowLayout());
-		
-		
 
-
-		addWindowListener(new WindowAdapter(){
-                public void windowClosing(WindowEvent e){
-                    if(towerDialogWindow.isVisible())
-                    {
-                    	towerDialogWindow.setVisible(false);
-                    	towerDialogWindow.dispose();
-                    }
-                }
-            });
-
-
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				if (towerDialogWindow.isVisible()) {
+					towerDialogWindow.setVisible(false);
+					towerDialogWindow.dispose();
+				}
+			}
+		});
 
 		pack();
 		setLocationRelativeTo(null);
@@ -566,12 +560,11 @@ public class UserInterface extends JFrame {
 
 			newParams.position = toCanvasCoordinates(point);
 			newParams.towerType = towerType;
-			newParams.towerCurrentLevel = 1;
-			// newParams.immagePath = "/tower1.png";
+			newParams.towerCurrentLevel = 0;
 
-			// Tower tower = towerFactory.creatTower(newParams);
+			Tower tower = towerFactory.creatTower(newParams);
 
-			Tower tower = towerFactory.creatTower();
+			// Tower tower = towerFactory.creatTower();
 
 			CanvasCoordinate localPoint = toCanvasCoordinates(point);
 			grid.setCell(localPoint.x, localPoint.y, 5); // @TODO: change the
@@ -582,6 +575,8 @@ public class UserInterface extends JFrame {
 					+ Integer.toString(localPoint.x);
 
 			((Map) grid).addTower(tower, position);
+			moneyControler(localPoint, "buy"); // updates amount of point owned by the player 
+
 			canva.repaint();
 			pack();
 		}
@@ -592,14 +587,14 @@ public class UserInterface extends JFrame {
 				+ Integer.toString(point.x);
 		((Map) grid).updateLevel(position, levelUpDown);
 
-		double price = ((Map) grid).towers.get(position).cost();
+		// double price = ((Map) grid).towers.get(position).cost();
 
 		String view = "<html>\n" + "Tower characteristics:\n" + "<ul>\n"
 				+ "<li><font color=red>Distance: " + towerParam.range
 				+ "</font>\n" + "<li><font color=blue>Frequency:"
 				+ towerParam.firingSpeed + "</font>\n"
-				+ "<li><font color=green>Power: x</font>\n"
-				+ "<li><font color=green>Damage: 3</font>\n" + "</ul>\n";
+				+ "<li><font color=green>Buy price: " +towerParam.buyPrice + "</font>\n"
+				+ "<li><font color=green>Sale price: " + towerParam.salePrice + "</font>\n" + "</ul>\n";
 
 		// Point currentPosition = new Point(j,i);
 		// towerWindow.updateCurrentPosition(currentPosition);
@@ -610,4 +605,27 @@ public class UserInterface extends JFrame {
 		pack();
 
 	}
+	
+	public boolean moneyControler(Point point, String buysell){
+		boolean anableSellBuy = true;
+		
+		double amount = 0;
+		String position = Integer.toString(point.y) + " "
+				+ Integer.toString(point.x);	
+		if(buysell.equals("buy"))
+			amount = ((Map) grid).towers.get(position).parameters.buyPrice;
+		else
+			amount = ((Map) grid).towers.get(position).parameters.salePrice;
+		
+		this.moneyView.setText(Double.toString(this.moneyManager.update(buysell, amount))); 
+		
+		int level = ((Map) grid).towers.get(position).parameters.towerCurrentLevel;
+		
+		if(buysell.equals("sell") && (level-1 == 0) || (buysell.equals("buy") && level == 2))
+			anableSellBuy = false;
+			
+		return anableSellBuy;
+			
+	}
+	
 }

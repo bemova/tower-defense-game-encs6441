@@ -10,6 +10,9 @@ public class TowerParameters {
 	public Point position;
 	public String imagePath;
 	public int towerCurrentLevel;
+	public String immagePath;
+	public double buyPrice;
+	public double salePrice;
 	
 	/*
 	 * This function is called when the level of tower is changed
