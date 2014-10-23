@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
+import core.domain.maps.EmptyGrid;
 import core.domain.maps.Grid;
 
 public class StandardAlgorithms {
@@ -35,10 +36,10 @@ public class StandardAlgorithms {
 	};
 
 	public StandardAlgorithms(Grid grid) {
-		sizeX = grid.getHeight();
-		sizeY = grid.getWidth();
+		sizeX = ((EmptyGrid)grid).getHeight();
+		sizeY = ((EmptyGrid)grid).getWidth();
 		this.map = new int[sizeX][sizeY];
-		this.map = grid.content;
+		this.map = ((EmptyGrid)grid).content;
 	};
 
 	

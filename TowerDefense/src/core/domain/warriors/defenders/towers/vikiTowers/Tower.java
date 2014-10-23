@@ -39,12 +39,12 @@ public class Tower {
 
 	};
 
-	public void levelUpDown(String newLevel) {
-
-		if (newLevel.equals("up")) {
-			// parameters.update(data.towerLevelConfig.get(parameters.towerType).get(
-			// parameters.towerCurrentLevel + 1));
-
+	public int levelUpDown(String upgradeLevel) {
+		int level = 0;
+		
+		
+		if (upgradeLevel.equals("up")) {
+// if we want to increase the level of a tower
 			ArrayList<TowerParameters> levelConfig = data.towerLevelConfig
 					.get(parameters.towerType);
 			if (parameters.towerCurrentLevel + 1 < levelConfig.size()) {
@@ -56,11 +56,13 @@ public class Tower {
 				parameters.buyPrice= newValues.buyPrice;
 				parameters.imagePath = newValues.imagePath;
 				parameters.towerCurrentLevel = parameters.towerCurrentLevel + 1;
+				level = parameters.towerCurrentLevel;
 			}
 
-		} else {
-
+		} else {// if we want to low the level of the tower
+			
 			if (parameters.towerCurrentLevel > 0) {
+				// If the level of a tower is not <0> yet we still can low it
 				TowerParameters newValues = data.towerLevelConfig.get(
 						parameters.towerType).get(
 						parameters.towerCurrentLevel - 1);
@@ -71,6 +73,11 @@ public class Tower {
 				parameters.buyPrice= newValues.buyPrice;
 				parameters.imagePath = newValues.imagePath;
 				parameters.towerCurrentLevel = parameters.towerCurrentLevel - 1;
+				level = parameters.towerCurrentLevel;
+			}else{
+				//if the level is already <0> means we have to remove the tower from the map
+				level = -1;
+				
 			}
 		}
 
@@ -81,6 +88,8 @@ public class Tower {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return level;
 
 	}
 

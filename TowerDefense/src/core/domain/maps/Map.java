@@ -37,9 +37,6 @@ public class Map extends CompleteGrid {
 			tower.draw(g);
 		}
 	
-		//	Dimension dimension = getSize();
-
-	
 	};
 	
 
@@ -60,9 +57,23 @@ public class Map extends CompleteGrid {
 		towers.put(positionKey , newTower);
 	};
 	
-	public void updateLevel(String towerKey, String upOrDown){
+	public int updateLevel(String towerKey, String upOrDown){
+		int level = 0;
+		level = towers.get(towerKey).levelUpDown(upOrDown);
 		
-		towers.get(towerKey).levelUpDown(upOrDown);
+		//if the method return negative value we have to remove the tower from the map => 
+		//it is completely sell
+		if(level < 0){
+			
+			towers.remove(towerKey);
+			String [] pointParts = towerKey.split(" ");
+			int i = Integer.parseInt(pointParts[0]);
+			int j = Integer.parseInt(pointParts[1]);
+			((EmptyGrid)simpleGrid).content[i][j] = 2;
+		
+		}
+		
+			return level;
 		
 	}
 	

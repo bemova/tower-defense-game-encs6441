@@ -14,10 +14,12 @@ public class MoneyManager {
 	}
 	
 	public double update(String buysell, double amount ){
+		double returnVAlue = money;
+		if(buysell.equals("buy")) returnVAlue = returnVAlue - amount;
+		else returnVAlue = returnVAlue + amount;
+		if(returnVAlue >= 0) money = returnVAlue;
 		
-		if(buysell.equals("buy")) money = money - amount;
-		else money = money + amount;
-		return  money;
+		return  returnVAlue;
 	}
 	
 	

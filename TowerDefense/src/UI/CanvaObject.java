@@ -23,10 +23,7 @@ public class CanvaObject extends Canvas {
 
 	};
 
-	/*
-	 * public void setSize(int i, int j) { // TODO Auto-generated method stub
-	 * super.setSize(i, j); }
-	 */
+
 
 	@Override
 	public void paint(Graphics graphics) {

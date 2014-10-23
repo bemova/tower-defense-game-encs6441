@@ -70,11 +70,12 @@ public class UserInterface extends JFrame {
 	JPanel entryP = new JPanel();
 
 	TowerParameters towerParam = new TowerParameters();
-	DesignToweerDialog towerDialogWindow = new DesignToweerDialog(this);
+//	DesignToweerDialog towerDialogWindow = new DesignToweerDialog(this);
 	MoneyManager moneyManager = new MoneyManager();
+	public enum EnumGameStatValue {DESIGN,PLAYGAME};
+	public EnumGameStatValue gameStatus;
 
-	// CreatEnemy enimyCreaterThread = null;
-	// DrawThread drawEnemyThread = null;
+
 	JPanel upper = new JPanel();
 
 	UserInterface() {
@@ -168,17 +169,17 @@ public class UserInterface extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					towerWindow.setVisible(true);
+					towerWindow.levelUp.setEnabled(true);
+					towerWindow.levelDown.setEnabled(true);
 
 					if (grid != null)
-						grid = new Map(grid);
+						grid = new Map((EmptyGrid)(((CompleteGrid)grid).simpleGrid));
 					canva.updateGrid(grid);
 					upper.add(acumulatedMoney);
 					upper.add(moneyView);
 					moneyView.setText("200");
-					// upper.add(designTowers);
-					// designTowers.setVisible(true);
+					gameStatus = EnumGameStatValue.PLAYGAME;
 
-					// canva.repaint();
 					pack();
 				} catch (java.lang.Exception ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -191,7 +192,7 @@ public class UserInterface extends JFrame {
 		designTowers.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					towerDialogWindow.setVisible(true);
+				//	towerDialogWindow.setVisible(true);
 
 					// pack();
 				} catch (java.lang.Exception ex) {
@@ -211,7 +212,7 @@ public class UserInterface extends JFrame {
 					yField.setEnabled(true);
 					// load.setEnabled(false);
 					// designMap.setVisible(false);
-					grid = new CompleteGrid(grid);
+					grid = new CompleteGrid((EmptyGrid)grid);
 					canva.updateGrid(grid);
 					pack();
 				} catch (java.lang.Exception ex) {
@@ -229,22 +230,24 @@ public class UserInterface extends JFrame {
 					JFileChooser openFile = new JFileChooser();
 					if (JFileChooser.APPROVE_OPTION == openFile
 							.showOpenDialog(null)) {
-						grid = new CompleteGrid(grid);
-						grid.gridAssignmentOperator(mapManager
+					//	grid = new CompleteGrid(grid);
+						grid = new CompleteGrid(mapManager.LoadMapFromFile(openFile.getSelectedFile().getAbsolutePath()));
+			
+					/*	grid.gridAssignmentOperator(mapManager // TODO
 								.LoadMapFromFile(openFile.getSelectedFile()
-										.getAbsolutePath()));
-						canva.updateGrid(grid);
-						width = grid.getWidth();
-						height = grid.getHeight();
-						lower.setSize(width * grid.getUnitSize(),
-								height * grid.getUnitSize());
-						canva.setSize(width * grid.getUnitSize(),
-								height * grid.getUnitSize());
+										.getAbsolutePath())); */
+						canva.updateGrid(grid); 
+						width = ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getWidth();
+						height = ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getHeight();
+						lower.setSize(width * ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getUnitSize(),
+								height * ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getUnitSize());
+						canva.setSize(width * ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getUnitSize(),
+								height *((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getUnitSize());
 						// designMap.setEnabled(false);
 
 						add(entryP, BorderLayout.CENTER);
 
-						String message = mapManager.validateMapContent(grid);
+						String message = mapManager.validateMapContent(((EmptyGrid)(((CompleteGrid) grid).simpleGrid)));
 						if (!message.equals(""))
 							JOptionPane.showMessageDialog(null, message);
 						else
@@ -271,7 +274,7 @@ public class UserInterface extends JFrame {
 						String fileName = saveFile.getSelectedFile()
 								.getAbsolutePath();
 
-						String errorMessage = mapManager.SaveMapIntoFle(grid,
+						String errorMessage = mapManager.SaveMapIntoFle((EmptyGrid)(((CompleteGrid)grid).simpleGrid),
 								fileName);
 
 						load.setEnabled(true);
@@ -382,16 +385,15 @@ public class UserInterface extends JFrame {
 						throw new java.lang.Exception(
 								"Error size max size: ....., min size: ....");
 
-					// canvas = new GameMap(height,width );
-					// pathAlgorithm = new FindingPathAlgorithm(height,width);
 
-					grid.setSize(width, height);
+							// (((CompleteGrid)grid).simpleGrid)
+					((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).setSize(width, height);
 					canva.updateGrid(grid);
 
-					lower.setSize(width * grid.getUnitSize(),
-							height * grid.getUnitSize());
-					canva.setSize(width * grid.getUnitSize(),
-							height * grid.getUnitSize());
+					lower.setSize(width * ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize(),
+							height * ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize());
+					canva.setSize(width * ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize(),
+							height * ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize());
 
 					add(entryP, BorderLayout.CENTER);
 					pack();
@@ -408,26 +410,39 @@ public class UserInterface extends JFrame {
 		canva.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if (designMap.isEnabled()) {
-					int i = e.getY() / grid.getUnitSize();
-					int j = e.getX() / grid.getUnitSize();
-					if ((i < grid.getHeight()) && (j < grid.getWidth())
-							&& (grid.content[i][j] != colorInInteger)) {
-						if (grid.content[i][j] == 5) {
-							Point point = canva.getLocation();
-							int x = point.x + j * grid.getUnitSize();
-							int y = point.y + i * grid.getUnitSize();
-							Point pointOnScreen = e.getLocationOnScreen();
+				if (designMap.isEnabled()) { 
+					int i = e.getY() / ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize();
+					
+					int j = e.getX() / ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize();
+					
+					if ((i < ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getHeight()) && (j < ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getWidth())
+							&& ((((EmptyGrid)(((CompleteGrid)grid).simpleGrid))).content[i][j] != colorInInteger)) {
+						
+						if ((((EmptyGrid)(((CompleteGrid)grid).simpleGrid))).content[i][j] == 5) {
+							Point point = canva.getLocationOnScreen();//getLocation();
+							int x = point.x + (j + 1) * (((EmptyGrid)(((CompleteGrid)grid).simpleGrid))).getUnitSize();
+							int y = point.y + (i + 1) * (((EmptyGrid)(((CompleteGrid)grid).simpleGrid))).getUnitSize();
+							Point pointOnScreen = new Point(x, y);//e.getLocationOnScreen();
 							// add(towerPropertyPanel);
 
 							towerWindow.frame.setLocation(pointOnScreen);
-							// towerWindow.frame.setLocation(100, 100);
-							towerWindow.setVisible(true);
+							
+							//towerWindow.setVisible(true);
 							towerWindow.frame.setVisible(true);
+							
 							String position = Integer.toString(i) + " "
 									+ Integer.toString(j);
 
 							towerParam = ((Map) grid).towers.get(position).parameters;
+							if(towerParam.towerCurrentLevel == 2){
+								towerWindow.levelUp.setEnabled(false);
+							towerWindow.levelDown.setEnabled(true);
+							}
+							else {									
+									towerWindow.levelDown.setEnabled(true);
+									towerWindow.levelUp.setEnabled(true);
+							}
+							
 							String view = "<html>\n"
 									+ "Tower characteristics:\n" + "<ul>\n"
 									+ "<li><font color=red>Distance: "
@@ -440,17 +455,15 @@ public class UserInterface extends JFrame {
 									+ towerParam.salePrice + "</font>\n"
 									+ "</ul>\n";
 
-							// ???????? String type =
-							// ((Map)grid).towers.get(position).draw(g);;
 
 							Point currentPosition = new Point(j, i);
 							towerWindow.updateCurrentPosition(currentPosition);
 							towerWindow.updateView(view);
 							canva.repaint();
-							// towerPropertyPanel.setLocation(x, y);
-							// pack();
+
 						} else {
-							grid.content[i][j] = colorInInteger;
+							if( !(gameStatus == EnumGameStatValue.PLAYGAME))
+								((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).content[i][j] = colorInInteger;
 						}
 
 						canva.repaint();
@@ -464,11 +477,13 @@ public class UserInterface extends JFrame {
 			public void mouseMoved(MouseEvent e) {
 				if (designMap.isEnabled()) {
 
-					int i = e.getY() / grid.getUnitSize();
-					int j = e.getX() / grid.getUnitSize();
-					if ((i < grid.getHeight()) && (j < grid.getWidth())
-							&& (grid.content[i][j] != colorInInteger)) {
-						grid.content[i][j] = colorInInteger;
+					//((EmptyGrid)(((Map) grid).simpleGrid))
+					
+					int i = e.getY() /((EmptyGrid) grid).getUnitSize();
+					int j = e.getX() / ((EmptyGrid) grid).getUnitSize();
+					if ((i < ((EmptyGrid) grid).getHeight()) && (j < ((EmptyGrid) grid).getWidth())
+							&& (((EmptyGrid) grid).content[i][j] != colorInInteger)) {
+						((EmptyGrid) grid).content[i][j] = colorInInteger;
 						canva.repaint();
 
 					}
@@ -483,11 +498,11 @@ public class UserInterface extends JFrame {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				if (designMap.isEnabled()) {
-					int i = e.getY() / grid.getUnitSize();
-					int j = e.getX() / grid.getUnitSize();
-					if ((i < grid.getHeight()) && (j < grid.getWidth())
-							&& (grid.content[i][j] != colorInInteger)) {
-						grid.content[i][j] = colorInInteger;
+					int i = e.getY() / ((EmptyGrid)((CompleteGrid)grid).simpleGrid).getUnitSize();
+					int j = e.getX() / ((EmptyGrid) ((CompleteGrid)grid).simpleGrid).getUnitSize();
+					if ((i < ((EmptyGrid) ((CompleteGrid)grid).simpleGrid).getHeight()) && (j < ((EmptyGrid) ((CompleteGrid)grid).simpleGrid).getWidth())
+							&& (((EmptyGrid) ((CompleteGrid)grid).simpleGrid).content[i][j] != colorInInteger)) {
+						((EmptyGrid) ((CompleteGrid)grid).simpleGrid).content[i][j] = colorInInteger;
 						canva.repaint();
 
 					}
@@ -495,10 +510,10 @@ public class UserInterface extends JFrame {
 			}
 		});
 
-		canva.setSize(grid.getHeight() * grid.getUnitSize(), grid.getWidth()
-				* grid.getUnitSize());
-		lower.setSize(grid.getHeight() * grid.getUnitSize(), grid.getWidth()
-				* grid.getUnitSize());
+		canva.setSize(((EmptyGrid) grid).getHeight() * ((EmptyGrid) grid).getUnitSize(), ((EmptyGrid) grid).getWidth()
+				* ((EmptyGrid) grid).getUnitSize());
+		lower.setSize(((EmptyGrid) grid).getHeight() * ((EmptyGrid) grid).getUnitSize(), ((EmptyGrid) grid).getWidth()
+				* ((EmptyGrid) grid).getUnitSize());
 		lower.add(canva);
 
 		add(upper, BorderLayout.NORTH);
@@ -508,10 +523,10 @@ public class UserInterface extends JFrame {
 
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				if (towerDialogWindow.isVisible()) {
+			/*	if (towerDialogWindow.isVisible()) {
 					towerDialogWindow.setVisible(false);
 					towerDialogWindow.dispose();
-				}
+				}*/
 			}
 		});
 
@@ -522,15 +537,15 @@ public class UserInterface extends JFrame {
 	}
 
 	void setMapSize(int width, int height) {
-		lower.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
-		canva.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
+		lower.setSize(width * ((EmptyGrid)grid).getUnitSize(), height * ((EmptyGrid)grid).getUnitSize());
+		canva.setSize(width * ((EmptyGrid)grid).getUnitSize(), height * ((EmptyGrid)grid).getUnitSize());
 		pack();
 		setLocationRelativeTo(null);
 	}
 
 	public boolean canPlaceTower(Point point) {
 		CanvasCoordinate coordinate = toCanvasCoordinates(point);
-		return (grid.getCellType(coordinate.x, coordinate.y) == 2);
+		return (((EmptyGrid)grid).getCellType(coordinate.x, coordinate.y) == 2);
 	}
 
 	public class CanvasCoordinate extends Point {
@@ -543,8 +558,8 @@ public class UserInterface extends JFrame {
 		Point canvasLocation = canva.getLocationOnScreen();
 		int relativeX = point.x - canvasLocation.x;
 		int relativeY = point.y - canvasLocation.y;
-		int i = relativeX / grid.getUnitSize();
-		int j = relativeY / grid.getUnitSize();
+		int i = relativeX / ((EmptyGrid)((Map)grid).simpleGrid).getUnitSize();
+		int j = relativeY / ((EmptyGrid)((Map)grid).simpleGrid).getUnitSize();
 		return new CanvasCoordinate(i, j);
 	}
 
@@ -553,7 +568,17 @@ public class UserInterface extends JFrame {
 	// 20 - freezing tower =>base level
 	// 30 - firing tower => 31 , 32, ...
 	public void placeTowerOnMap(Point point, int towerType) {
-		if (true) // canPlaceTower(point)
+		CanvasCoordinate localPoint = toCanvasCoordinates(point);
+		
+		if(localPoint.x < 0 || localPoint.y < 0 || 
+				localPoint.x > ((EmptyGrid)(((Map) grid).simpleGrid)).height || 
+				localPoint.y > ((EmptyGrid)(((Map) grid).simpleGrid)).width)
+		{
+			return;
+		}
+		
+		if(  ((EmptyGrid)(((Map) grid).simpleGrid)).content[localPoint.y][localPoint.x] == 2)
+				//if ( canPlaceTower(point))
 		{
 			TowerParameters newParams = new TowerParameters();
 			// newParams.towerType = ;
@@ -564,10 +589,8 @@ public class UserInterface extends JFrame {
 
 			Tower tower = towerFactory.creatTower(newParams);
 
-			// Tower tower = towerFactory.creatTower();
-
-			CanvasCoordinate localPoint = toCanvasCoordinates(point);
-			grid.setCell(localPoint.x, localPoint.y, 5); // @TODO: change the
+			
+			((EmptyGrid)(((Map) grid).simpleGrid)).setCell(localPoint.x, localPoint.y, 5); // @TODO: change the
 															// last parameter
 															// set proper tower
 															// value
@@ -617,12 +640,18 @@ public class UserInterface extends JFrame {
 		else
 			amount = ((Map) grid).towers.get(position).parameters.salePrice;
 		
-		this.moneyView.setText(Double.toString(this.moneyManager.update(buysell, amount))); 
+		Double value = (this.moneyManager.update(buysell, amount));
+		if(value < 0){
+			towerControler(point, "down");
+			JOptionPane.showMessageDialog(null, "Not enouph money to buy a tower!");
+		}else 	this.moneyView.setText(Double.toString(value)); 
+		
 		
 		int level = ((Map) grid).towers.get(position).parameters.towerCurrentLevel;
 		
-		if(buysell.equals("sell") && (level-1 == 0) || (buysell.equals("buy") && level == 2))
+		if(buysell.equals("sell") && (level == 0) || (buysell.equals("buy") && level == 2))
 			anableSellBuy = false;
+		
 			
 		return anableSellBuy;
 			

@@ -26,9 +26,11 @@ import core.applicationService.vikiMapServacs.MoneyManager;
 import core.domain.maps.CompleteGrid;
 import core.domain.maps.Grid;
 import core.domain.maps.Map;
+import core.domain.warriors.defenders.towers.vikiTowers.TowerDataCollection;
 
 public class TowerWindow extends JPanel {
 
+	TowerDataCollection towerParams = new TowerDataCollection();
 	JFrame frame = new JFrame("new frame");
 	final JLabel picLabel1;
 	final JLabel picLabel2;
@@ -99,10 +101,9 @@ public class TowerWindow extends JPanel {
 					levelDown.setEnabled(true);
 					userInterface.towerControler(currentPosition, "up");
 					boolean anaibleDisable = userInterface.moneyControler(currentPosition, "buy");
+				
 					if(!anaibleDisable)  levelUp.setEnabled(false);
 
-					// canva.repaint();
-					// pack();
 				} catch (java.lang.Exception ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage());
 				}
@@ -116,8 +117,11 @@ public class TowerWindow extends JPanel {
 				try {
 					levelUp.setEnabled(true);
 					boolean anaibleDisable =  userInterface.moneyControler(currentPosition, "sell");
-					if(!anaibleDisable)  levelDown.setEnabled(false);
+					
 					userInterface.towerControler(currentPosition, "down");
+					//if anaibleDisable is false it means the level of tower becomes below <0> and it is removed from the map
+					//the status of its window has to be changed into false
+					if(!anaibleDisable)  frame.setVisible(false);
 					
 					//userInterface.mapManager.
 
@@ -140,6 +144,15 @@ public class TowerWindow extends JPanel {
 		label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+
+				TowerParameters towerParam = towerParams.returnTowerParameters(towerType);
+				String view = "<html>\n" + "Tower characteristics:\n" + "<ul>\n"
+						+ "<li><font color=red>Distance: " + towerParam.range
+						+ "</font>\n" + "<li><font color=blue>Frequency:"
+						+ towerParam.firingSpeed + "</font>\n"
+						+ "<li><font color=green>Buy price: " +towerParam.buyPrice + "</font>\n"
+						+ "<li><font color=green>Sale price: " + towerParam.salePrice + "</font>\n" + "</ul>\n";
+				updateView(view);
 				setFrameLocation(label);
 			}
 
