@@ -11,7 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import core.domain.warriors.defenders.DefenderConstatns;
+import core.applicationService.warriorServices.TowerMarket;
+import core.contract.DefenderConstatns;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
@@ -134,7 +135,7 @@ public class TowerCostCalTest {
 					"FirePower", "FireRange", "FireSpeed");
 			List<String> ancientExpected = Arrays.asList("AncientTower",
 					"FirePower", "FireRange", "FireSpeed");
-			
+
 			// crate modern with three features
 			Tower modernCombo = new FirePower(modern);
 			modernCombo = new FireRange(modernCombo);
@@ -152,15 +153,38 @@ public class TowerCostCalTest {
 			for (Tower detail : ancientCombo.objectDetials()) {
 				ancientDetails.add(detail.getClass().getSimpleName());
 			}
-			
+
 			// assert part
 			assertEquals(modernExpected, modernDetails);
 			assertEquals(ancientExpected, ancientDetails);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	@Test
+	public void testSell(){
+		try {
+			double specialModern = DefenderConstatns.MODERN_TOWER
+					+ DefenderConstatns.FIRE_POWER
+					+ DefenderConstatns.FIRE_RANGE
+					+ DefenderConstatns.FIRE_SPEED;
+			
+			// crate modern with three features
+			Tower modernCombo = new FirePower(modern);
+			modernCombo = new FireRange(modernCombo);
+			modernCombo = new FireSpeed(modernCombo);
+			TowerMarket market = new TowerMarket();
+			
+			double sellResult = market.sellTower(modernCombo);
+			double expected = (specialModern * DefenderConstatns.Sell_Percentage)/100;
+			assertEquals(expected, sellResult, 0.001);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
-	
-	
+
+
 }

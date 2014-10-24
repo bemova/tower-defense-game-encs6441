@@ -3,7 +3,7 @@ package core.domain.warriors.defenders.towers.features;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.domain.warriors.defenders.DefenderConstatns;
+import core.contract.DefenderConstatns;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 

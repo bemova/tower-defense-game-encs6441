@@ -1,7 +1,7 @@
 package core.domain.warriors.defenders.towers.towerType;
 
 
-import core.domain.warriors.defenders.DefenderConstatns;
+import core.contract.DefenderConstatns;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourImp.MoveByMouse;
 import core.domain.warriors.defenders.towers.behaviourImp.ShootWithWeapon;

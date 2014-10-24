@@ -1,4 +1,4 @@
-package core.domain.warriors.defenders;
+package core.contract;
 
 public class DefenderConstatns {
 	// towers'cost
@@ -8,5 +8,8 @@ public class DefenderConstatns {
 	public static final long FIRE_POWER = 4;
 	public static final long FIRE_RANGE = 8;
 	public static final long FIRE_SPEED = 16;
+	
+	// tower sell price percentage
+	public static final long Sell_Percentage = 50;
 
 }
