@@ -2,6 +2,8 @@ package UI.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,9 +39,8 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	JButton scenery = new JButton(Constants.SCENERY);
 	JButton path = new JButton(Constants.PATH);
-	JButton ep = new JButton(Constants.Entrance);
-	JButton exp = new JButton(Constants.Exit);
-
+	JButton ep = new JButton(Constants.ENTRANCE);
+	JButton exp = new JButton(Constants.EXIT);
 
 	Color colorToDrawGreed = Color.green;
 	GridCellContentType cellContent = GridCellContentType.PATH;
@@ -48,39 +49,30 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	MapManager mapManager;
 	CanvaObject canva = new CanvaObject(grid);
-	JPanel lower = new JPanel();
+	JPanel mapContainer = new JPanel();
 	JPanel entryP = new JPanel();
 
-	JPanel upper = new JPanel();
+	JPanel toolBoxContainer = new JPanel();
 
-	private MapEditorPanel() {}
-	
+	private MapEditorPanel() {
+
+	}
+
 	public MapEditorPanel(int width, int height) {
+		setLayout(new BorderLayout());
 		this.width = width;
 		this.height = height;
-
-		scenery.setBackground(Color.green);
-		path.setBackground(Color.gray);
-		ep.setBackground(Color.red);
-		exp.setBackground(Color.blue);
-		upper.add(scenery);
-		upper.add(path);
-		upper.add(exp);
-		upper.add(ep);
-
-		// make part of interface invisible to a user
-
-		scenery.setEnabled(true);
-
-		path.setEnabled(true);
-		exp.setEnabled(true);
-		ep.setEnabled(true);
-
-
-		scenery.setVisible(true);
-		path.setVisible(true);
-		exp.setVisible(true);
-		ep.setVisible(true);
+		
+		scenery.setBackground(Constants.SCENERY_COLOR);
+		path.setBackground(Constants.PATH_COLOR);
+		ep.setBackground(Constants.ENTRANCE_COLOR);
+		exp.setBackground(Constants.EXIT_COLOR);
+		toolBoxContainer.setSize(10, 500);
+		toolBoxContainer.setLayout(new FlowLayout());
+		toolBoxContainer.add(scenery);
+		toolBoxContainer.add(path);
+		toolBoxContainer.add(exp);
+		toolBoxContainer.add(ep);
 
 		mapManager = new MapManager();
 
@@ -91,24 +83,27 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		canva.addMouseListener(this);
 		canva.addMouseMotionListener(this);
 
-		canva.setSize(grid.getHeight() * grid.getUnitSize(), grid.getWidth()
-				* grid.getUnitSize());
-		lower.setSize(grid.getHeight() * grid.getUnitSize(), grid.getWidth()
-				* grid.getUnitSize());
-		lower.add(canva);
+		int mapPixelWidth = grid.getWidth() * grid.getUnitSize();
+		int mapPixelHeight = grid.getHeight() * grid.getUnitSize();
+		canva.setSize(mapPixelWidth, mapPixelHeight);
+		mapContainer.setPreferredSize(new Dimension(mapPixelWidth, mapPixelHeight));
+		mapContainer.add(canva);
 
-		add(upper, BorderLayout.SOUTH);
-		add(lower, BorderLayout.NORTH);
-
+		add(new JPanel() ,BorderLayout.NORTH);
+		add(toolBoxContainer, BorderLayout.EAST);
+		add(mapContainer, BorderLayout.CENTER);
+		add(new JPanel() ,BorderLayout.WEST);
+		add(new JPanel() ,BorderLayout.SOUTH);
 		setVisible(true);
 
 	}
 
-	void setMapSize(int width, int height) {
-		lower.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
-		canva.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
-
-	}
+	// void setMapSize(int width, int height) {
+	// mapContainer.setSize(width * grid.getUnitSize(), height *
+	// grid.getUnitSize());
+	// canva.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
+	//
+	// }
 
 	public class CanvasCoordinate extends Point {
 		public CanvasCoordinate(int x, int y) {
@@ -127,17 +122,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	public void design(int width, int height) {
 		try {
-
-			// path.setVisible(true);
-			scenery.setVisible(true);
-			exp.setVisible(true);
-			ep.setVisible(true);
-
-			// path.setEnabled(true);
-			scenery.setEnabled(true);
-			exp.setEnabled(true);
-			ep.setEnabled(true);
-
 			if (width > 60 || width < 5 || height > 60 || height < 5)
 				throw new java.lang.Exception(
 						"Error size max size: ....., min size: ....");
@@ -146,7 +130,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 			// grid.setAllCells()
 			canva.updateGrid(grid);
 
-			lower.setSize(width * grid.getUnitSize(),
+			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 			canva.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
@@ -172,22 +156,23 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	@Override
 	public void mouseDragged(MouseEvent event) {
 		draw(event.getX(), event.getY());
-		
 
 	}
-	private void draw(int x, int y){
-			int i = y / grid.getUnitSize();
-			int j = x / grid.getUnitSize();
-			if ((i < grid.getHeight()) && (j < grid.getWidth())
-					&& (grid.getCell(i, j) != cellContent)) {
-				grid.setCell(i, j, cellContent);
-				canva.repaint();
 
-			}
+	private void draw(int x, int y) {
+		int i = y / grid.getUnitSize();
+		int j = x / grid.getUnitSize();
+		if ((i < grid.getHeight()) && (j < grid.getWidth())
+				&& (grid.getCell(i, j) != cellContent)) {
+			grid.setCell(i, j, cellContent);
+			canva.repaint();
+
+		}
 	}
+
 	@Override
 	public void mouseMoved(MouseEvent event) {
-		
+
 	}
 
 	@Override
@@ -233,10 +218,10 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		case Constants.SCENERY:
 			scenery();
 			break;
-		case Constants.Entrance:
+		case Constants.ENTRANCE:
 			entrance();
 			break;
-		case Constants.Exit:
+		case Constants.EXIT:
 			exit();
 			break;
 		case Constants.DRAW:
@@ -263,17 +248,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	protected void setMapSize() {
 		try {
-
-			path.setVisible(true);
-			scenery.setVisible(true);
-			exp.setVisible(true);
-			ep.setVisible(true);
-
-			path.setEnabled(true);
-			scenery.setEnabled(true);
-			exp.setEnabled(true);
-			ep.setEnabled(true);
-
 			if (width > 60 || width < 5 || height > 60 || height < 5)
 				throw new java.lang.Exception(
 						"Error size max size: ....., min size: ....");
@@ -281,7 +255,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 			grid.setSize(width, height);
 			canva.updateGrid(grid);
 
-			lower.setSize(width * grid.getUnitSize(),
+			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 			canva.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
@@ -372,7 +346,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 				canva.updateGrid(grid);
 				width = grid.getWidth();
 				height = grid.getHeight();
-				lower.setSize(width * grid.getUnitSize(),
+				mapContainer.setSize(width * grid.getUnitSize(),
 						height * grid.getUnitSize());
 				canva.setSize(width * grid.getUnitSize(),
 						height * grid.getUnitSize());
@@ -401,7 +375,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	}
 
 	public static void main(String[] args) {
-		new MapEditorPanel(10,10);
+		new MapEditorPanel(10, 10);
 	}
 
 }

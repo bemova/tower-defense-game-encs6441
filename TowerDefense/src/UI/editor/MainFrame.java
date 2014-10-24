@@ -56,7 +56,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private void setUpMenuBar() {
 		menuBar = new JMenuBar();
 
-		mapMenu = new JMenu("Map");
+		mapMenu = new JMenu(Constants.MAP_MENU);
 
 		newMenuItem = new JMenuItem(Constants.DESIGN_MAP);
 		openMenuItem = new JMenuItem(Constants.LOAD_MAP);
