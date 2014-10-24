@@ -17,7 +17,7 @@ public class StandardAlgorithms {
 	String source = "";
 	String destination = "";
 
-	HashMap<String, GraphNode> GraphMap = new HashMap<String, GraphNode>(); // contains
+	HashMap<String, GraphNode> graphMap = new HashMap<String, GraphNode>(); // contains
 																			// the
 																			// map
 																			// structure
@@ -26,7 +26,7 @@ public class StandardAlgorithms {
 
 	public StandardAlgorithms() {
 		map = new int[sizeX][sizeY];
-	}; // default contructor
+	}; // default constructor
 
 	public StandardAlgorithms(int width, int height, int[][] map) {
 		sizeX = height;
@@ -79,6 +79,7 @@ public class StandardAlgorithms {
 						message = "Invalid map: Invalid Exit point";
 						break;
 					} else {
+						numberOfExitPoints++;
 						destination = Integer.toString(i) + " "
 								+ Integer.toString(j);
 
@@ -87,16 +88,16 @@ public class StandardAlgorithms {
 
 				String curentNode = Integer.toString(i) + " "
 						+ Integer.toString(j);
-				if (GraphMap.get(curentNode) == null)
-					GraphMap.put(curentNode, new GraphNode(curentNode, i, j));
+				if (graphMap.get(curentNode) == null)
+					graphMap.put(curentNode, new GraphNode(curentNode, i, j));
 
 				GraphNode universalGrafNode;
 				if (i - 1 > 0) {
 					if ((map[i][j] == 1 || map[i][j] == 3 || map[i][j] == 4)
 							&& (map[i - 1][j] == 1 || map[i - 1][j] == 3 || map[i - 1][j] == 4)) {
-						if ((universalGrafNode = GraphMap.get(Integer
+						if ((universalGrafNode = graphMap.get(Integer
 								.toString(i - 1) + " " + Integer.toString(j))) != null) {
-							GraphMap.get(curentNode).neighbors
+							graphMap.get(curentNode).neighbors
 									.add(universalGrafNode);
 
 						} else {
@@ -104,9 +105,9 @@ public class StandardAlgorithms {
 							universalGrafNode = new GraphNode(
 									Integer.toString(i - 1) + " "
 											+ Integer.toString(j), i - 1, j);
-							GraphMap.put(universalGrafNode.name,
+							graphMap.put(universalGrafNode.name,
 									universalGrafNode);
-							GraphMap.get(curentNode).neighbors
+							graphMap.get(curentNode).neighbors
 									.add(universalGrafNode);
 						}
 					}
@@ -115,17 +116,17 @@ public class StandardAlgorithms {
 				if (j - 1 > 0) {
 					if ((map[i][j] == 1 || map[i][j] == 3 || map[i][j] == 4)
 							&& (map[i][j - 1] == 1 || map[i][j - 1] == 3 || map[i][j - 1] == 4)) {
-						if ((universalGrafNode = GraphMap.get(Integer
+						if ((universalGrafNode = graphMap.get(Integer
 								.toString(i) + " " + Integer.toString(j - 1))) != null) {
-							GraphMap.get(curentNode).neighbors
+							graphMap.get(curentNode).neighbors
 									.add(universalGrafNode);
 						} else {
 							universalGrafNode = new GraphNode(
 									Integer.toString(i) + " "
 											+ Integer.toString(j - 1), i, j - 1);
-							GraphMap.put(universalGrafNode.name,
+							graphMap.put(universalGrafNode.name,
 									universalGrafNode);
-							GraphMap.get(curentNode).neighbors
+							graphMap.get(curentNode).neighbors
 									.add(universalGrafNode);
 						}
 
@@ -135,9 +136,9 @@ public class StandardAlgorithms {
 				if (i + 1 < sizeX) {
 					if ((map[i][j] == 1 || map[i][j] == 3 || map[i][j] == 4)
 							&& (map[i + 1][j] == 1 || map[i + 1][j] == 3 || map[i + 1][j] == 4)) {
-						if ((universalGrafNode = GraphMap.get(Integer
+						if ((universalGrafNode = graphMap.get(Integer
 								.toString(i + 1) + " " + Integer.toString(j))) != null) {
-							GraphMap.get(curentNode).neighbors
+							graphMap.get(curentNode).neighbors
 									.add(universalGrafNode);
 
 						} else {
@@ -145,9 +146,9 @@ public class StandardAlgorithms {
 							universalGrafNode = new GraphNode(
 									Integer.toString(i + 1) + " "
 											+ Integer.toString(j), i + 1, j);
-							GraphMap.put(universalGrafNode.name,
+							graphMap.put(universalGrafNode.name,
 									universalGrafNode);
-							GraphMap.get(curentNode).neighbors
+							graphMap.get(curentNode).neighbors
 									.add(universalGrafNode);
 						}
 					}
@@ -158,9 +159,9 @@ public class StandardAlgorithms {
 					if ((map[i][j] == 1 || map[i][j] == 3 || map[i][j] == 4)
 							&& (map[i][j + 1] == 1 || map[i][j + 1] == 3 || map[i][j + 1] == 4)) {
 
-						if ((universalGrafNode = GraphMap.get(Integer
+						if ((universalGrafNode = graphMap.get(Integer
 								.toString(i) + " " + Integer.toString(j + 1))) != null) {
-							GraphMap.get(curentNode).neighbors
+							graphMap.get(curentNode).neighbors
 									.add(universalGrafNode);
 
 						} else {
@@ -168,9 +169,9 @@ public class StandardAlgorithms {
 							universalGrafNode = new GraphNode(
 									Integer.toString(i) + " "
 											+ Integer.toString(j + 1), i, j + 1);
-							GraphMap.put(universalGrafNode.name,
+							graphMap.put(universalGrafNode.name,
 									universalGrafNode);
-							GraphMap.get(curentNode).neighbors
+							graphMap.get(curentNode).neighbors
 									.add(universalGrafNode);
 						}
 
@@ -179,10 +180,7 @@ public class StandardAlgorithms {
 
 			}
 			
-//			if( numberOfEntryPoints == 0) message = "Invalis Map: Wrong number of entry points";
-//			else if( numberOfExitPoints == 0) message = "Invalis Map: Wrong number of exit points";
 
-			
 			
 		}
 
@@ -197,19 +195,29 @@ public class StandardAlgorithms {
 		int numberofEmptyCells = 0;
 		int numberOfTowers = 0;
 
-		for (int i = 0; i < sizeX; i++)
+		for (int i = 0; i < sizeX; i++){
+			if(!message.equals(""))
+				break;
 			for (int j = 0; j < sizeY; j++) {
 				if (map[i][j] == 0)
 					numberofEmptyCells++;
-				else if (map[i][j] == 3) {
+				else if (map[i][j] == 3) {// validates entry points
 					numberOfEntry++;
+					if(numberOfEntry >1){
+						message = "Invalis Map: Wrong number of entry points";
+						break;
+					}
 					if (j != 0 && numberOfEntry == 1) {
 						message = "Invalid Map: inapropriate erntry point";
 						break;
 					}
 
-				} else if (map[i][j] == 4) {
+				} else if (map[i][j] == 4) { // validates exit points
 					numberOfExit++;
+					if(numberOfExit > 1){
+						message = "Invalis Map: Wrong number of exit points";
+						break;
+					}
 					if ((j != sizeY - 1) && (numberOfExit == 1)) {
 						message = "Invalid Map: inapropriate exit point";
 						break;
@@ -218,19 +226,21 @@ public class StandardAlgorithms {
 					numberOfTowers++;
 
 			}
+	}
+		
+		if(message.equals("")){
 		if (numberofEmptyCells > 0)
 			message = "Invalid Map: not all the cells are covered";
-		else if (numberOfEntry > 1 || numberOfEntry == 0)
-			message = "Invalis Map: Wrong number of entry points";
-		else if (numberOfExit > 1 || numberOfExit == 0)
-			message = "Invalis Map: Wrong number of exit points";
-		// else if(numberOfTowers == 0) message =
-		// "invalid Map: not acceptable number of Towers";
-
+		else if (numberOfEntry == 0)
+			message = "Invalis Map: No entry points";
+		else if ( numberOfExit == 0)
+			message = "Invalis Map: No exit points";
+	}
+		
 		return message;
 	}
 
-	boolean shortestPathfinding() {
+	public Stack<GraphNode> shortestPathfinding() {
 
 		Stack<GraphNode> nodeStack = new Stack<GraphNode>();
 		Stack<GraphNode> nodePath = new Stack<GraphNode>();
@@ -241,8 +251,8 @@ public class StandardAlgorithms {
 		String red = "red";// processing is done
 
 		// nodePath.push(source);
-		nodeStack.push(GraphMap.get(source));
-		GraphMap.get(source).stateColor = yellow;
+		nodeStack.push(graphMap.get(source));
+		graphMap.get(source).stateColor = yellow;
 
 		while (!nodeStack.empty()) { // pass over the graph nodes until the
 										// destination is find or there are no
@@ -307,8 +317,12 @@ public class StandardAlgorithms {
 
 			}
 		} // close while
-
-		return pathIsFound;
+		
+		Stack<GraphNode> returnalue;
+		if(!pathIsFound) returnalue = null;
+		else returnalue = nodePath;
+		
+		return returnalue;
 
 	}
 
@@ -316,7 +330,7 @@ public class StandardAlgorithms {
 		String ErrorMessage = "";
 		if ((ErrorMessage = validateEntryExit()).isEmpty()) {
 			if ((ErrorMessage = fillGraph()).isEmpty())
-				if (!shortestPathfinding())
+				if (shortestPathfinding() == null)
 					ErrorMessage = "Invalid Map: Path does not found between Entry and Exit points";
 		}
 

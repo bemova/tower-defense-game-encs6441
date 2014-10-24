@@ -5,13 +5,18 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class GraphNode {
-	GraphNode(){stateColor = "green";};
-	GraphNode(String name, int cordinateX, int cordinateY){
+	public GraphNode(){stateColor = "green";};
+	public GraphNode(String name, int cordinateX, int cordinateY){
 		this.name = name;
 		stateColor = "green";
 		this.cordinateX = cordinateX;
 		this.cordinateY = cordinateY;
 		
+	};
+	
+	public String getName(){
+		
+		return name;
 	};
 	ArrayList<GraphNode> neighbors = new ArrayList<GraphNode>();
 	

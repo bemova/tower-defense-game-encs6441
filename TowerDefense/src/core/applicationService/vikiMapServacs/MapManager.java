@@ -96,7 +96,7 @@ public String SaveMapIntoFle(Grid grid, String FileName){
 	
 	try {
 		
-	//	errorMessage = validateEntryExit(grid);
+
 		errorMessage = validateMapContent(grid);
 		
 		PrintWriter out = new PrintWriter(FileName );
