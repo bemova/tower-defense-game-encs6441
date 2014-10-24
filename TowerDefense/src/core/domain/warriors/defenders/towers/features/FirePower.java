@@ -42,6 +42,5 @@ public class FirePower extends TowerFeatureDecorator {
 		}
 		return details;
 	}
-
 	
 }

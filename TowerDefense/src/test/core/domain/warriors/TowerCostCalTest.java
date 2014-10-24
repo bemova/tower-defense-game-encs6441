@@ -1,6 +1,10 @@
 package test.core.domain.warriors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -104,22 +108,57 @@ public class TowerCostCalTest {
 					+ DefenderConstatns.FIRE_RANGE
 					+ DefenderConstatns.FIRE_SPEED;
 			// crate modern with three features
-			Tower modernCombo= new FirePower(modern);
+			Tower modernCombo = new FirePower(modern);
 			modernCombo = new FireRange(modernCombo);
 			modernCombo = new FireSpeed(modernCombo);
-			
+
 			// crate ancient with three features
-			Tower ancientCombo= new FirePower(ancient);
+			Tower ancientCombo = new FirePower(ancient);
 			ancientCombo = new FireRange(ancientCombo);
 			ancientCombo = new FireSpeed(ancientCombo);
-			
+
 			// assert part
 			assertEquals(specialModern, modernCombo.cost());
 			assertEquals(specialAncient, ancientCombo.cost());
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
+	}
+
+	@Test
+	public void testObjectDetails() {
+		try {
+			List<String> modernExpected = Arrays.asList("ModernTower",
+					"FirePower", "FireRange", "FireSpeed");
+			List<String> ancientExpected = Arrays.asList("AncientTower",
+					"FirePower", "FireRange", "FireSpeed");
+			
+			// crate modern with three features
+			Tower modernCombo = new FirePower(modern);
+			modernCombo = new FireRange(modernCombo);
+			modernCombo = new FireSpeed(modernCombo);
+			List<String> modernDetails = new ArrayList<String>();
+			for (Tower detail : modernCombo.objectDetials()) {
+				modernDetails.add(detail.getClass().getSimpleName());
+			}
+
+			// crate ancient with three features
+			Tower ancientCombo = new FirePower(ancient);
+			ancientCombo = new FireRange(ancientCombo);
+			ancientCombo = new FireSpeed(ancientCombo);
+			List<String> ancientDetails = new ArrayList<String>();
+			for (Tower detail : ancientCombo.objectDetials()) {
+				ancientDetails.add(detail.getClass().getSimpleName());
+			}
+			
+			// assert part
+			assertEquals(modernExpected, modernDetails);
+			assertEquals(ancientExpected, ancientDetails);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }
