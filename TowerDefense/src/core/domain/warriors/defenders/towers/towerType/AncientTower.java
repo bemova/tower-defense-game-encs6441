@@ -6,7 +6,6 @@ import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourImp.NoMove;
 import core.domain.warriors.defenders.towers.behaviourImp.NoSound;
 import core.domain.warriors.defenders.towers.behaviourImp.ShootTrap;
-import core.domain.warriors.defenders.towers.vikiTowers.TowerParameters;
 
 public class AncientTower extends Tower {
 	public AncientTower() {
@@ -27,6 +26,7 @@ public class AncientTower extends Tower {
 		return DefenderConstatns.ANCIENT_TOWER;
 	}
 
+	
 }
 
 
