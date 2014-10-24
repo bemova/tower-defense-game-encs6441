@@ -1,0 +1,200 @@
+package UI.editor;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.InputStream;
+
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+
+import UI.Constants;
+
+public class MainFrame extends JFrame implements ActionListener {
+
+	private JMenuBar menuBar;
+	private JMenu mapMenu;
+	private JMenuItem newMenuItem;
+	private JMenuItem openMenuItem;
+	private JMenuItem saveMenuItem;
+	private MapEditorPanel mapPanel;
+	private int width;
+	private int height;
+	private JTextField widthTextField;
+	private JTextField heightTextField;
+	JDialog mapSizeDialog;
+
+	public MainFrame() {
+		setup();
+		setUpMenuBar();
+		setVisible(true);
+	}
+
+	private void setup() {
+		setTitle("Tower Defence - Map Editor");
+		refresh();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		
+		setLayout(new BorderLayout());		
+	}
+
+	private void refresh() {
+		setSize(700, 500);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
+	}
+
+	private void setUpMenuBar() {
+		menuBar = new JMenuBar();
+
+		mapMenu = new JMenu("Map");
+
+		newMenuItem = new JMenuItem(Constants.DESIGN_MAP);
+		openMenuItem = new JMenuItem(Constants.LOAD_MAP);
+		saveMenuItem = new JMenuItem(Constants.SAVE_MAP);
+
+		newMenuItem.addActionListener(this);
+		openMenuItem.addActionListener(this);
+		saveMenuItem.addActionListener(this);
+
+		mapMenu.add(newMenuItem);
+		mapMenu.add(openMenuItem);
+		mapMenu.add(saveMenuItem);
+
+		menuBar.add(mapMenu);
+
+		setJMenuBar(menuBar);
+		
+	}
+
+	public static void main(String[] args) {
+		new MainFrame();
+	}
+
+
+	public void actionPerformed(ActionEvent event) {
+		String menuItem = event.getActionCommand();
+
+		switch (menuItem) {
+		case Constants.DESIGN_MAP:
+			getNewMapSize();
+			break;
+		case Constants.LOAD_MAP:
+			mapPanel.loadMap();
+			break;
+		case Constants.SAVE_MAP:
+			mapPanel.saveMap();
+			break;
+		case Constants.OK:
+			setMapSize();
+			startMapDesign();
+			closeMapSizeDialog();
+			break;
+		case Constants.CANCEL:
+			closeMapSizeDialog();
+			break;
+		}
+
+	}
+
+	private void closeMapSizeDialog() {
+		mapSizeDialog.dispose();
+		
+	}
+
+	private void setMapSize() {
+		width = (new Integer(widthTextField.getText())).intValue();
+		height = (new Integer(heightTextField.getText())).intValue();
+		
+	}
+
+	private void startMapDesign() {
+		//first validate size
+		mapPanel = new MapEditorPanel(width, height);
+		mapPanel.designMap();
+		mapPanel.setMapSize();
+		add(mapPanel, BorderLayout.CENTER);
+		refresh();
+	}
+
+	private void getNewMapSize() {
+		mapSizeDialog = new JDialog(this, true); // parent, isModal
+		mapSizeDialog.setTitle(Constants.MAP_SIZE);
+		mapSizeDialog.setSize(200, 150);
+		mapSizeDialog.setLocationRelativeTo(this);
+
+		widthTextField = new JTextField("15", 1);
+		heightTextField = new JTextField("15", 1);
+
+		JLabel widthLable = new JLabel(Constants.WIDTH);
+		JLabel heightLable = new JLabel(Constants.HEIGHT);
+
+		JButton okButton = new JButton(Constants.OK);
+		JButton cancelButton = new JButton(Constants.CANCEL);
+
+		okButton.addActionListener(this);
+		cancelButton.addActionListener(this);
+
+		JPanel panel = new JPanel();
+		panel.setSize(100, 200);
+
+		// This section is to layout the form
+		GroupLayout layout = new GroupLayout(panel);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+
+		layout.setHorizontalGroup(layout
+				.createSequentialGroup()
+				.addGroup(
+						layout.createSequentialGroup().addGroup(
+								layout.createParallelGroup(
+										GroupLayout.Alignment.LEADING)
+										.addComponent(widthLable)
+										.addComponent(heightLable)
+										.addComponent(cancelButton)))
+				.addGroup(
+						layout.createSequentialGroup().addGroup(
+								layout.createParallelGroup(
+										GroupLayout.Alignment.LEADING)
+										.addComponent(widthTextField)
+										.addComponent(heightTextField)
+										.addComponent(okButton))));
+
+		layout.setVerticalGroup(layout
+				.createSequentialGroup()
+				.addGroup(
+						layout.createParallelGroup(
+								GroupLayout.Alignment.BASELINE)
+								.addComponent(widthLable)
+								.addComponent(widthTextField))
+				.addGroup(
+						layout.createParallelGroup(
+								GroupLayout.Alignment.BASELINE)
+								.addComponent(heightLable)
+								.addComponent(heightTextField))
+				.addGroup(
+						layout.createParallelGroup(
+								GroupLayout.Alignment.BASELINE)
+								.addComponent(cancelButton)
+								.addComponent(okButton)));
+		panel.setLayout(layout);
+		// Form layout done!
+
+		mapSizeDialog.add(panel);
+		mapSizeDialog.setVisible(true);
+
+	}
+}

@@ -2,6 +2,7 @@ package core.domain.maps;
 
 import java.awt.Graphics;
 
+@Deprecated
 public class EmptyGrid extends Grid {
 
 	public EmptyGrid(int newheiht, int newwidth){
@@ -10,7 +11,23 @@ public class EmptyGrid extends Grid {
 		width = newwidth;
 	}
 
+	public EmptyGrid(int newheiht, int newwidth, GridCellContentType cellType){
+		super();
+		height = newheiht;
+		width = newwidth;
+		initializeCellContents(cellType);
+	}
+
 	
+	private void initializeCellContents(GridCellContentType cellType) {
+		for(int i=0; i<width; i++){
+			for(int j=0; j<height; j++) {
+				setCell(i, j, cellType);
+			}
+		}
+		
+	}
+
 	@Override
 public	void draw(Graphics g) {
 		

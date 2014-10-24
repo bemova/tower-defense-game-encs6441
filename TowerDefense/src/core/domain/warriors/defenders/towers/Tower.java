@@ -46,7 +46,7 @@ public abstract class Tower extends Defender {
 	}
 
 	public abstract void display();
-	public abstract double cost();
+	public abstract long cost();
 //	public abstract TowerParameters returnParameters(); // addd by Vika, needs to be replaced later 
 
 }

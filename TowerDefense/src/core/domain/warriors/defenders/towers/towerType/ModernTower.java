@@ -1,6 +1,7 @@
 package core.domain.warriors.defenders.towers.towerType;
 
 
+import core.domain.warriors.defenders.DefenderConstatns;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourImp.MoveByMouse;
 import core.domain.warriors.defenders.towers.behaviourImp.ShootWithWeapon;
@@ -22,9 +23,9 @@ public class ModernTower extends Tower {
 
 	}
 	@Override
-	public double cost() {
+	public long cost() {
 		// TODO Auto-generated method stub
-		return 4;
+		return DefenderConstatns.MODERN_TOWER;
 	}
 
 }

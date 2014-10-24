@@ -1,5 +1,6 @@
 package core.domain.warriors.defenders.towers.features;
 
+import core.domain.warriors.defenders.DefenderConstatns;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 
@@ -23,9 +24,9 @@ public class FireRange extends TowerFeatureDecorator {
 	}
 
 	@Override
-	public double cost() {
+	public long cost() {
 		// TODO Auto-generated method stub
-		return 10 + this.tower.cost();
+		return DefenderConstatns.FIRE_RANGE + this.tower.cost();
 	}
 
 }

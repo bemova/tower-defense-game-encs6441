@@ -28,6 +28,7 @@ import UI.TowerParameters;
 import core.domain.maps.CompleteGrid;
 import core.domain.maps.EmptyGrid;
 import core.domain.maps.Grid;
+import core.domain.maps.GridCellContentType;
 import core.domain.maps.Map;
 import core.domain.warriors.defenders.towers.*;
 import core.domain.warriors.defenders.towers.vikiTowers.TowerDataCollection;
@@ -574,10 +575,10 @@ public class UserInterface extends JFrame {
 			Tower tower = towerFactory.creatTower();
 
 			CanvasCoordinate localPoint = toCanvasCoordinates(point);
-			grid.setCell(localPoint.x, localPoint.y, 5); // @TODO: change the
+			grid.setCell(localPoint.x, localPoint.y, GridCellContentType.PATH); // @TODO: change the
 															// last parameter
 															// set proper tower
-															// value
+															// value instead of path
 			String position = Integer.toString(localPoint.y) + " "
 					+ Integer.toString(localPoint.x);
 

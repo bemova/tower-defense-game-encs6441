@@ -26,5 +26,9 @@ public interface IStartEndChecker {
 	 * @return true, if is in edge
 	 */
 	public boolean isInEdge(int width, int height, Position position);
+	
+	public boolean hasStart(int[][] matrix);
+	public boolean hasEnd(int[][] matrix);
+	public boolean isCorrectSize(int height, int width);
 
 }

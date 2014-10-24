@@ -10,7 +10,7 @@ public abstract class Grid {
 	int height = 15;
 	int width = 15;
 	int sizeOfUnit = 30;
-	public int [][] content = new int[height][width];
+	GridCellContentType [][] content = new GridCellContentType [height][width];
 	
 	Grid(){};
 	 
@@ -35,7 +35,7 @@ public abstract class Grid {
 		
 		height = newheight;
 		width = newWidth;
-		content = new int[height][width];
+		content = new GridCellContentType [height][width];
 	};
 	
 	
@@ -50,17 +50,47 @@ public abstract class Grid {
 		
 	} 
 	
+	@Deprecated
 	public int getCellType(int i, int j)
 	{
 		if(i >= 0 && i < height && j >= 0 && j < width)
-			return content[i][j];
+			return content[i][j].getValue();
 		
 		return -1;
 	}
 	
-	public void setCell(int cordinatX, int cordinatY, int type)
+//	@Deprecated
+//	public void setCell(int cordinatX, int cordinatY, int type)
+//	{
+//		if(cordinatY >= 0 && cordinatY < height && cordinatX >= 0 && cordinatX < width){
+//			
+//			content[cordinatY][cordinatX] = type;
+//		}
+//	}
+	
+	public void setCell(int cordinatX, int cordinatY, GridCellContentType type)
 	{
 		if(cordinatY >= 0 && cordinatY < height && cordinatX >= 0 && cordinatX < width)
+			
 			content[cordinatY][cordinatX] = type;
 	}
+	
+	public GridCellContentType getCell(int cordinatX, int cordinatY)
+	{
+		if(cordinatY >= 0 && cordinatY < height && cordinatX >= 0 && cordinatX < width){
+			return content[cordinatY][cordinatX];
+		}
+		return null;
+	}
+	
+	@Deprecated
+	public int[][] getIntContent(){
+		int[][] c = new int[width][height];
+		for(int i = 0; i< height; i++)
+			for(int j = 0; j < width; j++)
+				c[i][j] = content[i][j].getValue();
+		
+		return c;
+	}
+	
 }

@@ -97,7 +97,7 @@ public String SaveMapIntoFle(Grid grid, String FileName){
 	try {
 		
 	//	errorMessage = validateEntryExit(grid);
-		errorMessage = validateMapContent(grid);
+//		errorMessage = validateMapContent(grid);
 		
 		PrintWriter out = new PrintWriter(FileName );
 
@@ -105,9 +105,9 @@ public String SaveMapIntoFle(Grid grid, String FileName){
 			String line = "";
 			for (int j = 0; j < widht; j++) {
 				if(j < widht -1)
-					line = line + grid.content[i][j] + " ";
+					line = line + grid.getCell(i,j).getValue() + " ";
 				else 
-					line = line + grid.content[i][j];	
+					line = line + grid.getCell(i,j).getValue();	
 
 			}
 			out.println(line);
@@ -125,7 +125,7 @@ public String SaveMapIntoFle(Grid grid, String FileName){
 }
 
 public String validateEntryExit(Grid grid){
-	String  message = "";
+/*	String  message = "";
 	int numberOfEntry = 0;
 	int numberOfExit = 0;
 	int numberofEmptyCells = 0;
@@ -144,7 +144,8 @@ public String validateEntryExit(Grid grid){
 	//else if(numberOfTowers == 0) message = "invalid Map: not acceptable number of Towers";
 	
 	
-	return message;
+	return message;*/
+	return "";
 }
 
 

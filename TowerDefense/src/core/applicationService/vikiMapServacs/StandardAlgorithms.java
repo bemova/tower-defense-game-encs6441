@@ -38,7 +38,8 @@ public class StandardAlgorithms {
 		sizeX = grid.getHeight();
 		sizeY = grid.getWidth();
 		this.map = new int[sizeX][sizeY];
-		this.map = grid.content;
+//		this.map = grid.content;
+		this.map = grid.getIntContent();
 	};
 
 	

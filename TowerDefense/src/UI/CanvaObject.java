@@ -18,7 +18,7 @@ public class CanvaObject extends Canvas {
 
 	}
 
-	void updateGrid(Grid newGrid) {
+	public void updateGrid(Grid newGrid) {
 		grid = newGrid;
 
 	};

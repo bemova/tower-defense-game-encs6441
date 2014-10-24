@@ -1,6 +1,7 @@
 package core.domain.warriors.defenders.towers.towerType;
 
 
+import core.domain.warriors.defenders.DefenderConstatns;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourImp.NoMove;
 import core.domain.warriors.defenders.towers.behaviourImp.NoSound;
@@ -21,13 +22,11 @@ public class AncientTower extends Tower {
 
 	}
 	@Override
-	public double cost() {
+	public long cost() {
 		// TODO Auto-generated method stub
-		return 2;
+		return DefenderConstatns.ANCIENT_TOWER;
 	}
-	
 
-		
-	}
+}
 
 
