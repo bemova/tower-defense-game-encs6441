@@ -18,7 +18,7 @@ public class Constants {
 	public static final String HEIGHT = "Height: ";
 	public static final String CANCEL = "Cancel";
 	public static final String OK = "OK";
-//	static final String  = ;
+	public static final String EDITOR_TITLE = "Tower Defence - Map Editor";
 //	static final String  = ;
 
 }

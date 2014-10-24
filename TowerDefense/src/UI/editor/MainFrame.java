@@ -1,12 +1,8 @@
 package UI.editor;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.InputStream;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -18,10 +14,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 
 import UI.Constants;
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
 
 	private JMenuBar menuBar;
@@ -43,7 +39,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	private void setup() {
-		setTitle("Tower Defence - Map Editor");
+		setTitle(Constants.EDITOR_TITLE);
 		refresh();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -79,11 +75,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		setJMenuBar(menuBar);
 		
 	}
-
-	public static void main(String[] args) {
-		new MainFrame();
-	}
-
 
 	public void actionPerformed(ActionEvent event) {
 		String menuItem = event.getActionCommand();
