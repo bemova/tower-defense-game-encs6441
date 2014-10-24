@@ -1,5 +1,8 @@
 package core.domain.warriors.defenders.towers.features;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import core.domain.warriors.defenders.DefenderConstatns;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
@@ -28,5 +31,17 @@ public class FirePower extends TowerFeatureDecorator {
 	public long cost() {
 		return DefenderConstatns.FIRE_POWER + this.tower.cost();
 	}
+	@Override
+	public List<Tower> objectDetials() {
+		List<Tower> details = new ArrayList<Tower>();
+		try {
+			details.addAll(tower.objectDetials());
+			details.add(this);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return details;
+	}
 
+	
 }
