@@ -3,16 +3,22 @@ package core.applicationService.vikiMapServacs;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import core.domain.maps.EmptyGrid;
-import core.domain.maps.Grid;
+//import core.domain.maps.Grid;
+import core.domain.maps.Grid2;
+import core.domain.maps.GridCellContentType;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import core.applicationService.vikiMapServacs.StandardAlgorithms;
 
 
@@ -27,20 +33,20 @@ public class MapManager {
 	}
 	
 	
-public String validateMapContent(Grid grid){
+public String validateMapContent(Grid2 grid){
 	String returnVlue = "";
 
-	algorithms = new StandardAlgorithms(grid);
-	
-	return returnVlue = algorithms.mapManager();
+//	algorithms = new StandardAlgorithms(grid);
+	return "";
+//	return returnVlue = algorithms.mapManager();
 	
 };
 
-public Grid LoadMapFromFile(String fileName){
-	Grid grid = null;  
+public Grid2 LoadMapFromFile(String fileName){
+	Grid2 grid = null;  
 	int wdth_ = 0;
 	int height_ = 0;
-	int[][] pathInMatrix = new int[15][15];
+	GridCellContentType[][] pathInMatrix = new GridCellContentType[15][15];
 	
     BufferedReader br = null;
     ArrayList<String> containerForMap = new ArrayList<String>();
@@ -59,17 +65,35 @@ public Grid LoadMapFromFile(String fileName){
         String[] parts =  containerForMap.get(0).split(" ");
         wdth_ = parts.length;
         height_ = containerForMap.size();
-        grid = new EmptyGrid(height_, wdth_);
+//        grid = new EmptyGrid(height_, wdth_);
+        grid = new Grid2(height_, wdth_);
         
-        pathInMatrix = new int [height_][wdth_];
-        grid.content = pathInMatrix;
+//        pathInMatrix = new GridCellContentType [height_][wdth_];
+//        grid.content = pathInMatrix;
         
         int i = 0;
         for(String lineComponent : containerForMap)
         {
         	parts = lineComponent.split(" ");
-        	for(int j = 0; j<wdth_; j++)
-        		pathInMatrix[i][j] =Integer.parseInt( parts[j]);
+        	for(int j = 0; j<wdth_; j++){
+        		switch(Integer.parseInt( parts[j])){
+        		case 1:
+//        			pathInMatrix[i][j] = GridCellContentType.PATH;
+        			grid.setCell(i, j, GridCellContentType.PATH);
+        			break;
+        		case 2:
+//        			pathInMatrix[i][j] = GridCellContentType.ENTRANCE;
+        			grid.setCell(i, j, GridCellContentType.ENTRANCE);
+        			break;
+        		case 3:
+//        			pathInMatrix[i][j] = GridCellContentType.EXIT;
+        			grid.setCell(i, j, GridCellContentType.EXIT);
+        			break;
+        		default:
+//        			pathInMatrix[i][j] = GridCellContentType.SCENERY;
+        			grid.setCell(i, j, GridCellContentType.SCENERY);
+        		}
+        	}
         	i++;
         }
         
@@ -88,7 +112,7 @@ return grid;
 };
 
 
-public String SaveMapIntoFle(Grid grid, String FileName){
+public String SaveMapIntoFle(Grid2 grid, String FileName){
 	
 	int widht = grid.getWidth();
 	int height = grid.getHeight();
@@ -124,7 +148,7 @@ public String SaveMapIntoFle(Grid grid, String FileName){
 	return errorMessage;
 }
 
-public String validateEntryExit(Grid grid){
+public String validateEntryExit(Grid2 grid){
 /*	String  message = "";
 	int numberOfEntry = 0;
 	int numberOfExit = 0;

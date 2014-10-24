@@ -44,7 +44,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-		setLayout(new BorderLayout());		
+		setLayout(new BorderLayout());
+		
+		mapPanel = new MapEditorPanel(1,1);
 	}
 
 	private void refresh() {
@@ -85,6 +87,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			break;
 		case Constants.LOAD_MAP:
 			mapPanel.loadMap();
+			continueMapDesign();
 			break;
 		case Constants.SAVE_MAP:
 			mapPanel.saveMap();
@@ -117,8 +120,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		mapPanel = new MapEditorPanel(width, height);
 		mapPanel.designMap();
 		mapPanel.setMapSize();
+		continueMapDesign();
+	}
+
+	private void continueMapDesign() {
 		add(mapPanel, BorderLayout.CENTER);
 		refresh();
+		
 	}
 
 	private void getNewMapSize() {

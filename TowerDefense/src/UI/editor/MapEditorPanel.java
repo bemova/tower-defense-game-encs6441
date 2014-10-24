@@ -21,9 +21,10 @@ import javax.swing.JTextField;
 import UI.CanvaObject;
 import UI.Constants;
 import core.applicationService.vikiMapServacs.MapManager;
-import core.domain.maps.CompleteGrid;
-import core.domain.maps.EmptyGrid;
-import core.domain.maps.Grid;
+//import core.domain.maps.CompleteGrid;
+//import core.domain.maps.EmptyGrid;
+//import core.domain.maps.Grid;
+import core.domain.maps.Grid2;
 import core.domain.maps.GridCellContentType;
 import core.domain.maps.Map;
 
@@ -34,34 +35,37 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int width = 15;
-	private int height = 15;
+	private int width;
+	private int height;
 
-	JButton scenery = new JButton(Constants.SCENERY);
-	JButton path = new JButton(Constants.PATH);
-	JButton ep = new JButton(Constants.ENTRANCE);
-	JButton exp = new JButton(Constants.EXIT);
+	JButton scenery;
+	JButton path;
+	JButton ep;
+	JButton exp;
 
-	Color colorToDrawGreed = Color.green;
-	GridCellContentType cellContent = GridCellContentType.PATH;
+	Color colorToDrawGreed;
+	GridCellContentType cellContent;
 
-	Grid grid = new EmptyGrid(height, width, GridCellContentType.SCENERY);
+//	Grid grid = new EmptyGrid(height, width, GridCellContentType.SCENERY);
+	Grid2 grid;
 
 	MapManager mapManager;
-	CanvaObject canva = new CanvaObject(grid);
-	JPanel mapContainer = new JPanel();
-	JPanel entryP = new JPanel();
+	CanvaObject canva;
+	JPanel mapContainer;
+	JPanel entryP;
 
 	JPanel toolBoxContainer = new JPanel();
 
+	@SuppressWarnings("unused")
 	private MapEditorPanel() {
-
 	}
 
 	public MapEditorPanel(int width, int height) {
+		
+		initialize(width, height);
 		setLayout(new BorderLayout());
-		this.width = width;
-		this.height = height;
+//		this.width = width;
+//		this.height = height;
 		
 		scenery.setBackground(Constants.SCENERY_COLOR);
 		path.setBackground(Constants.PATH_COLOR);
@@ -105,6 +109,32 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	//
 	// }
 
+	private void initialize(int width, int height) {
+//		width = 15;
+//		height = 15;
+		this.width = width;
+		this.height = height;
+
+		scenery = new JButton(Constants.SCENERY);
+		path = new JButton(Constants.PATH);
+		ep = new JButton(Constants.ENTRANCE);
+		exp = new JButton(Constants.EXIT);
+
+		colorToDrawGreed = Color.green;
+		cellContent = GridCellContentType.PATH;
+
+//		Grid grid = new EmptyGrid(height, width, GridCellContentType.SCENERY);
+		grid = new Grid2(height, width, GridCellContentType.SCENERY);
+
+//		MapManager mapManager;
+		canva = new CanvaObject(grid);
+		mapContainer = new JPanel();
+		entryP = new JPanel();
+
+		toolBoxContainer = new JPanel();
+		
+	}
+
 	public class CanvasCoordinate extends Point {
 		public CanvasCoordinate(int x, int y) {
 			super(x, y);
@@ -135,7 +165,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 			canva.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 
-			add(entryP, BorderLayout.CENTER);
+//			add(entryP, BorderLayout.CENTER);
 
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -206,15 +236,15 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		String command = event.getActionCommand();
 
 		switch (command) {
-		case Constants.DESIGN_MAP:
-			designMap();
-			break;
-		case Constants.LOAD_MAP:
-			loadMap();
-			break;
-		case Constants.SAVE_MAP:
-			saveMap();
-			break;
+//		case Constants.DESIGN_MAP:
+////			designMap();
+//			break;
+//		case Constants.LOAD_MAP:
+////			loadMap();
+//			break;
+//		case Constants.SAVE_MAP:
+////			saveMap();
+//			break;
 		case Constants.SCENERY:
 			scenery();
 			break;
@@ -224,12 +254,12 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		case Constants.EXIT:
 			exit();
 			break;
-		case Constants.DRAW:
-			drawMap();
-			break;
-		case Constants.SET_SIZE:
-			setMapSize();
-			break;
+//		case Constants.DRAW:
+////			drawMap();
+//			break;
+//		case Constants.SET_SIZE:
+////			setMapSize();
+//			break;
 		case Constants.PATH:
 			path();
 			break;
@@ -270,9 +300,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	private void drawMap() {
 		try {
-			if (((Map) grid).getEntryPoint().isEmpty()
-					|| ((Map) grid).getExitPOint().isEmpty())
-				throw new Exception("Entry and exit points are not defined");
+//			if (((Map) grid).getEntryPoint().isEmpty()
+//					|| ((Map) grid).getExitPOint().isEmpty())
+
+			//validate grid
+//				throw new Exception("Entry and exit points are not defined");
 			canva.updateGrid(grid);
 			canva.repaint();
 
@@ -317,6 +349,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	}
 
 	protected void saveMap() {
+		System.out.println("save");
 		try {
 
 			JFileChooser saveFile = new JFileChooser();
@@ -337,10 +370,10 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	protected void loadMap() {
 		try {
-
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
-				grid = new CompleteGrid(grid);
+//				grid = new CompleteGrid(grid);
+				grid = new Grid2(grid);
 				grid.gridAssignmentOperator(mapManager.LoadMapFromFile(openFile
 						.getSelectedFile().getAbsolutePath()));
 				canva.updateGrid(grid);
@@ -366,16 +399,13 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	protected void designMap() {
 		try {
-			grid = new CompleteGrid(grid);
+//			grid = new CompleteGrid(grid);
+			grid = new Grid2(grid);
 			canva.updateGrid(grid);
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 
-	}
-
-	public static void main(String[] args) {
-		new MapEditorPanel(10, 10);
 	}
 
 }

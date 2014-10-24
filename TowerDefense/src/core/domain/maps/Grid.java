@@ -10,7 +10,7 @@ public abstract class Grid {
 	int height = 15;
 	int width = 15;
 	int sizeOfUnit = 30;
-	GridCellContentType [][] content = new GridCellContentType [height][width];
+	public GridCellContentType [][] content = new GridCellContentType [height][width];
 	
 	Grid(){};
 	 
