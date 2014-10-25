@@ -3,6 +3,7 @@ package core.domain.maps;
 import java.awt.Color;
 import java.awt.Graphics;
 
+@SuppressWarnings("serial")
 public class VisualGrid extends Grid2 {
 
 	Grid2 simpleGrid;

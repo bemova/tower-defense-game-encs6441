@@ -22,7 +22,6 @@ import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.vikiMapServacs.MapManager;
 import core.domain.maps.Grid2;
 import core.domain.maps.GridCellContentType;
-import core.domain.maps.Map;
 import core.domain.maps.VisualGrid;
 
 public class MapEditorPanel extends JPanel implements ActionListener,
@@ -116,6 +115,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		
 	}
 
+	@SuppressWarnings("serial")
 	public class CanvasCoordinate extends Point {
 		public CanvasCoordinate(int x, int y) {
 			super(x, y);
@@ -155,7 +155,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		try {
 
 			colorToDrawGreed = backgroundColor;
-			cellContent = GridCellContentType.PATH; // black for path
+			cellContent = GridCellContentType.PATH;
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
@@ -259,25 +259,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
-	private void drawMap() {
-		try {
-//			if (((Map) grid).getEntryPoint().isEmpty()
-//					|| ((Map) grid).getExitPOint().isEmpty())
-
-			//validate grid
-//				throw new Exception("Entry and exit points are not defined");
-			canvas.updateGrid(grid);
-			canvas.repaint();
-
-		} catch (java.lang.Exception ex) {
-			JOptionPane.showMessageDialog(null, ex.getMessage());
-		}
-
-	}
-
 	private void exit() {
 		try {
-			cellContent = GridCellContentType.EXIT; // blue for exit point
+			cellContent = GridCellContentType.EXIT;
 			colorToDrawGreed = exp.getBackground();
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -290,7 +274,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		try {
 
 			colorToDrawGreed = ep.getBackground();
-			cellContent = GridCellContentType.ENTRANCE; // red for entry point
+			cellContent = GridCellContentType.ENTRANCE;
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
@@ -301,7 +285,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		try {
 
 			colorToDrawGreed = scenery.getBackground();
-			cellContent = GridCellContentType.SCENERY; // green
+			cellContent = GridCellContentType.SCENERY;
 
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -332,19 +316,12 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		try {
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
-				grid.gridAssignmentOperator(mapManager.LoadMapFromFile(openFile
-						.getSelectedFile().getAbsolutePath()));
+				grid = mapManager.LoadMapFromFile(openFile.getSelectedFile().getAbsolutePath());
 				canvas.updateGrid(grid);
 				width = grid.getWidth();
 				height = grid.getHeight();
-				mapContainer.setSize(width * grid.getUnitSize(),
-						height * grid.getUnitSize());
-				canvas.setSize(width * grid.getUnitSize(),
-						height * grid.getUnitSize());
-
-				String message = mapManager.validateMapContent(grid);
-				if (!message.equals(""))
-					JOptionPane.showMessageDialog(null, message);
+				mapContainer.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
+				canvas.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
 			}
 
 		} catch (java.lang.Exception ex) {

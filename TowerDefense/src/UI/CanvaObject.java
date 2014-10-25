@@ -3,14 +3,12 @@ package UI;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
 
-//import core.domain.maps.Grid;
 import core.domain.maps.Grid2;
 
+@SuppressWarnings("serial")
 public class CanvaObject extends Canvas {
 
-//	Grid grid = null;
 	Grid2 grid = null;
 	Dimension d = new Dimension();
 	Graphics imageGraphic = null;
@@ -25,14 +23,9 @@ public class CanvaObject extends Canvas {
 
 	};
 
-	/*
-	 * public void setSize(int i, int j) { // TODO Auto-generated method stub
-	 * super.setSize(i, j); }
-	 */
-
 	@Override
 	public void paint(Graphics graphics) {
-		// update( graphics );
+//		 update( graphics );
 
 		grid.draw(graphics);
 

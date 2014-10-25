@@ -1,21 +1,17 @@
 package core.domain.maps;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public class Grid2 {
+@SuppressWarnings("serial")
+public class Grid2 implements Serializable{
 
 	private int width;
 	private int height;
 	private int sizeOfUnit = 30;
 	private GridCellContentType[][] content;
 
-	public Grid2() {
-//		width = 10;
-//		height = 10;
-//		content = new GridCellContentType[width][height];
-//		initializeCellContents(GridCellContentType.SCENERY);
-	}
+	public Grid2() {}
 
 	public Grid2(int width, int height) {
 		this.width = width;
@@ -45,7 +41,6 @@ public class Grid2 {
 		}
 	}
 
-	// public abstract void draw(Graphics g);
 	public void draw(Graphics g) {
 
 		for (int i = 0; i < width * sizeOfUnit; i += sizeOfUnit) {
@@ -62,47 +57,6 @@ public class Grid2 {
 				* sizeOfUnit - 1);
 
 	}
-
-	// public void draw(Graphics g) {
-	// boolean draw = true;
-	// for (int x = 0; x < width; x++) {
-	// for (int y = 0; y < height; y++) {
-	// if (getCell(x, y) == null) {
-	// draw = false;
-	// break;
-	// }
-	// }
-	// }
-	// if (draw) {
-	// for (int x = 0; x < width; x++) {
-	// for (int y = 0; y < height; y++) {
-	// // if (getCell(x, y) != null) {
-	// Color color = Color.WHITE;
-	// switch (getCell(x, y)) {
-	// case SCENERY:
-	// color = Color.GREEN;
-	// break;
-	// case PATH:
-	// color = Color.GRAY;
-	// break;
-	// case ENTRANCE:
-	// color = Color.RED;
-	// break;
-	// case EXIT:
-	// color = Color.BLUE;
-	// break;
-	// // case BLANK:
-	// // color = Color.WHITE;
-	// // break;
-	// }
-	// g.setColor(color);
-	// g.fillRect((x * sizeOfUnit), (y * sizeOfUnit), sizeOfUnit,
-	// sizeOfUnit);
-	// // }
-	// }
-	// }
-	// }
-	// }
 
 	public int getHeight() {
 		return height;
@@ -128,18 +82,6 @@ public class Grid2 {
 		
 	};
 
-	public void gridAssignmentOperator(Grid2 newGrid) {
-
-		width = newGrid.getWidth();
-		height = newGrid.getHeight();
-		for (int y = 0; y < height; y++){
-			for (int x = 0; x < width; x++){
-//			for (int y = 0; y < height; y++)
-				content[y][x] = newGrid.getCell(x, y);
-			}
-		}
-	}
-
 	@Deprecated
 	public int getCellType(int i, int j) {
 		if (i >= 0 && i < height && j >= 0 && j < width)
@@ -147,16 +89,6 @@ public class Grid2 {
 
 		return -1;
 	}
-
-	// @Deprecated
-	// public void setCell(int cordinatX, int cordinatY, int type)
-	// {
-	// if(cordinatY >= 0 && cordinatY < height && cordinatX >= 0 && cordinatX <
-	// width){
-	//
-	// content[cordinatY][cordinatX] = type;
-	// }
-	// }
 
 	public void setCell(int x, int y, GridCellContentType type) {
 		if (x >= 0 && x < width && 
