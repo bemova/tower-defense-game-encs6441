@@ -9,11 +9,12 @@ import org.junit.Test;
 
 import core.applicationService.mapServices.connectivity.IConnectivityService;
 import core.applicationService.mapServices.connectivity.imp.ConnectivityService;
+import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 
 public class ConnectivityTest {
 
-	private int[][] matrix; 
+	private GridCellContentType[][] matrix; 
 	
 	@BeforeClass
 	public static void setUpBeforeClass(){
@@ -38,7 +39,7 @@ public class ConnectivityTest {
 		try {
 
 			MatrixUtility utility = new MatrixUtility();
-			matrix = utility.matrixReadre("matrix.txt", 4, 8);
+			matrix = utility.matrixCellType("matrix.txt", 4, 8);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
