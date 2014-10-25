@@ -38,9 +38,9 @@ public class Grid2 {
 	}
 
 	private void initializeCellContents(GridCellContentType cellType) {
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				setCell(i, j, cellType);
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				setCell(y, x, cellType);
 			}
 		}
 	}
@@ -123,7 +123,7 @@ public class Grid2 {
 	public void setSize(int width, int height) {
 		this.width = width;
 		this.height = height;
-		content = new GridCellContentType[height][width];
+		content = new GridCellContentType[width][height];
 		initializeCellContents(GridCellContentType.SCENERY);
 		
 	};
@@ -132,11 +132,12 @@ public class Grid2 {
 
 		width = newGrid.getWidth();
 		height = newGrid.getHeight();
-
-		for (int x = 0; x < width; x++)
-			for (int y = 0; y < height; y++)
-				content[x][y] = newGrid.getCell(x, y);
-
+		for (int y = 0; y < height; y++){
+			for (int x = 0; x < width; x++){
+//			for (int y = 0; y < height; y++)
+				content[y][x] = newGrid.getCell(x, y);
+			}
+		}
 	}
 
 	@Deprecated
@@ -158,8 +159,8 @@ public class Grid2 {
 	// }
 
 	public void setCell(int cordinatX, int cordinatY, GridCellContentType type) {
-		if (cordinatY >= 0 && cordinatY < height && cordinatX >= 0
-				&& cordinatX < width)
+		if (cordinatY >= 0 && cordinatY < width && cordinatX >= 0
+				&& cordinatX < height)
 
 			content[cordinatY][cordinatX] = type;
 	}

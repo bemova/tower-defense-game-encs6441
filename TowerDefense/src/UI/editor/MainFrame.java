@@ -117,15 +117,16 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	private void startMapDesign() {
 		//first validate size
-		mapPanel = null;
-		mapPanel = new MapEditorPanel(width, height);
-		mapPanel.designMap();
-		mapPanel.setMapSize();
+//		mapPanel = null;
+//		mapPanel = new MapEditorPanel(width, height);
+		mapPanel.setGridSize(width, height);
+//		mapPanel.designMap();
+		mapPanel.setMapSize(width, height);
 		continueMapDesign();
 	}
 
 	private void continueMapDesign() {
-		remove(mapPanel);
+//		remove(mapPanel);
 		add(mapPanel, BorderLayout.CENTER);
 		refresh();
 		

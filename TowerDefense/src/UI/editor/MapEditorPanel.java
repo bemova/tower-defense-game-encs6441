@@ -51,7 +51,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	Grid2 grid;
 
 	MapManager mapManager;
-	CanvaObject canva;
+	CanvaObject canvas;
 	JPanel mapContainer;
 //	JPanel entryP;
 
@@ -85,14 +85,14 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		path.addActionListener(this);
 		ep.addActionListener(this);
 		exp.addActionListener(this);
-		canva.addMouseListener(this);
-		canva.addMouseMotionListener(this);
+		canvas.addMouseListener(this);
+		canvas.addMouseMotionListener(this);
 
 		int mapPixelWidth = grid.getWidth() * grid.getUnitSize();
 		int mapPixelHeight = grid.getHeight() * grid.getUnitSize();
-		canva.setSize(mapPixelWidth, mapPixelHeight);
+		canvas.setSize(mapPixelWidth, mapPixelHeight);
 		mapContainer.setPreferredSize(new Dimension(mapPixelWidth, mapPixelHeight));
-		mapContainer.add(canva);
+		mapContainer.add(canvas);
 
 		add(new JPanel() ,BorderLayout.NORTH);
 		add(toolBoxContainer, BorderLayout.EAST);
@@ -106,7 +106,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	// void setMapSize(int width, int height) {
 	// mapContainer.setSize(width * grid.getUnitSize(), height *
 	// grid.getUnitSize());
-	// canva.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
+	// canvas.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
 	//
 	// }
 
@@ -125,12 +125,13 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		cellContent = GridCellContentType.PATH;
 
 //		Grid grid = new EmptyGrid(height, width, GridCellContentType.SCENERY);
-		grid = null;
-		grid = new Grid2(width, height, GridCellContentType.SCENERY);
+//		grid = null;
+//		grid = new Grid2(width, height, GridCellContentType.SCENERY);
+		grid = new VisualGrid(width, height, GridCellContentType.SCENERY);
 
 //		MapManager mapManager;
-		canva = null;
-		canva = new CanvaObject(grid);
+//		canvas = null;
+		canvas = new CanvaObject(grid);
 		mapContainer = new JPanel();
 //		entryP = new JPanel();
 
@@ -145,7 +146,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	}
 
 	public CanvasCoordinate toCanvasCoordinates(Point point) {
-		Point canvasLocation = canva.getLocationOnScreen();
+		Point canvasLocation = canvas.getLocationOnScreen();
 		int relativeX = point.x - canvasLocation.x;
 		int relativeY = point.y - canvasLocation.y;
 		int i = relativeX / grid.getUnitSize();
@@ -153,19 +154,24 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		return new CanvasCoordinate(i, j);
 	}
 
+	public void setGridSize(int width, int height) {
+		grid.setSize(width, height);
+		canvas.updateGrid(grid);
+	}
 	public void design(int width, int height) {
 		try {
-			if (width > 60 || width < 5 || height > 60 || height < 5)
-				throw new java.lang.Exception(
-						"Error size max size: ....., min size: ....");
+//			if (width > 60 || width < 5 || height > 60 || height < 5)
+//				throw new java.lang.Exception(
+//						"Error size max size: ....., min size: ....");
 
 			grid.setSize(width, height);
+//			grid = new VisualGrid(width, height);
 			// grid.setAllCells()
-			canva.updateGrid(grid);
+			canvas.updateGrid(grid);
 
 			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
-			canva.setSize(width * grid.getUnitSize(),
+			canvas.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 
 //			add(entryP, BorderLayout.CENTER);
@@ -198,7 +204,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		if ((i < grid.getHeight()) && (j < grid.getWidth())
 				&& (grid.getCell(i, j) != cellContent)) {
 			grid.setCell(i, j, cellContent);
-			canva.repaint();
+			canvas.repaint();
 
 		}
 	}
@@ -279,18 +285,20 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		}
 	}
 
-	protected void setMapSize() {
+	protected void setMapSize(int width, int height) {
 		try {
+			this.width = width;
+			this.height = height;
 			if (width > 60 || width < 5 || height > 60 || height < 5)
 				throw new java.lang.Exception(
 						"Error size max size: ....., min size: ....");
 
 //			grid.setSize(width, height);
-//			canva.updateGrid(grid);
+//			canvas.updateGrid(grid);
 
 			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
-			canva.setSize(width * grid.getUnitSize(),
+			canvas.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 
 //			add(entryP, BorderLayout.CENTER);
@@ -308,8 +316,8 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 			//validate grid
 //				throw new Exception("Entry and exit points are not defined");
-			canva.updateGrid(grid);
-			canva.repaint();
+			canvas.updateGrid(grid);
+			canvas.repaint();
 
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -352,7 +360,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	}
 
 	protected void saveMap() {
-		System.out.println("save");
 		try {
 
 			JFileChooser saveFile = new JFileChooser();
@@ -376,15 +383,15 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
 //				grid = new CompleteGrid(grid);
-				grid = new VisualGrid(grid);
+//				grid = new VisualGrid(grid);
 				grid.gridAssignmentOperator(mapManager.LoadMapFromFile(openFile
 						.getSelectedFile().getAbsolutePath()));
-				canva.updateGrid(grid);
+				canvas.updateGrid(grid);
 				width = grid.getWidth();
 				height = grid.getHeight();
 				mapContainer.setSize(width * grid.getUnitSize(),
 						height * grid.getUnitSize());
-				canva.setSize(width * grid.getUnitSize(),
+				canvas.setSize(width * grid.getUnitSize(),
 						height * grid.getUnitSize());
 
 //				add(entryP, BorderLayout.CENTER);
@@ -403,8 +410,8 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	protected void designMap() {
 		try {
 //			grid = new CompleteGrid(grid);
-			grid = new VisualGrid(grid);
-			canva.updateGrid(grid);
+//			grid = new VisualGrid(grid);
+			canvas.updateGrid(grid);
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
