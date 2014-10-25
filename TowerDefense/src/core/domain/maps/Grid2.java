@@ -11,10 +11,10 @@ public class Grid2 {
 	private GridCellContentType[][] content;
 
 	public Grid2() {
-		width = 10;
-		height = 10;
-		content = new GridCellContentType[width][height];
-		initializeCellContents(GridCellContentType.SCENERY);
+//		width = 10;
+//		height = 10;
+//		content = new GridCellContentType[width][height];
+//		initializeCellContents(GridCellContentType.SCENERY);
 	}
 
 	public Grid2(int width, int height) {
@@ -112,7 +112,7 @@ public class Grid2 {
 		return width;
 	}
 
-	private GridCellContentType[][] getContent() {
+	public GridCellContentType[][] getContent() {
 		return content;
 	}
 
@@ -124,6 +124,8 @@ public class Grid2 {
 		this.width = width;
 		this.height = height;
 		content = new GridCellContentType[height][width];
+		initializeCellContents(GridCellContentType.SCENERY);
+		
 	};
 
 	public void gridAssignmentOperator(Grid2 newGrid) {
