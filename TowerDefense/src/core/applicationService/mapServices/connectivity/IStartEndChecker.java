@@ -1,5 +1,6 @@
 package core.applicationService.mapServices.connectivity;
 
+import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 
 // TODO: Auto-generated Javadoc
@@ -27,8 +28,8 @@ public interface IStartEndChecker {
 	 */
 	public boolean isInEdge(int width, int height, Position position);
 	
-	public boolean hasStart(int[][] matrix);
-	public boolean hasEnd(int[][] matrix);
+	public boolean hasStart(GridCellContentType[][] matrix);
+	public boolean hasEnd(GridCellContentType[][] matrix);
 	public boolean isCorrectSize(int height, int width);
 
 }
