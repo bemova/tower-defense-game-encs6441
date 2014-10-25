@@ -2,6 +2,7 @@ package core.applicationService.warriorServices;
 
 import java.util.List;
 
+import core.contract.DefenderConstatns;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
@@ -9,6 +10,7 @@ import core.domain.warriors.defenders.towers.features.FireSpeed;
 import core.domain.warriors.defenders.towers.towerType.AncientTower;
 import core.domain.warriors.defenders.towers.towerType.KingTower;
 import core.domain.warriors.defenders.towers.towerType.ModernTower;
+import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
 public class TowerFactory {
 
@@ -26,9 +28,46 @@ public class TowerFactory {
 		}
 		return null;
 	}
+	public Tower getTower(String towerType, TowerLevel level){
+		Tower tower = getTower(towerType);
+		try {
+			switch (level.name()) {
+				case "One":
+					tower = getLevelOne(tower);
+					break;
+				case "two":
+				{
+					for(int i =0; i < 2;i++)
+						tower = getLevelOne(tower);
+					break;
+				}
+				case "three":
+				{
+					for(int i =0; i < 3;i++)
+						tower = getLevelOne(tower);
+					break;
+				}
+			}
+			return tower;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	Tower getLevelOne(Tower tower){
+		try {
+			tower = new FirePower(tower);
+			tower = new FireRange(tower);
+			tower = new FireSpeed(tower);
+			return tower;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
 	public Tower getDecoratedTower(List<Tower> details){
 		Tower baseTower = null;
-		Tower decoratedTower = null;
 		try {
 			for (Tower tower : details) {
 				if(tower.getClass() == ModernTower.class){
@@ -46,21 +85,21 @@ public class TowerFactory {
 				switch (tower.getClass().getSimpleName()) {
 				case "FireSpeed":
 					if(baseTower != null)
-						decoratedTower = new FireSpeed(baseTower);
+						baseTower = new FireSpeed(baseTower);
 					break;
 				case "FirePower":
 					if(baseTower != null)
-						decoratedTower = new FirePower(baseTower);
+						baseTower = new FirePower(baseTower);
 					break;
 				case "FireRange":
 					if(baseTower != null)
-						decoratedTower = new FireRange(baseTower);
+						baseTower = new FireRange(baseTower);
 					break;
 				}
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return decoratedTower;
+		return baseTower;
 	}
 }
