@@ -8,7 +8,8 @@ public class VisualGrid extends Grid {
 
 	Grid simpleGrid;
 
-	// constructor's section
+	public VisualGrid(){}
+	
 	public VisualGrid(Grid grid) {
 		simpleGrid = grid;
 

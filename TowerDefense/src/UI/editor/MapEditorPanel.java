@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import UI.CanvaObject;
 import UI.Constants;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
-import core.applicationService.vikiMapServacs.MapManager;
+import core.applicationService.mapServices.MapManager;
 import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
 import core.domain.maps.VisualGrid;
