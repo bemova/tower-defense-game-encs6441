@@ -7,7 +7,7 @@ import java.util.HashMap;
 import core.domain.warriors.defenders.towers.*;
 
 
-public class Map extends CompleteGrid {
+public class Map extends VisualGrid {
 
 	HashMap<String, GridCell > map;
 	ArrayList<GridCell> path;

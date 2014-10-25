@@ -1,4 +1,4 @@
-package core.applicationService.vikiMapServacs;
+package core.applicationService.mapServices;
 
 import core.domain.maps.Grid;
 import java.io.FileInputStream;
@@ -6,11 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import core.applicationService.vikiMapServacs.StandardAlgorithms;
-
 public class MapManager {
-
-	public StandardAlgorithms algorithms = null;
 
 	public MapManager() {
 
