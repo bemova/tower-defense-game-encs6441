@@ -50,7 +50,7 @@ public class StartEndChecker implements IStartEndChecker {
 	}
 	@Override
 	public boolean isCorrectSize(int height, int width) {
-		return ((height < 5 && height < 30) && (width > 5 && width < 30));
+		return ((height >= 5 && height <= 30) && (width >= 5 && width <= 30));
 	}
 	
 }

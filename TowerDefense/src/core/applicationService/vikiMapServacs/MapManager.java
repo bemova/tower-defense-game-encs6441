@@ -125,16 +125,17 @@ public String SaveMapIntoFle(Grid2 grid, String FileName){
 //		errorMessage = validateMapContent(grid);
 		
 		PrintWriter out = new PrintWriter(FileName );
-
-		for (int i = 0; i < height; i++) {
+		for (int y = 0; y < height; y++) {
+		
 			String line = "";
-			for (int j = 0; j < widht; j++) {
-				if(j < widht -1)
-					line = line + grid.getCell(i,j).getValue() + " ";
-				else 
-					line = line + grid.getCell(i,j).getValue();	
+			for (int x = 0; x < widht; x++) {	
+//				if(x < widht -1)
+					line = line + grid.getCell(x,y).getValue() + " ";
+//				else 
+//					line = line + grid.getCell(x,y).getValue();	
 
 			}
+			line = line.substring(0, line.length()-1);
 			out.println(line);
 		}
 		

@@ -20,9 +20,6 @@ import UI.CanvaObject;
 import UI.Constants;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.vikiMapServacs.MapManager;
-//import core.domain.maps.CompleteGrid;
-//import core.domain.maps.EmptyGrid;
-//import core.domain.maps.Grid;
 import core.domain.maps.Grid2;
 import core.domain.maps.GridCellContentType;
 import core.domain.maps.Map;
@@ -46,13 +43,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	Color colorToDrawGreed;
 	GridCellContentType cellContent;
 
-//	Grid grid = new EmptyGrid(height, width, GridCellContentType.SCENERY);
 	Grid2 grid;
 
 	MapManager mapManager;
 	CanvaObject canvas;
 	JPanel mapContainer;
-//	JPanel entryP;
 
 	JPanel toolBoxContainer = new JPanel();
 
@@ -64,8 +59,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		
 		initialize(width, height);
 		setLayout(new BorderLayout());
-//		this.width = width;
-//		this.height = height;
 		
 		scenery.setBackground(Constants.SCENERY_COLOR);
 		path.setBackground(Constants.PATH_COLOR);
@@ -102,16 +95,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
-	// void setMapSize(int width, int height) {
-	// mapContainer.setSize(width * grid.getUnitSize(), height *
-	// grid.getUnitSize());
-	// canvas.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
-	//
-	// }
-
 	private void initialize(int width, int height) {
-//		width = 15;
-//		height = 15;
 		this.width = width;
 		this.height = height;
 
@@ -123,16 +107,10 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		colorToDrawGreed = Color.green;
 		cellContent = GridCellContentType.PATH;
 
-//		Grid grid = new EmptyGrid(height, width, GridCellContentType.SCENERY);
-//		grid = null;
-//		grid = new Grid2(width, height, GridCellContentType.SCENERY);
 		grid = new VisualGrid(width, height, GridCellContentType.SCENERY);
 
-//		MapManager mapManager;
-//		canvas = null;
 		canvas = new CanvaObject(grid);
 		mapContainer = new JPanel();
-//		entryP = new JPanel();
 
 		toolBoxContainer = new JPanel();
 		
@@ -159,21 +137,13 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	}
 	public void design(int width, int height) {
 		try {
-//			if (width > 60 || width < 5 || height > 60 || height < 5)
-//				throw new java.lang.Exception(
-//						"Error size max size: ....., min size: ....");
-
 			grid.setSize(width, height);
-//			grid = new VisualGrid(width, height);
-			// grid.setAllCells()
 			canvas.updateGrid(grid);
 
 			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 			canvas.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
-
-//			add(entryP, BorderLayout.CENTER);
 
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -198,9 +168,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	}
 
 	private void draw(int x, int y) {
-		int i = y / grid.getUnitSize();
-		int j = x / grid.getUnitSize();
-		if ((i < grid.getHeight()) && (j < grid.getWidth())
+		int i = x / grid.getUnitSize();
+		int j = y / grid.getUnitSize();
+		if ((i < grid.getWidth()) && (j < grid.getHeight())
 				&& (grid.getCell(i, j) != cellContent)) {
 			grid.setCell(i, j, cellContent);
 			canvas.repaint();
@@ -244,15 +214,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		String command = event.getActionCommand();
 
 		switch (command) {
-//		case Constants.DESIGN_MAP:
-////			designMap();
-//			break;
-//		case Constants.LOAD_MAP:
-////			loadMap();
-//			break;
-//		case Constants.SAVE_MAP:
-////			saveMap();
-//			break;
 		case Constants.SCENERY:
 			scenery();
 			break;
@@ -262,12 +223,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		case Constants.EXIT:
 			exit();
 			break;
-//		case Constants.DRAW:
-////			drawMap();
-//			break;
-//		case Constants.SET_SIZE:
-////			setMapSize();
-//			break;
 		case Constants.PATH:
 			path();
 			break;
@@ -293,15 +248,10 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 						"Error size max size: ....., min size: ....");
 			// end of validation
 			
-//			grid.setSize(width, height);
-//			canvas.updateGrid(grid);
-
 			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 			canvas.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
-
-//			add(entryP, BorderLayout.CENTER);
 
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -382,8 +332,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		try {
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
-//				grid = new CompleteGrid(grid);
-//				grid = new VisualGrid(grid);
 				grid.gridAssignmentOperator(mapManager.LoadMapFromFile(openFile
 						.getSelectedFile().getAbsolutePath()));
 				canvas.updateGrid(grid);
@@ -393,8 +341,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 						height * grid.getUnitSize());
 				canvas.setSize(width * grid.getUnitSize(),
 						height * grid.getUnitSize());
-
-//				add(entryP, BorderLayout.CENTER);
 
 				String message = mapManager.validateMapContent(grid);
 				if (!message.equals(""))
@@ -409,8 +355,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	protected void designMap() {
 		try {
-//			grid = new CompleteGrid(grid);
-//			grid = new VisualGrid(grid);
 			canvas.updateGrid(grid);
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());

@@ -40,7 +40,7 @@ public class Grid2 {
 	private void initializeCellContents(GridCellContentType cellType) {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				setCell(y, x, cellType);
+				setCell(x, y, cellType);
 			}
 		}
 	}
@@ -158,17 +158,17 @@ public class Grid2 {
 	// }
 	// }
 
-	public void setCell(int cordinatX, int cordinatY, GridCellContentType type) {
-		if (cordinatY >= 0 && cordinatY < width && cordinatX >= 0
-				&& cordinatX < height)
-
-			content[cordinatY][cordinatX] = type;
+	public void setCell(int x, int y, GridCellContentType type) {
+		if (x >= 0 && x < width && 
+				y >= 0 && y < height){
+			content[x][y] = type;
+		}
 	}
 
-	public GridCellContentType getCell(int cordinatX, int cordinatY) {
-		if (cordinatY >= 0 && cordinatY < height && cordinatX >= 0
-				&& cordinatX < width) {
-			return content[cordinatY][cordinatX];
+	public GridCellContentType getCell(int x, int y) {
+		if (x >= 0 && x < width && y >= 0
+				&& y < height) {
+			return content[x][y];
 		}
 		return null;
 	}
