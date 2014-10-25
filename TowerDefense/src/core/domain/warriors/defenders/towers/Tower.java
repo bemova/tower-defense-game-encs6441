@@ -1,5 +1,7 @@
 package core.domain.warriors.defenders.towers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import core.domain.Subject;
@@ -7,7 +9,6 @@ import core.domain.warriors.defenders.Defender;
 import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.ShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.SoundBehaviour;
-import core.domain.warriors.defenders.towers.vikiTowers.TowerParameters;
 
 
 public abstract class Tower extends Defender {
@@ -18,6 +19,11 @@ public abstract class Tower extends Defender {
 	SoundBehaviour soundBehaviour;
 	// decorator parts
 	protected String description;
+
+	protected List<Tower> towers;
+	public List<Tower> getTowers() {
+		return towers;
+	}
 	public String getDescription() {
 		return description;
 	}
@@ -47,6 +53,17 @@ public abstract class Tower extends Defender {
 
 	public abstract void display();
 	public abstract long cost();
-//	public abstract TowerParameters returnParameters(); // addd by Vika, needs to be replaced later 
-
+	public List<Tower> objectDetials(){
+		try {
+			if(towers != null)
+				towers.add(this);
+			else{
+				towers = new ArrayList<Tower>();
+				towers.add(this);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return towers;
+	}
 }
