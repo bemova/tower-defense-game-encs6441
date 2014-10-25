@@ -119,6 +119,5 @@ public class TowerFactory {
 			// TODO: handle exception
 		}
 		return details;
-
 	}
 }
