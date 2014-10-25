@@ -1,6 +1,7 @@
 package core.applicationService.mapServices.connectivity.imp;
 
 import core.applicationService.mapServices.connectivity.IStartEndChecker;
+import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 
 public class StartEndChecker implements IStartEndChecker {
@@ -22,23 +23,23 @@ public class StartEndChecker implements IStartEndChecker {
 				return false;
 	}
 	@Override
-	public boolean hasStart(int[][] matrix){
-		return nodeChecker(matrix, 2);
+	public boolean hasStart(GridCellContentType[][] matrix){
+		return nodeChecker(matrix, GridCellContentType.ENTRANCE);
 	}
 	@Override
-	public boolean hasEnd(int[][] matrix) {
-			return nodeChecker(matrix, 3);
+	public boolean hasEnd(GridCellContentType[][] matrix) {
+			return nodeChecker(matrix, GridCellContentType.EXIT);
 	}
 	public boolean condition(int width, int height, Position position){
 		return ((position.getX() == 0) || (position.getX() ==width))
 				|| ((position.getY() == 0) || (position.getY() == height));
 	}
-	public boolean nodeChecker(int[][] matrix, int expected){
+	public boolean nodeChecker(GridCellContentType[][] matrix, GridCellContentType expected){
 		boolean flag = false;
 		try {
-			for (int[] rows : matrix) {
-				for (int num : rows) {
-					if(num == expected)
+			for (GridCellContentType[] rows : matrix) {
+				for (GridCellContentType type : rows) {
+					if(type == expected)
 						flag = true;
 				}
 			}
@@ -49,7 +50,7 @@ public class StartEndChecker implements IStartEndChecker {
 	}
 	@Override
 	public boolean isCorrectSize(int height, int width) {
-		return (height < 30 && width < 30);
+		return ((height < 5 && height < 30) && (width > 5 && width < 30));
 	}
 	
 }

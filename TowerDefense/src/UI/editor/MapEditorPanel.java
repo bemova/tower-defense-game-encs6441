@@ -13,13 +13,12 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import UI.CanvaObject;
 import UI.Constants;
+import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.vikiMapServacs.MapManager;
 //import core.domain.maps.CompleteGrid;
 //import core.domain.maps.EmptyGrid;
@@ -287,12 +286,13 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	protected void setMapSize(int width, int height) {
 		try {
-			this.width = width;
-			this.height = height;
-			if (width > 60 || width < 5 || height > 60 || height < 5)
+			// validation part
+			StartEndChecker checker = new StartEndChecker();
+			if (!checker.isCorrectSize(height, width))
 				throw new java.lang.Exception(
 						"Error size max size: ....., min size: ....");
-
+			// end of validation
+			
 //			grid.setSize(width, height);
 //			canvas.updateGrid(grid);
 

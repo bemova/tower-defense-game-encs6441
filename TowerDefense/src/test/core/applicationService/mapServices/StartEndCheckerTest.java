@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
+import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 
 public class StartEndCheckerTest {
@@ -73,7 +74,7 @@ public class StartEndCheckerTest {
 			int width = 8;
 			int height = 4;
 			MatrixUtility utility = new MatrixUtility();
-			int[][] matrix = utility.matrixReadre("matrix.txt", height, width);
+			GridCellContentType[][] matrix = utility.matrixCellType("matrix.txt", height, width);
 			assertTrue(checker.hasEnd(matrix));
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -85,7 +86,7 @@ public class StartEndCheckerTest {
 			int width = 4;
 			int height = 8;
 			MatrixUtility utility = new MatrixUtility();
-			int[][] matrix = utility.matrixReadre("matrix.txt", height, width);
+			GridCellContentType[][] matrix = utility.matrixCellType("matrix.txt", height, width);
 			assertTrue(checker.hasStart(matrix));
 			
 		} catch (Exception e) {

@@ -1,5 +1,6 @@
 package core.applicationService.mapServices.connectivity;
 
+import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 
 public interface IConnectivityService {
@@ -10,6 +11,6 @@ public interface IConnectivityService {
 	 * @param args
 	 *            the arguments
 	 */
-	public boolean isTherePath(Position start, Position end, int[][] matrix);
+	public boolean isTherePath(Position start, Position end, GridCellContentType[][] matrix);
 
 }
