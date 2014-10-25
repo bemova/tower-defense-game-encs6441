@@ -12,6 +12,7 @@ import core.domain.maps.EmptyGrid;
 //import core.domain.maps.Grid;
 import core.domain.maps.Grid2;
 import core.domain.maps.GridCellContentType;
+import core.domain.maps.VisualGrid;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -66,7 +67,7 @@ public Grid2 LoadMapFromFile(String fileName){
         wdth_ = parts.length;
         height_ = containerForMap.size();
 //        grid = new EmptyGrid(height_, wdth_);
-        grid = new Grid2(height_, wdth_);
+        grid = new VisualGrid(wdth_, height_);
         
 //        pathInMatrix = new GridCellContentType [height_][wdth_];
 //        grid.content = pathInMatrix;

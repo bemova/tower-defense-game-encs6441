@@ -27,6 +27,7 @@ import core.applicationService.vikiMapServacs.MapManager;
 import core.domain.maps.Grid2;
 import core.domain.maps.GridCellContentType;
 import core.domain.maps.Map;
+import core.domain.maps.VisualGrid;
 
 public class MapEditorPanel extends JPanel implements ActionListener,
 		MouseListener, MouseMotionListener {
@@ -52,7 +53,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	MapManager mapManager;
 	CanvaObject canva;
 	JPanel mapContainer;
-	JPanel entryP;
+//	JPanel entryP;
 
 	JPanel toolBoxContainer = new JPanel();
 
@@ -124,12 +125,14 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		cellContent = GridCellContentType.PATH;
 
 //		Grid grid = new EmptyGrid(height, width, GridCellContentType.SCENERY);
-		grid = new Grid2(height, width, GridCellContentType.SCENERY);
+		grid = null;
+		grid = new Grid2(width, height, GridCellContentType.SCENERY);
 
 //		MapManager mapManager;
+		canva = null;
 		canva = new CanvaObject(grid);
 		mapContainer = new JPanel();
-		entryP = new JPanel();
+//		entryP = new JPanel();
 
 		toolBoxContainer = new JPanel();
 		
@@ -282,15 +285,15 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 				throw new java.lang.Exception(
 						"Error size max size: ....., min size: ....");
 
-			grid.setSize(width, height);
-			canva.updateGrid(grid);
+//			grid.setSize(width, height);
+//			canva.updateGrid(grid);
 
 			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 			canva.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 
-			add(entryP, BorderLayout.CENTER);
+//			add(entryP, BorderLayout.CENTER);
 
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -373,7 +376,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
 //				grid = new CompleteGrid(grid);
-				grid = new Grid2(grid);
+				grid = new VisualGrid(grid);
 				grid.gridAssignmentOperator(mapManager.LoadMapFromFile(openFile
 						.getSelectedFile().getAbsolutePath()));
 				canva.updateGrid(grid);
@@ -384,7 +387,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 				canva.setSize(width * grid.getUnitSize(),
 						height * grid.getUnitSize());
 
-				add(entryP, BorderLayout.CENTER);
+//				add(entryP, BorderLayout.CENTER);
 
 				String message = mapManager.validateMapContent(grid);
 				if (!message.equals(""))
@@ -400,7 +403,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	protected void designMap() {
 		try {
 //			grid = new CompleteGrid(grid);
-			grid = new Grid2(grid);
+			grid = new VisualGrid(grid);
 			canva.updateGrid(grid);
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());

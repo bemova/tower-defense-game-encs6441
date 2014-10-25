@@ -14,14 +14,14 @@ public class Grid2 {
 		width = 10;
 		height = 10;
 		content = new GridCellContentType[width][height];
-		initializeCellContents(GridCellContentType.BLANK);
+		initializeCellContents(GridCellContentType.SCENERY);
 	}
 
 	public Grid2(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.content = new GridCellContentType[width][height];
-		initializeCellContents(GridCellContentType.BLANK);
+		initializeCellContents(GridCellContentType.SCENERY);
 	}
 
 	public Grid2(int width, int height, GridCellContentType cellType) {
@@ -45,35 +45,64 @@ public class Grid2 {
 		}
 	}
 
+	// public abstract void draw(Graphics g);
 	public void draw(Graphics g) {
-		for (int x = 0; x < width; x++)
-			for (int y = 0; y < height; y++) {
-				if (getCell(x, y) != null) {
-					Color color = Color.WHITE;
-					switch (getCell(x, y)) {
-					case SCENERY:
-						color = Color.GREEN;
-						break;
-					case PATH:
-						color = Color.GRAY;
-						break;
-					case ENTRANCE:
-						color = Color.RED;
-						break;
-					case EXIT:
-						color = Color.BLUE;
-						break;
-					case BLANK:
-						color = Color.WHITE;
-						break;
-					}
-					g.setColor(color);
-					g.fillRect((x * sizeOfUnit), (y * sizeOfUnit), sizeOfUnit,
-							sizeOfUnit);
-				}
+
+		for (int i = 0; i < width * sizeOfUnit; i += sizeOfUnit) {
+			for (int j = 0; j < height * sizeOfUnit; j += sizeOfUnit) {
+				g.drawLine(i, 0, i, height * sizeOfUnit);
+				g.drawLine(0, j, width * sizeOfUnit, j);
 			}
+		}
+
+		g.drawLine(width * sizeOfUnit - 1, height * sizeOfUnit - 1, width
+				* sizeOfUnit - 1, 0); // x1y1 x2y2
+
+		g.drawLine(0, height * sizeOfUnit - 1, width * sizeOfUnit - 1, height
+				* sizeOfUnit - 1);
 
 	}
+
+	// public void draw(Graphics g) {
+	// boolean draw = true;
+	// for (int x = 0; x < width; x++) {
+	// for (int y = 0; y < height; y++) {
+	// if (getCell(x, y) == null) {
+	// draw = false;
+	// break;
+	// }
+	// }
+	// }
+	// if (draw) {
+	// for (int x = 0; x < width; x++) {
+	// for (int y = 0; y < height; y++) {
+	// // if (getCell(x, y) != null) {
+	// Color color = Color.WHITE;
+	// switch (getCell(x, y)) {
+	// case SCENERY:
+	// color = Color.GREEN;
+	// break;
+	// case PATH:
+	// color = Color.GRAY;
+	// break;
+	// case ENTRANCE:
+	// color = Color.RED;
+	// break;
+	// case EXIT:
+	// color = Color.BLUE;
+	// break;
+	// // case BLANK:
+	// // color = Color.WHITE;
+	// // break;
+	// }
+	// g.setColor(color);
+	// g.fillRect((x * sizeOfUnit), (y * sizeOfUnit), sizeOfUnit,
+	// sizeOfUnit);
+	// // }
+	// }
+	// }
+	// }
+	// }
 
 	public int getHeight() {
 		return height;

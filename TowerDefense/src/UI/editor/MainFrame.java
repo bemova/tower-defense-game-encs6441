@@ -46,7 +46,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		setLayout(new BorderLayout());
 		
-		mapPanel = new MapEditorPanel(1,1);
+		mapPanel = new MapEditorPanel(8,8);
 	}
 
 	private void refresh() {
@@ -117,6 +117,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	private void startMapDesign() {
 		//first validate size
+		mapPanel = null;
 		mapPanel = new MapEditorPanel(width, height);
 		mapPanel.designMap();
 		mapPanel.setMapSize();
@@ -124,6 +125,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	private void continueMapDesign() {
+		remove(mapPanel);
 		add(mapPanel, BorderLayout.CENTER);
 		refresh();
 		
