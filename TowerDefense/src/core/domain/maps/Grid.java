@@ -4,30 +4,30 @@ import java.awt.Graphics;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Grid2 implements Serializable{
+public class Grid implements Serializable{
 
 	private int width;
 	private int height;
 	private int sizeOfUnit = 30;
 	private GridCellContentType[][] content;
 
-	public Grid2() {}
+	public Grid() {}
 
-	public Grid2(int width, int height) {
+	public Grid(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.content = new GridCellContentType[width][height];
 		initializeCellContents(GridCellContentType.SCENERY);
 	}
 
-	public Grid2(int width, int height, GridCellContentType cellType) {
+	public Grid(int width, int height, GridCellContentType cellType) {
 		this.width = width;
 		this.height = height;
 		this.content = new GridCellContentType[width][height];
 		initializeCellContents(cellType);
 	}
 
-	public Grid2(Grid2 grid) {
+	public Grid(Grid grid) {
 		this.width = grid.getWidth();
 		this.height = grid.getHeight();
 		this.content = grid.getContent();

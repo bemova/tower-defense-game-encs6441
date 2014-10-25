@@ -1,6 +1,6 @@
 package core.applicationService.vikiMapServacs;
 
-import core.domain.maps.Grid2;
+import core.domain.maps.Grid;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -16,13 +16,13 @@ public class MapManager {
 
 	}
 
-	public Grid2 LoadMapFromFile(String fileName) {
-		Grid2 grid = null;
+	public Grid LoadMapFromFile(String fileName) {
+		Grid grid = null;
 		try {
 			FileInputStream streamIn = new FileInputStream(fileName);
 			ObjectInputStream objectinputstream = new ObjectInputStream(
 					streamIn);
-			grid = (Grid2) objectinputstream.readObject();
+			grid = (Grid) objectinputstream.readObject();
 			objectinputstream.close();
 		} catch (Exception e) {
 			// errorMessage = "I couldn't load the map!";
@@ -30,7 +30,7 @@ public class MapManager {
 		return grid;
 	}
 
-	public String SaveMapIntoFle(Grid2 grid, String FileName) {
+	public String SaveMapIntoFle(Grid grid, String FileName) {
 
 		String errorMessage = "";
 

@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 @SuppressWarnings("serial")
-public class VisualGrid extends Grid2 {
+public class VisualGrid extends Grid {
 
-	Grid2 simpleGrid;
+	Grid simpleGrid;
 
 	// constructor's section
-	public VisualGrid(Grid2 grid) {
+	public VisualGrid(Grid grid) {
 		simpleGrid = grid;
 
 	}

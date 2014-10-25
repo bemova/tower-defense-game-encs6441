@@ -20,7 +20,7 @@ import UI.CanvaObject;
 import UI.Constants;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.vikiMapServacs.MapManager;
-import core.domain.maps.Grid2;
+import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
 import core.domain.maps.VisualGrid;
 
@@ -42,7 +42,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	Color colorToDrawGreed;
 	GridCellContentType cellContent;
 
-	Grid2 grid;
+	Grid grid;
 
 	MapManager mapManager;
 	CanvaObject canvas;
