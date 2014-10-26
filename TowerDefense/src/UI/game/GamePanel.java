@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -166,16 +167,21 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 		if (x <= width & y <= height) {
 			if (addTower) {
-				TowerFactory factory = new TowerFactory();
-				towers[x][y] = factory.getTower("ModernTower", TowerLevel.one);
-				grid.updateTowers(towers);
-				draw(x, y);
-				addTower = false;
+				if (grid.getCell(x, y) == GridCellContentType.SCENERY) {
+					TowerFactory factory = new TowerFactory();
+					towers[x][y] = factory.getTower("ModernTower",
+							TowerLevel.two);
+					grid.updateTowers(towers);
+					draw(x, y);
+					addTower = false;
+				}
 			} else {
 				if (towers[x][y] != null) {
 					TowerManagerPanel towerPanel = new TowerManagerPanel(
 							towers[x][y]);
-					add(towerPanel, BorderLayout.WEST);
+//					add(towerPanel, BorderLayout.SOUTH);
+//					JDialog jd = new JDialog("Tower specification");
+					
 				}
 			}
 		}
@@ -226,8 +232,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		try {
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
-				grid = new Map((Grid) mapManager.LoadMapFromFile(openFile.getSelectedFile()
-						.getAbsolutePath()));
+				grid = new Map((Grid) mapManager.LoadMapFromFile(openFile
+						.getSelectedFile().getAbsolutePath()));
 				canvas.updateGrid(grid);
 				width = grid.getWidth();
 				height = grid.getHeight();
