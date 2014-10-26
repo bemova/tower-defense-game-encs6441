@@ -18,7 +18,10 @@ public class MapManager {
 			FileInputStream streamIn = new FileInputStream(fileName);
 			ObjectInputStream objectinputstream = new ObjectInputStream(
 					streamIn);
-			grid = (Grid) objectinputstream.readObject();
+			Object obj = objectinputstream.readObject();
+			if(obj instanceof Grid){
+				grid = (Grid) obj;
+			}
 			objectinputstream.close();
 		} catch (Exception e) {
 			// errorMessage = "I couldn't load the map!";
