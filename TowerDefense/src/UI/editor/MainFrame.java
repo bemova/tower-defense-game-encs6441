@@ -118,7 +118,6 @@ public class MainFrame extends JFrame implements ActionListener {
 			StartEndChecker checker = new StartEndChecker();
 			if(!checker.isCorrectSize(height, width))
 				throw new Exception();
-			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(new JFrame(), "Please enter correct Size!", "Alert",
 			        JOptionPane.ERROR_MESSAGE);
