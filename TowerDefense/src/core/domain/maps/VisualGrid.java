@@ -2,13 +2,14 @@ package core.domain.maps;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import core.contract.MapConstants;
 
 @SuppressWarnings("serial")
 public class VisualGrid extends Grid {
 
 	Grid simpleGrid;
 
-	public VisualGrid(){}
+//	public VisualGrid(){}
 	
 	public VisualGrid(Grid grid) {
 		simpleGrid = grid;
@@ -30,17 +31,28 @@ public class VisualGrid extends Grid {
 				Color color = Color.green;
 				switch (getCell(x, y)){
 				case PATH:
-					color = Color.gray;
+					color = MapConstants.PATH_COLOR;
 					break;
 				case SCENERY:
-					color = Color.green;
+					color = MapConstants.SCENERY_COLOR;
 					break;
 				case ENTRANCE:
-					color = Color.red;
+					color = MapConstants.ENTRANCE_COLOR;
 					break;
 				case EXIT:
-					color = Color.blue;
+					color = MapConstants.EXIT_COLOR;
 					break;
+
+				case TOWER1:
+					color = MapConstants.TOWER1_COLOR;
+					break;
+				case TOWER2:
+					color = MapConstants.TOWER2_COLOR;
+					break;
+				case TOWER3:
+					color = MapConstants.TOWER3_COLOR;
+					break;
+
 				}
 				g.setColor(color);
 				g.fillRect(x * getUnitSize(), y * getUnitSize(), getUnitSize(),

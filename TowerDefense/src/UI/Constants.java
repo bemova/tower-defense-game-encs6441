@@ -1,6 +1,5 @@
 package UI;
 
-import java.awt.Color;
 
 public class Constants {
 	public static final String TAG_ENTRY_POINT = "Entery Point";
@@ -22,9 +21,9 @@ public class Constants {
 	public static final String OK = "OK";
 	public static final String EDITOR_TITLE = "Tower Defence - Map Editor";
 	public static final String MAP_MENU = "Map";
-	public static final Color PATH_COLOR = Color.GRAY;
-	public static final Color SCENERY_COLOR = Color.GREEN;
-	public static final Color ENTRANCE_COLOR = Color.RED;
-	public static final Color EXIT_COLOR = Color.BLUE;
-
+	
+	public static final String TOWER1 = "Tower 1";
+	public static final String TOWER2 = "Tower 2";
+	public static final String TOWER3 = "Tower 3";
+	
 }
