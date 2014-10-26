@@ -12,10 +12,12 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import UI.Constants;
+import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
@@ -110,9 +112,16 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	private void setMapSize() {
-		width = (new Integer(widthTextField.getText())).intValue();
-		height = (new Integer(heightTextField.getText())).intValue();
-		
+		try {
+			StartEndChecker checker = new StartEndChecker();
+			if(!checker.isCorrectSize(height, width))
+				throw new Exception();
+			width = (new Integer(widthTextField.getText())).intValue();
+			height = (new Integer(heightTextField.getText())).intValue();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(new JFrame(), "Please enter correct Size!", "Alert",
+			        JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private void startMapDesign() {
