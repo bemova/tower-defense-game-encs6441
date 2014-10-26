@@ -113,11 +113,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	private void setMapSize() {
 		try {
+			width = (new Integer(widthTextField.getText())).intValue();
+			height = (new Integer(heightTextField.getText())).intValue();
 			StartEndChecker checker = new StartEndChecker();
 			if(!checker.isCorrectSize(height, width))
 				throw new Exception();
-			width = (new Integer(widthTextField.getText())).intValue();
-			height = (new Integer(heightTextField.getText())).intValue();
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(new JFrame(), "Please enter correct Size!", "Alert",
 			        JOptionPane.ERROR_MESSAGE);
