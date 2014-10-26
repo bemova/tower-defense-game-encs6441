@@ -43,16 +43,9 @@ public class VisualGrid extends Grid {
 					color = MapConstants.EXIT_COLOR;
 					break;
 
-				case TOWER1:
-					color = MapConstants.TOWER1_COLOR;
+				case MODERN_TOWER:
+					color = MapConstants.MODERN_TOWER_COLOR;
 					break;
-				case TOWER2:
-					color = MapConstants.TOWER2_COLOR;
-					break;
-				case TOWER3:
-					color = MapConstants.TOWER3_COLOR;
-					break;
-
 				}
 				g.setColor(color);
 				g.fillRect(x * getUnitSize(), y * getUnitSize(), getUnitSize(),

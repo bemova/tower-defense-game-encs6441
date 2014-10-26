@@ -22,8 +22,6 @@ public class Constants {
 	public static final String EDITOR_TITLE = "Tower Defence - Map Editor";
 	public static final String MAP_MENU = "Map";
 	
-	public static final String TOWER1 = "Tower 1";
-	public static final String TOWER2 = "Tower 2";
-	public static final String TOWER3 = "Tower 3";
+	public static final String ANCIENT_TOWER = "Anceitn Tower";
 	
 }

@@ -1,7 +1,10 @@
 package core.domain.warriors.defenders.towers.towerType;
 
 
+import java.awt.Color;
+
 import core.contract.DefenderConstatns;
+import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourImp.MoveByMouse;
 import core.domain.warriors.defenders.towers.behaviourImp.ShootWithWeapon;
@@ -17,11 +20,13 @@ public class ModernTower extends Tower {
 		//this.map.put(arg0, arg1)
 		
 	}
+	
 	@Override
-	public void display() {
-		System.out.println("I am modern!");
+	public Color display() {
+		return MapConstants.MODERN_TOWER_COLOR;
 
 	}
+	
 	@Override
 	public long cost() {
 		// TODO Auto-generated method stub

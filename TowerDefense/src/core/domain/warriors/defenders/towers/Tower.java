@@ -1,5 +1,6 @@
 package core.domain.warriors.defenders.towers;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,7 +52,7 @@ public abstract class Tower extends Defender {
 		this.subject.registerObserver(this);
 	}
 
-	public abstract void display();
+	public abstract Color display();
 	public abstract long cost();
 	public List<Tower> objectDetials(){
 		try {

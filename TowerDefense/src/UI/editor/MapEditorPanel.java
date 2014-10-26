@@ -20,6 +20,7 @@ import UI.CanvaObject;
 import UI.Constants;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.mapServices.MapManager;
+import core.contract.MapConstants;
 import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
 import core.domain.maps.VisualGrid;
@@ -59,10 +60,10 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		initialize(width, height);
 		setLayout(new BorderLayout());
 		
-		scenery.setBackground(Constants.SCENERY_COLOR);
-		path.setBackground(Constants.PATH_COLOR);
-		ep.setBackground(Constants.ENTRANCE_COLOR);
-		exp.setBackground(Constants.EXIT_COLOR);
+		scenery.setBackground(MapConstants.SCENERY_COLOR);
+		path.setBackground(MapConstants.PATH_COLOR);
+		ep.setBackground(MapConstants.ENTRANCE_COLOR);
+		exp.setBackground(MapConstants.EXIT_COLOR);
 		toolBoxContainer.setSize(10, 500);
 		toolBoxContainer.setLayout(new FlowLayout());
 		toolBoxContainer.add(scenery);
