@@ -31,12 +31,13 @@ public class TowerManagerPanel extends JPanel {
 	private JTextField powerField;
 	private long currentBalance;
 	private long expectedBalance;
+	private long objBalance;
 	private String towerType;
 	private Tower decoratedTower;
 	private JButton submit;
 	private JLabel balanceLable;
 	private JButton purchaseBtn;
-
+	private BankManager bank;
 	public Tower getDecoratedTower() {
 		return decoratedTower;
 	}
@@ -45,8 +46,10 @@ public class TowerManagerPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public TowerManagerPanel(Tower tower) {
+		this.objBalance = tower.cost();
+		this.bank = BankManager.getInstance();
 		this.towerType = tower.getClass().getSimpleName();
-		this.currentBalance = BankManager.getCurrentBalance();
+		this.currentBalance = bank.getCurrentBalance();
 		submit = new JButton("Submit");
 		balanceLable = new JLabel("you don't have enough money to upgrade");
 		balanceLable.setVisible(false);
@@ -217,7 +220,7 @@ public class TowerManagerPanel extends JPanel {
 		speedUpBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				long expected = currentBalance + DefenderConstatns.FIRE_SPEED;
-				if (expected > (BankManager.balance - BankManager.getCurrentBalance())) {
+				if (expected > (bank.getBalance() - bank.getCurrentBalance())) {
 					balanceLable.setVisible(true);
 					purchaseBtn.setVisible(true);
 				} else {
@@ -238,7 +241,7 @@ public class TowerManagerPanel extends JPanel {
 		powerUpBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				long expected = currentBalance + DefenderConstatns.FIRE_POWER;
-				if (expected > (BankManager.balance - BankManager.getCurrentBalance())) {
+				if (expected > (bank.getBalance() - bank.getCurrentBalance())) {
 					balanceLable.setVisible(true);
 					purchaseBtn.setVisible(true);
 				} else {
@@ -259,7 +262,7 @@ public class TowerManagerPanel extends JPanel {
 		rangeUpBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				long expected = currentBalance + DefenderConstatns.FIRE_RANGE;
-				if (expected > (BankManager.balance - BankManager.getCurrentBalance())) {
+				if (expected > (bank.getBalance() - bank.getCurrentBalance())) {
 					balanceLable.setVisible(true);
 					purchaseBtn.setVisible(true);
 				} else {
@@ -278,6 +281,7 @@ public class TowerManagerPanel extends JPanel {
 
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(currentBalance);
 				towerFactory();
 			}
 		});
@@ -316,8 +320,11 @@ public class TowerManagerPanel extends JPanel {
 				tower= new FirePower(tower);
 
 			this.decoratedTower = tower;
-			currentBalance = decoratedTower.cost();
-			BankManager.setCurrentBalance(currentBalance);
+			long value = bank.getCurrentBalance();
+			value -= objBalance;
+			long temp = this.decoratedTower.cost(); 
+			value  += temp;
+			bank.setCurrentBalance(value);
 
 		} catch (Exception e) {
 			// TODO: handle exception
