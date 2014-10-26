@@ -17,14 +17,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	private JMenuBar menuBar;
 	private JMenu mapMenu;
-//	private JMenuItem newMenuItem;
 	private JMenuItem openMenuItem;
-//	private JMenuItem saveMenuItem;
-	private MapEditorPanel mapPanel;
-//	private int width;
-//	private int height;
-//	private JTextField widthTextField;
-//	private JTextField heightTextField;
+	private GamePanel mapPanel;
 	JDialog mapSizeDialog;
 
 	public MainFrame() {
@@ -41,7 +35,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		setLayout(new BorderLayout());
 		
-		mapPanel = new MapEditorPanel(8,8);
+		mapPanel = new GamePanel(8,8);
 	}
 
 	private void refresh() {
@@ -55,17 +49,11 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		mapMenu = new JMenu(Constants.MAP_MENU);
 
-//		newMenuItem = new JMenuItem(Constants.DESIGN_MAP);
 		openMenuItem = new JMenuItem(Constants.LOAD_MAP);
-//		saveMenuItem = new JMenuItem(Constants.SAVE_MAP);
 
-//		newMenuItem.addActionListener(this);
 		openMenuItem.addActionListener(this);
-//		saveMenuItem.addActionListener(this);
 
-//		mapMenu.add(newMenuItem);
 		mapMenu.add(openMenuItem);
-//		mapMenu.add(saveMenuItem);
 
 		menuBar.add(mapMenu);
 
@@ -77,121 +65,17 @@ public class MainFrame extends JFrame implements ActionListener {
 		String menuItem = event.getActionCommand();
 
 		switch (menuItem) {
-//		case Constants.DESIGN_MAP:
-//			getNewMapSize();
-//			break;
 		case Constants.LOAD_MAP:
 			mapPanel.loadMap();
 			continueMapDesign();
 			break;
-//		case Constants.SAVE_MAP:
-//			mapPanel.saveMap();
-//			break;
-//		case Constants.OK:
-//			setMapSize();
-//			startMapDesign();
-//			closeMapSizeDialog();
-//			break;
-//		case Constants.CANCEL:
-//			closeMapSizeDialog();
-//			break;
 		}
-
 	}
 
-//	private void closeMapSizeDialog() {
-//		mapSizeDialog.dispose();
-//		
-//	}
-
-//	private void setMapSize() {
-//		width = (new Integer(widthTextField.getText())).intValue();
-//		height = (new Integer(heightTextField.getText())).intValue();
-//		
-//	}
-
-//	private void startMapDesign() {
-//		//first validate size
-////		mapPanel = null;
-////		mapPanel = new MapEditorPanel(width, height);
-//		mapPanel.setGridSize(width, height);
-////		mapPanel.designMap();
-//		mapPanel.setMapSize(width, height);
-//		continueMapDesign();
-//	}
-
 	private void continueMapDesign() {
-//		remove(mapPanel);
 		add(mapPanel, BorderLayout.CENTER);
 		refresh();
 		
 	}
 
-//	private void getNewMapSize() {
-//		mapSizeDialog = new JDialog(this, true); // parent, isModal
-//		mapSizeDialog.setTitle(Constants.MAP_SIZE);
-//		mapSizeDialog.setSize(200, 150);
-//		mapSizeDialog.setLocationRelativeTo(this);
-//
-//		widthTextField = new JTextField("15", 1);
-//		heightTextField = new JTextField("15", 1);
-//
-//		JLabel widthLable = new JLabel(Constants.WIDTH);
-//		JLabel heightLable = new JLabel(Constants.HEIGHT);
-//
-//		JButton okButton = new JButton(Constants.OK);
-//		JButton cancelButton = new JButton(Constants.CANCEL);
-//
-//		okButton.addActionListener(this);
-//		cancelButton.addActionListener(this);
-//
-//		JPanel panel = new JPanel();
-//		panel.setSize(100, 200);
-//
-//		// This section is to layout the form
-//		GroupLayout layout = new GroupLayout(panel);
-//		layout.setAutoCreateGaps(true);
-//		layout.setAutoCreateContainerGaps(true);
-//
-//		layout.setHorizontalGroup(layout
-//				.createSequentialGroup()
-//				.addGroup(
-//						layout.createSequentialGroup().addGroup(
-//								layout.createParallelGroup(
-//										GroupLayout.Alignment.LEADING)
-//										.addComponent(widthLable)
-//										.addComponent(heightLable)
-//										.addComponent(cancelButton)))
-//				.addGroup(
-//						layout.createSequentialGroup().addGroup(
-//								layout.createParallelGroup(
-//										GroupLayout.Alignment.LEADING)
-//										.addComponent(widthTextField)
-//										.addComponent(heightTextField)
-//										.addComponent(okButton))));
-//
-//		layout.setVerticalGroup(layout
-//				.createSequentialGroup()
-//				.addGroup(
-//						layout.createParallelGroup(
-//								GroupLayout.Alignment.BASELINE)
-//								.addComponent(widthLable)
-//								.addComponent(widthTextField))
-//				.addGroup(
-//						layout.createParallelGroup(
-//								GroupLayout.Alignment.BASELINE)
-//								.addComponent(heightLable)
-//								.addComponent(heightTextField))
-//				.addGroup(
-//						layout.createParallelGroup(
-//								GroupLayout.Alignment.BASELINE)
-//								.addComponent(cancelButton)
-//								.addComponent(okButton)));
-//		panel.setLayout(layout);
-//		// Form layout done!
-//
-//		mapSizeDialog.add(panel);
-//		mapSizeDialog.setVisible(true);
-//
-//	}
 }

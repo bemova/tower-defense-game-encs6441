@@ -29,7 +29,7 @@ import core.domain.maps.VisualGrid;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
-public class MapEditorPanel extends JPanel implements ActionListener,
+public class GamePanel extends JPanel implements ActionListener,
 		MouseListener, MouseMotionListener {
 
 	/**
@@ -59,10 +59,10 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	JPanel toolBoxContainer = new JPanel();
 
 	@SuppressWarnings("unused")
-	private MapEditorPanel() {
+	private GamePanel() {
 	}
 
-	public MapEditorPanel(int width, int height) {
+	public GamePanel(int width, int height) {
 
 		initialize(width, height);
 		setLayout(new BorderLayout());
