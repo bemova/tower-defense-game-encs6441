@@ -9,7 +9,7 @@ public class BankManager {
 	public static long currentBalance;
 	
 	
-	protected BankManager() {
+	public BankManager() {
 		// Exists only to defeat instantiation.
 	}
 	public static BankManager getInstance() {
@@ -20,16 +20,16 @@ public class BankManager {
 		}
 		return instance;
 	}
-	public static long getBalance() {
+	public long getBalance() {
 		return balance;
 	}
-	public static void addBalance(long balance) {
+	public void addBalance(long balance) {
 		BankManager.balance += balance;
 	}
-	public static long getCurrentBalance() {
+	public long getCurrentBalance() {
 		return currentBalance;
 	}
-	public static void setCurrentBalance(long currentBalance) {
+	public void setCurrentBalance(long currentBalance) {
 		BankManager.currentBalance += currentBalance;
 	}
 }

@@ -1,11 +1,12 @@
 package core.applicationService.warriorServices;
 
-import java.beans.FeatureDescriptor;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import core.domain.warriors.defenders.towers.Tower;
+import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
 import core.domain.warriors.defenders.towers.features.FireSpeed;
@@ -106,13 +107,14 @@ public class TowerFactory {
 	}
 	public Map<String, Integer> getFeaturesCount(List<Tower> towerDetails){
 		Map<String,Integer> details = new HashMap<>();
+		details.put("FirePower", 0);
+		details.put("FireRange", 0);
+		details.put("FireSpeed", 0);
 		try {
 			for (Object tower : towerDetails) {
-				if(tower instanceof FeatureDescriptor){
+				if(tower instanceof TowerFeatureDecorator){
 					String key = tower.getClass().getSimpleName();
-					int value = details.get(key);
-					value ++;
-					details.put(key, value);
+					details.put(key, details.get(key) + 1);
 				}
 			}
 		} catch (Exception e) {
