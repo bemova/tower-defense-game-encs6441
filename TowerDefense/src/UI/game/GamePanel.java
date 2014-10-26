@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import UI.CanvaObject;
 import UI.Constants;
+import UI.towerdesign.TowerInspection;
 import UI.towerdesign.TowerManagerPanel;
 import core.applicationService.mapServices.MapManager;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
@@ -177,9 +178,20 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 				}
 			} else {
 				if (towers[x][y] != null) {
-					TowerManagerPanel towerPanel = new TowerManagerPanel(
-							towers[x][y]);
-					add(towerPanel, BorderLayout.SOUTH);
+//					TowerManagerPanel towerPanel = new TowerManagerPanel(
+//							towers[x][y]);
+					TowerInspection inspection = new TowerInspection(towers[x][y]);
+					inspection.setVisible(true);
+					JDialog jd = new JDialog();
+					jd.setVisible(true);
+					jd.setSize(300, 500);
+					jd.setLocationRelativeTo(this);
+					
+					jd.setLayout(new  FlowLayout());
+					jd.add(inspection);
+					//add(inspection, BorderLayout.SOUTH);
+					//add(towerPanel, BorderLayout.SOUTH);
+					
 //					JDialog towerSpecs = new JDialog(); // parent, isModal
 //					towerSpecs.setTitle("Tower specification");
 //					towerSpecs.setSize(200, 150);
