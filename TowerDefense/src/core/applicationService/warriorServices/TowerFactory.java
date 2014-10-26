@@ -1,8 +1,10 @@
 package core.applicationService.warriorServices;
 
+import java.beans.FeatureDescriptor;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import core.contract.DefenderConstatns;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
@@ -32,21 +34,21 @@ public class TowerFactory {
 		Tower tower = getTower(towerType);
 		try {
 			switch (level.name()) {
-				case "One":
+			case "One":
+				tower = getLevelOne(tower);
+				break;
+			case "two":
+			{
+				for(int i =0; i < 2;i++)
 					tower = getLevelOne(tower);
-					break;
-				case "two":
-				{
-					for(int i =0; i < 2;i++)
-						tower = getLevelOne(tower);
-					break;
-				}
-				case "three":
-				{
-					for(int i =0; i < 3;i++)
-						tower = getLevelOne(tower);
-					break;
-				}
+				break;
+			}
+			case "three":
+			{
+				for(int i =0; i < 3;i++)
+					tower = getLevelOne(tower);
+				break;
+			}
 			}
 			return tower;
 		} catch (Exception e) {
@@ -101,5 +103,21 @@ public class TowerFactory {
 			// TODO: handle exception
 		}
 		return baseTower;
+	}
+	public Map<String, Integer> getFeaturesCount(List<Tower> towerDetails){
+		Map<String,Integer> details = new HashMap<>();
+		try {
+			for (Object tower : towerDetails) {
+				if(tower instanceof FeatureDescriptor){
+					String key = tower.getClass().getSimpleName();
+					int value = details.get(key);
+					value ++;
+					details.put(key, value);
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return details;
 	}
 }
