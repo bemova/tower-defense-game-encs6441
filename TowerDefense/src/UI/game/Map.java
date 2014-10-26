@@ -42,7 +42,6 @@ public class Map extends Grid {
 				case EXIT:
 					color = MapConstants.EXIT_COLOR;
 					break;
-
 				case TOWER:
 					color = towers[x][y].display();
 					break;

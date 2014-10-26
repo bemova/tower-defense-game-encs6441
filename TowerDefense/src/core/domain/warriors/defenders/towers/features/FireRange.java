@@ -1,5 +1,6 @@
 package core.domain.warriors.defenders.towers.features;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class FireRange extends TowerFeatureDecorator {
 	}
 
 	@Override
-	public void display() {
-		this.tower.display();
+	public Color display() {
+		return this.tower.display();
 	}
 
 	@Override

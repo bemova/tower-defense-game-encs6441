@@ -1,6 +1,9 @@
 package core.domain.warriors.defenders.towers.towerType;
 
+import java.awt.Color;
+
 import core.contract.DefenderConstatns;
+import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourImp.NoMove;
 import core.domain.warriors.defenders.towers.behaviourImp.NoSound;
@@ -16,8 +19,8 @@ public class KingTower extends Tower {
 	}
 
 	@Override
-	public void display() {
-		System.out.println("I am King!");
+	public Color display() {
+		return MapConstants.KING_TOWER_COLOR;
 
 	}
 	@Override

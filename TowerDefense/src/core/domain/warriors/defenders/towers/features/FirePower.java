@@ -1,5 +1,6 @@
 package core.domain.warriors.defenders.towers.features;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,8 @@ public class FirePower extends TowerFeatureDecorator {
 	}
 
 	@Override
-	public void display() {
-		// TODO Auto-generated method stub
-
-		this.tower.display();
+	public Color display() {
+		return this.tower.display();
 	}
 
 	@Override

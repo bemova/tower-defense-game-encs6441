@@ -18,7 +18,7 @@ public class Map extends VisualGrid {
 	
 	
 	//contructor's section
-	public Map(){};
+//	public Map(){};
 	public Map(Grid grid){
 		super(grid);
 		towers = new HashMap<String,Tower>();
