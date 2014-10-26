@@ -1,29 +1,29 @@
-package core.domain.maps;
+package UI.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
 import core.contract.MapConstants;
+import core.domain.maps.Grid;
+import core.domain.warriors.defenders.towers.Tower;
 
-@SuppressWarnings("serial")
-public class VisualGrid extends Grid {
+public class Map extends Grid {
 
-	Grid simpleGrid;
+	Tower[][] towers;
 
-//	public VisualGrid(){}
-	
-	public VisualGrid(Grid grid) {
-		simpleGrid = grid;
-
-	}
-
-	public VisualGrid(int width, int height) {
+	public Map(int width, int height) {
 		super(width, height);
 	}
 
-	public VisualGrid(int width, int height, GridCellContentType cellType) {
-		super(width, height, cellType);
+	public Map(Grid grid) {
+		super(grid);
 	}
 
+	public void updateTowers(Tower[][] towers) {
+		this.towers = towers;
+
+	}
+	
 	public void draw(Graphics g) {
 		// simpleGrid.draw(g);
 		for (int x = 0; x < getWidth(); x++) {
@@ -41,6 +41,10 @@ public class VisualGrid extends Grid {
 					break;
 				case EXIT:
 					color = MapConstants.EXIT_COLOR;
+					break;
+
+				case TOWER:
+					color = towers[x][y].display();
 					break;
 				}
 				g.setColor(color);
