@@ -18,12 +18,16 @@ import javax.swing.JPanel;
 
 import UI.CanvaObject;
 import UI.Constants;
-import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
+import UI.towerdesign.TowerManagerPanel;
 import core.applicationService.mapServices.MapManager;
+import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
+import core.applicationService.warriorServices.TowerFactory;
 import core.contract.MapConstants;
 import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
 import core.domain.maps.VisualGrid;
+import core.domain.warriors.defenders.towers.Tower;
+import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
 public class MapEditorPanel extends JPanel implements ActionListener,
 		MouseListener, MouseMotionListener {
@@ -37,6 +41,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	private boolean addTower;
 
+	private Tower tower;
 	JButton modernTower;
 	// JButton path;
 	// JButton ep;
@@ -190,11 +195,16 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	@Override
 	public void mouseClicked(MouseEvent event) {
 		if (addTower) {
+			TowerFactory factory = new TowerFactory();
+			tower = factory.getTower("ModernTower", TowerLevel.two);
 			draw(event.getX(), event.getY());
 			addTower = false;
 		}
 		else {
-//			openUpgradePanel();
+			if (tower != null){
+			TowerManagerPanel towerPanel = new TowerManagerPanel(tower);
+			add(towerPanel, BorderLayout.WEST);
+			}
 		}
 	}
 
@@ -258,59 +268,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		}
 
 	}
-
-	// private void exit() {
-	// try {
-	// cellContent = GridCellContentType.EXIT;
-	// colorToDrawGreed = exp.getBackground();
-	// } catch (java.lang.Exception ex) {
-	// JOptionPane.showMessageDialog(null, ex.getMessage());
-	//
-	// }
-	//
-	// }
-
-	// private void entrance() {
-	// try {
-	//
-	// colorToDrawGreed = ep.getBackground();
-	// cellContent = GridCellContentType.ENTRANCE;
-	// } catch (java.lang.Exception ex) {
-	// JOptionPane.showMessageDialog(null, ex.getMessage());
-	// }
-	//
-	// }
-
-	// private void scenery() {
-	// try {
-	//
-	// colorToDrawGreed = scenery.getBackground();
-	// cellContent = GridCellContentType.SCENERY;
-	//
-	// } catch (java.lang.Exception ex) {
-	// JOptionPane.showMessageDialog(null, ex.getMessage());
-	// }
-	//
-	// }
-
-	// protected void saveMap() {
-	// try {
-	//
-	// JFileChooser saveFile = new JFileChooser();
-	//
-	// if (saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-	// String fileName = saveFile.getSelectedFile().getAbsolutePath();
-	//
-	// String errorMessage = mapManager.SaveMapIntoFle(grid, fileName);
-	//
-	// if (!errorMessage.equals(""))
-	// JOptionPane.showMessageDialog(null, errorMessage);
-	// }
-	// } catch (java.lang.Exception ex) {
-	// JOptionPane.showMessageDialog(null, ex.getMessage());
-	// }
-	//
-	// }
 
 	protected void loadMap() {
 		try {
