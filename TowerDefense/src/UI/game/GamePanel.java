@@ -179,8 +179,17 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 				if (towers[x][y] != null) {
 					TowerManagerPanel towerPanel = new TowerManagerPanel(
 							towers[x][y]);
-//					add(towerPanel, BorderLayout.SOUTH);
-//					JDialog jd = new JDialog("Tower specification");
+					add(towerPanel, BorderLayout.SOUTH);
+//					JDialog towerSpecs = new JDialog(); // parent, isModal
+//					towerSpecs.setTitle("Tower specification");
+//					towerSpecs.setSize(200, 150);
+//					towerSpecs.setLocationRelativeTo(this);
+//					JPanel panel = new JPanel();
+//					panel.setLayout(new FlowLayout());
+//					panel.add(towerPanel);
+//					panel.setVisible(true);
+//					towerSpecs.setVisible(true);
+					
 					
 				}
 			}
