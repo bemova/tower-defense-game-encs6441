@@ -1,7 +1,7 @@
 package core.domain.maps;
 
 public enum GridCellContentType {
-	SCENERY(0), PATH(1), ENTRANCE(2), EXIT(3), MODERN_TOWER(11);
+	SCENERY(0), PATH(1), ENTRANCE(2), EXIT(3), TOWER(11);
 	private int value;
 	
 	private GridCellContentType(int value){

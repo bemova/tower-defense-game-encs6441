@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -25,12 +24,11 @@ import core.applicationService.warriorServices.TowerFactory;
 import core.contract.MapConstants;
 import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
-import core.domain.maps.VisualGrid;
+//import core.domain.maps.VisualGrid;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
-public class GamePanel extends JPanel implements ActionListener,
-		MouseListener, MouseMotionListener {
+public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 	/**
 	 * 
@@ -42,15 +40,13 @@ public class GamePanel extends JPanel implements ActionListener,
 	private boolean addTower;
 
 	private Tower tower;
-	JButton modernTower;
-	// JButton path;
-	// JButton ep;
-	// JButton exp;
+	private Tower[][] towers;
+	JButton towerButton;
 
 	Color colorToDrawGreed;
 	GridCellContentType cellContent;
 
-	Grid grid;
+	Map grid;
 
 	MapManager mapManager;
 	CanvaObject canvas;
@@ -67,22 +63,15 @@ public class GamePanel extends JPanel implements ActionListener,
 		initialize(width, height);
 		setLayout(new BorderLayout());
 
-		modernTower.setBackground(MapConstants.MODERN_TOWER_COLOR);
+		towerButton.setBackground(MapConstants.MODERN_TOWER_COLOR);
 		toolBoxContainer.setSize(10, 500);
 		toolBoxContainer.setLayout(new FlowLayout());
-		toolBoxContainer.add(modernTower);
-		// toolBoxContainer.add(path);
-		// toolBoxContainer.add(exp);
-		// toolBoxContainer.add(ep);
+		toolBoxContainer.add(towerButton);
 
 		mapManager = new MapManager();
 
-		modernTower.addActionListener(this);
-		// path.addActionListener(this);
-		// ep.addActionListener(this);
-		// exp.addActionListener(this);
+		towerButton.addActionListener(this);
 		canvas.addMouseListener(this);
-		canvas.addMouseMotionListener(this);
 
 		int mapPixelWidth = grid.getWidth() * grid.getUnitSize();
 		int mapPixelHeight = grid.getHeight() * grid.getUnitSize();
@@ -106,15 +95,10 @@ public class GamePanel extends JPanel implements ActionListener,
 
 		this.addTower = false;
 
-		modernTower = new JButton(Constants.MODERN_TOWER);
-		// path = new JButton(Constants.PATH);
-		// ep = new JButton(Constants.ENTRANCE);
-		// exp = new JButton(Constants.EXIT);
+		towerButton = new JButton(Constants.MODERN_TOWER);
 
-		// colorToDrawGreed = Color.green;
-		// cellContent = GridCellContentType.PATH;
-
-		grid = new VisualGrid(width, height, GridCellContentType.SCENERY);
+		towers = new Tower[width][height];
+		grid = new Map(width, height);
 
 		canvas = new CanvaObject(grid);
 		mapContainer = new JPanel();
@@ -157,75 +141,44 @@ public class GamePanel extends JPanel implements ActionListener,
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
-
 	}
 
-	// public void drawPath(Color backgroundColor) {
-	// try {
-	//
-	// colorToDrawGreed = backgroundColor;
-	// cellContent = GridCellContentType.PATH;
-	// } catch (java.lang.Exception ex) {
-	// JOptionPane.showMessageDialog(null, ex.getMessage());
-	// }
-	// }
-
-	@Override
-	public void mouseDragged(MouseEvent event) {
-		// draw(event.getX(), event.getY());
-
+	private int[] cellCoordinate(int pixelX, int pixelY) {
+		int i = pixelX / grid.getUnitSize();
+		int j = pixelY / grid.getUnitSize();
+		int[] coordinate = { i, j };
+		return coordinate;
 	}
 
 	private void draw(int x, int y) {
-		int i = x / grid.getUnitSize();
-		int j = y / grid.getUnitSize();
-		if ((i < grid.getWidth()) && (j < grid.getHeight())
-				&& (grid.getCell(i, j) != cellContent)) {
-			grid.setCell(i, j, cellContent);
+		if ((x < grid.getWidth()) && (y < grid.getHeight())
+				&& (grid.getCell(x, y) != cellContent)) {
+			grid.setCell(x, y, cellContent);
 			canvas.repaint();
-
 		}
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent event) {
-
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent event) {
-		if (addTower) {
-			TowerFactory factory = new TowerFactory();
-			tower = factory.getTower("ModernTower", TowerLevel.two);
-			draw(event.getX(), event.getY());
-			addTower = false;
-		}
-		else {
-			if (tower != null){
-			TowerManagerPanel towerPanel = new TowerManagerPanel(tower);
-			add(towerPanel, BorderLayout.WEST);
+		int[] coordinate = cellCoordinate(event.getX(), event.getY());
+		int x = coordinate[0];
+		int y = coordinate[1];
+
+		if (x <= width & y <= height) {
+			if (addTower) {
+				TowerFactory factory = new TowerFactory();
+				towers[x][y] = factory.getTower("ModernTower", TowerLevel.one);
+				grid.updateTowers(towers);
+				draw(x, y);
+				addTower = false;
+			} else {
+				if (towers[x][y] != null) {
+					TowerManagerPanel towerPanel = new TowerManagerPanel(
+							towers[x][y]);
+					add(towerPanel, BorderLayout.WEST);
+				}
 			}
 		}
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent event) {
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-
 	}
 
 	@Override
@@ -234,16 +187,16 @@ public class GamePanel extends JPanel implements ActionListener,
 
 		switch (command) {
 		case Constants.MODERN_TOWER:
-			modernTower();
+			tower();
 			break;
 		}
 	}
 
-	private void modernTower() {
+	private void tower() {
 		try {
 			addTower = true;
-			colorToDrawGreed = modernTower.getBackground();
-			cellContent = GridCellContentType.MODERN_TOWER; // black for path
+			colorToDrawGreed = towerButton.getBackground();
+			cellContent = GridCellContentType.TOWER;
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
@@ -273,8 +226,8 @@ public class GamePanel extends JPanel implements ActionListener,
 		try {
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
-				grid = mapManager.LoadMapFromFile(openFile.getSelectedFile()
-						.getAbsolutePath());
+				grid = new Map((Grid) mapManager.LoadMapFromFile(openFile.getSelectedFile()
+						.getAbsolutePath()));
 				canvas.updateGrid(grid);
 				width = grid.getWidth();
 				height = grid.getHeight();
@@ -282,6 +235,7 @@ public class GamePanel extends JPanel implements ActionListener,
 						height * grid.getUnitSize());
 				canvas.setSize(width * grid.getUnitSize(),
 						height * grid.getUnitSize());
+				resetTowerGrid();
 			}
 
 		} catch (java.lang.Exception ex) {
@@ -290,13 +244,24 @@ public class GamePanel extends JPanel implements ActionListener,
 
 	}
 
-	// protected void designMap() {
-	// try {
-	// canvas.updateGrid(grid);
-	// } catch (java.lang.Exception ex) {
-	// JOptionPane.showMessageDialog(null, ex.getMessage());
-	// }
-	//
-	// }
+	private void resetTowerGrid() {
+		towers = new Tower[width][height];
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent event) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+	}
 
 }

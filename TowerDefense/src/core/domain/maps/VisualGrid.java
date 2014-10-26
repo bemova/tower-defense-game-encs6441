@@ -9,8 +9,8 @@ public class VisualGrid extends Grid {
 
 	Grid simpleGrid;
 
-//	public VisualGrid(){}
-	
+	// public VisualGrid(){}
+
 	public VisualGrid(Grid grid) {
 		simpleGrid = grid;
 
@@ -29,7 +29,7 @@ public class VisualGrid extends Grid {
 		for (int x = 0; x < getWidth(); x++) {
 			for (int y = 0; y < getHeight(); y++) {
 				Color color = Color.green;
-				switch (getCell(x, y)){
+				switch (getCell(x, y)) {
 				case PATH:
 					color = MapConstants.PATH_COLOR;
 					break;
@@ -42,10 +42,7 @@ public class VisualGrid extends Grid {
 				case EXIT:
 					color = MapConstants.EXIT_COLOR;
 					break;
-
-				case MODERN_TOWER:
-					color = MapConstants.MODERN_TOWER_COLOR;
-					break;
+				default:
 				}
 				g.setColor(color);
 				g.fillRect(x * getUnitSize(), y * getUnitSize(), getUnitSize(),
