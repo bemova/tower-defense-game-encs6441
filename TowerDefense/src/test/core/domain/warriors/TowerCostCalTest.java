@@ -177,8 +177,8 @@ public class TowerCostCalTest {
 			modernCombo = new FireSpeed(modernCombo);
 			TowerMarket market = new TowerMarket();
 			
-			double sellResult = market.sellTower(modernCombo);
-			double expected = (specialModern * DefenderConstants.Sell_Percentage)/100;
+			long sellResult = market.sellTower(modernCombo);
+			long expected = (long) ((specialModern * DefenderConstants.Sell_Percentage)/100);
 			assertEquals(expected, sellResult, 0.001);
 			
 		} catch (Exception e) {
