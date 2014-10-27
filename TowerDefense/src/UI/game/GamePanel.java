@@ -2,7 +2,6 @@ package UI.game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
@@ -10,8 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,10 +18,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 import UI.CanvaObject;
-import UI.Constants;
 import UI.towerdesign.SimpleInspection;
 import core.applicationService.mapServices.MapManager;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
@@ -36,12 +33,10 @@ import core.domain.maps.GridCellContentType;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
-public class GamePanel extends JPanel implements ActionListener, MouseListener {
+@SuppressWarnings("serial")
+public class GamePanel extends JPanel implements Observer, ActionListener,
+		MouseListener {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private int width;
 	private int height;
 	private BankManager bank;
@@ -65,20 +60,22 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 	JPanel toolBoxContainer = new JPanel();
 
-	JDialog jd;
-//	SimpleInspection inspection;
-	
+	private JDialog jd;
+	private SimpleInspection inspection;
+	private int x, y;
+
 	@SuppressWarnings("unused")
 	private GamePanel() {
 	}
 
 	public GamePanel(int width, int height) {
-
-//		jd = new JDialog();
-//		jd.setTitle("Tower Inspection");
-//		jd.setVisible(false);
-//		jd.setSize(300, 280);
-//		jd.setLocationRelativeTo(this);
+		// model = new MyModel();
+		// inspection.addObserver(this);
+		// jd = new JDialog();
+		// jd.setTitle("Tower Inspection");
+		// jd.setVisible(false);
+		// jd.setSize(300, 280);
+		// jd.setLocationRelativeTo(this);
 
 		initialize(width, height);
 		setLayout(new BorderLayout());
@@ -178,6 +175,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		int i = pixelX / grid.getUnitSize();
 		int j = pixelY / grid.getUnitSize();
 		int[] coordinate = { i, j };
+		this.x = i;
+		this.y = j;
 		return coordinate;
 	}
 
@@ -238,65 +237,63 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 				}
 			} else {
 				if (towers[x][y] != null) {
-					
-					SimpleInspection inspection = new SimpleInspection(
-							towers[x][y]);
-//					jd = new JDialog();
-//					jd.setLayout(new FlowLayout());
-					
-					
-					inspection.setVisible(true);
-//					jd.add(inspection);
-//					jd.setTitle("Tower Inspection");
-//					jd.setVisible(true);
-//					jd.setSize(300, 280);
-//					jd.setLocationRelativeTo(this);
+
+					inspection = new SimpleInspection(towers[x][y]);
+					inspection.addObserver(this);
+					// jd = new JDialog();
+					// jd.setLayout(new FlowLayout());
+
+					// inspection.setVisible(true);
+					// jd.add(inspection);
+					// jd.setTitle("Tower Inspection");
+					// jd.setVisible(true);
+					// jd.setSize(300, 280);
+					// jd.setLocationRelativeTo(this);
 					// jd.setDefaultCloseOperation(closeInspector(inspection,x,y));
-//					jd.addWindowListener(new WindowListener() {
-//
-//						@Override
-//						public void windowOpened(WindowEvent e) {
-//							// TODO Auto-generated method stub
-//
-//						}
-//
-//						@Override
-//						public void windowIconified(WindowEvent e) {
-//							// TODO Auto-generated method stub
-//
-//						}
-//
-//						@Override
-//						public void windowDeiconified(WindowEvent e) {
-//							// TODO Auto-generated method stub
-//
-//						}
-//
-//						@Override
-//						public void windowDeactivated(WindowEvent e) {
-//							// TODO Auto-generated method stub
-//
-//						}
-//
-//						@Override
-//						public void windowClosing(WindowEvent e) {
-//							closeInspector(inspection, x, y);
-//
-//						}
-//
-//						@Override
-//						public void windowClosed(WindowEvent e) {
-//							// TODO Auto-generated method stub
-//
-//						}
-//
-//						@Override
-//						public void windowActivated(WindowEvent e) {
-//							// TODO Auto-generated method stub
-//
-//						}
-//					});
-					
+					// jd.addWindowListener(new WindowListener() {
+					//
+					// @Override
+					// public void windowOpened(WindowEvent e) {
+					// // TODO Auto-generated method stub
+					//
+					// }
+					//
+					// @Override
+					// public void windowIconified(WindowEvent e) {
+					// // TODO Auto-generated method stub
+					//
+					// }
+					//
+					// @Override
+					// public void windowDeiconified(WindowEvent e) {
+					// // TODO Auto-generated method stub
+					//
+					// }
+					//
+					// @Override
+					// public void windowDeactivated(WindowEvent e) {
+					// // TODO Auto-generated method stub
+					//
+					// }
+					//
+					// @Override
+					// public void windowClosing(WindowEvent e) {
+					// closeInspector(inspection, x, y);
+					//
+					// }
+					//
+					// @Override
+					// public void windowClosed(WindowEvent e) {
+					// // TODO Auto-generated method stub
+					//
+					// }
+					//
+					// @Override
+					// public void windowActivated(WindowEvent e) {
+					// // TODO Auto-generated method stub
+					//
+					// }
+					// });
 
 				}
 			}
@@ -413,4 +410,28 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 	public void mouseReleased(MouseEvent arg0) {
 	}
 
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		switch (inspection.getPerformedAction()) {
+		case "Upgrade":
+			towers[x][y] = inspection.getTower();
+			break;
+		case "Sell":
+			towers[x][y] = null;
+			clearTower(x, y);
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	private void clearTower(int x, int y) {
+		if ((x < grid.getWidth()) && (y < grid.getHeight())
+				&& (grid.getCell(x, y) == GridCellContentType.TOWER)) {
+			grid.updateTowers(towers);
+			grid.setCell(x, y, GridCellContentType.SCENERY);
+			canvas.repaint();
+		}
+	}
 }

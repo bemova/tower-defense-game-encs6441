@@ -6,9 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -22,13 +25,12 @@ import core.domain.account.BankManager;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
-@SuppressWarnings("serial")
-public class SimpleInspection extends JDialog implements ActionListener {
+public class SimpleInspection extends Observable implements ActionListener {
 	private String towerType;
 	private BankManager bank;
 	private Tower tower;
 
-
+	private String performedAction;
 	JLabel speedCount;
 	JLabel rangeCount;
 	JLabel powerCount;
@@ -38,16 +40,51 @@ public class SimpleInspection extends JDialog implements ActionListener {
 	JLabel levelLabel;
 	JButton upgradeBtn;
 	JPanel panel;
+	JDialog dialog;
 
 	/**
 	 * Create the panel.
 	 */
 	public SimpleInspection(Tower tower) {
+		performedAction = "";
+		dialog = new JDialog();
+		dialog.addWindowListener(new WindowListener() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				closeInspector();
+
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+			}
+		});
+
 		panel = new JPanel();
 		this.tower = tower;
-		setLayout(new FlowLayout());
-		setTitle("Tower Inspection");
-		
+		dialog.setLayout(new FlowLayout());
+		dialog.setTitle("Tower Inspection");
+
 		List<Tower> towerList = tower.objectDetials();
 		TowerFactory f = new TowerFactory();
 		this.towerType = f.getDecoratedName(towerList);
@@ -210,11 +247,10 @@ public class SimpleInspection extends JDialog implements ActionListener {
 		sellPriceCount.setText(new Long(sellPrice).toString());
 
 		// end of texboxes'text setting
-		add(panel);
-		setVisible(true);
-		setSize(300, 280);
-		setLocationRelativeTo(this);
-		
+		dialog.add(panel);
+		dialog.setVisible(true);
+		dialog.setSize(300, 280);
+		dialog.setLocationRelativeTo(null);
 
 	}
 
@@ -232,6 +268,11 @@ public class SimpleInspection extends JDialog implements ActionListener {
 		}
 	}
 
+	public String getPerformedAction() {
+		return performedAction;
+
+	}
+
 	private void sell() {
 		String str = sellPriceCount.getText();
 		long temp = bank.getCurrentBalance();
@@ -239,6 +280,8 @@ public class SimpleInspection extends JDialog implements ActionListener {
 		temp -= sellPrice;
 		bank.resetCurrentBalance();
 		bank.setCurrentBalance(temp);
+		performedAction = "Sell";
+		closeInspector();
 	}
 
 	private void upgrade() {
@@ -252,8 +295,8 @@ public class SimpleInspection extends JDialog implements ActionListener {
 
 			Tower newTower = upgradeLevel(tower, towerType, speedCount,
 					rangeCount, powerCount);
-			
-			//if()
+
+			// if()
 			this.tower = newTower;
 			this.speedCount.setText(new Integer(speedCount++).toString());
 			this.rangeCount.setText(new Integer(rangeCount++).toString());
@@ -263,12 +306,14 @@ public class SimpleInspection extends JDialog implements ActionListener {
 			this.sellPriceCount.setText(Double.toString(market
 					.sellTower(newTower)));
 			this.levelLabel.setText("Level " + newTower.getLevel().toString());
+			performedAction = "Upgrade";
 			if (newTower.getLevel().equals(TowerLevel.three)) {
 				this.upgradeBtn.setEnabled(false);
 			}
 		}
 
 		// this.setVisible(false);
+
 	}
 
 	public Tower getTower() {
@@ -302,6 +347,14 @@ public class SimpleInspection extends JDialog implements ActionListener {
 			return tower;
 		}
 		return null;
+	}
+
+	private void closeInspector() {
+		setChanged();
+		notifyObservers();
+		// towers[x][y] = inspection.getTower();
+		// grid.updateTowers(towers);
+		dialog.dispose();
 	}
 
 }
