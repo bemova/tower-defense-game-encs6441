@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,6 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import UI.CanvaObject;
 import UI.Constants;
@@ -73,7 +76,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		modernTowerBtn.setBackground(MapConstants.MODERN_TOWER_COLOR);
 		ancientTowerBtn.setBackground(MapConstants.ANCIENT_TOWER_COLOR);
 		kingTowerBtn.setBackground(MapConstants.KING_TOWER_COLOR);
-		
+
 		toolBoxContainer.setSize(10, 500);
 		toolBoxContainer.setLayout(new FlowLayout());
 		toolBoxContainer.add(modernTowerBtn);
@@ -183,34 +186,43 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		int y = coordinate[1];
 
 		if (x <= width & y <= height) {
-			if (addTower) { 
+			if (addTower) {
 				if (grid.getCell(x, y) == GridCellContentType.SCENERY) {
 					TowerFactory factory = new TowerFactory();
 					Tower tower;
 					switch (towerType) {
 					case DefenderConstants.MODERN_TOWER_TYPE:
-						tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE, TowerLevel.one);
+						tower = factory.getTower(
+								DefenderConstants.MODERN_TOWER_TYPE,
+								TowerLevel.one);
 						break;
 					case DefenderConstants.ANCIENT_TOWER_TYPE:
-						tower = factory.getTower(DefenderConstants.ANCIENT_TOWER_TYPE, TowerLevel.one);
+						tower = factory.getTower(
+								DefenderConstants.ANCIENT_TOWER_TYPE,
+								TowerLevel.one);
 						break;
 					case DefenderConstants.KING_TOWER_TYPE:
-						tower = factory.getTower(DefenderConstants.KING_TOWER_TYPE, TowerLevel.one);
+						tower = factory.getTower(
+								DefenderConstants.KING_TOWER_TYPE,
+								TowerLevel.one);
 						break;
 
 					default:
-						tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE, TowerLevel.one);
+						tower = factory.getTower(
+								DefenderConstants.MODERN_TOWER_TYPE,
+								TowerLevel.one);
 					}
 
-					if (tower.cost() < bank.getBalance() - bank.getCurrentBalance()) {
+					if (tower.cost() < bank.getBalance()
+							- bank.getCurrentBalance()) {
 						bank.setCurrentBalance(tower.cost());
 						towers[x][y] = tower;
 						grid.updateTowers(towers);
 						draw(x, y);
-					}
-					else {
-						JOptionPane.showMessageDialog(new JFrame(), "you don't have enough money :(", "Alert",
-						        JOptionPane.WARNING_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(new JFrame(),
+								"you don't have enough money :(", "Alert",
+								JOptionPane.WARNING_MESSAGE);
 					}
 					addTower = false;
 				}
@@ -218,13 +230,58 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 				if (towers[x][y] != null) {
 					SimpleInspection inspection = new SimpleInspection(
 							towers[x][y]);
+					System.out.println(x + " - " + y);
 					inspection.setVisible(true);
 					JDialog jd = new JDialog();
 					jd.setTitle("Tower Inspection");
 					jd.setVisible(true);
 					jd.setSize(300, 280);
 					jd.setLocationRelativeTo(this);
+					// jd.setDefaultCloseOperation(closeInspector(inspection,x,y));
+					jd.addWindowListener(new WindowListener() {
 
+						@Override
+						public void windowOpened(WindowEvent e) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void windowIconified(WindowEvent e) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void windowDeiconified(WindowEvent e) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void windowDeactivated(WindowEvent e) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void windowClosing(WindowEvent e) {
+							closeInspector(inspection, x, y);
+
+						}
+
+						@Override
+						public void windowClosed(WindowEvent e) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void windowActivated(WindowEvent e) {
+							// TODO Auto-generated method stub
+
+						}
+					});
 					jd.setLayout(new FlowLayout());
 					jd.add(inspection);
 
@@ -233,21 +290,31 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		}
 	}
 
+	private int closeInspector(SimpleInspection inspection, int x, int y) {
+		System.out.println("blob");
+		// WindowConstants.DISPOSE_ON_CLOSE;
+		System.out.println(inspection.getTower().cost());
+		towers[x][y] = inspection.getTower();
+		grid.updateTowers(towers);
+		// dispose();
+		return 0;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
 
 		switch (command) {
 		case DefenderConstants.MODERN_TOWER_TYPE:
-			towerType =DefenderConstants.MODERN_TOWER_TYPE; 
+			towerType = DefenderConstants.MODERN_TOWER_TYPE;
 			tower(towerType);
 			break;
 		case DefenderConstants.ANCIENT_TOWER_TYPE:
-			towerType =DefenderConstants.ANCIENT_TOWER_TYPE;
+			towerType = DefenderConstants.ANCIENT_TOWER_TYPE;
 			tower(towerType);
 			break;
 		case DefenderConstants.KING_TOWER_TYPE:
-			towerType =DefenderConstants.KING_TOWER_TYPE;
+			towerType = DefenderConstants.KING_TOWER_TYPE;
 			tower(towerType);
 			break;
 		}

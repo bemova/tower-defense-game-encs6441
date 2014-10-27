@@ -14,20 +14,31 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import UI.game.FormEvent;
+import UI.game.FormListener;
 import core.applicationService.warriorServices.TowerFactory;
 import core.applicationService.warriorServices.TowerMarket;
+import core.contract.DefenderConstants;
 import core.domain.account.BankManager;
 import core.domain.warriors.defenders.towers.Tower;
 
 @SuppressWarnings("serial")
-public class SimpleInspection extends JPanel {
+public class SimpleInspection extends JPanel implements ActionListener {
 	private String towerType;
 	private BankManager bank;
+	private Tower tower;
+	private FormListener listener;
+
+	JLabel speedCount;
+	JLabel rangeCount;
+	JLabel powerCount;
+	JLabel valueCount;
 
 	/**
 	 * Create the panel.
 	 */
 	public SimpleInspection(Tower tower) {
+		this.tower = tower;
 		List<Tower> towerList = tower.objectDetials();
 		TowerFactory f = new TowerFactory();
 		this.towerType = f.getDecoratedName(towerList);
@@ -50,7 +61,7 @@ public class SimpleInspection extends JPanel {
 		gbc_speedLable.gridy = 1;
 		add(speedLable, gbc_speedLable);
 
-		JLabel speedCount = new JLabel("");
+		speedCount = new JLabel("");
 		GridBagConstraints gbc_speedCount = new GridBagConstraints();
 		gbc_speedCount.insets = new Insets(0, 0, 5, 0);
 		gbc_speedCount.gridx = 2;
@@ -65,7 +76,7 @@ public class SimpleInspection extends JPanel {
 		gbc_powerLable.gridy = 2;
 		add(powerLable, gbc_powerLable);
 
-		JLabel powerCount = new JLabel("");
+		powerCount = new JLabel("");
 		GridBagConstraints gbc_powerCount = new GridBagConstraints();
 		gbc_powerCount.insets = new Insets(0, 0, 5, 0);
 		gbc_powerCount.gridx = 2;
@@ -80,7 +91,7 @@ public class SimpleInspection extends JPanel {
 		gbc_rangeLable.gridy = 3;
 		add(rangeLable, gbc_rangeLable);
 
-		JLabel rangeCount = new JLabel("");
+		rangeCount = new JLabel("");
 		GridBagConstraints gbc_rangeCount = new GridBagConstraints();
 		gbc_rangeCount.insets = new Insets(0, 0, 5, 0);
 		gbc_rangeCount.gridx = 2;
@@ -95,7 +106,7 @@ public class SimpleInspection extends JPanel {
 		gbc_valueLable.gridy = 4;
 		add(valueLable, gbc_valueLable);
 
-		JLabel valueCount = new JLabel("");
+		valueCount = new JLabel("");
 		GridBagConstraints gbc_valueCount = new GridBagConstraints();
 		gbc_valueCount.insets = new Insets(0, 0, 5, 0);
 		gbc_valueCount.gridx = 2;
@@ -104,40 +115,46 @@ public class SimpleInspection extends JPanel {
 
 		JButton upgradeBtn = new JButton("Upgrade");
 		upgradeBtn.setSize(30, 20);
-		upgradeBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String str = speedCount.getText();
-				int speedCount = Integer.parseInt(str)+1;
-				str = rangeCount.getText();
-				int rangeCount = Integer.parseInt(str)+1;
-				str = powerCount.getText();
-				int powerCount = Integer.parseInt(str)+1;
-
-				upgradeLevel(tower, towerType, speedCount, rangeCount,
-						powerCount);
-			}
-
-			private void upgradeLevel(Tower tower, String towerType,
-					int speedCount, int rangeCount, int powerCount) {
-				TowerFactory factory = new TowerFactory();
-
-				// get details from text fiels
-
-				// End of Details
-
-				Tower createdTower = factory.updateLevel(towerType, speedCount,
-						rangeCount, powerCount);
-
-				long value = tower.cost();
-				Tower tempTower = createdTower;
-				long delta = tempTower.cost() - value;
-				if (delta < bank.getBalance() - bank.getCurrentBalance()) {
-					bank.setCurrentBalance(delta);
-					tower = tempTower;
-				}
-
-			}
-		});
+		upgradeBtn.addActionListener(this);
+		// (new ActionListener() {
+		// public void actionPerformed(ActionEvent e) {
+		// String str = speedCount.getText();
+		// int speedCount = Integer.parseInt(str) + 1;
+		// str = rangeCount.getText();
+		// int rangeCount = Integer.parseInt(str) + 1;
+		// str = powerCount.getText();
+		// int powerCount = Integer.parseInt(str) + 1;
+		//
+		// Tower newTower = upgradeLevel(tower, towerType, speedCount,
+		// rangeCount, powerCount);
+		// FormEvent formEvent = new FormEvent(e, newTower);
+		// if (listener != null) {
+		// listener.formOccured(formEvent);
+		// }
+		// valueCount.setText(Long.toString(newTower.cost()));
+		// // speedCount.set
+		//
+		// }
+		//
+		// private Tower upgradeLevel(Tower tower, String towerType,
+		// int speedCount, int rangeCount, int powerCount) {
+		// TowerFactory factory = new TowerFactory();
+		//
+		// Tower createdTower = factory.updateLevel(towerType, speedCount,
+		// rangeCount, powerCount);
+		//
+		// long value = tower.cost();
+		// Tower tempTower = createdTower;
+		// long delta = tempTower.cost() - value;
+		// if (delta < bank.getBalance() - bank.getCurrentBalance()) {
+		// bank.setCurrentBalance(delta);
+		// tower = tempTower;
+		// return tower;
+		// }
+		// return null;
+		// }
+		//
+		// });
 
 		JLabel label_1 = new JLabel(" ");
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
@@ -224,6 +241,59 @@ public class SimpleInspection extends JPanel {
 
 		// end of texboxes'text setting
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		String command = event.getActionCommand();
+
+		switch (command) {
+		case "Upgrade":
+			upgrade();
+			break;
+		}
+	}
+
+	public void setListener(FormListener listener) {
+		this.listener = listener;
+	}
+
+	private void upgrade() {
+		String str = this.speedCount.getText();
+		int speedCount = Integer.parseInt(str) + 1;
+		str = rangeCount.getText();
+		int rangeCount = Integer.parseInt(str) + 1;
+		str = powerCount.getText();
+		int powerCount = Integer.parseInt(str) + 1;
+
+		Tower newTower = upgradeLevel(tower, towerType, speedCount, rangeCount,
+				powerCount);
+		this.tower = newTower;
+		valueCount.setText(Long.toString(newTower.cost()));
+		// speedCount.set
+
+	}
+
+	public Tower getTower() {
+		return this.tower;
+	}
+
+	private Tower upgradeLevel(Tower tower, String towerType, int speedCount,
+			int rangeCount, int powerCount) {
+		TowerFactory factory = new TowerFactory();
+
+		Tower createdTower = factory.updateLevel(towerType, speedCount,
+				rangeCount, powerCount);
+
+		long value = tower.cost();
+		Tower tempTower = createdTower;
+		long delta = tempTower.cost() - value;
+		if (delta < bank.getBalance() - bank.getCurrentBalance()) {
+			bank.setCurrentBalance(delta);
+			tower = tempTower;
+			return tower;
+		}
+		return null;
 	}
 
 }
