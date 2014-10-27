@@ -1,5 +1,6 @@
 package UI.towerdesign;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -25,52 +26,18 @@ public class TowerInfoPanel extends JPanel {
 	private JLabel powerCount;
 	private JLabel valueCount;
 	private JLabel levelLabel;
-	private JPanel panel;
-	private JDialog dialog;
+//	private JPanel panel;
+//	private JDialog dialog;
 	private Tower tower;
 	private String towerType;
 
 	/**
 	 * Create the panel.
 	 */
-	public TowerInfoPanel(String towerType) {
+	public TowerInfoPanel(){}
+	public TowerInfoPanel(Tower tower) {
 
-		dialog = new JDialog();
-		dialog.addWindowListener(new WindowListener() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-
-			}
-
-			@Override
-			public void windowClosed(WindowEvent e) {
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
-			}
-		});
-
-		panel = new JPanel();
 		this.tower = tower;
-		dialog.setLayout(new FlowLayout());
-		dialog.setTitle("Tower Information");
 
 		List<Tower> towerList = tower.objectDetials();
 		TowerFactory f = new TowerFactory();
@@ -83,7 +50,7 @@ public class TowerInfoPanel extends JPanel {
 				Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		panel.setLayout(gridBagLayout);
+		setLayout(gridBagLayout);
 
 		JLabel speedLable = new JLabel("Fire Speed");
 		speedLable.setHorizontalAlignment(SwingConstants.LEFT);
@@ -91,14 +58,14 @@ public class TowerInfoPanel extends JPanel {
 		gbc_speedLable.insets = new Insets(0, 0, 5, 5);
 		gbc_speedLable.gridx = 1;
 		gbc_speedLable.gridy = 1;
-		panel.add(speedLable, gbc_speedLable);
+		add(speedLable, gbc_speedLable);
 
 		speedCount = new JLabel("");
 		GridBagConstraints gbc_speedCount = new GridBagConstraints();
 		gbc_speedCount.insets = new Insets(0, 0, 5, 0);
 		gbc_speedCount.gridx = 2;
 		gbc_speedCount.gridy = 1;
-		panel.add(speedCount, gbc_speedCount);
+		add(speedCount, gbc_speedCount);
 
 		JLabel powerLable = new JLabel("Fire Power");
 		powerLable.setHorizontalAlignment(SwingConstants.LEFT);
@@ -106,14 +73,14 @@ public class TowerInfoPanel extends JPanel {
 		gbc_powerLable.insets = new Insets(0, 0, 5, 5);
 		gbc_powerLable.gridx = 1;
 		gbc_powerLable.gridy = 2;
-		panel.add(powerLable, gbc_powerLable);
+		add(powerLable, gbc_powerLable);
 
 		powerCount = new JLabel("");
 		GridBagConstraints gbc_powerCount = new GridBagConstraints();
 		gbc_powerCount.insets = new Insets(0, 0, 5, 0);
 		gbc_powerCount.gridx = 2;
 		gbc_powerCount.gridy = 2;
-		panel.add(powerCount, gbc_powerCount);
+		add(powerCount, gbc_powerCount);
 
 		JLabel rangeLable = new JLabel("Fire Range");
 		rangeLable.setHorizontalAlignment(SwingConstants.LEFT);
@@ -121,36 +88,36 @@ public class TowerInfoPanel extends JPanel {
 		gbc_rangeLable.insets = new Insets(0, 0, 5, 5);
 		gbc_rangeLable.gridx = 1;
 		gbc_rangeLable.gridy = 3;
-		panel.add(rangeLable, gbc_rangeLable);
+		add(rangeLable, gbc_rangeLable);
 
 		rangeCount = new JLabel("");
 		GridBagConstraints gbc_rangeCount = new GridBagConstraints();
 		gbc_rangeCount.insets = new Insets(0, 0, 5, 0);
 		gbc_rangeCount.gridx = 2;
 		gbc_rangeCount.gridy = 3;
-		panel.add(rangeCount, gbc_rangeCount);
+		add(rangeCount, gbc_rangeCount);
 
-		JLabel valueLable = new JLabel("Value         ");
+		JLabel valueLable = new JLabel("Price         ");
 		valueLable.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_valueLable = new GridBagConstraints();
 		gbc_valueLable.insets = new Insets(0, 0, 5, 5);
 		gbc_valueLable.gridx = 1;
 		gbc_valueLable.gridy = 4;
-		panel.add(valueLable, gbc_valueLable);
+		add(valueLable, gbc_valueLable);
 
 		valueCount = new JLabel("");
 		GridBagConstraints gbc_valueCount = new GridBagConstraints();
 		gbc_valueCount.insets = new Insets(0, 0, 5, 0);
 		gbc_valueCount.gridx = 2;
 		gbc_valueCount.gridy = 4;
-		panel.add(valueCount, gbc_valueCount);
+		add(valueCount, gbc_valueCount);
 
 		JLabel label_1 = new JLabel(" ");
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
 		gbc_label_1.insets = new Insets(0, 0, 5, 5);
 		gbc_label_1.gridx = 1;
 		gbc_label_1.gridy = 5;
-		panel.add(label_1, gbc_label_1);
+		add(label_1, gbc_label_1);
 
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
@@ -163,7 +130,7 @@ public class TowerInfoPanel extends JPanel {
 		gbc_levelLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_levelLabel.gridx = 1;
 		gbc_levelLabel.gridy = 6;
-		panel.add(levelLabel, gbc_levelLabel);
+		add(levelLabel, gbc_levelLabel);
 		GridBagConstraints gbc_upgradeBtn = new GridBagConstraints();
 		gbc_upgradeBtn.insets = new Insets(0, 0, 5, 0);
 		gbc_upgradeBtn.gridx = 2;
@@ -174,7 +141,7 @@ public class TowerInfoPanel extends JPanel {
 		gbc_label.insets = new Insets(0, 0, 5, 5);
 		gbc_label.gridx = 1;
 		gbc_label.gridy = 7;
-		panel.add(label, gbc_label);
+		add(label, gbc_label);
 
 		GridBagConstraints gbc_sellPriceLable = new GridBagConstraints();
 		gbc_sellPriceLable.insets = new Insets(0, 0, 5, 5);
@@ -209,12 +176,9 @@ public class TowerInfoPanel extends JPanel {
 		valueCount.setText(Long.toString(value));
 		levelLabel.setText("Level " + tower.getLevel());
 		GridBagConstraints gbc_sellBtn = new GridBagConstraints();
-
-		// end of texboxes'text setting
-		dialog.add(panel);
-		dialog.setVisible(true);
-		dialog.setSize(300, 280);
-		dialog.setLocationRelativeTo(null);
+setVisible(true);
+//setBackground(Color.GREEN);
+//setSize(200,200);
 
 	}
 

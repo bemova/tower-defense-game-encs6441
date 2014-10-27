@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +39,7 @@ import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Observer, ActionListener,
 		MouseListener {
-
+	private JDialog towerInfo;
 	private int width;
 	private int height;
 	private BankManager bank;
@@ -66,7 +68,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	private SimpleInspection inspection;
 	private int x, y;
 	private long availFunds;
-	
+
 	private TowerInfoPanel towerInfoPanel;
 
 	@SuppressWarnings("unused")
@@ -89,114 +91,112 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		toolBoxContainer.add(ancientTowerBtn);
 		toolBoxContainer.add(kingTowerBtn);
 		mapManager = new MapManager();
-		
+
 		toolBoxContainer.add(towerInfoPanel);
 
 		modernTowerBtn.addActionListener(this);
 		ancientTowerBtn.addActionListener(this);
 		kingTowerBtn.addActionListener(this);
 		canvas.addMouseListener(this);
-		
-		modernTowerBtn.addMouseListener(new MouseListener(){
+
+		modernTowerBtn.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				displayTowerInfo("ModernTower");
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+				hideTowerInfo();
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
 
-		ancientTowerBtn.addMouseListener(new MouseListener(){
+		ancientTowerBtn.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				displayTowerInfo("AncientTower");
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+				hideTowerInfo();
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
-		
-		kingTowerBtn.addMouseListener(new MouseListener(){
+
+		kingTowerBtn.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				displayTowerInfo("KingTower");
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+				hideTowerInfo();
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
 		int mapPixelWidth = grid.getWidth() * grid.getUnitSize();
 		int mapPixelHeight = grid.getHeight() * grid.getUnitSize();
@@ -215,7 +215,9 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	}
 
 	private void initialize(int width, int height) {
-		
+
+		towerInfoPanel = new TowerInfoPanel();
+
 		this.bank = BankManager.getInstance();
 
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
@@ -239,17 +241,25 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		toolBoxContainer = new JPanel();
 
 	}
-private void displayTowerInfo(String towerType){
-	switch (towerType) {
-	case "ModernTower":
-		
-		break;
 
-	default:
-		break;
+	private void displayTowerInfo(String towerType) {
+		TowerFactory factory = new TowerFactory();
+
+		Tower tower = factory.getTower(towerType, TowerLevel.one);
+
+		towerInfoPanel = new TowerInfoPanel(tower);
+		// toolBoxContainer.add(towerInfoPanel);
+		towerInfo = new JDialog(new Frame(),"Tower info");
+		towerInfo.add(towerInfoPanel);
+		towerInfo.setSize(150, 200);
+		towerInfo.setVisible(true);
+
 	}
-	towerInfoPanel = new TowerInfoPanel(towerType);
-}
+
+	private void hideTowerInfo() {
+		towerInfo.dispose();
+	}
+
 	public class CanvasCoordinate extends Point {
 		public CanvasCoordinate(int x, int y) {
 			super(x, y);
@@ -311,7 +321,7 @@ private void displayTowerInfo(String towerType){
 
 		if (x <= width & y <= height) {
 			if (addTowerFlag) {
-				addTower(x,y);
+				addTower(x, y);
 			} else {
 				towerUpgradePanels();
 			}
@@ -325,42 +335,37 @@ private void displayTowerInfo(String towerType){
 				inspection.close();
 				inspection = null;
 			}
-//			customTowerFeatures = new TowerManagerPanel(towers[x][y]);
+			// customTowerFeatures = new TowerManagerPanel(towers[x][y]);
 			inspection = new SimpleInspection(towers[x][y]);
 			inspection.addObserver(this);
 		}
 	}
-	
-	private void addTower(int x, int y){
+
+	private void addTower(int x, int y) {
 
 		if (grid.getCell(x, y) == GridCellContentType.SCENERY) {
 			TowerFactory factory = new TowerFactory();
 			Tower tower;
 			switch (towerType) {
 			case DefenderConstants.MODERN_TOWER_TYPE:
-				tower = factory.getTower(
-						DefenderConstants.MODERN_TOWER_TYPE,
+				tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE,
 						TowerLevel.one);
 				break;
 			case DefenderConstants.ANCIENT_TOWER_TYPE:
-				tower = factory.getTower(
-						DefenderConstants.ANCIENT_TOWER_TYPE,
+				tower = factory.getTower(DefenderConstants.ANCIENT_TOWER_TYPE,
 						TowerLevel.one);
 				break;
 			case DefenderConstants.KING_TOWER_TYPE:
-				tower = factory.getTower(
-						DefenderConstants.KING_TOWER_TYPE,
+				tower = factory.getTower(DefenderConstants.KING_TOWER_TYPE,
 						TowerLevel.one);
 				break;
 
 			default:
-				tower = factory.getTower(
-						DefenderConstants.MODERN_TOWER_TYPE,
+				tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE,
 						TowerLevel.one);
 			}
 
-			if (tower.cost() < bank.getBalance()
-					- bank.getCurrentBalance()) {
+			if (tower.cost() < bank.getBalance() - bank.getCurrentBalance()) {
 				bank.setCurrentBalance(tower.cost());
 				availFunds = this.bank.getBalance()
 						- this.bank.getCurrentBalance();
@@ -377,7 +382,7 @@ private void displayTowerInfo(String towerType){
 			addTowerFlag = false;
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
@@ -423,10 +428,10 @@ private void displayTowerInfo(String towerType){
 			// validation part
 			StartEndChecker checker = new StartEndChecker();
 			if (!checker.isCorrectSize(height, width))
-			// end of validation
+				// end of validation
 
-			mapContainer.setSize(width * grid.getUnitSize(),
-					height * grid.getUnitSize());
+				mapContainer.setSize(width * grid.getUnitSize(),
+						height * grid.getUnitSize());
 			canvas.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 
@@ -465,7 +470,7 @@ private void displayTowerInfo(String towerType){
 
 	@Override
 	public void mouseEntered(MouseEvent event) {
-		
+
 	}
 
 	@Override

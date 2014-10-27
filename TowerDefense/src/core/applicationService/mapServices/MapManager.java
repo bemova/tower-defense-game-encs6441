@@ -50,10 +50,7 @@ public class MapManager {
 	 * @param FileName
 	 * @return
 	 */
-	public String SaveMapIntoFle(Grid grid, String FileName) {
-
-		String errorMessage = "";
-		//validation part 
+	public void SaveMapIntoFle(Grid grid, String FileName) {
 		try {
 			StartEndChecker startEndChecker = new StartEndChecker();
 			if(!startEndChecker.hasEnd(grid.getContent()))
@@ -77,7 +74,6 @@ public class MapManager {
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
 		}
-		return errorMessage;
 	}
 
 }
