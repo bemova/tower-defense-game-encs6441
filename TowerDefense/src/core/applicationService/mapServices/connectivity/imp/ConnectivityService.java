@@ -5,6 +5,7 @@ package core.applicationService.mapServices.connectivity.imp;
 
 import java.io.BufferedReader;
 
+import Infrastructure.loggin.Log4jLogger;
 import core.applicationService.mapServices.connectivity.IConnectivityService;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
@@ -18,6 +19,10 @@ import core.domain.waves.Position;
 public class ConnectivityService implements IConnectivityService {
 
 	private static BufferedReader br;
+	/**
+	 * application logger definition
+	 */
+	private static final Log4jLogger logger = new Log4jLogger();
 
 	/**
 	 * <b>
@@ -52,6 +57,7 @@ public class ConnectivityService implements IConnectivityService {
 			return (compression.connected(start, end));
 
 		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
 			return false;
 		}
 	}

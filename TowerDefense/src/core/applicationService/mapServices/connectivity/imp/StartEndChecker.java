@@ -1,5 +1,6 @@
 package core.applicationService.mapServices.connectivity.imp;
 
+import Infrastructure.loggin.Log4jLogger;
 import core.applicationService.mapServices.connectivity.IStartEndChecker;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
@@ -10,6 +11,7 @@ import core.domain.waves.Position;
  * @version 0.1
  */
 public class StartEndChecker implements IStartEndChecker {
+	private static final Log4jLogger logger = new Log4jLogger();
 	/**
 	 * <b>it can used for check any two positions that were selected have overlap with others our not</b>
 	 * @param first 
@@ -81,7 +83,7 @@ public class StartEndChecker implements IStartEndChecker {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.writer(this.getClass().getName(), e);
 		}
 		return flag;
 	}

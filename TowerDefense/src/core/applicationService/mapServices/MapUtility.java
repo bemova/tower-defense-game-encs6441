@@ -1,5 +1,6 @@
 package core.applicationService.mapServices;
 
+import Infrastructure.loggin.Log4jLogger;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 /**
@@ -8,6 +9,7 @@ import core.domain.waves.Position;
  * @version 0.1
  */
 public class MapUtility {
+	private static final Log4jLogger logger = new Log4jLogger();
 	/**
 	 * <b>this method can find the enterance point </b>
 	 * @param map
@@ -23,7 +25,7 @@ public class MapUtility {
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.writer(this.getClass().getName(), e);
 		}
 		return null;
 	}
@@ -41,7 +43,7 @@ public class MapUtility {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.writer(this.getClass().getName(), e);
 		}
 		return null;
 	}

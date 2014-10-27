@@ -1,5 +1,6 @@
 package core.applicationService.warriorServices;
 
+import Infrastructure.loggin.Log4jLogger;
 import core.contract.DefenderConstants;
 import core.domain.warriors.defenders.towers.Tower;
 /**
@@ -8,6 +9,7 @@ import core.domain.warriors.defenders.towers.Tower;
  * @version 0.1
  */
 public class TowerMarket {
+	private static final Log4jLogger logger = new Log4jLogger();
 	/**
 	 * <b>this method calculate the sell value base on the decorated tower </b>
 	 * @param tower
@@ -18,7 +20,7 @@ public class TowerMarket {
 		try {
 				amount = (tower.cost() * DefenderConstants.Sell_Percentage)/100;
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.writer(this.getClass().getName(), e);
 		}
 		return amount;
 	}

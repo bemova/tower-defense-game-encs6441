@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import Infrastructure.loggin.Log4jLogger;
 import core.contract.DefenderConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
@@ -21,6 +22,7 @@ import core.domain.warriors.defenders.towers.towerType.TowerLevel;
  * @version 0.1
  */
 public class TowerFactory {
+	private static final Log4jLogger logger = new Log4jLogger();
 
 	/**
 	 * it takes tower type name and it will create a type of tower without any features
@@ -71,7 +73,7 @@ public class TowerFactory {
 			}
 			return tower;
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.writer(this.getClass().getName(), e);
 		}
 		return null;
 	}
@@ -88,7 +90,7 @@ public class TowerFactory {
 			tower = new FireSpeed(tower);
 			return tower;
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.writer(this.getClass().getName(), e);
 		}
 		return null;
 	}
@@ -130,7 +132,7 @@ public class TowerFactory {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.writer(this.getClass().getName(), e);
 		}
 		return baseTower;
 	}
@@ -153,7 +155,7 @@ public class TowerFactory {
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.writer(this.getClass().getName(), e);
 		}
 		return details;
 	}
@@ -174,7 +176,7 @@ public class TowerFactory {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.writer(this.getClass().getName(), e);
 		}
 		return null;
 	}
