@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import Infrastructure.loggin.Log4jLogger;
 import core.applicationService.informerServices.Observer;
 import core.applicationService.mapServices.connectivity.IUnion;
 import core.applicationService.mapServices.connectivity.IWeightedUnionPathCompression;
@@ -24,14 +25,14 @@ public class WeightedUnionPathCompression implements IUnion, IWeightedUnionPathC
 	private int[] unionArray;
 	private int[] unionSize;
 	private Map<Position, Integer> unionMap;
-	private ITDLogger logger;
+	private static final Log4jLogger logger = new Log4jLogger();
 	
-	@Autowired
-    public void setLogger(ITDLogger logger) {
-		this.logger = logger;
-	}
-	/* (non-Javadoc)
-	 * @see core.applicationService.mapServices.connectivity.imp.IWeightedUnionPathCompression#initialize(int, int)
+	/**
+	 * <b>we initialize the empty one dimensional array that has n * m size and the nodes are initialized by their index
+	 * like this a[0, 1, 2, 3, 4, 5, 6, 7, 8....] 
+	 * </b>
+	 * @param n
+	 * @param m
 	 */
 	@Override
 	public void initialize(int n, int m){
@@ -50,11 +51,14 @@ public class WeightedUnionPathCompression implements IUnion, IWeightedUnionPathC
 				}
 			}
 		} catch (Exception e) {
-			logger.writer("WeightedUnionPathCompression--> initialize", e);
+			logger.writer(this.getClass().getName(), e);
 		}
 	}
-	/* (non-Javadoc)
-	 * @see core.applicationService.mapServices.connectivity.imp.IWeightedUnionPathCompression#connected(core.domain.waves.Position, core.domain.waves.Position)
+	/**
+	 * <b>it can check two nodes have any connection or not</b>
+	 * @param p
+	 * @param q
+	 * @return boolean 
 	 */
 	@Override
 	public boolean connected(Position p, Position q){
@@ -62,8 +66,10 @@ public class WeightedUnionPathCompression implements IUnion, IWeightedUnionPathC
 		int qkey = unionMap.get(q);
 		return root(pKey) == root(qkey);
 	}
-	/* (non-Javadoc)
-	 * @see core.applicationService.mapServices.connectivity.imp.IWeightedUnionPathCompression#root(int)
+	/**
+	 * <b>it can get the root of each graph</b>
+	 * @param pKey index of node p 
+	 * @return int that represent the root node of each graph
 	 */
 	@Override
 	public int root(int pKey){
@@ -73,12 +79,14 @@ public class WeightedUnionPathCompression implements IUnion, IWeightedUnionPathC
 				pKey = unionArray[pKey];
 			}
 		} catch (Exception e) {
-			logger.writer("WeightedUnionPathCompression--> root", e);
+			logger.writer(this.getClass().getName(), e);
 		}
 		return pKey;
 	}
-	/* (non-Javadoc)
-	 * @see core.applicationService.mapServices.connectivity.imp.IWeightedUnionPathCompression#union(core.domain.waves.Position, core.domain.waves.Position)
+	/**
+	 * <b>it can make a union between two nodes of graph</b>
+	 * @param p node p from array
+	 * @param q node q from array
 	 */
 	@Override
 	public void union(Position p, Position q){
@@ -96,8 +104,7 @@ public class WeightedUnionPathCompression implements IUnion, IWeightedUnionPathC
 				unionSize[i] += unionSize[j];
 			}
 		} catch (Exception e) {
-			logger.writer("WeightedUnionPathCompression--> union", e);
+			logger.writer(this.getClass().getName(), e);
 		}
-
 	}
 }
