@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,7 +26,7 @@ import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
 import core.domain.warriors.defenders.towers.features.FireSpeed;
 
-public class TowerManagerPanel extends JPanel {
+public class TowerManagerPanel extends Observable {//JPanel
 	private JTextField speedField;
 	private JTextField rangeField;
 	private JTextField powerField;

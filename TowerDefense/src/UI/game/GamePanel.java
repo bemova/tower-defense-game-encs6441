@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 
 import UI.CanvaObject;
 import UI.towerdesign.SimpleInspection;
+import UI.towerdesign.TowerManagerPanel;
 import core.applicationService.mapServices.MapManager;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.warriorServices.TowerFactory;
@@ -60,6 +61,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 	private JPanel toolBoxContainer = new JPanel();
 
+	private TowerManagerPanel customTowerFeatures;
 	private SimpleInspection inspection;
 	private int x, y;
 	private long availFunds;
@@ -240,6 +242,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 						inspection.close();
 						inspection = null;
 					}
+					customTowerFeatures = new TowerManagerPanel(towers[x][y]);
 					inspection = new SimpleInspection(towers[x][y]);
 					inspection.addObserver(this);
 				}
