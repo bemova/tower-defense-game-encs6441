@@ -1,5 +1,6 @@
 package UI.towerdesign;
 
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,11 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import UI.game.FormListener;
 import core.applicationService.warriorServices.TowerFactory;
 import core.applicationService.warriorServices.TowerMarket;
 import core.domain.account.BankManager;
@@ -22,11 +23,11 @@ import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
 @SuppressWarnings("serial")
-public class SimpleInspection extends JPanel implements ActionListener {
+public class SimpleInspection extends JDialog implements ActionListener {
 	private String towerType;
 	private BankManager bank;
 	private Tower tower;
-	private FormListener listener;
+
 
 	JLabel speedCount;
 	JLabel rangeCount;
@@ -36,12 +37,17 @@ public class SimpleInspection extends JPanel implements ActionListener {
 	JLabel sellPriceCount;
 	JLabel levelLabel;
 	JButton upgradeBtn;
+	JPanel panel;
 
 	/**
 	 * Create the panel.
 	 */
 	public SimpleInspection(Tower tower) {
+		panel = new JPanel();
 		this.tower = tower;
+		setLayout(new FlowLayout());
+		setTitle("Tower Inspection");
+		
 		List<Tower> towerList = tower.objectDetials();
 		TowerFactory f = new TowerFactory();
 		this.towerType = f.getDecoratedName(towerList);
@@ -54,7 +60,7 @@ public class SimpleInspection extends JPanel implements ActionListener {
 				Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		setLayout(gridBagLayout);
+		panel.setLayout(gridBagLayout);
 
 		JLabel speedLable = new JLabel("Fire Speed");
 		speedLable.setHorizontalAlignment(SwingConstants.LEFT);
@@ -62,14 +68,14 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_speedLable.insets = new Insets(0, 0, 5, 5);
 		gbc_speedLable.gridx = 1;
 		gbc_speedLable.gridy = 1;
-		add(speedLable, gbc_speedLable);
+		panel.add(speedLable, gbc_speedLable);
 
 		speedCount = new JLabel("");
 		GridBagConstraints gbc_speedCount = new GridBagConstraints();
 		gbc_speedCount.insets = new Insets(0, 0, 5, 0);
 		gbc_speedCount.gridx = 2;
 		gbc_speedCount.gridy = 1;
-		add(speedCount, gbc_speedCount);
+		panel.add(speedCount, gbc_speedCount);
 
 		JLabel powerLable = new JLabel("Fire Power");
 		powerLable.setHorizontalAlignment(SwingConstants.LEFT);
@@ -77,14 +83,14 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_powerLable.insets = new Insets(0, 0, 5, 5);
 		gbc_powerLable.gridx = 1;
 		gbc_powerLable.gridy = 2;
-		add(powerLable, gbc_powerLable);
+		panel.add(powerLable, gbc_powerLable);
 
 		powerCount = new JLabel("");
 		GridBagConstraints gbc_powerCount = new GridBagConstraints();
 		gbc_powerCount.insets = new Insets(0, 0, 5, 0);
 		gbc_powerCount.gridx = 2;
 		gbc_powerCount.gridy = 2;
-		add(powerCount, gbc_powerCount);
+		panel.add(powerCount, gbc_powerCount);
 
 		JLabel rangeLable = new JLabel("Fire Range");
 		rangeLable.setHorizontalAlignment(SwingConstants.LEFT);
@@ -92,14 +98,14 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_rangeLable.insets = new Insets(0, 0, 5, 5);
 		gbc_rangeLable.gridx = 1;
 		gbc_rangeLable.gridy = 3;
-		add(rangeLable, gbc_rangeLable);
+		panel.add(rangeLable, gbc_rangeLable);
 
 		rangeCount = new JLabel("");
 		GridBagConstraints gbc_rangeCount = new GridBagConstraints();
 		gbc_rangeCount.insets = new Insets(0, 0, 5, 0);
 		gbc_rangeCount.gridx = 2;
 		gbc_rangeCount.gridy = 3;
-		add(rangeCount, gbc_rangeCount);
+		panel.add(rangeCount, gbc_rangeCount);
 
 		JLabel valueLable = new JLabel("Value         ");
 		valueLable.setHorizontalAlignment(SwingConstants.LEFT);
@@ -107,14 +113,14 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_valueLable.insets = new Insets(0, 0, 5, 5);
 		gbc_valueLable.gridx = 1;
 		gbc_valueLable.gridy = 4;
-		add(valueLable, gbc_valueLable);
+		panel.add(valueLable, gbc_valueLable);
 
 		valueCount = new JLabel("");
 		GridBagConstraints gbc_valueCount = new GridBagConstraints();
 		gbc_valueCount.insets = new Insets(0, 0, 5, 0);
 		gbc_valueCount.gridx = 2;
 		gbc_valueCount.gridy = 4;
-		add(valueCount, gbc_valueCount);
+		panel.add(valueCount, gbc_valueCount);
 
 		upgradeBtn = new JButton("Upgrade");
 		upgradeBtn.setSize(30, 20);
@@ -128,7 +134,7 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_label_1.insets = new Insets(0, 0, 5, 5);
 		gbc_label_1.gridx = 1;
 		gbc_label_1.gridy = 5;
-		add(label_1, gbc_label_1);
+		panel.add(label_1, gbc_label_1);
 
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
@@ -141,19 +147,19 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_levelLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_levelLabel.gridx = 1;
 		gbc_levelLabel.gridy = 6;
-		add(levelLabel, gbc_levelLabel);
+		panel.add(levelLabel, gbc_levelLabel);
 		GridBagConstraints gbc_upgradeBtn = new GridBagConstraints();
 		gbc_upgradeBtn.insets = new Insets(0, 0, 5, 0);
 		gbc_upgradeBtn.gridx = 2;
 		gbc_upgradeBtn.gridy = 6;
-		add(upgradeBtn, gbc_upgradeBtn);
+		panel.add(upgradeBtn, gbc_upgradeBtn);
 
 		JLabel label = new JLabel(" ");
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.insets = new Insets(0, 0, 5, 5);
 		gbc_label.gridx = 1;
 		gbc_label.gridy = 7;
-		add(label, gbc_label);
+		panel.add(label, gbc_label);
 
 		sellPriceLable = new JLabel("Sell Price ");
 		sellPriceLable.setHorizontalAlignment(SwingConstants.LEFT);
@@ -161,14 +167,14 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_sellPriceLable.insets = new Insets(0, 0, 5, 5);
 		gbc_sellPriceLable.gridx = 1;
 		gbc_sellPriceLable.gridy = 8;
-		add(sellPriceLable, gbc_sellPriceLable);
+		panel.add(sellPriceLable, gbc_sellPriceLable);
 
 		sellPriceCount = new JLabel("");
 		GridBagConstraints gbc_sellPriceCount = new GridBagConstraints();
 		gbc_sellPriceCount.insets = new Insets(0, 0, 5, 0);
 		gbc_sellPriceCount.gridx = 2;
 		gbc_sellPriceCount.gridy = 8;
-		add(sellPriceCount, gbc_sellPriceCount);
+		panel.add(sellPriceCount, gbc_sellPriceCount);
 		List<Tower> towerDetails = tower.objectDetials();
 		TowerFactory factory = new TowerFactory();
 
@@ -198,12 +204,17 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		GridBagConstraints gbc_sellBtn = new GridBagConstraints();
 		gbc_sellBtn.gridx = 2;
 		gbc_sellBtn.gridy = 9;
-		add(sellBtn, gbc_sellBtn);
+		panel.add(sellBtn, gbc_sellBtn);
 		TowerMarket market = new TowerMarket();
-		double sellPrice = market.sellTower(tower);
-		sellPriceCount.setText(Double.toString(sellPrice));
+		long sellPrice = market.sellTower(tower);
+		sellPriceCount.setText(new Long(sellPrice).toString());
 
 		// end of texboxes'text setting
+		add(panel);
+		setVisible(true);
+		setSize(300, 280);
+		setLocationRelativeTo(this);
+		
 
 	}
 
@@ -215,11 +226,19 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		case "Upgrade":
 			upgrade();
 			break;
+		case "Sell":
+			sell();
+			break;
 		}
 	}
 
-	public void setListener(FormListener listener) {
-		this.listener = listener;
+	private void sell() {
+		String str = sellPriceCount.getText();
+		long temp = bank.getCurrentBalance();
+		long sellPrice = new Long(str);
+		temp -= sellPrice;
+		bank.resetCurrentBalance();
+		bank.setCurrentBalance(temp);
 	}
 
 	private void upgrade() {
@@ -233,6 +252,8 @@ public class SimpleInspection extends JPanel implements ActionListener {
 
 			Tower newTower = upgradeLevel(tower, towerType, speedCount,
 					rangeCount, powerCount);
+			
+			//if()
 			this.tower = newTower;
 			this.speedCount.setText(new Integer(speedCount++).toString());
 			this.rangeCount.setText(new Integer(rangeCount++).toString());

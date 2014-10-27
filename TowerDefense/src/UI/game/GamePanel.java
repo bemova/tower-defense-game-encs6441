@@ -2,6 +2,7 @@ package UI.game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
@@ -65,12 +66,19 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 	JPanel toolBoxContainer = new JPanel();
 
 	JDialog jd;
+//	SimpleInspection inspection;
 	
 	@SuppressWarnings("unused")
 	private GamePanel() {
 	}
 
 	public GamePanel(int width, int height) {
+
+//		jd = new JDialog();
+//		jd.setTitle("Tower Inspection");
+//		jd.setVisible(false);
+//		jd.setSize(300, 280);
+//		jd.setLocationRelativeTo(this);
 
 		initialize(width, height);
 		setLayout(new BorderLayout());
@@ -230,61 +238,65 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 				}
 			} else {
 				if (towers[x][y] != null) {
+					
 					SimpleInspection inspection = new SimpleInspection(
 							towers[x][y]);
+//					jd = new JDialog();
+//					jd.setLayout(new FlowLayout());
+					
+					
 					inspection.setVisible(true);
-					jd = new JDialog();
-					jd.setTitle("Tower Inspection");
-					jd.setVisible(true);
-					jd.setSize(300, 280);
-					jd.setLocationRelativeTo(this);
+//					jd.add(inspection);
+//					jd.setTitle("Tower Inspection");
+//					jd.setVisible(true);
+//					jd.setSize(300, 280);
+//					jd.setLocationRelativeTo(this);
 					// jd.setDefaultCloseOperation(closeInspector(inspection,x,y));
-					jd.addWindowListener(new WindowListener() {
-
-						@Override
-						public void windowOpened(WindowEvent e) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void windowIconified(WindowEvent e) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void windowDeiconified(WindowEvent e) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void windowDeactivated(WindowEvent e) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void windowClosing(WindowEvent e) {
-							closeInspector(inspection, x, y);
-
-						}
-
-						@Override
-						public void windowClosed(WindowEvent e) {
-							// TODO Auto-generated method stub
-
-						}
-
-						@Override
-						public void windowActivated(WindowEvent e) {
-							// TODO Auto-generated method stub
-
-						}
-					});
-					jd.setLayout(new FlowLayout());
-					jd.add(inspection);
+//					jd.addWindowListener(new WindowListener() {
+//
+//						@Override
+//						public void windowOpened(WindowEvent e) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//
+//						@Override
+//						public void windowIconified(WindowEvent e) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//
+//						@Override
+//						public void windowDeiconified(WindowEvent e) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//
+//						@Override
+//						public void windowDeactivated(WindowEvent e) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//
+//						@Override
+//						public void windowClosing(WindowEvent e) {
+//							closeInspector(inspection, x, y);
+//
+//						}
+//
+//						@Override
+//						public void windowClosed(WindowEvent e) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//
+//						@Override
+//						public void windowActivated(WindowEvent e) {
+//							// TODO Auto-generated method stub
+//
+//						}
+//					});
+					
 
 				}
 			}
