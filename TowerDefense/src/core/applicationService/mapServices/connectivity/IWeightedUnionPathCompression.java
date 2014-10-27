@@ -2,9 +2,10 @@ package core.applicationService.mapServices.connectivity;
 
 import core.domain.waves.Position;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface IWeightedUnionPathCompression.
+ * it is defined to use in ioc
+ * @version 0.1
  */
 public interface IWeightedUnionPathCompression {
 
