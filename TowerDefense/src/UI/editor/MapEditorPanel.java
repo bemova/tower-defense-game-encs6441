@@ -56,10 +56,10 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	}
 
 	public MapEditorPanel(int width, int height) {
-		
+
 		initialize(width, height);
 		setLayout(new BorderLayout());
-		
+
 		scenery.setBackground(MapConstants.SCENERY_COLOR);
 		path.setBackground(MapConstants.PATH_COLOR);
 		ep.setBackground(MapConstants.ENTRANCE_COLOR);
@@ -83,14 +83,15 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		int mapPixelWidth = grid.getWidth() * grid.getUnitSize();
 		int mapPixelHeight = grid.getHeight() * grid.getUnitSize();
 		canvas.setSize(mapPixelWidth, mapPixelHeight);
-		mapContainer.setPreferredSize(new Dimension(mapPixelWidth, mapPixelHeight));
+		mapContainer.setPreferredSize(new Dimension(mapPixelWidth,
+				mapPixelHeight));
 		mapContainer.add(canvas);
 
-		add(new JPanel() ,BorderLayout.NORTH);
+		add(new JPanel(), BorderLayout.NORTH);
 		add(toolBoxContainer, BorderLayout.EAST);
 		add(mapContainer, BorderLayout.CENTER);
-		add(new JPanel() ,BorderLayout.WEST);
-		add(new JPanel() ,BorderLayout.SOUTH);
+		add(new JPanel(), BorderLayout.WEST);
+		add(new JPanel(), BorderLayout.SOUTH);
 		setVisible(true);
 
 	}
@@ -113,7 +114,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		mapContainer = new JPanel();
 
 		toolBoxContainer = new JPanel();
-		
+
 	}
 
 	@SuppressWarnings("serial")
@@ -136,6 +137,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		grid.setSize(width, height);
 		canvas.updateGrid(grid);
 	}
+
 	public void design(int width, int height) {
 		try {
 			grid.setSize(width, height);
@@ -171,10 +173,21 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	private void draw(int x, int y) {
 		int i = x / grid.getUnitSize();
 		int j = y / grid.getUnitSize();
-		if ((i < grid.getWidth()) && (j < grid.getHeight())
-				&& (grid.getCell(i, j) != cellContent)) {
-			grid.setCell(i, j, cellContent);
-			canvas.repaint();
+		boolean drawAllowed = true;
+		// if entrance or exit check for isSingle
+		if (cellContent == GridCellContentType.ENTRANCE
+				|| cellContent == GridCellContentType.EXIT) {
+			if (!isSingle(cellContent)) {
+				drawAllowed = false;
+			}
+		}
+		if (drawAllowed) {
+			if ((i < grid.getWidth()) && (j < grid.getHeight())
+					&& (grid.getCell(i, j) != cellContent)) {
+				grid.setCell(i, j, cellContent);
+				canvas.repaint();
+
+			}
 
 		}
 	}
@@ -248,7 +261,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 				throw new java.lang.Exception(
 						"Error size max size: ....., min size: ....");
 			// end of validation
-			
+
 			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
 			canvas.setSize(width * grid.getUnitSize(),
@@ -263,7 +276,6 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	private void exit() {
 		try {
 			cellContent = GridCellContentType.EXIT;
-			colorToDrawGreed = exp.getBackground();
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 
@@ -274,12 +286,22 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	private void entrance() {
 		try {
 
-			colorToDrawGreed = ep.getBackground();
 			cellContent = GridCellContentType.ENTRANCE;
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 
+	}
+
+	private boolean isSingle(GridCellContentType cellContent) {
+		for (int x = 0; x < grid.getWidth(); x++) {
+			for (int y = 0; y < grid.getHeight(); y++) {
+				if (grid.getCell(x, y) == cellContent) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	private void scenery() {
@@ -317,12 +339,15 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		try {
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
-				grid = mapManager.LoadMapFromFile(openFile.getSelectedFile().getAbsolutePath());
+				grid = mapManager.LoadMapFromFile(openFile.getSelectedFile()
+						.getAbsolutePath());
 				canvas.updateGrid(grid);
 				width = grid.getWidth();
 				height = grid.getHeight();
-				mapContainer.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
-				canvas.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
+				mapContainer.setSize(width * grid.getUnitSize(),
+						height * grid.getUnitSize());
+				canvas.setSize(width * grid.getUnitSize(),
+						height * grid.getUnitSize());
 			}
 
 		} catch (java.lang.Exception ex) {
