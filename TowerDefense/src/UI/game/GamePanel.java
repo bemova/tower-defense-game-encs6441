@@ -70,13 +70,20 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		setLayout(new BorderLayout());
 
 		modernTowerBtn.setBackground(MapConstants.MODERN_TOWER_COLOR);
+		ancientTowerBtn.setBackground(MapConstants.ANCIENT_TOWER_COLOR);
+		kingTowerBtn.setBackground(MapConstants.KING_TOWER_COLOR);
+		
 		toolBoxContainer.setSize(10, 500);
 		toolBoxContainer.setLayout(new FlowLayout());
 		toolBoxContainer.add(modernTowerBtn);
+		toolBoxContainer.add(ancientTowerBtn);
+		toolBoxContainer.add(kingTowerBtn);
 
 		mapManager = new MapManager();
 
 		modernTowerBtn.addActionListener(this);
+		ancientTowerBtn.addActionListener(this);
+		kingTowerBtn.addActionListener(this);
 		canvas.addMouseListener(this);
 
 		int mapPixelWidth = grid.getWidth() * grid.getUnitSize();
@@ -104,6 +111,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		this.addTower = false;
 
 		modernTowerBtn = new JButton(Constants.MODERN_TOWER);
+		ancientTowerBtn = new JButton(Constants.ANCIENT_TOWER);
+		kingTowerBtn = new JButton(Constants.KING_TOWER);
 
 		towers = new Tower[width][height];
 		grid = new Map(width, height);
@@ -214,15 +223,31 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 		switch (command) {
 		case Constants.MODERN_TOWER:
-			tower();
+			tower(Constants.MODERN_TOWER);
+			break;
+		case Constants.ANCIENT_TOWER:
+			tower(Constants.ANCIENT_TOWER);
+			break;
+		case Constants.KING_TOWER:
+			tower(Constants.KING_TOWER);
 			break;
 		}
 	}
 
-	private void tower() {
+	private void tower(String towerType) {
 		try {
 			addTower = true;
-			colorToDrawGreed = modernTowerBtn.getBackground();
+			switch (towerType) {
+			case Constants.MODERN_TOWER:
+				colorToDrawGreed = modernTowerBtn.getBackground();
+				break;
+			case Constants.ANCIENT_TOWER:
+				colorToDrawGreed = ancientTowerBtn.getBackground();
+				break;
+			case Constants.KING_TOWER:
+				colorToDrawGreed = kingTowerBtn.getBackground();
+				break;
+			}
 			cellContent = GridCellContentType.TOWER;
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());

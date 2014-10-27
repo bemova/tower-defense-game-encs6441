@@ -10,7 +10,7 @@ public class MapConstants {
 	public static final Color EXIT_COLOR = Color.BLUE;
 	
 	public static final Color MODERN_TOWER_COLOR = Color.ORANGE;
-	public static final Color ANCIENT_TOWER_COLOR = Color.ORANGE;
-	public static final Color KING_TOWER_COLOR = Color.ORANGE;
+	public static final Color ANCIENT_TOWER_COLOR = Color.WHITE;
+	public static final Color KING_TOWER_COLOR = Color.CYAN;
 	
 }
