@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -23,6 +24,7 @@ import core.applicationService.mapServices.MapManager;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.warriorServices.TowerFactory;
 import core.contract.MapConstants;
+import core.domain.account.BankManager;
 import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
 //import core.domain.maps.VisualGrid;
@@ -37,12 +39,15 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
 	private int width;
 	private int height;
+	private BankManager bank;
 
 	private boolean addTower;
 
 	private Tower tower;
 	private Tower[][] towers;
-	JButton towerButton;
+	JButton modernTowerBtn;
+	JButton ancientTowerBtn;
+	JButton kingTowerBtn;
 
 	Color colorToDrawGreed;
 	GridCellContentType cellContent;
@@ -64,14 +69,14 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		initialize(width, height);
 		setLayout(new BorderLayout());
 
-		towerButton.setBackground(MapConstants.MODERN_TOWER_COLOR);
+		modernTowerBtn.setBackground(MapConstants.MODERN_TOWER_COLOR);
 		toolBoxContainer.setSize(10, 500);
 		toolBoxContainer.setLayout(new FlowLayout());
-		toolBoxContainer.add(towerButton);
+		toolBoxContainer.add(modernTowerBtn);
 
 		mapManager = new MapManager();
 
-		towerButton.addActionListener(this);
+		modernTowerBtn.addActionListener(this);
 		canvas.addMouseListener(this);
 
 		int mapPixelWidth = grid.getWidth() * grid.getUnitSize();
@@ -94,9 +99,11 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		this.width = width;
 		this.height = height;
 
+		this.bank = BankManager.getInstance();
+
 		this.addTower = false;
 
-		towerButton = new JButton(Constants.MODERN_TOWER);
+		modernTowerBtn = new JButton(Constants.MODERN_TOWER);
 
 		towers = new Tower[width][height];
 		grid = new Map(width, height);
@@ -169,33 +176,31 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 			if (addTower) {
 				if (grid.getCell(x, y) == GridCellContentType.SCENERY) {
 					TowerFactory factory = new TowerFactory();
-					towers[x][y] = factory.getTower("ModernTower",
-							TowerLevel.two);
-					grid.updateTowers(towers);
-					draw(x, y);
+					Tower tower = factory.getTower("ModernTower", TowerLevel.two);
+					if (tower.cost() < bank.getBalance() - bank.getCurrentBalance()) {
+						bank.setCurrentBalance(tower.cost());
+						towers[x][y] = tower;
+						grid.updateTowers(towers);
+						draw(x, y);
+					}
+					else {
+						JOptionPane.showMessageDialog(new JFrame(), "you don't have enough money :(", "Alert",
+						        JOptionPane.WARNING_MESSAGE);
+					}
 					addTower = false;
 				}
 			} else {
 				if (towers[x][y] != null) {
-//					TowerInspection inspection = new TowerInspection(towers[x][y]);
-//					inspection.setVisible(true);
-//					JDialog jd = new JDialog();
-//					jd.setVisible(true);
-//					jd.setSize(300, 500);
-//					jd.setLocationRelativeTo(this);
-//					
-//					jd.setLayout(new  FlowLayout());
-//					jd.add(inspection);
-
-					SimpleInspection inspection = new SimpleInspection(towers[x][y]);
+					SimpleInspection inspection = new SimpleInspection(
+							towers[x][y]);
 					inspection.setVisible(true);
 					JDialog jd = new JDialog();
 					jd.setTitle("Tower Inspection");
 					jd.setVisible(true);
 					jd.setSize(300, 280);
 					jd.setLocationRelativeTo(this);
-					
-					jd.setLayout(new  FlowLayout());
+
+					jd.setLayout(new FlowLayout());
 					jd.add(inspection);
 
 				}
@@ -217,7 +222,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 	private void tower() {
 		try {
 			addTower = true;
-			colorToDrawGreed = towerButton.getBackground();
+			colorToDrawGreed = modernTowerBtn.getBackground();
 			cellContent = GridCellContentType.TOWER;
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
