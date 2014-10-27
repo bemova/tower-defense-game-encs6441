@@ -18,8 +18,7 @@ import javax.swing.JPanel;
 
 import UI.CanvaObject;
 import UI.Constants;
-import UI.towerdesign.TowerInspection;
-import UI.towerdesign.TowerManagerPanel;
+import UI.towerdesign.SimpleInspection;
 import core.applicationService.mapServices.MapManager;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.warriorServices.TowerFactory;
@@ -178,31 +177,27 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 				}
 			} else {
 				if (towers[x][y] != null) {
-//					TowerManagerPanel towerPanel = new TowerManagerPanel(
-//							towers[x][y]);
-					TowerInspection inspection = new TowerInspection(towers[x][y]);
+//					TowerInspection inspection = new TowerInspection(towers[x][y]);
+//					inspection.setVisible(true);
+//					JDialog jd = new JDialog();
+//					jd.setVisible(true);
+//					jd.setSize(300, 500);
+//					jd.setLocationRelativeTo(this);
+//					
+//					jd.setLayout(new  FlowLayout());
+//					jd.add(inspection);
+
+					SimpleInspection inspection = new SimpleInspection(towers[x][y]);
 					inspection.setVisible(true);
 					JDialog jd = new JDialog();
+					jd.setTitle("Tower Inspection");
 					jd.setVisible(true);
-					jd.setSize(300, 500);
+					jd.setSize(300, 280);
 					jd.setLocationRelativeTo(this);
 					
 					jd.setLayout(new  FlowLayout());
 					jd.add(inspection);
-					//add(inspection, BorderLayout.SOUTH);
-					//add(towerPanel, BorderLayout.SOUTH);
-					
-//					JDialog towerSpecs = new JDialog(); // parent, isModal
-//					towerSpecs.setTitle("Tower specification");
-//					towerSpecs.setSize(200, 150);
-//					towerSpecs.setLocationRelativeTo(this);
-//					JPanel panel = new JPanel();
-//					panel.setLayout(new FlowLayout());
-//					panel.add(towerPanel);
-//					panel.setVisible(true);
-//					towerSpecs.setVisible(true);
-					
-					
+
 				}
 			}
 		}

@@ -16,6 +16,10 @@ import javax.swing.JPanel;
 import core.applicationService.warriorServices.TowerFactory;
 import core.applicationService.warriorServices.TowerMarket;
 import core.domain.warriors.defenders.towers.Tower;
+import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
 public class SimpleInspection extends JPanel {
 
@@ -24,13 +28,14 @@ public class SimpleInspection extends JPanel {
 	 */
 	public SimpleInspection(Tower tower) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, -27, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel speedLable = new JLabel("FireSpeed");
+		JLabel speedLable = new JLabel("Fire Speed");
+		speedLable.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_speedLable = new GridBagConstraints();
 		gbc_speedLable.insets = new Insets(0, 0, 5, 5);
 		gbc_speedLable.gridx = 1;
@@ -40,11 +45,12 @@ public class SimpleInspection extends JPanel {
 		JLabel speedCount = new JLabel("");
 		GridBagConstraints gbc_speedCount = new GridBagConstraints();
 		gbc_speedCount.insets = new Insets(0, 0, 5, 0);
-		gbc_speedCount.gridx = 4;
+		gbc_speedCount.gridx = 2;
 		gbc_speedCount.gridy = 1;
 		add(speedCount, gbc_speedCount);
 		
-		JLabel powerLable = new JLabel("FirePower");
+		JLabel powerLable = new JLabel("Fire Power");
+		powerLable.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_powerLable = new GridBagConstraints();
 		gbc_powerLable.insets = new Insets(0, 0, 5, 5);
 		gbc_powerLable.gridx = 1;
@@ -53,12 +59,13 @@ public class SimpleInspection extends JPanel {
 		
 		JLabel powerCount = new JLabel("");
 		GridBagConstraints gbc_powerCount = new GridBagConstraints();
-		gbc_powerCount.insets = new Insets(0, 0, 5, 5);
-		gbc_powerCount.gridx = 3;
+		gbc_powerCount.insets = new Insets(0, 0, 5, 0);
+		gbc_powerCount.gridx = 2;
 		gbc_powerCount.gridy = 2;
 		add(powerCount, gbc_powerCount);
 		
-		JLabel rangeLable = new JLabel("FireRange");
+		JLabel rangeLable = new JLabel("Fire Range");
+		rangeLable.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_rangeLable = new GridBagConstraints();
 		gbc_rangeLable.insets = new Insets(0, 0, 5, 5);
 		gbc_rangeLable.gridx = 1;
@@ -67,18 +74,13 @@ public class SimpleInspection extends JPanel {
 		
 		JLabel rangeCount = new JLabel("");
 		GridBagConstraints gbc_rangeCount = new GridBagConstraints();
-		gbc_rangeCount.insets = new Insets(0, 0, 5, 5);
-		gbc_rangeCount.gridx = 3;
+		gbc_rangeCount.insets = new Insets(0, 0, 5, 0);
+		gbc_rangeCount.gridx = 2;
 		gbc_rangeCount.gridy = 3;
 		add(rangeCount, gbc_rangeCount);
 		
-		JButton sellBtn = new JButton("Sell");
-		sellBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
-		JLabel valueLable = new JLabel("Value");
+		JLabel valueLable = new JLabel("Value         ");
+		valueLable.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_valueLable = new GridBagConstraints();
 		gbc_valueLable.insets = new Insets(0, 0, 5, 5);
 		gbc_valueLable.gridx = 1;
@@ -87,40 +89,61 @@ public class SimpleInspection extends JPanel {
 		
 		JLabel valueCount = new JLabel("");
 		GridBagConstraints gbc_valueCount = new GridBagConstraints();
-		gbc_valueCount.insets = new Insets(0, 0, 5, 5);
+		gbc_valueCount.insets = new Insets(0, 0, 5, 0);
 		gbc_valueCount.gridx = 2;
 		gbc_valueCount.gridy = 4;
 		add(valueCount, gbc_valueCount);
 		
-		JLabel sellPriceLable = new JLabel("Sell Price");
-		GridBagConstraints gbc_sellPriceLable = new GridBagConstraints();
-		gbc_sellPriceLable.insets = new Insets(0, 0, 5, 5);
-		gbc_sellPriceLable.gridx = 1;
-		gbc_sellPriceLable.gridy = 5;
-		add(sellPriceLable, gbc_sellPriceLable);
-		
-		JLabel sellPriceCount = new JLabel("");
-		GridBagConstraints gbc_sellPriceCount = new GridBagConstraints();
-		gbc_sellPriceCount.insets = new Insets(0, 0, 5, 5);
-		gbc_sellPriceCount.gridx = 2;
-		gbc_sellPriceCount.gridy = 5;
-		add(sellPriceCount, gbc_sellPriceCount);
-		GridBagConstraints gbc_sellBtn = new GridBagConstraints();
-		gbc_sellBtn.insets = new Insets(0, 0, 0, 5);
-		gbc_sellBtn.gridx = 1;
-		gbc_sellBtn.gridy = 6;
-		add(sellBtn, gbc_sellBtn);
-		
 		JButton upgradeBtn = new JButton("Upgrade");
+		upgradeBtn.setSize(30, 20);
 		upgradeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+		JLabel label_1 = new JLabel(" ");
+		GridBagConstraints gbc_label_1 = new GridBagConstraints();
+		gbc_label_1.insets = new Insets(0, 0, 5, 5);
+		gbc_label_1.gridx = 1;
+		gbc_label_1.gridy = 5;
+		add(label_1, gbc_label_1);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setSize(30, 20);
+		comboBox.setModel(new DefaultComboBoxModel(TowerLevel.values()));
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 1;
+		gbc_comboBox.gridy = 6;
+		add(comboBox, gbc_comboBox);
 		GridBagConstraints gbc_upgradeBtn = new GridBagConstraints();
-		gbc_upgradeBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_upgradeBtn.insets = new Insets(0, 0, 5, 0);
 		gbc_upgradeBtn.gridx = 2;
 		gbc_upgradeBtn.gridy = 6;
 		add(upgradeBtn, gbc_upgradeBtn);
+		
+		JLabel label = new JLabel(" ");
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.insets = new Insets(0, 0, 5, 5);
+		gbc_label.gridx = 1;
+		gbc_label.gridy = 7;
+		add(label, gbc_label);
+		
+		JLabel sellPriceLable = new JLabel("Sell Price ");
+		sellPriceLable.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_sellPriceLable = new GridBagConstraints();
+		gbc_sellPriceLable.insets = new Insets(0, 0, 5, 5);
+		gbc_sellPriceLable.gridx = 1;
+		gbc_sellPriceLable.gridy = 8;
+		add(sellPriceLable, gbc_sellPriceLable);
+		
+		JLabel sellPriceCount = new JLabel("");
+		GridBagConstraints gbc_sellPriceCount = new GridBagConstraints();
+		gbc_sellPriceCount.insets = new Insets(0, 0, 5, 0);
+		gbc_sellPriceCount.gridx = 2;
+		gbc_sellPriceCount.gridy = 8;
+		add(sellPriceCount, gbc_sellPriceCount);
 		List<Tower> towerDetails = tower.objectDetials();
 		TowerFactory factory = new TowerFactory();
 
@@ -143,9 +166,21 @@ public class SimpleInspection extends JPanel {
 		}
 		long value = (tower.cost());
 		valueCount.setText(Long.toString(value));
+		
+		JButton sellBtn = new JButton("Sell");
+		sellBtn.setSize(30, 20);
+		sellBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_sellBtn = new GridBagConstraints();
+		gbc_sellBtn.gridx = 2;
+		gbc_sellBtn.gridy = 9;
+		add(sellBtn, gbc_sellBtn);
 		TowerMarket market = new TowerMarket();
 		double sellPrice = market.sellTower(tower);
 		sellPriceCount.setText(Double.toString(sellPrice));
+
 		// end of texboxes'text setting
 
 	}
