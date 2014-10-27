@@ -4,7 +4,7 @@ import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.aliens.CritterFeatureDecorator;
 /**
  * <h4>this class used to implement decorator pattern for Critter<h4>
- * <b>that is one of the feature that are used for towers</b>
+ * <b>that is one of the feature that are used for Critter</b>
  * @author mojtaba
  * @version 0.1
  */
