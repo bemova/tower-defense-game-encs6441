@@ -89,12 +89,115 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		toolBoxContainer.add(ancientTowerBtn);
 		toolBoxContainer.add(kingTowerBtn);
 		mapManager = new MapManager();
+		
+		toolBoxContainer.add(towerInfoPanel);
 
 		modernTowerBtn.addActionListener(this);
 		ancientTowerBtn.addActionListener(this);
 		kingTowerBtn.addActionListener(this);
 		canvas.addMouseListener(this);
+		
+		modernTowerBtn.addMouseListener(new MouseListener(){
 
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				displayTowerInfo("ModernTower");
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+
+		ancientTowerBtn.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				displayTowerInfo("AncientTower");
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		kingTowerBtn.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				displayTowerInfo("KingTower");
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		int mapPixelWidth = grid.getWidth() * grid.getUnitSize();
 		int mapPixelHeight = grid.getHeight() * grid.getUnitSize();
 		canvas.setSize(mapPixelWidth, mapPixelHeight);
@@ -136,7 +239,17 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		toolBoxContainer = new JPanel();
 
 	}
+private void displayTowerInfo(String towerType){
+	switch (towerType) {
+	case "ModernTower":
+		
+		break;
 
+	default:
+		break;
+	}
+	towerInfoPanel = new TowerInfoPanel(towerType);
+}
 	public class CanvasCoordinate extends Point {
 		public CanvasCoordinate(int x, int y) {
 			super(x, y);
@@ -212,7 +325,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 				inspection.close();
 				inspection = null;
 			}
-			customTowerFeatures = new TowerManagerPanel(towers[x][y]);
+//			customTowerFeatures = new TowerManagerPanel(towers[x][y]);
 			inspection = new SimpleInspection(towers[x][y]);
 			inspection.addObserver(this);
 		}
@@ -310,8 +423,6 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 			// validation part
 			StartEndChecker checker = new StartEndChecker();
 			if (!checker.isCorrectSize(height, width))
-				throw new java.lang.Exception(
-						"Error size max size: ....., min size: ....");
 			// end of validation
 
 			mapContainer.setSize(width * grid.getUnitSize(),
@@ -353,7 +464,8 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent event) {
+		
 	}
 
 	@Override
