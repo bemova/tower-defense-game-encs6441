@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 
 import UI.CanvaObject;
 import UI.towerdesign.SimpleInspection;
+import UI.towerdesign.TowerInfoPanel;
 import UI.towerdesign.TowerManagerPanel;
 import core.applicationService.mapServices.MapManager;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
@@ -41,7 +42,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	private int height;
 	private BankManager bank;
 
-	private boolean addTower;
+	private boolean addTowerFlag;
 
 	private String towerType;
 	private Tower[][] towers;
@@ -50,7 +51,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	private JButton kingTowerBtn;
 
 	private JLabel bankLbl;
-	private Color colorToDrawGreed;
+	private Color colorToDisplayTower;
 	private GridCellContentType cellContent;
 
 	private Map grid;
@@ -65,6 +66,8 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	private SimpleInspection inspection;
 	private int x, y;
 	private long availFunds;
+	
+	private TowerInfoPanel towerInfoPanel;
 
 	@SuppressWarnings("unused")
 	private GamePanel() {
@@ -109,6 +112,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	}
 
 	private void initialize(int width, int height) {
+		
 		this.bank = BankManager.getInstance();
 
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
@@ -117,7 +121,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		this.width = width;
 		this.height = height;
 
-		this.addTower = false;
+		this.addTowerFlag = false;
 
 		modernTowerBtn = new JButton(DefenderConstants.MODERN_TOWER_TYPE);
 		ancientTowerBtn = new JButton(DefenderConstants.ANCIENT_TOWER_TYPE);
@@ -193,23 +197,27 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		int y = coordinate[1];
 
 		if (x <= width & y <= height) {
-			if (addTower) {
+			if (addTowerFlag) {
 				addTower(x,y);
 			} else {
-				if (towers[x][y] != null) {
-
-					if (inspection != null) {
-						inspection.close();
-						inspection = null;
-					}
-					customTowerFeatures = new TowerManagerPanel(towers[x][y]);
-					inspection = new SimpleInspection(towers[x][y]);
-					inspection.addObserver(this);
-				}
+				towerUpgradePanels();
 			}
 		}
 	}
 
+	private void towerUpgradePanels() {
+		if (towers[x][y] != null) {
+
+			if (inspection != null) {
+				inspection.close();
+				inspection = null;
+			}
+			customTowerFeatures = new TowerManagerPanel(towers[x][y]);
+			inspection = new SimpleInspection(towers[x][y]);
+			inspection.addObserver(this);
+		}
+	}
+	
 	private void addTower(int x, int y){
 
 		if (grid.getCell(x, y) == GridCellContentType.SCENERY) {
@@ -253,7 +261,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 						"you don't have enough money :(", "Alert",
 						JOptionPane.WARNING_MESSAGE);
 			}
-			addTower = false;
+			addTowerFlag = false;
 		}
 	}
 	
@@ -279,16 +287,16 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 	private void tower(String towerType) {
 		try {
-			addTower = true;
+			addTowerFlag = true;
 			switch (towerType) {
 			case DefenderConstants.MODERN_TOWER_TYPE:
-				colorToDrawGreed = modernTowerBtn.getBackground();
+				colorToDisplayTower = modernTowerBtn.getBackground();
 				break;
 			case DefenderConstants.ANCIENT_TOWER_TYPE:
-				colorToDrawGreed = ancientTowerBtn.getBackground();
+				colorToDisplayTower = ancientTowerBtn.getBackground();
 				break;
 			case DefenderConstants.KING_TOWER_TYPE:
-				colorToDrawGreed = kingTowerBtn.getBackground();
+				colorToDisplayTower = kingTowerBtn.getBackground();
 				break;
 			}
 			cellContent = GridCellContentType.TOWER;
