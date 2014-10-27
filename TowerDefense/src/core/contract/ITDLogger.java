@@ -7,7 +7,7 @@ package core.contract;
 public interface ITDLogger {
 	
 	/**
-	 * Writer.
+	 * Writer  interface for logging this interface will be used for IOC and dependecy injection
 	 *
 	 * @param message the message
 	 * @param t the t
