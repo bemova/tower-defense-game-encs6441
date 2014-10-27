@@ -3,6 +3,10 @@ package core.domain.maps;
 import java.awt.Graphics;
 import java.io.Serializable;
 
+/**
+ * @author 	Ali
+ *
+ */
 @SuppressWarnings("serial")
 public class Grid implements Serializable{
 
@@ -13,6 +17,10 @@ public class Grid implements Serializable{
 
 	public Grid() {}
 
+	/**
+	 * @param width width of grid 
+	 * @param height height of grid
+	 */
 	public Grid(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -20,6 +28,11 @@ public class Grid implements Serializable{
 		initializeCellContents(GridCellContentType.SCENERY);
 	}
 
+	/**
+	 * @param width width of grid
+	 * @param height height of grid
+	 * @param cellType type of grid
+	 */
 	public Grid(int width, int height, GridCellContentType cellType) {
 		this.width = width;
 		this.height = height;
@@ -27,12 +40,18 @@ public class Grid implements Serializable{
 		initializeCellContents(cellType);
 	}
 
+	/**
+	 * @param grid pass object grid to get width/height/content
+	 */
 	public Grid(Grid grid) {
 		this.width = grid.getWidth();
 		this.height = grid.getHeight();
 		this.content = grid.getContent();
 	}
 
+	/**
+	 * @param cellType type of cell 
+	 */
 	private void initializeCellContents(GridCellContentType cellType) {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
@@ -41,6 +60,9 @@ public class Grid implements Serializable{
 		}
 	}
 
+	/**
+	 * @param g draw graphics after iteration
+	 */
 	public void draw(Graphics g) {
 
 		for (int i = 0; i < width * sizeOfUnit; i += sizeOfUnit) {
@@ -58,22 +80,38 @@ public class Grid implements Serializable{
 
 	}
 
+	/**
+	 * @return height of map
+	 */
 	public int getHeight() {
 		return height;
 	}
 
+	/**
+	 * @return width of map
+	 */
 	public int getWidth() {
 		return width;
 	}
 
+	/**
+	 * @return type return content of the grid cell
+	 */
 	public GridCellContentType[][] getContent() {
 		return content;
 	}
 
+	/**
+	 * @return size of the unit 
+	 */
 	public int getUnitSize() {
 		return sizeOfUnit;
 	}
 
+	/**
+	 * @param width width of the content to set
+	 * @param height height of the content to set
+	 */
 	public void setSize(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -82,14 +120,12 @@ public class Grid implements Serializable{
 		
 	};
 
-	@Deprecated
-	public int getCellType(int i, int j) {
-		if (i >= 0 && i < height && j >= 0 && j < width)
-			return content[i][j].getValue();
 
-		return -1;
-	}
-
+	/**
+	 * @param x location of cell
+	 * @param y location of cell
+	 * @param type  type of cell
+	 */
 	public void setCell(int x, int y, GridCellContentType type) {
 		if (x >= 0 && x < width && 
 				y >= 0 && y < height){
@@ -105,14 +141,6 @@ public class Grid implements Serializable{
 		return null;
 	}
 
-	@Deprecated
-	public int[][] getIntContent() {
-		int[][] c = new int[width][height];
-		for (int i = 0; i < height; i++)
-			for (int j = 0; j < width; j++)
-				c[i][j] = content[i][j].getValue();
 
-		return c;
-	}
 
 }

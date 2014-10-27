@@ -7,11 +7,19 @@ import core.contract.MapConstants;
 import core.domain.maps.Grid;
 import core.domain.warriors.defenders.towers.Tower;
 
+/**
+ * @author Team5
+ *
+ */
 @SuppressWarnings("serial")
 public class Map extends Grid {
 
 	Tower[][] towers;
 
+	/**
+	 * @param width
+	 * @param height
+	 */
 	public Map(int width, int height) {
 		super(width, height);
 	}
@@ -20,17 +28,22 @@ public class Map extends Grid {
 		super(grid);
 	}
 
+	/**
+	 * @param towers
+	 */
 	public void updateTowers(Tower[][] towers) {
 		this.towers = towers;
 
 	}
-	
+/**
+ * 
+ * @param g to paint the component 
+ */
 	public void draw(Graphics g) {
-		// simpleGrid.draw(g);
 		for (int x = 0; x < getWidth(); x++) {
 			for (int y = 0; y < getHeight(); y++) {
 				Color color = Color.green;
-				switch (getCell(x, y)){
+				switch (getCell(x, y)) {
 				case PATH:
 					color = MapConstants.PATH_COLOR;
 					break;

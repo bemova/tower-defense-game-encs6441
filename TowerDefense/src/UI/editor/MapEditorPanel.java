@@ -28,6 +28,10 @@ import core.domain.maps.GridCellContentType;
 import core.domain.maps.VisualGrid;
 import core.domain.waves.Position;
 
+/**
+ * @author Team5
+ *
+ */
 public class MapEditorPanel extends JPanel implements ActionListener,
 		MouseListener, MouseMotionListener {
 
@@ -43,7 +47,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	JButton ep;
 	JButton exp;
 
-	Color colorToDrawGreed;
+	Color colorToDrawGrid;
 	GridCellContentType cellContent;
 
 	Grid grid;
@@ -108,7 +112,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		ep = new JButton(Constants.ENTRANCE);
 		exp = new JButton(Constants.EXIT);
 
-		colorToDrawGreed = Color.green;
+		colorToDrawGrid = Color.green;
 		cellContent = GridCellContentType.PATH;
 
 		grid = new VisualGrid(width, height, GridCellContentType.SCENERY);
@@ -160,7 +164,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	public void drawPath(Color backgroundColor) {
 		try {
 
-			colorToDrawGreed = backgroundColor;
+			colorToDrawGrid = backgroundColor;
 			cellContent = GridCellContentType.PATH;
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -249,7 +253,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	private void path() {
 		try {
 
-			colorToDrawGreed = path.getBackground();
+			colorToDrawGrid = path.getBackground();
 			cellContent = GridCellContentType.PATH; // black for path
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -310,7 +314,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	private void scenery() {
 		try {
 
-			colorToDrawGreed = scenery.getBackground();
+			colorToDrawGrid = scenery.getBackground();
 			cellContent = GridCellContentType.SCENERY;
 
 		} catch (java.lang.Exception ex) {

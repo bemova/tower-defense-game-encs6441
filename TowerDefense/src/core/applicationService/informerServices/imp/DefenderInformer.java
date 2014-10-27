@@ -15,7 +15,7 @@ import core.domain.waves.Position;
 
 /**
  * <b>In this class we implement observer design pattern to inform all towers the wave's head position</b>
- * @author Ali, Mojtaba
+ * @author Team5, Mojtaba
  * @version 0.1
  */
 @Component

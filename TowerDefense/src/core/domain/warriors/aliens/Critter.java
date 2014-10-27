@@ -9,7 +9,7 @@ import core.domain.warriors.aliens.behaviours.SoundBehaviour;
 /**
  * this class is the abstract class that has all information about critters and it is ready to 
  * use in decorated critters and for having different critters by different behaviors(Strategy Design pattern)
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public abstract class Critter {

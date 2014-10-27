@@ -11,7 +11,7 @@ import core.applicationService.mapServices.connectivity.IWeightedUnionPathCompre
 import core.domain.waves.Position;
 
 /**
- * @author mojtaba
+ * @author Team5
  * in this case the order of growth is lg*n for the n nodes in union functionality.
  * lg* 65536 = lg* 2^16 = lg 2+lg 2^4 = 1+ lg2 + Lg 4= 1+1+lg2+lg2 =4 !
  */

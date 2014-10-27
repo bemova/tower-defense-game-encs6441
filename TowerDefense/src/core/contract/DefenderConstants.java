@@ -1,7 +1,7 @@
 package core.contract;
 /**
  * <b>this defined Default information about towers and features that are used in UI and Core</b> 
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class DefenderConstants {

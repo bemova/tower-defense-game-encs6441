@@ -1,7 +1,7 @@
 package core.contract;
 /**
  * <b>this defined Default money of player for starting the game for first level and starting the game</b> 
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class AccountConstants {

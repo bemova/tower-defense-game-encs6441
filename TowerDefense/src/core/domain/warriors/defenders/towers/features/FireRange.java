@@ -11,7 +11,7 @@ import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 /**
  * <b>this class used to implement decorator pattern for Towers
  * that is one of the feature that are used for towers</b>
- * @author mojtaba
+ * @author Team5
  *@version 0.1
  */
 public class FireRange extends TowerFeatureDecorator {

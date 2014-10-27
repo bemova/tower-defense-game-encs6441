@@ -7,7 +7,7 @@ import core.domain.waves.Position;
 
 /**
  * this calss used as a service to chech some validation in map based on the position of start and end 
- * @author mojtaba , ali
+ * @author Team5 , ali
  * @version 0.1
  */
 public class StartEndChecker implements IStartEndChecker {

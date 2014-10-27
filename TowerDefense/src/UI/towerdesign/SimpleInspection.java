@@ -27,6 +27,10 @@ import core.domain.account.BankManager;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
+/**
+ * <b>This class is an Observable class</b>
+ * @author Team5
+ */
 public class SimpleInspection extends Observable implements ActionListener {
 	private String towerType;
 	private BankManager bank;

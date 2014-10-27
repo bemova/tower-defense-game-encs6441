@@ -6,7 +6,7 @@ import core.domain.waves.Position;
 
 /**
  * <b>this class is imply observer design patter for informing all towers about the critters'position </b>
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public abstract class Defender implements Observer {

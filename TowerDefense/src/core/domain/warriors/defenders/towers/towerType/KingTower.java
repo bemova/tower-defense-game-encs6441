@@ -10,7 +10,7 @@ import core.domain.warriors.defenders.towers.behaviourImp.NoSound;
 import core.domain.warriors.defenders.towers.behaviourImp.ShootTrap;
 /**
  * <b>this type of tower has shoot trap as a weapon and it doesn't have any sound and moving </b>
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class KingTower extends Tower {

@@ -6,7 +6,7 @@ import core.domain.warriors.aliens.behaviours.MovingBehaviour;
  * this class is defined to implement the one of the moving behavior of a alien
  * that is a kind of regular move
  * </b>
- * @author mojtaba
+ * @author Team5
  *@version 0.1
  */
 public class RegularMove implements MovingBehaviour{

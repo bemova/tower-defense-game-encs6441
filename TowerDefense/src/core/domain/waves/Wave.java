@@ -11,7 +11,7 @@ import core.domain.warriors.aliens.Critter;
  *  the position of the wave by observer design pattern</p> 
  *  <b>this part it will be implemented for the build 2</b>
  *  
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class Wave {

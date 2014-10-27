@@ -7,7 +7,7 @@ import core.domain.waves.Position;
  * the interfaces that DefenderInformer calss have to implement for dependency injection 
  * for the futures build
  * </b>
- * @author mojtaba,ali
+ * @author Team5,ali
  * @version 0.1
  */
 public interface IDefenderInformer {

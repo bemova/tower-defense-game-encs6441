@@ -102,8 +102,6 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -120,14 +118,10 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 		});
@@ -136,8 +130,6 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -486,6 +478,11 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	public void mouseReleased(MouseEvent arg0) {
 	}
 
+	/**
+	 * <b>this method updates the tower stats and the bank balance and removes the a tower from the map </b>
+	 * @param arg1 is object is of type tower  perform operation
+	 * @param arg0 observer object
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		switch (inspection.getPerformedAction()) {

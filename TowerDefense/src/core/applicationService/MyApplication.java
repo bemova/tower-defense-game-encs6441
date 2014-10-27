@@ -7,7 +7,7 @@ import core.contract.ITDLogger;
 
 /**
  * this demo was implemented as aDemo for dependecy injection and IOC for the build2
- * @author mojtaba
+ * @author Team5
  * @version 1.0
  */
 @Component

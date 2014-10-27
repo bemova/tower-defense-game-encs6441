@@ -21,8 +21,6 @@ public class TowerInfoPanel extends JPanel {
 	private JLabel powerCount;
 	private JLabel valueCount;
 	private JLabel levelLabel;
-//	private JPanel panel;
-//	private JDialog dialog;
 	@SuppressWarnings("unused")
 	private Tower tower;
 	@SuppressWarnings("unused")

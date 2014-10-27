@@ -7,7 +7,7 @@ import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
  * <b>this is used for strategy design pattern
  * this class is defined to implement the one of the moving behavior of a tower
  * that is a kind of move by strategy</b>
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class MoveByMouse implements MovingBehaviour {

@@ -6,7 +6,7 @@ import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
  * <b> this is used for strategy design pattern
  *this class is defined to implement the one of the moving behavior that is disable moving behavior for tower
  * that is a kind of move by strategy</b>
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class NoMove implements MovingBehaviour {

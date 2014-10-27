@@ -5,7 +5,7 @@ import core.domain.warriors.aliens.behaviours.MovingBehaviour;
  * <b> this is used for strategy design pattern
  *this class is defined to implement the one of the moving behavior of a alien
  * that is a kind of move by strategy</b>
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class MoveByStrategy implements MovingBehaviour {

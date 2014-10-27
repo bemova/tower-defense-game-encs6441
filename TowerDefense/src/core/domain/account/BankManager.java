@@ -3,7 +3,7 @@ package core.domain.account;
 import core.contract.AccountConstants;
 /**
  * <b>for implementing this class we used singleton pattern for managing our players' moneys balance</b>
- * @author mojtaba
+ * @author Team5
  *
  */
 public class BankManager { 

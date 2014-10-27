@@ -30,18 +30,21 @@ public interface IStartEndChecker {
 	public boolean isInEdge(int width, int height, Position position);
 	/**
 	 * used for validation on design map
-	 * @param matrix
+	 * @param matrix grid info
 	 * @return true, if has start node
 	 */
 	public boolean hasStart(GridCellContentType[][] matrix);
 	/**
 	 *  used for validation on design map
-	 * @param matrix
+	 * @param matrix grind info
 	 * @return true, if has end
 	 */
 	public boolean hasEnd(GridCellContentType[][] matrix);
 	/**
 	 * check for size validation in grid design 
+	 * @param height height of teh grid
+	 * @param width with of the grid
+	 * @return true if correct
 	 */
 	public boolean isCorrectSize(int height, int width);
 

@@ -4,7 +4,7 @@ import java.awt.Color;
 
 /**
  * <b>default information about map like colore of the path and color of the towers and so on</b>
- * @author mojtaba
+ * @author Team5
  *
  */
 public class MapConstants {

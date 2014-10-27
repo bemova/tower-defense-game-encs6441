@@ -13,7 +13,7 @@ import core.domain.waves.Position;
 /**
  * <b>The Class ConnectivityService.</b>
  * in this class connectivity service was added to check if there is any path between start and end 
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class ConnectivityService implements IConnectivityService {

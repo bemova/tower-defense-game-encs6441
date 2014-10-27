@@ -5,7 +5,7 @@ import core.domain.warriors.aliens.CritterFeatureDecorator;
 /**
  * <b>this class used to implement decorator pattern for Critter
  * that is one of the feature that are used for Critter</b>
- * @author mojtaba
+ * @author Team5
  *@version 0.1
  */
 public class MovingSpeed extends CritterFeatureDecorator {

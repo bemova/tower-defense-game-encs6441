@@ -3,7 +3,7 @@ package core.domain.waves;
 /**
  * <b>this class definded because in java we don't have single pair 
  * to keep only one key value pair, so for keeping the position we crate a Position class</b> 
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class Position {

@@ -5,7 +5,7 @@ import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 /**
  * thos class are used for working with a map
- * @author mojtaba
+ * @author Team5
  * @version 0.1
  */
 public class MapUtility {
