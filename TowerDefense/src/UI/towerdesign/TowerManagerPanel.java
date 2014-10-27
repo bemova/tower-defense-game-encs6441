@@ -46,6 +46,7 @@ public class TowerManagerPanel extends Observable {//JPanel
 
 	/**
 	 * Create the panel.
+	 * @param tower that we want to show its information 
 	 */
 	public TowerManagerPanel(Tower tower) {
 		this.objBalance = tower.cost();

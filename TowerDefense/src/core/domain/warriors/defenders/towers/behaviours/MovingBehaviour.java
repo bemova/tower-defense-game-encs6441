@@ -1,8 +1,8 @@
 package core.domain.warriors.defenders.towers.behaviours;
 
 /**
- * <h4> this is used for strategy design pattern</h4>
- *<b>this class is defined to implement the moving behavior of a defender</b>
+ * <b>this is used for strategy design pattern
+ *this class is defined to implement the moving behavior of a defender
  *</b>
  * @author mojtaba
  * @version 0.1

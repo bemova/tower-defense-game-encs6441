@@ -2,8 +2,8 @@ package core.domain.warriors.aliens.behaviourImp;
 
 import core.domain.warriors.aliens.behaviours.MovingBehaviour;
 /**
- * <h4> this is used for strategy design pattern</h4>
- *<b>this class is defined to implement the one of the moving behavior of a alien</b>
+ * <b> this is used for strategy design pattern
+ *this class is defined to implement the one of the moving behavior of a alien
  * that is a kind of move by strategy</b>
  * @author mojtaba
  * @version 0.1

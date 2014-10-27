@@ -8,8 +8,8 @@ import core.contract.DefenderConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 /**
- * <h4>this class used to implement decorator pattern for Towers<h4>
- * <b>that is one of the feature that are used for towers</b>
+ * <b>this class used to implement decorator pattern for Towers
+ * that is one of the feature that are used for towers</b>
  * @author mojtaba
  *@version 0.1
  */

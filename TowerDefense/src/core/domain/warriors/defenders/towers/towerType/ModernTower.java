@@ -12,7 +12,7 @@ import core.domain.warriors.defenders.towers.behaviourImp.ShootingSound;
 /**
  * <b>this type of tower has ShootWithWeapon as a weapon and it has MoveByMouse & ShootingSound </b>
  * @author mojtaba
- * @version0.1
+ * @version 0.1
  */
 public class ModernTower extends Tower {
 

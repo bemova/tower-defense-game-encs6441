@@ -11,8 +11,8 @@ public class Position {
 	private int y;
 	/**
 	 * for initiating this object we need to x , y for create a object as this type 
-	 * @param x
-	 * @param y
+	 * @param x is the width of the actual position on the grid
+	 * @param y is the height of the actual position on the grid
 	 */
 	public Position(int x, int y) {
 		this.x = x;
@@ -27,7 +27,7 @@ public class Position {
 	}
 	/**
 	 * setter for X
-	 * @param x
+	 * @param x is the width of the actual position on the grid
 	 */
 	public void setX(int x) {
 		this.x = x;

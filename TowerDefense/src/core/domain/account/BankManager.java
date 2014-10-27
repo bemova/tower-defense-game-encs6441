@@ -46,7 +46,6 @@ public class BankManager {
 	}
 	/**
 	 * <b>this method can add the extra money that player can add to the their amount of money</b>
-	 * @return long,
 	 */
 	public void addBalance(long balance) {
 		BankManager.balance += balance;

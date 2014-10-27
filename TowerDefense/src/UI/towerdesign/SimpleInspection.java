@@ -47,6 +47,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 
 	/**
 	 * Create the panel.
+	 * @param Tower the tower that this panel needs to show its information
 	 */
 	public SimpleInspection(Tower tower) {
 		this.bank = BankManager.getInstance();

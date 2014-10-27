@@ -1,8 +1,8 @@
 package core.domain.warriors.aliens.behaviours;
 
 /**
- * <h4> this is used for strategy design pattern</h4>
- *<b>this class is defined to implement the sound behavior of a alien</b>
+ * <b>this is used for strategy design pattern
+ *this class is defined to implement the sound behavior of a alien
  *</b>
  * @author mojtaba
  * @version 0.1

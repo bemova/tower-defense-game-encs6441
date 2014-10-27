@@ -12,8 +12,8 @@ public class TowerMarket {
 	private static final Log4jLogger logger = new Log4jLogger();
 	/**
 	 * <b>this method calculate the sell value base on the decorated tower </b>
-	 * @param tower
-	 * @return tower
+	 * @param tower the tower that player wants to sell
+	 * @return tower the amount of after the sell
 	 */
 	public <T extends Tower> long sellTower(T tower){
 		long amount = 0;

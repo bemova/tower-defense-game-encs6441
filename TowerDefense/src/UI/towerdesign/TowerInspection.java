@@ -9,6 +9,7 @@ public class TowerInspection extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @param Tower the tower that we need its information
 	 */
 	public TowerInspection(Tower tower) {
 		

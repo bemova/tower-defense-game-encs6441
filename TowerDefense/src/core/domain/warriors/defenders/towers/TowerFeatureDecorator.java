@@ -1,8 +1,8 @@
 package core.domain.warriors.defenders.towers;
 
 /**
- * <h4>This class is used for decorator design pattern for towers</h4>
- * </b>
+ * </b>This class is used for decorator design pattern for towers</b>
+ * 
  * @author mojtaba
  * @version 0.1
  */

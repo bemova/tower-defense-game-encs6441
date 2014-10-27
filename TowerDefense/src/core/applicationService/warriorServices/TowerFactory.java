@@ -26,7 +26,7 @@ public class TowerFactory {
 
 	/**
 	 * it takes tower type name and it will create a type of tower without any features
-	 * @param towerType
+	 * @param towerType the name of tower
 	 * @return Tower 
 	 */
 	public Tower getTower(String towerType) {
@@ -44,7 +44,7 @@ public class TowerFactory {
 	}
 	/**
 	 * it creates a tower by tower type name and tower level that can define the feature numbers as a default
-	 * @param towerType
+	 * @param towerType the name of the tower
 	 * @param level , it is a type of TowerLevel that is a enum type that has level one, two and three
 	 * @return Tower
 	 */
@@ -139,8 +139,8 @@ public class TowerFactory {
 	/**
 	 * <b> this method can get a list of contributor that can create a decorated tower with infinitive features
 	 *  an it returns the list of key value pair that contains the features' name as a key and features' count as a value</b> 
-	 * @param towerDetails
-	 * @return Map<String, Integer>
+	 * @param towerDetails is the list that we can get from tower by calling objectDetails that contains all features and base tower
+	 * @return key valu pair of string and Integer
 	 */
 	public Map<String, Integer> getFeaturesCount(List<Tower> towerDetails) {
 		Map<String, Integer> details = new HashMap<>();
@@ -161,8 +161,8 @@ public class TowerFactory {
 	}
 	/**
 	 * 
-	 * @param towerDetails
-	 * @return
+	 * @param towerDetails the decorated tower base tower and all features
+	 * @return string, base tower that is used for crate decorated tower
 	 */
 	public String getDecoratedName(List<Tower> towerDetails) {
 		try {
@@ -182,10 +182,10 @@ public class TowerFactory {
 	}
 	/**
 	 * <b>it used in update tower in our grid with freatures count</b>
-	 * @param towerType
-	 * @param speedCount
-	 * @param rangeCount
-	 * @param powerCount
+	 * @param towerType name of tower
+	 * @param speedCount speed feature count
+	 * @param rangeCount range feature count
+	 * @param powerCount power feature count
 	 * @return Tower 
 	 */
 	public Tower updateLevel(String towerType, int speedCount, int rangeCount,

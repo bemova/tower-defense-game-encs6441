@@ -4,8 +4,8 @@ import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
 
 
 /**
- * <h4> this is used for strategy design pattern</h4>
- *<b>this class is defined to implement the one of the moving behavior of a tower</b>
+ * <b>this is used for strategy design pattern
+ * this class is defined to implement the one of the moving behavior of a tower
  * that is a kind of move by strategy</b>
  * @author mojtaba
  * @version 0.1

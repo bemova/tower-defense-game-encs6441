@@ -31,8 +31,8 @@ public class WeightedUnionPathCompression implements IUnion, IWeightedUnionPathC
 	 * <b>we initialize the empty one dimensional array that has n * m size and the nodes are initialized by their index
 	 * like this a[0, 1, 2, 3, 4, 5, 6, 7, 8....] 
 	 * </b>
-	 * @param n
-	 * @param m
+	 * @param n the size of the array
+	 * @param m the size of array
 	 */
 	@Override
 	public void initialize(int n, int m){
@@ -56,9 +56,9 @@ public class WeightedUnionPathCompression implements IUnion, IWeightedUnionPathC
 	}
 	/**
 	 * <b>it can check two nodes have any connection or not</b>
-	 * @param p
-	 * @param q
-	 * @return boolean 
+	 * @param p a position on map
+	 * @param q a second position on the grid
+	 * @return true, if the both of them has a connection  
 	 */
 	@Override
 	public boolean connected(Position p, Position q){

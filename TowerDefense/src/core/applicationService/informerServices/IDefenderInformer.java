@@ -19,7 +19,7 @@ public interface IDefenderInformer {
 	/**
 	 * 
 	 * this signature can show removing one of tower or defender from observers'list of defenders
-	 * @param Observer
+	 * @param Observer the object the you want to remove from the observers'list
 	 */
 	public void removeObserver(Observer o);
 

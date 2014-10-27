@@ -5,7 +5,7 @@ import core.domain.warriors.aliens.Critter;
 /**
  * <b>this type of critters can not decide by themself and by game strategy and AI Algorithms</b>
  * @author mojtaba
- * @version0.1
+ * @version 0.1
  */
 public class FoolishCritter extends Critter {
 	

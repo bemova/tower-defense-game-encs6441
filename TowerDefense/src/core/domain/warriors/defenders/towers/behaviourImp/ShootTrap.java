@@ -2,11 +2,11 @@ package core.domain.warriors.defenders.towers.behaviourImp;
 
 import core.domain.warriors.defenders.towers.behaviours.ShootingBehaviour;
 /**
- * <h4> this is used for strategy design pattern</h4>
- * <b>this class is defined to implement the one of the shooting behavior of a tower</b>
+ * <b> this is used for strategy design pattern
+ * this class is defined to implement the one of the shooting behavior of a tower
  * that is a kind of weapon that tower will be able to use in during the game</b>
  * @author mojtaba
- *@version 0.1
+ * @version 0.1
  */
 public class ShootTrap implements ShootingBehaviour {
 	/**

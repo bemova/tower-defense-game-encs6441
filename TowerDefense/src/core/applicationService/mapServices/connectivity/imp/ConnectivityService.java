@@ -64,7 +64,7 @@ public class ConnectivityService implements IConnectivityService {
 
 	/**
 	 * 
-	 * @param matrix
+	 * @param matrix the matrix that we want for validating
 	 * @param i as int that shows the index of the node that we want to check if there is any neighbor in right or not
 	 * @param j as int that shows the index of the node that we want to check if there is any neighbor in right or not
 	 * @return boolean that shows there is a connected neighbor in right place
@@ -77,10 +77,10 @@ public class ConnectivityService implements IConnectivityService {
 	}
 	/**
 	 * {@link #isRight(GridCellContentType[][], int, int)}
-	 * @param matrix
-	 * @param i
-	 * @param j
-	 * @return
+	 * @param matrix that is the grid 
+	 * @param i index of actual node
+	 * @param j index of actual node
+	 * @return true , if it has right connection
 	 */
 	public boolean isDown(GridCellContentType[][] matrix, int i, int j) {
 		return ((matrix[i][j] == GridCellContentType.PATH
@@ -90,10 +90,10 @@ public class ConnectivityService implements IConnectivityService {
 	}
 	/**
 	 * it can check is this node is part of path or not
-	 * @param matrix
-	 * @param i
-	 * @param j
-	 * @return boolean 
+	 * @param matrix grid info
+	 * @param i actual node index
+	 * @param j actual node index
+	 * @return true, if it has Down connection  
 	 */
 	public boolean isPath(GridCellContentType[][] matrix, int i, int j) {
 		return (matrix[i][j] == GridCellContentType.PATH
