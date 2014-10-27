@@ -357,6 +357,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		if (!conn.isTherePath(start, end, matrix)) {
 			return false;
 		}
+		if(startChecker.isNeighbor(start, end)){
+			return false;
+		}
 		return true;
 	}
 
