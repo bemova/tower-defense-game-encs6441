@@ -10,6 +10,7 @@ import core.domain.warriors.defenders.Defender;
 import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.ShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.SoundBehaviour;
+import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
 
 public abstract class Tower extends Defender {
@@ -18,6 +19,14 @@ public abstract class Tower extends Defender {
 	MovingBehaviour movingBehaviour;
 	ShootingBehaviour shootingBehaviour;
 	SoundBehaviour soundBehaviour;
+	private TowerLevel level;
+	
+	public TowerLevel getLevel() {
+		return level;
+	}
+	public void setLevel(TowerLevel level) {
+		this.level = level;
+	}
 	// decorator parts
 	protected String description;
 

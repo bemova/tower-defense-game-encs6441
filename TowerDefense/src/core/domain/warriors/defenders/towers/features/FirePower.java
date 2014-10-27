@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.contract.DefenderConstatns;
+import core.contract.DefenderConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 
@@ -28,7 +28,7 @@ public class FirePower extends TowerFeatureDecorator {
 
 	@Override
 	public long cost() {
-		return DefenderConstatns.FIRE_POWER + this.tower.cost();
+		return DefenderConstants.FIRE_POWER + this.tower.cost();
 	}
 	@Override
 	public List<Tower> objectDetials() {

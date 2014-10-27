@@ -32,4 +32,8 @@ public class BankManager {
 	public void setCurrentBalance(long currentBalance) {
 		BankManager.currentBalance += currentBalance;
 	}
+	public void resetCurrentBalance() {
+		BankManager.currentBalance = 0;
+		
+	}
 }

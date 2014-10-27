@@ -23,6 +23,7 @@ import UI.towerdesign.SimpleInspection;
 import core.applicationService.mapServices.MapManager;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.warriorServices.TowerFactory;
+import core.contract.DefenderConstants;
 import core.contract.MapConstants;
 import core.domain.account.BankManager;
 import core.domain.maps.Grid;
@@ -43,7 +44,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 	private boolean addTower;
 
-	private Tower tower;
+	private String towerType;
 	private Tower[][] towers;
 	JButton modernTowerBtn;
 	JButton ancientTowerBtn;
@@ -110,9 +111,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 		this.addTower = false;
 
-		modernTowerBtn = new JButton(Constants.MODERN_TOWER);
-		ancientTowerBtn = new JButton(Constants.ANCIENT_TOWER);
-		kingTowerBtn = new JButton(Constants.KING_TOWER);
+		modernTowerBtn = new JButton(DefenderConstants.MODERN_TOWER_TYPE);
+		ancientTowerBtn = new JButton(DefenderConstants.ANCIENT_TOWER_TYPE);
+		kingTowerBtn = new JButton(DefenderConstants.KING_TOWER_TYPE);
 
 		towers = new Tower[width][height];
 		grid = new Map(width, height);
@@ -182,10 +183,25 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		int y = coordinate[1];
 
 		if (x <= width & y <= height) {
-			if (addTower) {
+			if (addTower) { 
 				if (grid.getCell(x, y) == GridCellContentType.SCENERY) {
 					TowerFactory factory = new TowerFactory();
-					Tower tower = factory.getTower("ModernTower", TowerLevel.two);
+					Tower tower;
+					switch (towerType) {
+					case DefenderConstants.MODERN_TOWER_TYPE:
+						tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE, TowerLevel.one);
+						break;
+					case DefenderConstants.ANCIENT_TOWER_TYPE:
+						tower = factory.getTower(DefenderConstants.ANCIENT_TOWER_TYPE, TowerLevel.one);
+						break;
+					case DefenderConstants.KING_TOWER_TYPE:
+						tower = factory.getTower(DefenderConstants.KING_TOWER_TYPE, TowerLevel.one);
+						break;
+
+					default:
+						tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE, TowerLevel.one);
+					}
+
 					if (tower.cost() < bank.getBalance() - bank.getCurrentBalance()) {
 						bank.setCurrentBalance(tower.cost());
 						towers[x][y] = tower;
@@ -222,14 +238,17 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		String command = event.getActionCommand();
 
 		switch (command) {
-		case Constants.MODERN_TOWER:
-			tower(Constants.MODERN_TOWER);
+		case DefenderConstants.MODERN_TOWER_TYPE:
+			towerType =DefenderConstants.MODERN_TOWER_TYPE; 
+			tower(towerType);
 			break;
-		case Constants.ANCIENT_TOWER:
-			tower(Constants.ANCIENT_TOWER);
+		case DefenderConstants.ANCIENT_TOWER_TYPE:
+			towerType =DefenderConstants.ANCIENT_TOWER_TYPE;
+			tower(towerType);
 			break;
-		case Constants.KING_TOWER:
-			tower(Constants.KING_TOWER);
+		case DefenderConstants.KING_TOWER_TYPE:
+			towerType =DefenderConstants.KING_TOWER_TYPE;
+			tower(towerType);
 			break;
 		}
 	}
@@ -238,13 +257,13 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 		try {
 			addTower = true;
 			switch (towerType) {
-			case Constants.MODERN_TOWER:
+			case DefenderConstants.MODERN_TOWER_TYPE:
 				colorToDrawGreed = modernTowerBtn.getBackground();
 				break;
-			case Constants.ANCIENT_TOWER:
+			case DefenderConstants.ANCIENT_TOWER_TYPE:
 				colorToDrawGreed = ancientTowerBtn.getBackground();
 				break;
-			case Constants.KING_TOWER:
+			case DefenderConstants.KING_TOWER_TYPE:
 				colorToDrawGreed = kingTowerBtn.getBackground();
 				break;
 			}
@@ -287,7 +306,7 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 						height * grid.getUnitSize());
 				canvas.setSize(width * grid.getUnitSize(),
 						height * grid.getUnitSize());
-				resetTowerGrid();
+				resetGameState();
 			}
 
 		} catch (java.lang.Exception ex) {
@@ -296,8 +315,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 	}
 
-	private void resetTowerGrid() {
+	private void resetGameState() {
 		towers = new Tower[width][height];
+		bank.resetCurrentBalance();
 	}
 
 	@Override

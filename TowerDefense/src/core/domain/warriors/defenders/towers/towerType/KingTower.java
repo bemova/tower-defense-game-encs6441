@@ -2,7 +2,7 @@ package core.domain.warriors.defenders.towers.towerType;
 
 import java.awt.Color;
 
-import core.contract.DefenderConstatns;
+import core.contract.DefenderConstants;
 import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourImp.NoMove;
@@ -26,7 +26,7 @@ public class KingTower extends Tower {
 	@Override
 	public long cost() {
 		// TODO Auto-generated method stub
-		return DefenderConstatns.KING_TOWER;
+		return DefenderConstants.KING_TOWER;
 	}
 
 }

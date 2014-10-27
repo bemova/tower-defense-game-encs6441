@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import core.applicationService.warriorServices.TowerMarket;
-import core.contract.DefenderConstatns;
+import core.contract.DefenderConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
@@ -41,8 +41,8 @@ public class TowerCostCalTest {
 	@Test
 	public void testTowerTypeCost() {
 		try {
-			assertEquals(DefenderConstatns.ANCIENT_TOWER, ancient.cost());
-			assertEquals(DefenderConstatns.MODERN_TOWER, modern.cost());
+			assertEquals(DefenderConstants.ANCIENT_TOWER, ancient.cost());
+			assertEquals(DefenderConstants.MODERN_TOWER, modern.cost());
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -52,10 +52,10 @@ public class TowerCostCalTest {
 	@Test
 	public void testFireRangeCost() {
 		try {
-			long specialModern = DefenderConstatns.MODERN_TOWER
-					+ DefenderConstatns.FIRE_RANGE;
-			long specialAncient = DefenderConstatns.ANCIENT_TOWER
-					+ DefenderConstatns.FIRE_RANGE;
+			long specialModern = DefenderConstants.MODERN_TOWER
+					+ DefenderConstants.FIRE_RANGE;
+			long specialAncient = DefenderConstants.ANCIENT_TOWER
+					+ DefenderConstants.FIRE_RANGE;
 			Tower mWithRange = new FireRange(modern);
 			Tower aWithRange = new FireRange(ancient);
 			assertEquals(specialModern, mWithRange.cost());
@@ -68,10 +68,10 @@ public class TowerCostCalTest {
 	@Test
 	public void testFireSpeedCost() {
 		try {
-			long specialModern = DefenderConstatns.MODERN_TOWER
-					+ DefenderConstatns.FIRE_SPEED;
-			long specialAncient = DefenderConstatns.ANCIENT_TOWER
-					+ DefenderConstatns.FIRE_SPEED;
+			long specialModern = DefenderConstants.MODERN_TOWER
+					+ DefenderConstants.FIRE_SPEED;
+			long specialAncient = DefenderConstants.ANCIENT_TOWER
+					+ DefenderConstants.FIRE_SPEED;
 			Tower mWithSpeed = new FireSpeed(modern);
 			Tower aWithSpeed = new FireSpeed(ancient);
 			assertEquals(specialModern, mWithSpeed.cost());
@@ -84,10 +84,10 @@ public class TowerCostCalTest {
 	@Test
 	public void testFirePowerCost() {
 		try {
-			long specialModern = DefenderConstatns.MODERN_TOWER
-					+ DefenderConstatns.FIRE_POWER;
-			long specialAncient = DefenderConstatns.ANCIENT_TOWER
-					+ DefenderConstatns.FIRE_POWER;
+			long specialModern = DefenderConstants.MODERN_TOWER
+					+ DefenderConstants.FIRE_POWER;
+			long specialAncient = DefenderConstants.ANCIENT_TOWER
+					+ DefenderConstants.FIRE_POWER;
 			Tower mWithPower = new FirePower(modern);
 			Tower aWithPower = new FirePower(ancient);
 			assertEquals(specialModern, mWithPower.cost());
@@ -100,14 +100,14 @@ public class TowerCostCalTest {
 	@Test
 	public void testComboFeature() {
 		try {
-			long specialModern = DefenderConstatns.MODERN_TOWER
-					+ DefenderConstatns.FIRE_POWER
-					+ DefenderConstatns.FIRE_RANGE
-					+ DefenderConstatns.FIRE_SPEED;
-			long specialAncient = DefenderConstatns.ANCIENT_TOWER
-					+ DefenderConstatns.FIRE_POWER
-					+ DefenderConstatns.FIRE_RANGE
-					+ DefenderConstatns.FIRE_SPEED;
+			long specialModern = DefenderConstants.MODERN_TOWER
+					+ DefenderConstants.FIRE_POWER
+					+ DefenderConstants.FIRE_RANGE
+					+ DefenderConstants.FIRE_SPEED;
+			long specialAncient = DefenderConstants.ANCIENT_TOWER
+					+ DefenderConstants.FIRE_POWER
+					+ DefenderConstants.FIRE_RANGE
+					+ DefenderConstants.FIRE_SPEED;
 			// crate modern with three features
 			Tower modernCombo = new FirePower(modern);
 			modernCombo = new FireRange(modernCombo);
@@ -166,10 +166,10 @@ public class TowerCostCalTest {
 	@Test
 	public void testSell(){
 		try {
-			double specialModern = DefenderConstatns.MODERN_TOWER
-					+ DefenderConstatns.FIRE_POWER
-					+ DefenderConstatns.FIRE_RANGE
-					+ DefenderConstatns.FIRE_SPEED;
+			double specialModern = DefenderConstants.MODERN_TOWER
+					+ DefenderConstants.FIRE_POWER
+					+ DefenderConstants.FIRE_RANGE
+					+ DefenderConstants.FIRE_SPEED;
 			
 			// crate modern with three features
 			Tower modernCombo = new FirePower(modern);
@@ -178,7 +178,7 @@ public class TowerCostCalTest {
 			TowerMarket market = new TowerMarket();
 			
 			double sellResult = market.sellTower(modernCombo);
-			double expected = (specialModern * DefenderConstatns.Sell_Percentage)/100;
+			double expected = (specialModern * DefenderConstants.Sell_Percentage)/100;
 			assertEquals(expected, sellResult, 0.001);
 			
 		} catch (Exception e) {

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.contract.DefenderConstatns;
+import core.contract.DefenderConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 
@@ -24,7 +24,7 @@ public class FireSpeed extends TowerFeatureDecorator {
 	@Override
 	public long cost() {
 		// TODO Auto-generated method stub
-		return DefenderConstatns.FIRE_SPEED + this.tower.cost();
+		return DefenderConstants.FIRE_SPEED + this.tower.cost();
 	}
 
 	@Override

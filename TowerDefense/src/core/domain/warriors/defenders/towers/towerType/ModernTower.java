@@ -3,7 +3,7 @@ package core.domain.warriors.defenders.towers.towerType;
 
 import java.awt.Color;
 
-import core.contract.DefenderConstatns;
+import core.contract.DefenderConstants;
 import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourImp.MoveByMouse;
@@ -30,7 +30,7 @@ public class ModernTower extends Tower {
 	@Override
 	public long cost() {
 		// TODO Auto-generated method stub
-		return DefenderConstatns.MODERN_TOWER;
+		return DefenderConstants.MODERN_TOWER;
 	}
 
 }

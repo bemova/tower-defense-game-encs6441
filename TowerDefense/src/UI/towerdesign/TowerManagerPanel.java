@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import core.applicationService.warriorServices.TowerFactory;
-import core.contract.DefenderConstatns;
+import core.contract.DefenderConstants;
 import core.domain.account.BankManager;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.features.FirePower;
@@ -38,6 +38,7 @@ public class TowerManagerPanel extends JPanel {
 	private JLabel balanceLable;
 	private JButton purchaseBtn;
 	private BankManager bank;
+
 	public Tower getDecoratedTower() {
 		return decoratedTower;
 	}
@@ -219,7 +220,7 @@ public class TowerManagerPanel extends JPanel {
 		// speed up and down ActionListeners
 		speedUpBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				long expected = currentBalance + DefenderConstatns.FIRE_SPEED;
+				long expected = currentBalance + DefenderConstants.FIRE_SPEED;
 				if (expected > (bank.getBalance() - bank.getCurrentBalance())) {
 					balanceLable.setVisible(true);
 					purchaseBtn.setVisible(true);
@@ -232,7 +233,7 @@ public class TowerManagerPanel extends JPanel {
 		speedDownBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				down(speedField);
-				currentBalance -= DefenderConstatns.FIRE_SPEED;
+				currentBalance -= DefenderConstants.FIRE_SPEED;
 			}
 		});
 		// End of Speed ActionListener
@@ -240,7 +241,7 @@ public class TowerManagerPanel extends JPanel {
 		// Power up and down ActionListeners
 		powerUpBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				long expected = currentBalance + DefenderConstatns.FIRE_POWER;
+				long expected = currentBalance + DefenderConstants.FIRE_POWER;
 				if (expected > (bank.getBalance() - bank.getCurrentBalance())) {
 					balanceLable.setVisible(true);
 					purchaseBtn.setVisible(true);
@@ -253,15 +254,15 @@ public class TowerManagerPanel extends JPanel {
 		powerDownBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				down(powerField);
-				currentBalance -= DefenderConstatns.FIRE_POWER;
+				currentBalance -= DefenderConstants.FIRE_POWER;
 			}
 		});
 		// End of Power ActionListener
 
-		// Power up and down ActionListeners 
+		// Power up and down ActionListeners
 		rangeUpBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				long expected = currentBalance + DefenderConstatns.FIRE_RANGE;
+				long expected = currentBalance + DefenderConstants.FIRE_RANGE;
 				if (expected > (bank.getBalance() - bank.getCurrentBalance())) {
 					balanceLable.setVisible(true);
 					purchaseBtn.setVisible(true);
@@ -274,7 +275,7 @@ public class TowerManagerPanel extends JPanel {
 		rangeDownBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				down(rangeField);
-				currentBalance -= DefenderConstatns.FIRE_RANGE;
+				currentBalance -= DefenderConstants.FIRE_RANGE;
 			}
 		});
 		// End of Power ActionListener
@@ -304,26 +305,20 @@ public class TowerManagerPanel extends JPanel {
 	public void towerFactory() {
 		try {
 			TowerFactory factory = new TowerFactory();
-			Tower tower = factory.getTower(this.towerType);
 
 			// get details from text fiels
 			int speedCount = Integer.parseInt(speedField.getText());
 			int rangeCount = Integer.parseInt(rangeField.getText());
 			int powerCount = Integer.parseInt(powerField.getText());
 			// End of Details
-			
-			for (int i = 0; i < rangeCount; i++)
-				tower = new FireRange(tower);
-			for (int i = 0; i < speedCount; i++)
-				tower = new FireSpeed(tower);
-			for (int i = 0; i < powerCount; i++)
-				tower= new FirePower(tower);
+
+			Tower tower = factory.updateLevel(towerType, speedCount, rangeCount, powerCount);
 
 			this.decoratedTower = tower;
 			long value = bank.getCurrentBalance();
 			value -= objBalance;
-			long temp = this.decoratedTower.cost(); 
-			value  += temp;
+			long temp = this.decoratedTower.cost();
+			value += temp;
 			bank.setCurrentBalance(value);
 
 		} catch (Exception e) {
@@ -336,9 +331,9 @@ public class TowerManagerPanel extends JPanel {
 			TowerFactory factory = new TowerFactory();
 			Tower t = factory.getTower(towerType);
 			this.currentBalance += t.cost();
-			this.currentBalance += DefenderConstatns.FIRE_POWER;
-			this.currentBalance += DefenderConstatns.FIRE_RANGE;
-			this.currentBalance += DefenderConstatns.FIRE_SPEED;
+			this.currentBalance += DefenderConstants.FIRE_POWER;
+			this.currentBalance += DefenderConstants.FIRE_RANGE;
+			this.currentBalance += DefenderConstants.FIRE_SPEED;
 
 		} catch (Exception e) {
 			// TODO: handle exception
