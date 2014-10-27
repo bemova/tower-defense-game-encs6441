@@ -96,8 +96,6 @@ public class MainFrame extends JFrame implements ActionListener {
 			break;
 		case Constants.OK:
 			setMapSize();
-			startMapDesign();
-			closeMapSizeDialog();
 			break;
 		case Constants.CANCEL:
 			closeMapSizeDialog();
@@ -118,6 +116,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			StartEndChecker checker = new StartEndChecker();
 			if(!checker.isCorrectSize(height, width))
 				throw new Exception();
+			startMapDesign();
+			closeMapSizeDialog();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(new JFrame(), "Please enter correct Size!", "Alert",
 			        JOptionPane.ERROR_MESSAGE);
