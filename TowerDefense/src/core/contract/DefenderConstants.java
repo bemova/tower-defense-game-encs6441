@@ -1,5 +1,9 @@
 package core.contract;
-
+/**
+ * <b>this defined Default information about towers and features that are used in UI and Core</b> 
+ * @author mojtaba
+ * @version 0.1
+ */
 public class DefenderConstants {
 	// towers'cost
 	public static final long ANCIENT_TOWER = 10;

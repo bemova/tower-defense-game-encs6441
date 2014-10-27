@@ -2,7 +2,11 @@ package core.contract;
 
 import java.awt.Color;
 
-
+/**
+ * <b>default information about map like colore of the path and color of the towers and so on</b>
+ * @author mojtaba
+ *
+ */
 public class MapConstants {
 	public static final Color PATH_COLOR = Color.GRAY;
 	public static final Color SCENERY_COLOR = Color.GREEN;
