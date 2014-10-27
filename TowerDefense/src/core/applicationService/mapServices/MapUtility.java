@@ -2,8 +2,17 @@ package core.applicationService.mapServices;
 
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
-
+/**
+ * thos class are used for working with a map
+ * @author mojtaba
+ * @version 0.1
+ */
 public class MapUtility {
+	/**
+	 * <b>this method can find the enterance point </b>
+	 * @param map
+	 * @return Position of the entrance from mapd 
+	 */
 	public Position getEnter(GridCellContentType[][] map){
 		try {
 			for (int i = 0; i < map.length; i++) {
@@ -18,6 +27,11 @@ public class MapUtility {
 		}
 		return null;
 	}
+	/**
+	 * <b>this method can find the exit point </b>
+	 * @param map
+	 * @return Position of the entrance from exit 
+	 */
 	public Position getExit(GridCellContentType[][] map){
 		try {
 			for (int i = 0; i < map.length; i++) {

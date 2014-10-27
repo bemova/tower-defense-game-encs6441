@@ -1,5 +1,6 @@
 package core.applicationService.mapServices;
 
+import Infrastructure.loggin.Log4jLogger;
 import core.applicationService.mapServices.connectivity.imp.ConnectivityService;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.domain.maps.Grid;
@@ -9,13 +10,23 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
+/**
+ * <b>it can used as a service during save and load from or into the file</b>
+ * @author ali
+ * @version 0.1
+ */
 public class MapManager {
 
+	private static final Log4jLogger logger = new Log4jLogger();
 	public MapManager() {
 
 	}
 
+	/**
+	 * 
+	 * @param fileName is the address of the file
+	 * @return Grid
+	 */
 	public Grid LoadMapFromFile(String fileName) {
 		Grid grid = null;
 		try {
@@ -28,11 +39,17 @@ public class MapManager {
 			}
 			objectinputstream.close();
 		} catch (Exception e) {
-			// errorMessage = "I couldn't load the map!";
+			logger.writer(this.getClass().getName(), e);
 		}
 		return grid;
 	}
 
+	/**
+	 * <b>save the grid into file</b>
+	 * @param grid
+	 * @param FileName
+	 * @return
+	 */
 	public String SaveMapIntoFle(Grid grid, String FileName) {
 
 		String errorMessage = "";
@@ -58,7 +75,7 @@ public class MapManager {
 			oos.writeObject(grid);
 			oos.close();
 		} catch (Exception e) {
-			errorMessage = "Oops! something went wrong, I couldn't save the map!";
+			logger.writer(this.getClass().getName(), e);
 		}
 		return errorMessage;
 	}
