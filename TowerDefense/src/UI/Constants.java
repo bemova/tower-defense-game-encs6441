@@ -1,6 +1,5 @@
 package UI;
 
-import javax.swing.Icon;
 
 
 public class Constants {
@@ -22,6 +21,7 @@ public class Constants {
 	public static final String CANCEL = "Cancel";
 	public static final String OK = "OK";
 	public static final String EDITOR_TITLE = "Tower Defence - Map Editor";
+	public static final String GAME_TITLE = "Tower Defence - Game";
 	public static final String MAP_MENU = "Map";
 		
 }

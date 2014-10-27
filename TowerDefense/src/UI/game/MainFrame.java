@@ -28,7 +28,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	private void setup() {
-		setTitle(Constants.EDITOR_TITLE);
+		setTitle(Constants.GAME_TITLE);
 		refresh();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);

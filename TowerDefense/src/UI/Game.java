@@ -2,7 +2,7 @@ package UI;
 
 import javax.swing.SwingUtilities;
 
-import UI.game.*;
+import UI.game.MainFrame;
 
 public class Game {
 

@@ -1,17 +1,13 @@
 package core.applicationService.mapServices.connectivity.imp;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import Infrastructure.loggin.Log4jLogger;
-import core.applicationService.informerServices.Observer;
 import core.applicationService.mapServices.connectivity.IUnion;
 import core.applicationService.mapServices.connectivity.IWeightedUnionPathCompression;
-import core.contract.ITDLogger;
 import core.domain.waves.Position;
 
 /**

@@ -1,6 +1,5 @@
 package core.applicationService.informerServices;
 
-import core.applicationService.informerServices.Observer;
 import core.domain.waves.Position;
 
 /**

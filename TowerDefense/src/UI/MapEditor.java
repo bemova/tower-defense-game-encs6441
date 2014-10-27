@@ -2,7 +2,7 @@ package UI;
 
 import javax.swing.SwingUtilities;
 
-import UI.editor.*;
+import UI.editor.MainFrame;
 
 public class MapEditor {
 

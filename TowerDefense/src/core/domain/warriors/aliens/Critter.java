@@ -2,7 +2,6 @@ package core.domain.warriors.aliens;
 
 import java.util.UUID;
 
-import core.domain.Subject;
 import core.domain.warriors.aliens.behaviours.MovingBehaviour;
 import core.domain.warriors.aliens.behaviours.SoundBehaviour;
 

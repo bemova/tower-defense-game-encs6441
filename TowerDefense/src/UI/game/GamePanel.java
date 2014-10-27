@@ -24,7 +24,6 @@ import javax.swing.JPanel;
 import UI.CanvaObject;
 import UI.towerdesign.SimpleInspection;
 import UI.towerdesign.TowerInfoPanel;
-import UI.towerdesign.TowerManagerPanel;
 import core.applicationService.mapServices.MapManager;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.warriorServices.TowerFactory;
@@ -64,7 +63,6 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 	private JPanel toolBoxContainer = new JPanel();
 
-	private TowerManagerPanel customTowerFeatures;
 	private SimpleInspection inspection;
 	private int x, y;
 	private long availFunds;
@@ -249,11 +247,11 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 		towerInfoPanel = new TowerInfoPanel(tower);
 		// toolBoxContainer.add(towerInfoPanel);
-		towerInfo = new JDialog(new Frame(),"Tower info");
+		towerInfo = new JDialog(new Frame(), "Tower info");
 		towerInfo.add(towerInfoPanel);
 		towerInfo.setSize(200, 200);
-		
-		towerInfo.setLocation(getWidth()-250, 100);
+
+		towerInfo.setLocation(getWidth() - 250, 100);
 		towerInfo.setVisible(true);
 
 	}
@@ -499,7 +497,6 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		default:
 			break;
 		}
-
 	}
 
 	private void upgradeTower() {
