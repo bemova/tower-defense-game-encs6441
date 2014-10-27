@@ -15,10 +15,18 @@ import core.domain.warriors.defenders.towers.towerType.AncientTower;
 import core.domain.warriors.defenders.towers.towerType.KingTower;
 import core.domain.warriors.defenders.towers.towerType.ModernTower;
 import core.domain.warriors.defenders.towers.towerType.TowerLevel;
-
+/**
+ * <b>this class is used as a application service to create a difrent type of factories by difrent features</b>
+ * @author mojtaba
+ * @version 0.1
+ */
 public class TowerFactory {
 
-	// use getShape method to get object of type shape
+	/**
+	 * it takes tower type name and it will create a type of tower without any features
+	 * @param towerType
+	 * @return Tower 
+	 */
 	public Tower getTower(String towerType) {
 		if (towerType == null) {
 			return null;
@@ -32,7 +40,12 @@ public class TowerFactory {
 		}
 		return null;
 	}
-
+	/**
+	 * it creates a tower by tower type name and tower level that can define the feature numbers as a default
+	 * @param towerType
+	 * @param level , it is a type of TowerLevel that is a enum type that has level one, two and three
+	 * @return Tower
+	 */
 	public Tower getTower(String towerType, TowerLevel level) {
 		Tower tower = getTower(towerType);
 		try {
@@ -63,6 +76,11 @@ public class TowerFactory {
 		return null;
 	}
 
+	/**
+	 * it can create simple basic decorated tower in level one that means it has fire speed and range and power 1 1 
+	 * @param tower
+	 * @return Tower
+	 */
 	Tower getLevelOne(Tower tower) {
 		try {
 			tower = new FirePower(tower);
@@ -75,6 +93,11 @@ public class TowerFactory {
 		return null;
 	}
 
+	/**
+	 * <b>create a decorated tower by list of contributors tower </b> 
+	 * @param details, is a list of Tower that can have a contribute to create a decorated tower 
+	 * @return Tower
+	 */
 	public Tower getDecoratedTower(List<Tower> details) {
 		Tower baseTower = null;
 		try {
@@ -111,7 +134,12 @@ public class TowerFactory {
 		}
 		return baseTower;
 	}
-
+	/**
+	 * <b> this method can get a list of contributor that can create a decorated tower with infinitive features
+	 *  an it returns the list of key value pair that contains the features' name as a key and features' count as a value</b> 
+	 * @param towerDetails
+	 * @return Map<String, Integer>
+	 */
 	public Map<String, Integer> getFeaturesCount(List<Tower> towerDetails) {
 		Map<String, Integer> details = new HashMap<>();
 		details.put("FirePower", 0);
@@ -129,7 +157,11 @@ public class TowerFactory {
 		}
 		return details;
 	}
-
+	/**
+	 * 
+	 * @param towerDetails
+	 * @return
+	 */
 	public String getDecoratedName(List<Tower> towerDetails) {
 		try {
 			for (Object tower : towerDetails) {
@@ -146,7 +178,14 @@ public class TowerFactory {
 		}
 		return null;
 	}
-
+	/**
+	 * <b>it used in update tower in our grid with freatures count</b>
+	 * @param towerType
+	 * @param speedCount
+	 * @param rangeCount
+	 * @param powerCount
+	 * @return Tower 
+	 */
 	public Tower updateLevel(String towerType, int speedCount, int rangeCount,
 			int powerCount) {
 
