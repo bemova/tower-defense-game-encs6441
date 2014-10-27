@@ -14,13 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import UI.game.FormEvent;
 import UI.game.FormListener;
 import core.applicationService.warriorServices.TowerFactory;
 import core.applicationService.warriorServices.TowerMarket;
-import core.contract.DefenderConstants;
 import core.domain.account.BankManager;
 import core.domain.warriors.defenders.towers.Tower;
+import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
 @SuppressWarnings("serial")
 public class SimpleInspection extends JPanel implements ActionListener {
@@ -33,6 +32,10 @@ public class SimpleInspection extends JPanel implements ActionListener {
 	JLabel rangeCount;
 	JLabel powerCount;
 	JLabel valueCount;
+	JLabel sellPriceLable;
+	JLabel sellPriceCount;
+	JLabel levelLabel;
+	JButton upgradeBtn;
 
 	/**
 	 * Create the panel.
@@ -113,48 +116,12 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_valueCount.gridy = 4;
 		add(valueCount, gbc_valueCount);
 
-		JButton upgradeBtn = new JButton("Upgrade");
+		upgradeBtn = new JButton("Upgrade");
 		upgradeBtn.setSize(30, 20);
 		upgradeBtn.addActionListener(this);
-		// (new ActionListener() {
-		// public void actionPerformed(ActionEvent e) {
-		// String str = speedCount.getText();
-		// int speedCount = Integer.parseInt(str) + 1;
-		// str = rangeCount.getText();
-		// int rangeCount = Integer.parseInt(str) + 1;
-		// str = powerCount.getText();
-		// int powerCount = Integer.parseInt(str) + 1;
-		//
-		// Tower newTower = upgradeLevel(tower, towerType, speedCount,
-		// rangeCount, powerCount);
-		// FormEvent formEvent = new FormEvent(e, newTower);
-		// if (listener != null) {
-		// listener.formOccured(formEvent);
-		// }
-		// valueCount.setText(Long.toString(newTower.cost()));
-		// // speedCount.set
-		//
-		// }
-		//
-		// private Tower upgradeLevel(Tower tower, String towerType,
-		// int speedCount, int rangeCount, int powerCount) {
-		// TowerFactory factory = new TowerFactory();
-		//
-		// Tower createdTower = factory.updateLevel(towerType, speedCount,
-		// rangeCount, powerCount);
-		//
-		// long value = tower.cost();
-		// Tower tempTower = createdTower;
-		// long delta = tempTower.cost() - value;
-		// if (delta < bank.getBalance() - bank.getCurrentBalance()) {
-		// bank.setCurrentBalance(delta);
-		// tower = tempTower;
-		// return tower;
-		// }
-		// return null;
-		// }
-		//
-		// });
+		if (tower.getLevel().equals(TowerLevel.three)) {
+			this.upgradeBtn.setEnabled(false);
+		}
 
 		JLabel label_1 = new JLabel(" ");
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
@@ -169,7 +136,7 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 6;
 
-		JLabel levelLabel = new JLabel("");
+		levelLabel = new JLabel("");
 		GridBagConstraints gbc_levelLabel = new GridBagConstraints();
 		gbc_levelLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_levelLabel.gridx = 1;
@@ -188,7 +155,7 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_label.gridy = 7;
 		add(label, gbc_label);
 
-		JLabel sellPriceLable = new JLabel("Sell Price ");
+		sellPriceLable = new JLabel("Sell Price ");
 		sellPriceLable.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_sellPriceLable = new GridBagConstraints();
 		gbc_sellPriceLable.insets = new Insets(0, 0, 5, 5);
@@ -196,7 +163,7 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		gbc_sellPriceLable.gridy = 8;
 		add(sellPriceLable, gbc_sellPriceLable);
 
-		JLabel sellPriceCount = new JLabel("");
+		sellPriceCount = new JLabel("");
 		GridBagConstraints gbc_sellPriceCount = new GridBagConstraints();
 		gbc_sellPriceCount.insets = new Insets(0, 0, 5, 0);
 		gbc_sellPriceCount.gridx = 2;
@@ -227,10 +194,7 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		levelLabel.setText("Level " + tower.getLevel());
 		JButton sellBtn = new JButton("Sell");
 		sellBtn.setSize(30, 20);
-		sellBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		sellBtn.addActionListener(this);
 		GridBagConstraints gbc_sellBtn = new GridBagConstraints();
 		gbc_sellBtn.gridx = 2;
 		gbc_sellBtn.gridy = 9;
@@ -259,19 +223,31 @@ public class SimpleInspection extends JPanel implements ActionListener {
 	}
 
 	private void upgrade() {
-		String str = this.speedCount.getText();
-		int speedCount = Integer.parseInt(str) + 1;
-		str = rangeCount.getText();
-		int rangeCount = Integer.parseInt(str) + 1;
-		str = powerCount.getText();
-		int powerCount = Integer.parseInt(str) + 1;
+		if (!tower.getLevel().equals(TowerLevel.three)) {
+			String str = this.speedCount.getText();
+			int speedCount = Integer.parseInt(str) + 1;
+			str = rangeCount.getText();
+			int rangeCount = Integer.parseInt(str) + 1;
+			str = powerCount.getText();
+			int powerCount = Integer.parseInt(str) + 1;
 
-		Tower newTower = upgradeLevel(tower, towerType, speedCount, rangeCount,
-				powerCount);
-		this.tower = newTower;
-		valueCount.setText(Long.toString(newTower.cost()));
-		// speedCount.set
+			Tower newTower = upgradeLevel(tower, towerType, speedCount,
+					rangeCount, powerCount);
+			this.tower = newTower;
+			this.speedCount.setText(new Integer(speedCount++).toString());
+			this.rangeCount.setText(new Integer(rangeCount++).toString());
+			this.powerCount.setText(new Integer(powerCount++).toString());
+			this.valueCount.setText(Long.toString(newTower.cost()));
+			TowerMarket market = new TowerMarket();
+			this.sellPriceCount.setText(Double.toString(market
+					.sellTower(newTower)));
+			this.levelLabel.setText("Level " + newTower.getLevel().toString());
+			if (newTower.getLevel().equals(TowerLevel.three)) {
+				this.upgradeBtn.setEnabled(false);
+			}
+		}
 
+		// this.setVisible(false);
 	}
 
 	public Tower getTower() {
@@ -290,6 +266,17 @@ public class SimpleInspection extends JPanel implements ActionListener {
 		long delta = tempTower.cost() - value;
 		if (delta < bank.getBalance() - bank.getCurrentBalance()) {
 			bank.setCurrentBalance(delta);
+			switch (tower.getLevel()) {
+			case one:
+				tempTower.setLevel(TowerLevel.two);
+				break;
+			case two:
+				tempTower.setLevel(TowerLevel.three);
+				break;
+			default:
+				break;
+			}
+
 			tower = tempTower;
 			return tower;
 		}

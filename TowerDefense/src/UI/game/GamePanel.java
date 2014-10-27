@@ -64,6 +64,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 
 	JPanel toolBoxContainer = new JPanel();
 
+	JDialog jd;
+	
 	@SuppressWarnings("unused")
 	private GamePanel() {
 	}
@@ -230,9 +232,8 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 				if (towers[x][y] != null) {
 					SimpleInspection inspection = new SimpleInspection(
 							towers[x][y]);
-					System.out.println(x + " - " + y);
 					inspection.setVisible(true);
-					JDialog jd = new JDialog();
+					jd = new JDialog();
 					jd.setTitle("Tower Inspection");
 					jd.setVisible(true);
 					jd.setSize(300, 280);
@@ -291,12 +292,9 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener {
 	}
 
 	private int closeInspector(SimpleInspection inspection, int x, int y) {
-		System.out.println("blob");
-		// WindowConstants.DISPOSE_ON_CLOSE;
-		System.out.println(inspection.getTower().cost());
 		towers[x][y] = inspection.getTower();
 		grid.updateTowers(towers);
-		// dispose();
+		jd.dispose();
 		return 0;
 	}
 
