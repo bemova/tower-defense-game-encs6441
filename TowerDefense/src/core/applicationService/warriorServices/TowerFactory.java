@@ -36,17 +36,20 @@ public class TowerFactory {
 		try {
 			switch (level.name()) {
 			case "One":
-				tower = getLevelOne(tower);
-				break;
-			case "two":
 			{
 				for(int i =0; i < 2;i++)
 					tower = getLevelOne(tower);
 				break;
 			}
-			case "three":
+			case "two":
 			{
 				for(int i =0; i < 3;i++)
+					tower = getLevelOne(tower);
+				break;
+			}
+			case "three":
+			{
+				for(int i =0; i < 4;i++)
 					tower = getLevelOne(tower);
 				break;
 			}
