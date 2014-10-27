@@ -42,9 +42,6 @@ public interface IStartEndChecker {
 	public boolean hasEnd(GridCellContentType[][] matrix);
 	/**
 	 * check for size validation in grid design 
-	 * @param height
-	 * @param width
-	 * @return true, is the grid was defined in correct sizes
 	 */
 	public boolean isCorrectSize(int height, int width);
 

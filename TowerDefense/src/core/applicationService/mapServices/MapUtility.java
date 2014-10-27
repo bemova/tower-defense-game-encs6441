@@ -12,7 +12,7 @@ public class MapUtility {
 	private static final Log4jLogger logger = new Log4jLogger();
 	/**
 	 * <b>this method can find the enterance point </b>
-	 * @param map
+	 * @param map grid info
 	 * @return Position of the entrance from mapd 
 	 */
 	public Position getEnter(GridCellContentType[][] map){
@@ -31,7 +31,7 @@ public class MapUtility {
 	}
 	/**
 	 * <b>this method can find the exit point </b>
-	 * @param map
+	 * @param map grid info
 	 * @return Position of the entrance from exit 
 	 */
 	public Position getExit(GridCellContentType[][] map){
