@@ -32,16 +32,16 @@ public class MainFrame extends JFrame implements ActionListener {
 		refresh();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
+
 		setLayout(new BorderLayout());
-		
-		mapPanel = new GamePanel(8,8);
+
+		mapPanel = new GamePanel(8, 8);
 	}
 
 	private void refresh() {
 		setSize(700, 500);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
+
 	}
 
 	private void setUpMenuBar() {
@@ -58,7 +58,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		menuBar.add(mapMenu);
 
 		setJMenuBar(menuBar);
-		
+
 	}
 
 	public void actionPerformed(ActionEvent event) {
@@ -75,7 +75,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private void continueMapDesign() {
 		add(mapPanel, BorderLayout.CENTER);
 		refresh();
-		
+
 	}
 
 }
