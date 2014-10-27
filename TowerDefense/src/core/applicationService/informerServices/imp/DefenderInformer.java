@@ -7,29 +7,35 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import Infrastructure.loggin.Log4jLogger;
 import core.applicationService.informerServices.IDefenderInformer;
 import core.applicationService.informerServices.Observer;
-import core.contract.ITDLogger;
 import core.domain.Subject;
 import core.domain.waves.Position;
 
-// TODO: Auto-generated Javadoc
+
 /**
- * The Class DefenderInformer.
+ * <b>In this class we implement observer design pattern to inform all towers the wave's head position</b>
+ * @author Ali, Mojtaba
+ * @version 0.1
  */
 @Component
 public class DefenderInformer implements Subject, IDefenderInformer {
 	
 	/**
-	 * The wave head position.
+	 * <b>The wave head position.
+	 * this member is the wave's head reperesenteter</b>
 	 */
 	private Position waveHeadPosition;
 	
-	/** The observers. */
+	/** <b>List of observer that contains the all observer for implementing our observer design pattern</b>
+	 * 
+	 */
 	private List<Observer> observers;
 	
-	/** The logger. */
-	private ITDLogger logger;
+	/** The logger that was implemented by log4j2 and the logger class is located in Infrastructure
+	 */
+	private static final Log4jLogger logger = new Log4jLogger();
 	
 	/**
 	 * Instantiates a new defender informer.
@@ -39,17 +45,10 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	}
 	
 	/**
-	 * Sets the logger.
-	 *
-	 * @param logger the new logger
-	 */
-	@Autowired
-    public void setLogger(ITDLogger logger) {
-		this.logger = logger;
-	}
-	
-	/* (non-Javadoc)
-	 * @see core.domain.Subject#registerObserver(core.applicationService.informerServices.Observer)
+	 * <b>
+	 * this method can register all observers in observer's list
+	 * </b
+	 * @param Observer
 	 */
 	@Override
 	public void registerObserver(Observer o) {
@@ -58,13 +57,16 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 				observers.add(o);
 			
 		} catch (Exception e) {
-			logger.writer("DefenderInformer-->registerObserver", e);
+			logger.writer(this.getClass().getName(), e);
 		}
 	}
 
 
-	/* (non-Javadoc)
-	 * @see core.domain.Subject#removeObserver(core.applicationService.informerServices.Observer)
+	/**
+	 * <b>
+	 * this method can remove a observer from observer's list
+	 * </b
+	 * @param Observer
 	 */
 	@Override
 	public void removeObserver(Observer o) {
@@ -72,13 +74,22 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 			if (o !=null)
 				observers.remove(o);
 		} catch (Exception e) {
-			logger.writer("DefenderInformer-->removeObserver", e);
+			logger.writer(this.getClass().getName(), e);
 		}
 	}
 
 	
-	/* (non-Javadoc)
-	 * @see core.domain.Subject#notifyObservers()
+	/**
+	 * <b>
+	 * this method can force observers to update 
+	 * and towers are informed the position of aliens by this method.
+	 * 
+	 * <code>
+	 * for (Observer ob : observers) {
+	 *			ob.update(waveHeadPosition);
+	 *		}
+	 * </code>
+	 * </b>
 	 */
 	@Override
 	public void notifyObservers() {
@@ -87,13 +98,15 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 				ob.update(waveHeadPosition);
 			}
 		} catch (Exception e) {
-			logger.writer("DefenderInformer-->notifyObservers", e);
+			logger.writer(this.getClass().getName(), e);
 		}
 		
 	}
 	
-	/* (non-Javadoc)
-	 * @see core.applicationService.informerServices.IDefenderInformer#setPosition(int, int)
+	/**
+	 * this method sets the wave'poisition
+	 * @param x as integer 
+	 * @param y as integer
 	 */
 	@Override
 	public void setPosition(int x, int y){
@@ -102,25 +115,27 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 			this.waveHeadPosition.setY(y);
 			positionChange();
 		} catch (Exception e) {
-			logger.writer("DefenderInformer-->setPosition", e);
+			logger.writer(this.getClass().getName(), e);
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see core.applicationService.informerServices.IDefenderInformer#positionChange()
+	/**
+	 * 
+	 * if the x and y of the head changes the setPosition method will call this method tho notify the observers 
+	 * that are towers
 	 */
 	@Override
 	public void positionChange(){
 		try {
 			notifyObservers();
 		} catch (Exception e) {
-			logger.writer("DefenderInformer-->positionChange", e);
+			logger.writer(this.getClass().getName(), e);
 		}
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see core.applicationService.informerServices.IDefenderInformer#getPosition()
+	/**
+	 * it can return the current position of the wave's head
+	 * @return Position 
 	 */
 	@Override
 	public Position getPosition() {
