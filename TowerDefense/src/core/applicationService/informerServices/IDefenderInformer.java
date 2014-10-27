@@ -3,27 +3,46 @@ package core.applicationService.informerServices;
 import core.applicationService.informerServices.Observer;
 import core.domain.waves.Position;
 
+/**
+ * <b>
+ * the interfaces that DefenderInformer calss have to implement for dependency injection 
+ * for the futures build
+ * </b>
+ * @author mojtaba,ali
+ * @version 0.1
+ */
 public interface IDefenderInformer {
 
-	/* (non-Javadoc)
-	 * @see core.applicationService.informerServices.imp.IDefenderInformer#registerObserver(core.applicationService.informerServices.Observer)
-	 */
+
 	public void registerObserver(Observer o);
 
-	/* (non-Javadoc)
-	 * @see core.applicationService.informerServices.imp.IDefenderInformer#removeObserver(core.applicationService.informerServices.Observer)
+	/**
+	 * 
+	 * this signature can show removing one of tower or defender from observers'list of defenders
+	 * @param Observer
 	 */
 	public void removeObserver(Observer o);
 
-	/* (non-Javadoc)
-	 * @see core.applicationService.informerServices.imp.IDefenderInformer#notifyObservers()
+	/**
+	 * Signature of the method of notify defenders about the latest position of wave 
 	 */
 	public void notifyObservers();
 
+	/**
+	 * set the wave's head position
+	 * @param x as integer 
+	 * @param y as integer
+	 */
 	public void setPosition(int x, int y);
-
+	/**
+	 * <b>signature of the position changes</b>
+	 */
 	public void positionChange();
 
+	/**
+	 * this signature represent the way of getting position of the wave's head
+	 * @return Position 
+	 */
 	public Position getPosition();
 
 }
