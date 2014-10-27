@@ -251,7 +251,9 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		// toolBoxContainer.add(towerInfoPanel);
 		towerInfo = new JDialog(new Frame(),"Tower info");
 		towerInfo.add(towerInfoPanel);
-		towerInfo.setSize(150, 200);
+		towerInfo.setSize(200, 200);
+		
+		towerInfo.setLocation(getWidth()-250, 100);
 		towerInfo.setVisible(true);
 
 	}
