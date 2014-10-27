@@ -18,12 +18,15 @@ import javax.swing.JPanel;
 
 import UI.CanvaObject;
 import UI.Constants;
-import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.mapServices.MapManager;
+import core.applicationService.mapServices.MapUtility;
+import core.applicationService.mapServices.connectivity.imp.ConnectivityService;
+import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.contract.MapConstants;
 import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
 import core.domain.maps.VisualGrid;
+import core.domain.waves.Position;
 
 public class MapEditorPanel extends JPanel implements ActionListener,
 		MouseListener, MouseMotionListener {
@@ -319,20 +322,45 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	protected void saveMap() {
 		try {
 
-			JFileChooser saveFile = new JFileChooser();
+			if (!isValid(grid.getContent())) {
+				throw new Exception("Map is not valid!!");
+			} else {
+				JFileChooser saveFile = new JFileChooser();
 
-			if (saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-				String fileName = saveFile.getSelectedFile().getAbsolutePath();
+				if (saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+					String fileName = saveFile.getSelectedFile()
+							.getAbsolutePath();
 
-				String errorMessage = mapManager.SaveMapIntoFle(grid, fileName);
+					mapManager.SaveMapIntoFle(grid, fileName);
 
-				if (!errorMessage.equals(""))
-					JOptionPane.showMessageDialog(null, errorMessage);
+				}
 			}
+
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 
+	}
+
+	private boolean isValid(GridCellContentType[][] matrix) {
+		StartEndChecker startChecker = new StartEndChecker();
+		ConnectivityService conn = new ConnectivityService();
+		MapUtility utility = new MapUtility();
+		Position start = utility.getEnter(matrix);
+		Position end = utility.getExit(matrix);
+		if (!startChecker.hasEnd(matrix)) {
+			return false;
+		}
+		if(!startChecker.hasStart(matrix)){
+			return false;
+		}
+		if (!conn.isTherePath(start, end, matrix)) {
+			return false;
+		}
+		if(startChecker.isNeighbor(start, end)){
+			return false;
+		}
+		return true;
 	}
 
 	protected void loadMap() {
