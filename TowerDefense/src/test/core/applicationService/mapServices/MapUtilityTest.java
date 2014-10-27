@@ -12,6 +12,7 @@ import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 
 public class MapUtilityTest {
+	@SuppressWarnings("unused")
 	private int[][] matrix;
 	private GridCellContentType[][] cellTypeMatrix;
 

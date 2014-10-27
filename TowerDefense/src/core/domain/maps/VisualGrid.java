@@ -25,6 +25,7 @@ public class VisualGrid extends Grid {
 		super(width, height, cellType);
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	public void draw(Graphics g) {
 		// simpleGrid.draw(g);
 		for (int x = 0; x < getWidth(); x++) {

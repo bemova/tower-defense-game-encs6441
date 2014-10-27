@@ -52,6 +52,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	private JButton kingTowerBtn;
 
 	private JLabel bankLbl;
+	@SuppressWarnings("unused")
 	private Color colorToDisplayTower;
 	private GridCellContentType cellContent;
 

@@ -31,6 +31,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 	private String towerType;
 	private BankManager bank;
 	private Tower tower;
+	@SuppressWarnings("unused")
 	private long availFunds;
 	private String performedAction;
 	private JLabel speedCount;

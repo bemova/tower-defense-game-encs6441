@@ -23,7 +23,9 @@ public class TowerInfoPanel extends JPanel {
 	private JLabel levelLabel;
 //	private JPanel panel;
 //	private JDialog dialog;
+	@SuppressWarnings("unused")
 	private Tower tower;
+	@SuppressWarnings("unused")
 	private String towerType;
 
 	/**
@@ -170,6 +172,7 @@ public class TowerInfoPanel extends JPanel {
 		long value = (tower.cost());
 		valueCount.setText(Long.toString(value));
 		levelLabel.setText("Level " + tower.getLevel());
+		@SuppressWarnings("unused")
 		GridBagConstraints gbc_sellBtn = new GridBagConstraints();
 setVisible(true);
 //setBackground(Color.GREEN);

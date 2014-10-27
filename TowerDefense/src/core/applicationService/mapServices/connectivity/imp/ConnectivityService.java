@@ -18,6 +18,7 @@ import core.domain.waves.Position;
  */
 public class ConnectivityService implements IConnectivityService {
 
+	@SuppressWarnings("unused")
 	private static BufferedReader br;
 	/**
 	 * application logger definition

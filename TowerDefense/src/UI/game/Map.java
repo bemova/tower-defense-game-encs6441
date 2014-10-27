@@ -7,6 +7,7 @@ import core.contract.MapConstants;
 import core.domain.maps.Grid;
 import core.domain.warriors.defenders.towers.Tower;
 
+@SuppressWarnings("serial")
 public class Map extends Grid {
 
 	Tower[][] towers;
