@@ -15,7 +15,9 @@ import java.util.Observable;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -29,23 +31,27 @@ public class SimpleInspection extends Observable implements ActionListener {
 	private String towerType;
 	private BankManager bank;
 	private Tower tower;
-
+	private long availFunds;
 	private String performedAction;
-	JLabel speedCount;
-	JLabel rangeCount;
-	JLabel powerCount;
-	JLabel valueCount;
-	JLabel sellPriceLable;
-	JLabel sellPriceCount;
-	JLabel levelLabel;
-	JButton upgradeBtn;
-	JPanel panel;
-	JDialog dialog;
+	private JLabel speedCount;
+	private JLabel rangeCount;
+	private JLabel powerCount;
+	private JLabel valueCount;
+	private JLabel sellPriceLable;
+	private JLabel sellPriceCount;
+	private JLabel levelLabel;
+	private JButton upgradeBtn;
+	private JButton sellBtn;
+	private JPanel panel;
+	private JDialog dialog;
 
 	/**
 	 * Create the panel.
 	 */
 	public SimpleInspection(Tower tower) {
+		this.bank = BankManager.getInstance();
+		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
+
 		performedAction = "";
 		dialog = new JDialog();
 		dialog.addWindowListener(new WindowListener() {
@@ -235,7 +241,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 		long value = (tower.cost());
 		valueCount.setText(Long.toString(value));
 		levelLabel.setText("Level " + tower.getLevel());
-		JButton sellBtn = new JButton("Sell");
+		sellBtn = new JButton("Sell");
 		sellBtn.setSize(30, 20);
 		sellBtn.addActionListener(this);
 		GridBagConstraints gbc_sellBtn = new GridBagConstraints();
@@ -276,7 +282,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 	private void sell() {
 		String str = sellPriceCount.getText();
 		long temp = bank.getCurrentBalance();
-		long sellPrice = new Long(str);
+		long sellPrice = new Long(str).longValue();
 		temp -= sellPrice;
 		bank.resetCurrentBalance();
 		bank.setCurrentBalance(temp);
@@ -295,20 +301,23 @@ public class SimpleInspection extends Observable implements ActionListener {
 
 			Tower newTower = upgradeLevel(tower, towerType, speedCount,
 					rangeCount, powerCount);
-
-			// if()
-			this.tower = newTower;
-			this.speedCount.setText(new Integer(speedCount++).toString());
-			this.rangeCount.setText(new Integer(rangeCount++).toString());
-			this.powerCount.setText(new Integer(powerCount++).toString());
-			this.valueCount.setText(Long.toString(newTower.cost()));
-			TowerMarket market = new TowerMarket();
-			this.sellPriceCount.setText(Double.toString(market
-					.sellTower(newTower)));
-			this.levelLabel.setText("Level " + newTower.getLevel().toString());
-			performedAction = "Upgrade";
-			if (newTower.getLevel().equals(TowerLevel.three)) {
-				this.upgradeBtn.setEnabled(false);
+			if (newTower != null) {
+				this.tower = newTower;
+				this.speedCount.setText(new Integer(speedCount++).toString());
+				this.rangeCount.setText(new Integer(rangeCount++).toString());
+				this.powerCount.setText(new Integer(powerCount++).toString());
+				this.valueCount.setText(Long.toString(newTower.cost()));
+				TowerMarket market = new TowerMarket();
+				this.sellPriceCount.setText(Double.toString(market
+						.sellTower(newTower)));
+				this.levelLabel.setText("Level "
+						+ newTower.getLevel().toString());
+				this.sellBtn.setEnabled(false);
+				performedAction = "Upgrade";
+				sendUpdateSignal();
+				if (newTower.getLevel().equals(TowerLevel.three)) {
+					this.upgradeBtn.setEnabled(false);
+				}
 			}
 		}
 
@@ -345,16 +354,25 @@ public class SimpleInspection extends Observable implements ActionListener {
 
 			tower = tempTower;
 			return tower;
+		} else {
+			JOptionPane.showMessageDialog(new JFrame(),
+					"you don't have enough money :(", "Alert",
+					JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
 	}
 
+	public void close(){
+		dialog.dispose();
+	}
 	private void closeInspector() {
+		sendUpdateSignal();
+		dialog.dispose();
+	}
+	private void sendUpdateSignal(){
 		setChanged();
 		notifyObservers();
-		// towers[x][y] = inspection.getTower();
-		// grid.updateTowers(towers);
-		dialog.dispose();
+		
 	}
 
 }

@@ -13,9 +13,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -29,7 +29,6 @@ import core.contract.MapConstants;
 import core.domain.account.BankManager;
 import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
-//import core.domain.maps.VisualGrid;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towerType.TowerLevel;
 
@@ -45,37 +44,31 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 	private String towerType;
 	private Tower[][] towers;
-	JButton modernTowerBtn;
-	JButton ancientTowerBtn;
-	JButton kingTowerBtn;
+	private JButton modernTowerBtn;
+	private JButton ancientTowerBtn;
+	private JButton kingTowerBtn;
 
-	Color colorToDrawGreed;
-	GridCellContentType cellContent;
+	private JLabel bankLbl;
+	private Color colorToDrawGreed;
+	private GridCellContentType cellContent;
 
-	Map grid;
+	private Map grid;
 
-	MapManager mapManager;
-	CanvaObject canvas;
-	JPanel mapContainer;
+	private MapManager mapManager;
+	private CanvaObject canvas;
+	private JPanel mapContainer;
 
-	JPanel toolBoxContainer = new JPanel();
+	private JPanel toolBoxContainer = new JPanel();
 
-	private JDialog jd;
 	private SimpleInspection inspection;
 	private int x, y;
+	private long availFunds;
 
 	@SuppressWarnings("unused")
 	private GamePanel() {
 	}
 
 	public GamePanel(int width, int height) {
-		// model = new MyModel();
-		// inspection.addObserver(this);
-		// jd = new JDialog();
-		// jd.setTitle("Tower Inspection");
-		// jd.setVisible(false);
-		// jd.setSize(300, 280);
-		// jd.setLocationRelativeTo(this);
 
 		initialize(width, height);
 		setLayout(new BorderLayout());
@@ -86,10 +79,10 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 		toolBoxContainer.setSize(10, 500);
 		toolBoxContainer.setLayout(new FlowLayout());
+		toolBoxContainer.add(bankLbl);
 		toolBoxContainer.add(modernTowerBtn);
 		toolBoxContainer.add(ancientTowerBtn);
 		toolBoxContainer.add(kingTowerBtn);
-
 		mapManager = new MapManager();
 
 		modernTowerBtn.addActionListener(this);
@@ -114,10 +107,13 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	}
 
 	private void initialize(int width, int height) {
+		this.bank = BankManager.getInstance();
+
+		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
+		String str = new Long(availFunds).toString();
+		this.bankLbl = new JLabel("$"+str);
 		this.width = width;
 		this.height = height;
-
-		this.bank = BankManager.getInstance();
 
 		this.addTower = false;
 
@@ -135,7 +131,6 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 	}
 
-	@SuppressWarnings("serial")
 	public class CanvasCoordinate extends Point {
 		public CanvasCoordinate(int x, int y) {
 			super(x, y);
@@ -225,6 +220,9 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 					if (tower.cost() < bank.getBalance()
 							- bank.getCurrentBalance()) {
 						bank.setCurrentBalance(tower.cost());
+						availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
+						String str = new Long(availFunds).toString();
+						this.bankLbl.setText("$"+str);
 						towers[x][y] = tower;
 						grid.updateTowers(towers);
 						draw(x, y);
@@ -238,73 +236,15 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 			} else {
 				if (towers[x][y] != null) {
 
+					if(inspection != null){
+						inspection.close();
+						inspection = null;
+					}
 					inspection = new SimpleInspection(towers[x][y]);
 					inspection.addObserver(this);
-					// jd = new JDialog();
-					// jd.setLayout(new FlowLayout());
-
-					// inspection.setVisible(true);
-					// jd.add(inspection);
-					// jd.setTitle("Tower Inspection");
-					// jd.setVisible(true);
-					// jd.setSize(300, 280);
-					// jd.setLocationRelativeTo(this);
-					// jd.setDefaultCloseOperation(closeInspector(inspection,x,y));
-					// jd.addWindowListener(new WindowListener() {
-					//
-					// @Override
-					// public void windowOpened(WindowEvent e) {
-					// // TODO Auto-generated method stub
-					//
-					// }
-					//
-					// @Override
-					// public void windowIconified(WindowEvent e) {
-					// // TODO Auto-generated method stub
-					//
-					// }
-					//
-					// @Override
-					// public void windowDeiconified(WindowEvent e) {
-					// // TODO Auto-generated method stub
-					//
-					// }
-					//
-					// @Override
-					// public void windowDeactivated(WindowEvent e) {
-					// // TODO Auto-generated method stub
-					//
-					// }
-					//
-					// @Override
-					// public void windowClosing(WindowEvent e) {
-					// closeInspector(inspection, x, y);
-					//
-					// }
-					//
-					// @Override
-					// public void windowClosed(WindowEvent e) {
-					// // TODO Auto-generated method stub
-					//
-					// }
-					//
-					// @Override
-					// public void windowActivated(WindowEvent e) {
-					// // TODO Auto-generated method stub
-					//
-					// }
-					// });
-
 				}
 			}
 		}
-	}
-
-	private int closeInspector(SimpleInspection inspection, int x, int y) {
-		towers[x][y] = inspection.getTower();
-		grid.updateTowers(towers);
-		jd.dispose();
-		return 0;
 	}
 
 	@Override
@@ -414,10 +354,9 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	public void update(Observable arg0, Object arg1) {
 		switch (inspection.getPerformedAction()) {
 		case "Upgrade":
-			towers[x][y] = inspection.getTower();
+			upgradeTower();
 			break;
 		case "Sell":
-			towers[x][y] = null;
 			clearTower(x, y);
 			break;
 		default:
@@ -426,9 +365,20 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 	}
 
+	private void upgradeTower() {
+		towers[x][y] = inspection.getTower();
+		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
+		String str = new Long(availFunds).toString();
+		this.bankLbl.setText("$"+str);
+	}
+
 	private void clearTower(int x, int y) {
 		if ((x < grid.getWidth()) && (y < grid.getHeight())
 				&& (grid.getCell(x, y) == GridCellContentType.TOWER)) {
+			availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
+			String str = new Long(availFunds).toString();
+			this.bankLbl.setText("$"+str);
+			towers[x][y] = null;
 			grid.updateTowers(towers);
 			grid.setCell(x, y, GridCellContentType.SCENERY);
 			canvas.repaint();
