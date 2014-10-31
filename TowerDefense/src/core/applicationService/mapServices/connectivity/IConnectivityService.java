@@ -11,6 +11,7 @@ public interface IConnectivityService {
 	 * @param start start position
 	 * @param end end position
 	 * @param matrix grid content
+	 * @return true, if there is a valid path.
 	 */
 	public boolean isTherePath(Position start, Position end, GridCellContentType[][] matrix);
 

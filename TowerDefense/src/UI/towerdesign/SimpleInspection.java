@@ -52,7 +52,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 
 	/**
 	 * Create the panel.
-	 * @param Tower the tower that this panel needs to show its information
+	 * @param tower the tower that this panel needs to show its information
 	 */
 	public SimpleInspection(Tower tower) {
 		this.bank = BankManager.getInstance();
@@ -266,6 +266,10 @@ public class SimpleInspection extends Observable implements ActionListener {
 
 	}
 
+	/**
+	 * <b>Based on user action, either upgrades a tower or sells it.</b>
+	 * @param event ActionEvent passed based on user action.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
@@ -280,6 +284,11 @@ public class SimpleInspection extends Observable implements ActionListener {
 		}
 	}
 
+	/**
+	 * <b>This method is used by the Observer to know what has been updated.</b>
+	 * 
+	 * @return "Sell" or "Upgrade"
+	 */
 	public String getPerformedAction() {
 		return performedAction;
 
@@ -331,6 +340,9 @@ public class SimpleInspection extends Observable implements ActionListener {
 
 	}
 
+	/**
+	 * @return The tower that has been acted upon.
+	 */
 	public Tower getTower() {
 		return this.tower;
 	}
@@ -368,17 +380,22 @@ public class SimpleInspection extends Observable implements ActionListener {
 		return null;
 	}
 
-	public void close(){
+	/**
+	 * <b>Closes the inspection panel.</b>
+	 */
+	public void close() {
 		dialog.dispose();
 	}
+
 	private void closeInspector() {
 		sendUpdateSignal();
 		dialog.dispose();
 	}
-	private void sendUpdateSignal(){
+
+	private void sendUpdateSignal() {
 		setChanged();
 		notifyObservers();
-		
+
 	}
 
 }

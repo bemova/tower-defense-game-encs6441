@@ -62,6 +62,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 	private MapEditorPanel() {
 	}
 
+	/**
+	 * <b>Initializes the main content of the map editor</b>
+	 * @param width map width
+	 * @param height map height
+	 */
 	public MapEditorPanel(int width, int height) {
 
 		initialize(width, height);
@@ -131,6 +136,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		}
 	}
 
+	/**
+	 * <b>Converts point to a coordinate that is actionable by the canvas.</b>
+	 * @param point target location on the grid (canvas)
+	 * @return canvas coordinate
+	 */
 	public CanvasCoordinate toCanvasCoordinates(Point point) {
 		Point canvasLocation = canvas.getLocationOnScreen();
 		int relativeX = point.x - canvasLocation.x;
@@ -140,15 +150,25 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		return new CanvasCoordinate(i, j);
 	}
 
+	/**
+	 * <b>Sets the grid size either to design a new map or to load a map.</b>
+	 * @param width map width
+	 * @param height map height
+	 */
 	public void setGridSize(int width, int height) {
 		grid.setSize(width, height);
-		canvas.updateGrid(grid);
+		canvas.setGrid(grid);
 	}
 
+	/**
+	 * <b>prepares for map design.</b>
+	 * @param width map width
+	 * @param height map height
+	 */
 	public void design(int width, int height) {
 		try {
 			grid.setSize(width, height);
-			canvas.updateGrid(grid);
+			canvas.setGrid(grid);
 
 			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
@@ -161,6 +181,10 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
+	/**
+	 * <b>Prepares to draw path.</b>
+	 * @param backgroundColor path color 
+	 */
 	public void drawPath(Color backgroundColor) {
 		try {
 
@@ -204,7 +228,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
-	@Override
+	
+	/** <b>Draws the selected content on the map.</b>
+	 * @param event MouseEvent passed to the method.
+	 * 
+	 */
 	public void mouseClicked(MouseEvent event) {
 		draw(event.getX(), event.getY());
 
@@ -230,7 +258,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
-	@Override
+	
+	/** 
+	 * <b>Depending on which button user clicks on, a scenery, entrance, exit, or path will be selected to draw on map.</b> 
+	 * @param event the ActionEvent passed to this method.
+	 */
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
 
@@ -373,7 +405,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
 				grid = mapManager.LoadMapFromFile(openFile.getSelectedFile()
 						.getAbsolutePath());
-				canvas.updateGrid(grid);
+				canvas.setGrid(grid);
 				width = grid.getWidth();
 				height = grid.getHeight();
 				mapContainer.setSize(width * grid.getUnitSize(),
@@ -390,7 +422,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	protected void designMap() {
 		try {
-			canvas.updateGrid(grid);
+			canvas.setGrid(grid);
 		} catch (java.lang.Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}

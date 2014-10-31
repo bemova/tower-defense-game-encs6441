@@ -74,6 +74,11 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	private GamePanel() {
 	}
 
+	/**
+	 * <b>Constructs the main panel for game</b>
+	 * @param width map width
+	 * @param height map height
+	 */
 	public GamePanel(int width, int height) {
 
 		initialize(width, height);
@@ -259,6 +264,11 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		}
 	}
 
+	/**
+	 * <b>Converts point to a coordinate that is actionable by the canvas.</b>
+	 * @param point target location on the grid (canvas)
+	 * @return canvas coordinate
+	 */
 	public CanvasCoordinate toCanvasCoordinates(Point point) {
 		Point canvasLocation = canvas.getLocationOnScreen();
 		int relativeX = point.x - canvasLocation.x;
@@ -268,15 +278,26 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		return new CanvasCoordinate(i, j);
 	}
 
+	/**
+	 * <b>Prepares the grid for further actions.</b>
+	 * @param width map width
+	 * @param height map height
+	 */
 	public void setGridSize(int width, int height) {
 		grid.setSize(width, height);
-		canvas.updateGrid(grid);
+		canvas.setGrid(grid);
 	}
 
+	
+	/**
+	 * <b>Prepares the map after it is loaded from file system.</b>
+	 * @param width map width
+	 * @param height map height
+	 */
 	public void design(int width, int height) {
 		try {
 			grid.setSize(width, height);
-			canvas.updateGrid(grid);
+			canvas.setGrid(grid);
 
 			mapContainer.setSize(width * grid.getUnitSize(),
 					height * grid.getUnitSize());
@@ -305,6 +326,9 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		}
 	}
 
+	/** <b>Depending on where the user clicks it would either place a tower on the map or inspects a tower characteristics.</b>
+	 * @param event MouseEvent generated from user action.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent event) {
 
@@ -376,7 +400,11 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		}
 	}
 
-	@Override
+	
+	/** 
+	 * <b>Depending on the tower selection by the user, selects one and prepares to place it on the map.</b>
+	 * @param event ActionEvent passed as a result of user action.
+	 */
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
 
@@ -440,7 +468,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
 				grid = new Map((Grid) mapManager.LoadMapFromFile(openFile
 						.getSelectedFile().getAbsolutePath()));
-				canvas.updateGrid(grid);
+				canvas.setGrid(grid);
 				width = grid.getWidth();
 				height = grid.getHeight();
 				mapContainer.setSize(width * grid.getUnitSize(),
@@ -479,7 +507,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 	}
 
 	/**
-	 * <b>this method updates the tower stats and the bank balance and removes the a tower from the map </b>
+	 * <b>This method updates the tower stats and the bank balance and removes the a tower from the map.</b>
 	 * @param arg1 is object is of type tower  perform operation
 	 * @param arg0 observer object
 	 */

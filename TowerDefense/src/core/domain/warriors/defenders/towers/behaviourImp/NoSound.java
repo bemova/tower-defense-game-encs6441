@@ -3,10 +3,10 @@ package core.domain.warriors.defenders.towers.behaviourImp;
 import core.domain.warriors.defenders.towers.behaviours.SoundBehaviour;
 /**
  * <b>this is used for strategy design pattern
- * this class is defined to implement the one of the sound behavior of a tower>
+ * this class is defined to implement the one of the sound behavior of a tower
  * that is a kind of no sound</b>
  * @author Team5
- *@version 0.1
+ * @version 0.1
  */
 public class NoSound implements SoundBehaviour {
 	/**

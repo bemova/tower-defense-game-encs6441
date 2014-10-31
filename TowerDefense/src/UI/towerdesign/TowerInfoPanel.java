@@ -27,9 +27,14 @@ public class TowerInfoPanel extends JPanel {
 	private String towerType;
 
 	/**
-	 * Create the panel.
+	 * Creates the panel.
 	 */
 	public TowerInfoPanel(){}
+	
+	/**
+	 * <b>Constructs a tower info panel.</b>
+	 * @param tower Tower object passed to the constructor.
+	 */
 	public TowerInfoPanel(Tower tower) {
 
 		this.tower = tower;

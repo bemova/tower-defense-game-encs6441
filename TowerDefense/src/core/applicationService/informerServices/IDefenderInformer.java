@@ -7,7 +7,7 @@ import core.domain.waves.Position;
  * the interfaces that DefenderInformer calss have to implement for dependency injection 
  * for the futures build
  * </b>
- * @author Team5,ali
+ * @author Team5
  * @version 0.1
  */
 public interface IDefenderInformer {
@@ -18,7 +18,7 @@ public interface IDefenderInformer {
 	/**
 	 * 
 	 * this signature can show removing one of tower or defender from observers'list of defenders
-	 * @param Observer the object the you want to remove from the observers'list
+	 * @param o the object the you want to remove from the observers'list
 	 */
 	public void removeObserver(Observer o);
 

@@ -7,7 +7,7 @@ import core.domain.waves.Position;
 
 /**
  * this calss used as a service to chech some validation in map based on the position of start and end 
- * @author Team5 , ali
+ * @author Team5
  * @version 0.1
  */
 public class StartEndChecker implements IStartEndChecker {
@@ -27,7 +27,7 @@ public class StartEndChecker implements IStartEndChecker {
 	 * @param width place of the edge
 	 * @param height place of the edge
 	 * @param position position that we need for validation 
-	 * @return
+	 * @return true, if node is on edge
 	 */
 	@Override
 	public boolean isInEdge(int width, int height, Position position){

@@ -21,6 +21,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	private GamePanel mapPanel;
 	JDialog mapSizeDialog;
 
+	
+	/**
+	 * <b>Initializes the main game frame.</b>
+	 */
 	public MainFrame() {
 		setup();
 		setUpMenuBar();
@@ -61,6 +65,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	}
 
+	/** 
+	 * <b>Brings up the file browser dialog.</b>
+	 * @param event ActionEvent passed based on user action.
+	 */
 	public void actionPerformed(ActionEvent event) {
 		String menuItem = event.getActionCommand();
 

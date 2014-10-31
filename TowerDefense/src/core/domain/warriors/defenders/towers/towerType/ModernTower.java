@@ -10,7 +10,7 @@ import core.domain.warriors.defenders.towers.behaviourImp.MoveByMouse;
 import core.domain.warriors.defenders.towers.behaviourImp.ShootWithWeapon;
 import core.domain.warriors.defenders.towers.behaviourImp.ShootingSound;
 /**
- * <b>this type of tower has ShootWithWeapon as a weapon and it has MoveByMouse & ShootingSound </b>
+ * <b>this type of tower has ShootWithWeapon as a weapon and it has MoveByMouse and ShootingSound </b>
  * @author Team5
  * @version 0.1
  */

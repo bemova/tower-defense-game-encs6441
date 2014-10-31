@@ -12,7 +12,7 @@ import core.domain.maps.Grid;
 import core.domain.waves.Position;
 /**
  * <b>it can used as a service during save and load from or into the file</b>
- * @author ali
+ * @author Team5
  * @version 0.1
  */
 public class MapManager {
@@ -46,9 +46,9 @@ public class MapManager {
 
 	/**
 	 * <b>save the grid into file</b>
-	 * @param grid
-	 * @param FileName
-	 * @return
+	 * @param grid grid info
+	 * @param FileName absolute file path and name
+	 * 
 	 */
 	public void SaveMapIntoFle(Grid grid, String FileName) {
 		try {

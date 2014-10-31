@@ -16,7 +16,7 @@ public enum GridCellContentType {
 	}
 	/**
 	 * 
-	 * @return value which is calling
+	 * @return int, value which is calling
 	 */
 	public int getValue() {
 		return this.value;

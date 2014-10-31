@@ -15,7 +15,7 @@ import core.domain.waves.Position;
 
 /**
  * <b>In this class we implement observer design pattern to inform all towers the wave's head position</b>
- * @author Team5, Mojtaba
+ * @author Team5
  * @version 0.1
  */
 @Component
@@ -46,8 +46,8 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	/**
 	 * <b>
 	 * this method can register all observers in observer's list
-	 * </b
-	 * @param Observer
+	 * </b>
+	 * @param o Observer object
 	 */
 	@Override
 	public void registerObserver(Observer o) {
@@ -64,8 +64,8 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	/**
 	 * <b>
 	 * this method can remove a observer from observer's list
-	 * </b
-	 * @param Observer
+	 * </b>
+	 * @param o Observer object
 	 */
 	@Override
 	public void removeObserver(Observer o) {

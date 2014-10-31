@@ -16,7 +16,7 @@ public class VisualGrid extends Grid {
 	Grid simpleGrid;
 /**
  * 
- * @param grid initalize grid
+ * @param grid initializes grid
  */
 	public VisualGrid(Grid grid) {
 		simpleGrid = grid;

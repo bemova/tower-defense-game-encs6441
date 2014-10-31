@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.io.Serializable;
 
 /**
- * @author 	Ali
+ * @author 	Team5
  *
  */
 @SuppressWarnings("serial")
@@ -15,9 +15,13 @@ public class Grid implements Serializable{
 	private int sizeOfUnit = 30;
 	private GridCellContentType[][] content;
 
+	/**
+	 * This is a dummy constructor 
+	 */
 	public Grid() {}
 
 	/**
+	 * <b>Creates a Grid using width and height and initializes the content as Scenery</b>
 	 * @param width width of grid 
 	 * @param height height of grid
 	 */
@@ -29,6 +33,7 @@ public class Grid implements Serializable{
 	}
 
 	/**
+	 * <b>Creates a Grid with width, height, and content type</b>
 	 * @param width width of grid
 	 * @param height height of grid
 	 * @param cellType type of grid
@@ -41,7 +46,8 @@ public class Grid implements Serializable{
 	}
 
 	/**
-	 * @param grid pass object grid to get width/height/content
+	 * <b>Constructs a Grid by another grid.</b>
+	 * @param grid grid object
 	 */
 	public Grid(Grid grid) {
 		this.width = grid.getWidth();
@@ -50,6 +56,7 @@ public class Grid implements Serializable{
 	}
 
 	/**
+	 * <b>initializes grid content to cellType</b>
 	 * @param cellType type of cell 
 	 */
 	private void initializeCellContents(GridCellContentType cellType) {
@@ -61,6 +68,7 @@ public class Grid implements Serializable{
 	}
 
 	/**
+	 * <b>Draws the grid</b>
 	 * @param g draw graphics after iteration
 	 */
 	public void draw(Graphics g) {
@@ -109,6 +117,7 @@ public class Grid implements Serializable{
 	}
 
 	/**
+	 * <b>Sets the size of the grid and resets its content to scenery.</b>
 	 * @param width width of the content to set
 	 * @param height height of the content to set
 	 */
@@ -122,6 +131,7 @@ public class Grid implements Serializable{
 
 
 	/**
+	 * <b>Sets the content of a cell to type</b>
 	 * @param x location of cell
 	 * @param y location of cell
 	 * @param type  type of cell
@@ -133,6 +143,11 @@ public class Grid implements Serializable{
 		}
 	}
 
+	/**
+	 * @param x coordinate
+	 * @param y coordinate
+	 * @return content type
+	 */
 	public GridCellContentType getCell(int x, int y) {
 		if (x >= 0 && x < width && y >= 0
 				&& y < height) {

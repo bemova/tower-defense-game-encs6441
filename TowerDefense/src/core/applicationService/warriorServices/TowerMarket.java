@@ -13,7 +13,8 @@ public class TowerMarket {
 	/**
 	 * <b>this method calculate the sell value base on the decorated tower </b>
 	 * @param tower the tower that player wants to sell
-	 * @return tower the amount of after the sell
+	 * @param <T> is type of tower
+	 * @return sale value of a tower
 	 */
 	public <T extends Tower> long sellTower(T tower){
 		long amount = 0;

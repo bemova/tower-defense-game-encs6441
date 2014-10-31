@@ -34,6 +34,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JTextField heightTextField;
 	JDialog mapSizeDialog;
 
+	/**
+	 * Constructs Editor's main frame. 
+	 */
 	public MainFrame() {
 		setup();
 		setUpMenuBar();
@@ -51,6 +54,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		mapPanel = new MapEditorPanel(8,8);
 	}
 
+	
 	private void refresh() {
 		setSize(700, 500);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -83,6 +87,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 	}
 
+	/** 
+	 * <b>Based on the menu, an action is selected.</b>
+	 */
 	public void actionPerformed(ActionEvent event) {
 		String menuItem = event.getActionCommand();
 
@@ -140,7 +147,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * 
+	 * <b>This method creates a dialog to allow the user to input the map size.</b>
 	 */
 	private void getNewMapSize() {
 		mapSizeDialog = new JDialog(this, true); // parent, isModal
