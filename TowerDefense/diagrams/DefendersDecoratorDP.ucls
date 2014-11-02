@@ -50,8 +50,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="core.domain.warriors.defenders.towers.towerType.AncientTower" 
-    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/towerType/AncientTower.java" 
+  <class id="6" language="java" name="core.domain.warriors.defenders.towers.towertype.AncientTower" 
+    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/towertype/AncientTower.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="686" y="811"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -60,8 +60,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="core.domain.warriors.defenders.towers.towerType.ModernTower" 
-    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/towerType/ModernTower.java" 
+  <class id="7" language="java" name="core.domain.warriors.defenders.towers.towertype.ModernTower" 
+    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/towertype/ModernTower.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="988" y="809"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
