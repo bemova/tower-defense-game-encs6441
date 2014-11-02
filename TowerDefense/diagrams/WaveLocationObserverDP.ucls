@@ -28,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="4" language="java" name="core.applicationService.informerServices.Observer" project="TowerDefense" 
-    file="/TowerDefense/src/core/applicationService/informerServices/Observer.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="4" language="java" name="core.applicationservice.informerservices.Observer" project="TowerDefense" 
+    file="/TowerDefense/src/core/applicationservice/informerservices/Observer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="133" y="645"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="5" language="java" name="core.applicationService.informerServices.IDefenderInformer" 
-    project="TowerDefense" file="/TowerDefense/src/core/applicationService/informerServices/IDefenderInformer.java" 
+  <interface id="5" language="java" name="core.applicationservice.informerservices.IDefenderInformer" 
+    project="TowerDefense" file="/TowerDefense/src/core/applicationservice/informerservices/IDefenderInformer.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="967" y="648"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -47,8 +47,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="6" language="java" name="core.applicationService.informerServices.imp.DefenderInformer" 
-    project="TowerDefense" file="/TowerDefense/src/core/applicationService/informerServices/imp/DefenderInformer.java" 
+  <class id="6" language="java" name="core.applicationservice.informerservices.imp.DefenderInformer" 
+    project="TowerDefense" file="/TowerDefense/src/core/applicationservice/informerservices/imp/DefenderInformer.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="496" y="645"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

@@ -6,9 +6,9 @@ import java.awt.Color;
 import core.contract.DefenderConstants;
 import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
-import core.domain.warriors.defenders.towers.behaviourImp.MoveByMouse;
-import core.domain.warriors.defenders.towers.behaviourImp.ShootWithWeapon;
-import core.domain.warriors.defenders.towers.behaviourImp.ShootingSound;
+import core.domain.warriors.defenders.towers.behaviourimp.MoveByMouse;
+import core.domain.warriors.defenders.towers.behaviourimp.ShootWithWeapon;
+import core.domain.warriors.defenders.towers.behaviourimp.ShootingSound;
 /**
  * <b>this type of tower has ShootWithWeapon as a weapon and it has MoveByMouse and ShootingSound </b>
  * @author Team5

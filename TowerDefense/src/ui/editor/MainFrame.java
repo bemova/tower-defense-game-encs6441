@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import ui.Constants;
-import core.applicationservice.mapServices.connectivity.imp.StartEndChecker;
+import core.applicationservice.mapservices.connectivity.imp.StartEndChecker;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {

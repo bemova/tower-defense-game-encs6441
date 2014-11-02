@@ -1,4 +1,4 @@
-package test.core.applicationservice.mapServices;
+package test.core.applicationservice.mapservices;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import core.applicationservice.mapServices.connectivity.imp.StartEndChecker;
+import core.applicationservice.mapservices.connectivity.imp.StartEndChecker;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 

@@ -1,6 +1,6 @@
 package core.domain.warriors.defenders;
 
-import core.applicationservice.informerServices.Observer;
+import core.applicationservice.informerservices.Observer;
 import core.domain.Subject;
 import core.domain.waves.Position;
 

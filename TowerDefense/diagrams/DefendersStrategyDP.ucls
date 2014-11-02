@@ -71,8 +71,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="8" language="java" name="core.domain.warriors.defenders.towers.behaviourImp.LaughSound" 
-    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourImp/LaughSound.java" 
+  <class id="8" language="java" name="core.domain.warriors.defenders.towers.behaviourimp.LaughSound" 
+    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourimp/LaughSound.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1611" y="411"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -81,8 +81,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="core.domain.warriors.defenders.towers.behaviourImp.MoveByMouse" 
-    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourImp/MoveByMouse.java" 
+  <class id="9" language="java" name="core.domain.warriors.defenders.towers.behaviourimp.MoveByMouse" 
+    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourimp/MoveByMouse.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1615" y="1211"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -91,9 +91,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="core.domain.warriors.defenders.towers.behaviourImp.MoveByStrategy" 
+  <class id="10" language="java" name="core.domain.warriors.defenders.towers.behaviourimp.MoveByStrategy" 
     project="TowerDefense" 
-    file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourImp/MoveByStrategy.java" binary="false" 
+    file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourimp/MoveByStrategy.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1615" y="873"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -102,8 +102,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="core.domain.warriors.defenders.towers.behaviourImp.NoMove" project="TowerDefense" 
-    file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourImp/NoMove.java" binary="false" 
+  <class id="11" language="java" name="core.domain.warriors.defenders.towers.behaviourimp.NoMove" project="TowerDefense" 
+    file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourimp/NoMove.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1619" y="1057"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -112,8 +112,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="core.domain.warriors.defenders.towers.behaviourImp.NoSound" 
-    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourImp/NoSound.java" 
+  <class id="12" language="java" name="core.domain.warriors.defenders.towers.behaviourimp.NoSound" 
+    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourimp/NoSound.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1613" y="117"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -122,9 +122,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="core.domain.warriors.defenders.towers.behaviourImp.ShootingSound" 
+  <class id="13" language="java" name="core.domain.warriors.defenders.towers.behaviourimp.ShootingSound" 
     project="TowerDefense" 
-    file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourImp/ShootingSound.java" binary="false" 
+    file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourimp/ShootingSound.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1611" y="257"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -133,8 +133,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="core.domain.warriors.defenders.towers.behaviourImp.ShootTrap" 
-    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourImp/ShootTrap.java" 
+  <class id="14" language="java" name="core.domain.warriors.defenders.towers.behaviourimp.ShootTrap" 
+    project="TowerDefense" file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourimp/ShootTrap.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1611" y="553"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -143,9 +143,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="core.domain.warriors.defenders.towers.behaviourImp.ShootWithWeapon" 
+  <class id="15" language="java" name="core.domain.warriors.defenders.towers.behaviourimp.ShootWithWeapon" 
     project="TowerDefense" 
-    file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourImp/ShootWithWeapon.java" binary="false" 
+    file="/TowerDefense/src/core/domain/warriors/defenders/towers/behaviourimp/ShootWithWeapon.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1615" y="725"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
