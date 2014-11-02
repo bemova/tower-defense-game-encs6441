@@ -2,6 +2,7 @@ package UI.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Arrays;
 
 import core.contract.MapConstants;
 import core.domain.maps.Grid;
@@ -37,8 +38,9 @@ public class Map extends Grid {
 	 * @param towers list of towers on the grid
 	 */
 	public void updateTowers(Tower[][] towers) {
-		this.towers = towers;
-
+		if(towers != null) { 
+			this.towers = Arrays.copyOf(towers, towers.length); 
+		} 
 	}
 /**
  * <b>Draws the map on the screen.</b>
