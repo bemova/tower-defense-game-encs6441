@@ -24,7 +24,7 @@ public class TowerInfoPanel extends JPanel {
 	@SuppressWarnings("unused")
 	private Tower tower;
 	@SuppressWarnings("unused")
-	private String towerType;
+	private String towertype;
 
 	/**
 	 * Creates the panel.
@@ -41,7 +41,7 @@ public class TowerInfoPanel extends JPanel {
 
 		List<Tower> towerList = tower.objectDetials();
 		TowerFactory f = new TowerFactory();
-		this.towerType = f.getDecoratedName(towerList);
+		this.towertype = f.getDecoratedName(towerList);
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0 };

@@ -10,7 +10,7 @@ import core.domain.warriors.defenders.Defender;
 import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.ShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.SoundBehaviour;
-import core.domain.warriors.defenders.towers.towerType.TowerLevel;
+import core.domain.warriors.defenders.towers.towertype.TowerLevel;
 
 
 public abstract class Tower extends Defender {

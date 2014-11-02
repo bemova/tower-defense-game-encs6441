@@ -25,14 +25,14 @@ import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.TowerMarket;
 import core.domain.account.BankManager;
 import core.domain.warriors.defenders.towers.Tower;
-import core.domain.warriors.defenders.towers.towerType.TowerLevel;
+import core.domain.warriors.defenders.towers.towertype.TowerLevel;
 
 /**
  * <b>This class is an Observable class</b>
  * @author Team5
  */
 public class SimpleInspection extends Observable implements ActionListener {
-	private String towerType;
+	private String towertype;
 	private BankManager bank;
 	private Tower tower;
 	@SuppressWarnings("unused")
@@ -99,7 +99,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 
 		List<Tower> towerList = tower.objectDetials();
 		TowerFactory f = new TowerFactory();
-		this.towerType = f.getDecoratedName(towerList);
+		this.towertype = f.getDecoratedName(towerList);
 		this.bank = BankManager.getInstance();
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -314,7 +314,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 			str = powerCount.getText();
 			int powerCount = Integer.parseInt(str) + 1;
 
-			Tower newTower = upgradeLevel(tower, towerType, speedCount,
+			Tower newTower = upgradeLevel(tower, towertype, speedCount,
 					rangeCount, powerCount);
 			if (newTower != null) {
 				this.tower = newTower;
@@ -347,11 +347,11 @@ public class SimpleInspection extends Observable implements ActionListener {
 		return this.tower;
 	}
 
-	private Tower upgradeLevel(Tower tower, String towerType, int speedCount,
+	private Tower upgradeLevel(Tower tower, String towertype, int speedCount,
 			int rangeCount, int powerCount) {
 		TowerFactory factory = new TowerFactory();
 
-		Tower createdTower = factory.updateLevel(towerType, speedCount,
+		Tower createdTower = factory.updateLevel(towertype, speedCount,
 				rangeCount, powerCount);
 
 		long value = tower.cost();

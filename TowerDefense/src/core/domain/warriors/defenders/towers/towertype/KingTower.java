@@ -1,4 +1,4 @@
-package core.domain.warriors.defenders.towers.towerType;
+package core.domain.warriors.defenders.towers.towertype;
 
 import java.awt.Color;
 

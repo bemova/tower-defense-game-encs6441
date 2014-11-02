@@ -17,8 +17,8 @@ import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
 import core.domain.warriors.defenders.towers.features.FireSpeed;
-import core.domain.warriors.defenders.towers.towerType.AncientTower;
-import core.domain.warriors.defenders.towers.towerType.ModernTower;
+import core.domain.warriors.defenders.towers.towertype.AncientTower;
+import core.domain.warriors.defenders.towers.towertype.ModernTower;
 
 public class TowerCostCalTest {
 	private AncientTower ancient;

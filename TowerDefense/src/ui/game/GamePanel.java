@@ -33,7 +33,7 @@ import core.domain.account.BankManager;
 import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
 import core.domain.warriors.defenders.towers.Tower;
-import core.domain.warriors.defenders.towers.towerType.TowerLevel;
+import core.domain.warriors.defenders.towers.towertype.TowerLevel;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Observer, ActionListener,
@@ -45,7 +45,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 	private boolean addTowerFlag;
 
-	private String towerType;
+	private String towertype;
 	private Tower[][] towers;
 	private JButton modernTowerBtn;
 	private JButton ancientTowerBtn;
@@ -238,10 +238,10 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 	}
 
-	private void displayTowerInfo(String towerType) {
+	private void displayTowerInfo(String towertype) {
 		TowerFactory factory = new TowerFactory();
 
-		Tower tower = factory.getTower(towerType, TowerLevel.one);
+		Tower tower = factory.getTower(towertype, TowerLevel.one);
 
 		towerInfoPanel = new TowerInfoPanel(tower);
 		// toolBoxContainer.add(towerInfoPanel);
@@ -363,7 +363,7 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 		if (grid.getCell(x, y) == GridCellContentType.SCENERY) {
 			TowerFactory factory = new TowerFactory();
 			Tower tower;
-			switch (towerType) {
+			switch (towertype) {
 			case DefenderConstants.MODERN_TOWER_TYPE:
 				tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE,
 						TowerLevel.one);
@@ -410,24 +410,24 @@ public class GamePanel extends JPanel implements Observer, ActionListener,
 
 		switch (command) {
 		case DefenderConstants.MODERN_TOWER_TYPE:
-			towerType = DefenderConstants.MODERN_TOWER_TYPE;
-			tower(towerType);
+			towertype = DefenderConstants.MODERN_TOWER_TYPE;
+			tower(towertype);
 			break;
 		case DefenderConstants.ANCIENT_TOWER_TYPE:
-			towerType = DefenderConstants.ANCIENT_TOWER_TYPE;
-			tower(towerType);
+			towertype = DefenderConstants.ANCIENT_TOWER_TYPE;
+			tower(towertype);
 			break;
 		case DefenderConstants.KING_TOWER_TYPE:
-			towerType = DefenderConstants.KING_TOWER_TYPE;
-			tower(towerType);
+			towertype = DefenderConstants.KING_TOWER_TYPE;
+			tower(towertype);
 			break;
 		}
 	}
 
-	private void tower(String towerType) {
+	private void tower(String towertype) {
 		try {
 			addTowerFlag = true;
-			switch (towerType) {
+			switch (towertype) {
 			case DefenderConstants.MODERN_TOWER_TYPE:
 				colorToDisplayTower = modernTowerBtn.getBackground();
 				break;

@@ -11,10 +11,10 @@ import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
 import core.domain.warriors.defenders.towers.features.FireSpeed;
-import core.domain.warriors.defenders.towers.towerType.AncientTower;
-import core.domain.warriors.defenders.towers.towerType.KingTower;
-import core.domain.warriors.defenders.towers.towerType.ModernTower;
-import core.domain.warriors.defenders.towers.towerType.TowerLevel;
+import core.domain.warriors.defenders.towers.towertype.AncientTower;
+import core.domain.warriors.defenders.towers.towertype.KingTower;
+import core.domain.warriors.defenders.towers.towertype.ModernTower;
+import core.domain.warriors.defenders.towers.towertype.TowerLevel;
 /**
  * <b>this class is used as a application service to create a difrent type of factories by difrent features</b>
  * @author Team5
@@ -25,30 +25,30 @@ public class TowerFactory {
 
 	/**
 	 * it takes tower type name and it will create a type of tower without any features
-	 * @param towerType the name of tower
+	 * @param towertype the name of tower
 	 * @return Tower 
 	 */
-	public Tower getTower(String towerType) {
-		if (towerType == null) {
+	public Tower getTower(String towertype) {
+		if (towertype == null) {
 			return null;
 		}
-		if (towerType.equalsIgnoreCase("ModernTower")) {
+		if (towertype.equalsIgnoreCase("ModernTower")) {
 			return new ModernTower();
-		} else if (towerType.equalsIgnoreCase("AncientTower")) {
+		} else if (towertype.equalsIgnoreCase("AncientTower")) {
 			return new AncientTower();
-		} else if (towerType.equalsIgnoreCase("KingTower")) {
+		} else if (towertype.equalsIgnoreCase("KingTower")) {
 			return new KingTower();
 		}
 		return null;
 	}
 	/**
 	 * it creates a tower by tower type name and tower level that can define the feature numbers as a default
-	 * @param towerType the name of the tower
+	 * @param towertype the name of the tower
 	 * @param level , it is a type of TowerLevel that is a enum type that has level one, two and three
 	 * @return Tower
 	 */
-	public Tower getTower(String towerType, TowerLevel level) {
-		Tower tower = getTower(towerType);
+	public Tower getTower(String towertype, TowerLevel level) {
+		Tower tower = getTower(towertype);
 		try {
 			switch (level.name()) {
 			case "one":
@@ -181,17 +181,17 @@ public class TowerFactory {
 	}
 	/**
 	 * <b>it used in update tower in our grid with freatures count</b>
-	 * @param towerType name of tower
+	 * @param towertype name of tower
 	 * @param speedCount speed feature count
 	 * @param rangeCount range feature count
 	 * @param powerCount power feature count
 	 * @return Tower 
 	 */
-	public Tower updateLevel(String towerType, int speedCount, int rangeCount,
+	public Tower updateLevel(String towertype, int speedCount, int rangeCount,
 			int powerCount) {
 
 		TowerFactory factory = new TowerFactory();
-		Tower tower = factory.getTower(towerType);
+		Tower tower = factory.getTower(towertype);
 
 		for (int i = 0; i < rangeCount; i++){
 			tower = new FireRange(tower);
