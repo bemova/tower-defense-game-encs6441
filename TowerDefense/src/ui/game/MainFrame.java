@@ -1,4 +1,4 @@
-package UI.game;
+package ui.game;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import UI.Constants;
+import ui.Constants;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {

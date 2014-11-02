@@ -1,12 +1,12 @@
-package UI;
+package ui;
 
 import javax.swing.SwingUtilities;
 
-import UI.editor.MainFrame;
+import ui.game.MainFrame;
 
-public class MapEditor {
+public class Game {
 
-	private MapEditor() {
+	private Game() {
 	}
 
 	public static void main(String[] args) {

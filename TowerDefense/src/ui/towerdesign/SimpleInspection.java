@@ -1,4 +1,4 @@
-package UI.towerdesign;
+package ui.towerdesign;
 
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;

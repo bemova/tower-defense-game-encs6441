@@ -1,4 +1,4 @@
-package UI.game;
+package ui.game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,9 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import UI.CanvaObject;
-import UI.towerdesign.SimpleInspection;
-import UI.towerdesign.TowerInfoPanel;
+import ui.CanvaObject;
+import ui.towerdesign.SimpleInspection;
+import ui.towerdesign.TowerInfoPanel;
 import core.applicationService.mapServices.MapManager;
 import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
 import core.applicationService.warriorServices.TowerFactory;

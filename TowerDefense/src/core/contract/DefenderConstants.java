@@ -1,6 +1,6 @@
 package core.contract;
 /**
- * <b>this defined Default information about towers and features that are used in UI and Core</b> 
+ * <b>this defined Default information about towers and features that are used in ui and core</b> 
  * @author Team5
  * @version 0.1
  */

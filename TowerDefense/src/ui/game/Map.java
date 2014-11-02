@@ -1,4 +1,4 @@
-package UI.game;
+package ui.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
