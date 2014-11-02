@@ -1,4 +1,4 @@
-package core.applicationService.informerServices.imp;
+package core.applicationservice.informerServices.imp;
 
 
 import java.util.ArrayList;
@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import Infrastructure.loggin.Log4jLogger;
-import core.applicationService.informerServices.IDefenderInformer;
-import core.applicationService.informerServices.Observer;
+import infrastructure.loggin.Log4jLogger;
+import core.applicationservice.informerServices.IDefenderInformer;
+import core.applicationservice.informerServices.Observer;
 import core.domain.Subject;
 import core.domain.waves.Position;
 
@@ -32,7 +32,7 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 */
 	private List<Observer> observers;
 	
-	/** The logger that was implemented by log4j2 and the logger class is located in Infrastructure
+	/** The logger that was implemented by log4j2 and the logger class is located in infrastructure
 	 */
 	private static final Log4jLogger logger = new Log4jLogger();
 	

@@ -1,4 +1,4 @@
-package core.applicationService;
+package core.applicationservice;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 /**

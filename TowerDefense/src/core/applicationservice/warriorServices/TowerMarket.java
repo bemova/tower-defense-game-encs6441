@@ -1,6 +1,6 @@
-package core.applicationService.warriorServices;
+package core.applicationservice.warriorServices;
 
-import Infrastructure.loggin.Log4jLogger;
+import infrastructure.loggin.Log4jLogger;
 import core.contract.DefenderConstants;
 import core.domain.warriors.defenders.towers.Tower;
 /**

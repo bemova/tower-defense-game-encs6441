@@ -18,10 +18,10 @@ import javax.swing.JPanel;
 
 import ui.CanvaObject;
 import ui.Constants;
-import core.applicationService.mapServices.MapManager;
-import core.applicationService.mapServices.MapUtility;
-import core.applicationService.mapServices.connectivity.imp.ConnectivityService;
-import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
+import core.applicationservice.mapServices.MapManager;
+import core.applicationservice.mapServices.MapUtility;
+import core.applicationservice.mapServices.connectivity.imp.ConnectivityService;
+import core.applicationservice.mapServices.connectivity.imp.StartEndChecker;
 import core.contract.MapConstants;
 import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;

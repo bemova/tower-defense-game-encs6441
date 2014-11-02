@@ -1,12 +1,12 @@
-package test.core.applicationService;
+package test.core.applicationservice;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import test.core.applicationService.mapServices.ConnectivityTest;
-import test.core.applicationService.mapServices.MapUtilityTest;
-import test.core.applicationService.mapServices.StartEndCheckerTest;
+import test.core.applicationservice.mapServices.ConnectivityTest;
+import test.core.applicationservice.mapServices.MapUtilityTest;
+import test.core.applicationservice.mapServices.StartEndCheckerTest;
 
 
 @RunWith(Suite.class)

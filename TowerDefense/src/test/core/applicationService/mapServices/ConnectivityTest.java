@@ -1,4 +1,4 @@
-package test.core.applicationService.mapServices;
+package test.core.applicationservice.mapServices;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,8 +7,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import core.applicationService.mapServices.connectivity.IConnectivityService;
-import core.applicationService.mapServices.connectivity.imp.ConnectivityService;
+import core.applicationservice.mapServices.connectivity.IConnectivityService;
+import core.applicationservice.mapServices.connectivity.imp.ConnectivityService;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 

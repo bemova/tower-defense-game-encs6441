@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import core.applicationService.warriorServices.TowerFactory;
+import core.applicationservice.warriorServices.TowerFactory;
 import core.domain.warriors.defenders.towers.Tower;
 
 @SuppressWarnings("serial")

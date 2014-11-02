@@ -1,6 +1,6 @@
-package core.applicationService.mapServices;
+package core.applicationservice.mapServices;
 
-import Infrastructure.loggin.Log4jLogger;
+import infrastructure.loggin.Log4jLogger;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 /**

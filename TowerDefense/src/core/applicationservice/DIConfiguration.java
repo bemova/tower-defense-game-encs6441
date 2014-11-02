@@ -1,10 +1,10 @@
-package core.applicationService;
+package core.applicationservice;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import Infrastructure.loggin.Log4jLogger;
+import infrastructure.loggin.Log4jLogger;
 import core.contract.ITDLogger;
 /**
  * this demo was implemented as aDemo for dependecy injection and IOC for the build2
@@ -12,7 +12,7 @@ import core.contract.ITDLogger;
  * @version 1.0
  */
 @Configuration
-@ComponentScan(value={"core.applicationService"})
+@ComponentScan(value={"core.applicationservice"})
 public class DIConfiguration {
 
 	/**

@@ -1,4 +1,4 @@
-package core.applicationService;
+package core.applicationservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class MyApplication implements IAplication {
     }
      
     /* (non-Javadoc)
-	 * @see core.applicationService.IAplication#processMessage(java.lang.String, java.lang.String)
+	 * @see core.applicationservice.IAplication#processMessage(java.lang.String, java.lang.String)
 	 */
     @Override
 	public boolean processMessage(String msg, String rec){

@@ -1,4 +1,4 @@
-package Infrastructure.loggin;
+package infrastructure.loggin;
 
 
 import org.apache.logging.log4j.LogManager;

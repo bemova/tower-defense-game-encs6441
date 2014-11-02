@@ -1,12 +1,12 @@
 /*
  * 
  */
-package core.applicationService.mapServices.connectivity.imp;
+package core.applicationservice.mapServices.connectivity.imp;
 
 import java.io.BufferedReader;
 
-import Infrastructure.loggin.Log4jLogger;
-import core.applicationService.mapServices.connectivity.IConnectivityService;
+import infrastructure.loggin.Log4jLogger;
+import core.applicationservice.mapServices.connectivity.IConnectivityService;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 

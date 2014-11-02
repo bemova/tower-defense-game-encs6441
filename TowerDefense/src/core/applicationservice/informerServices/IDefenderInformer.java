@@ -1,4 +1,4 @@
-package core.applicationService.informerServices;
+package core.applicationservice.informerServices;
 
 import core.domain.waves.Position;
 

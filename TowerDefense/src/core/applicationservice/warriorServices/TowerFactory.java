@@ -1,10 +1,10 @@
-package core.applicationService.warriorServices;
+package core.applicationservice.warriorServices;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Infrastructure.loggin.Log4jLogger;
+import infrastructure.loggin.Log4jLogger;
 import core.contract.DefenderConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;

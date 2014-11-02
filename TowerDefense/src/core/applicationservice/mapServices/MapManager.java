@@ -1,13 +1,13 @@
-package core.applicationService.mapServices;
+package core.applicationservice.mapServices;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import Infrastructure.loggin.Log4jLogger;
-import core.applicationService.mapServices.connectivity.imp.ConnectivityService;
-import core.applicationService.mapServices.connectivity.imp.StartEndChecker;
+import infrastructure.loggin.Log4jLogger;
+import core.applicationservice.mapServices.connectivity.imp.ConnectivityService;
+import core.applicationservice.mapServices.connectivity.imp.StartEndChecker;
 import core.domain.maps.Grid;
 import core.domain.waves.Position;
 /**

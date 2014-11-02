@@ -1,13 +1,13 @@
-package core.applicationService.mapServices.connectivity.imp;
+package core.applicationservice.mapServices.connectivity.imp;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import Infrastructure.loggin.Log4jLogger;
-import core.applicationService.mapServices.connectivity.IUnion;
-import core.applicationService.mapServices.connectivity.IWeightedUnionPathCompression;
+import infrastructure.loggin.Log4jLogger;
+import core.applicationservice.mapServices.connectivity.IUnion;
+import core.applicationservice.mapServices.connectivity.IWeightedUnionPathCompression;
 import core.domain.waves.Position;
 
 /**

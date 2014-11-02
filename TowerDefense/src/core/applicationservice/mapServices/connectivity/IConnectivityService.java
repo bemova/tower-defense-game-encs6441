@@ -1,4 +1,4 @@
-package core.applicationService.mapServices.connectivity;
+package core.applicationservice.mapServices.connectivity;
 
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;

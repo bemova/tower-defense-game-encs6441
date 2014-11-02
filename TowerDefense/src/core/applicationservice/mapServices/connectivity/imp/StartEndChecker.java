@@ -1,7 +1,7 @@
-package core.applicationService.mapServices.connectivity.imp;
+package core.applicationservice.mapServices.connectivity.imp;
 
-import Infrastructure.loggin.Log4jLogger;
-import core.applicationService.mapServices.connectivity.IStartEndChecker;
+import infrastructure.loggin.Log4jLogger;
+import core.applicationservice.mapServices.connectivity.IStartEndChecker;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 

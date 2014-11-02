@@ -1,6 +1,6 @@
 package core;
 
-import Infrastructure.loggin.Log4jLogger;
+import infrastructure.loggin.Log4jLogger;
 
 public class TestLog {
 

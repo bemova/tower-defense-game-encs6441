@@ -1,4 +1,4 @@
-package test.core.applicationService.mapServices;
+package test.core.applicationservice.mapServices;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

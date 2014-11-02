@@ -1,4 +1,4 @@
-package core.applicationService;
+package core.applicationservice;
 
 /**
  * this demo was implemented as aDemo for dependecy injection and IOC for the build2
