@@ -47,10 +47,10 @@ public class MapManager {
 	/**
 	 * <b>save the grid into file</b>
 	 * @param grid grid info
-	 * @param FileName absolute file path and name
+	 * @param fileName absolute file path and name
 	 * 
 	 */
-	public void SaveMapIntoFle(Grid grid, String FileName) {
+	public void SaveMapIntoFle(Grid grid, String fileName) {
 		try {
 			StartEndChecker startEndChecker = new StartEndChecker();
 			if(!startEndChecker.hasEnd(grid.getContent()))
@@ -67,7 +67,7 @@ public class MapManager {
 			if(!connectivityService.isTherePath(start, end, grid.getContent()))
 				throw new Exception("There isn't any path between start and end points in the map!");
 			
-			FileOutputStream fout = new FileOutputStream(FileName);
+			FileOutputStream fout = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			oos.writeObject(grid);
 			oos.close();
