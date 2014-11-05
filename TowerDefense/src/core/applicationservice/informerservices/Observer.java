@@ -12,6 +12,7 @@ public interface Observer {
 	 *
 	 * @param position  as Position that represent the position of the wave's head
 	 */
-	public void update(Position position);
+	public void waveUpdate(Position position);
+	public void alienUpdate(Position position, String critterId);
 
 }

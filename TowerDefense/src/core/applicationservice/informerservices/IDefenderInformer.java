@@ -32,16 +32,32 @@ public interface IDefenderInformer {
 	 * @param x as integer 
 	 * @param y as integer
 	 */
-	public void setPosition(int x, int y);
+	public void setWavePosition(int x, int y);
+	/**
+	 * set the alien's position
+	 * @param x as integer 
+	 * @param y as integer
+	 */
+	public void setAlienPosition(int x, int y, String CritterId);
+	
 	/**
 	 * <b>signature of the position changes</b>
 	 */
-	public void positionChange();
+	public void wavePositionChange();
+	/**
+	 * <b>signature of the position changes</b>
+	 */
+	public void alienPositionChange();
 
 	/**
 	 * this signature represent the way of getting position of the wave's head
 	 * @return Position 
 	 */
-	public Position getPosition();
+	public Position getWavePosition();
+	/**
+	 * this signature represent the way of getting position of the wave's head
+	 * @return Position 
+	 */
+	public Position getAlienPosition();
 
 }

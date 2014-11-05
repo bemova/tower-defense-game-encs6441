@@ -1,15 +1,18 @@
 package core.applicationservice.informerservices.imp;
 
 
+import infrastructure.loggin.Log4jLogger;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import infrastructure.loggin.Log4jLogger;
 import core.applicationservice.informerservices.IDefenderInformer;
 import core.applicationservice.informerservices.Observer;
 import core.domain.Subject;
+import core.domain.warriors.aliens.Critter;
 import core.domain.waves.Position;
 
 
@@ -26,7 +29,8 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 * this member is the wave's head reperesenteter</b>
 	 */
 	private Position waveHeadPosition;
-	
+	private String critterId;
+	private Position alienPosition;
 	/** <b>List of observer that contains the all observer for implementing our observer design pattern</b>
 	 * 
 	 */
@@ -85,7 +89,7 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 * 
 	 * <code>
 	 * for (Observer ob : observers) {
-	 *			ob.update(waveHeadPosition);
+	 *			ob.waveUpdate(waveHeadPosition);
 	 *		}
 	 * </code>
 	 * </b>
@@ -94,7 +98,31 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	public void notifyObservers() {
 		try {
 			for (Observer ob : observers) {
-				ob.update(waveHeadPosition);
+				ob.waveUpdate(waveHeadPosition);
+			}
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
+		
+	}
+	
+	/**
+	 * <b>
+	 * this method can force observers to update 
+	 * and towers are informed the position of aliens by this method.
+	 * 
+	 * <code>
+	 * for (Observer ob : observers) {
+     *		ob.alienUpdate(alienPosition);
+	 *		}
+	 * </code>
+	 * </b>
+	 */
+	@Override
+	public void notifyDefenders() {
+		try {
+			for (Observer ob : observers) {
+				ob.alienUpdate(alienPosition, critterId);
 			}
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
@@ -108,11 +136,27 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 * @param y as integer
 	 */
 	@Override
-	public void setPosition(int x, int y){
+	public void setWavePosition(int x, int y){
 		try {
 			this.waveHeadPosition.setX(x);
 			this.waveHeadPosition.setY(y);
-			positionChange();
+			wavePositionChange();
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
+	}
+	/**
+	 * this method sets the wave'poisition
+	 * @param x as integer 
+	 * @param y as integer
+	 */
+	@Override
+	public void setAlienPosition(int x, int y, String critterId){
+		try {
+			this.alienPosition.setX(x);
+			this.alienPosition.setY(y);
+			this.critterId = critterId;
+			alienPositionChange();
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
 		}
@@ -124,9 +168,22 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 * that are towers
 	 */
 	@Override
-	public void positionChange(){
+	public void wavePositionChange(){
 		try {
 			notifyObservers();
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
+	}
+	/**
+	 * 
+	 * if the x and y of the head changes the setPosition method will call this method tho notify the observers 
+	 * that are towers
+	 */
+	@Override
+	public void alienPositionChange(){
+		try {
+			notifyDefenders();
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
 		}
@@ -137,8 +194,16 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 * @return Position 
 	 */
 	@Override
-	public Position getPosition() {
+	public Position getWavePosition() {
 		return waveHeadPosition;
+	}
+	/**
+	 * it can return the current position of the alien's position
+	 * @return Position, that is the position of critters
+	 */
+	@Override
+	public Position getAlienPosition() {
+		return alienPosition;
 	}
 
 }

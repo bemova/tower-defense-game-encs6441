@@ -3,6 +3,7 @@ package core.domain.warriors.defenders.towers;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import core.domain.Subject;
@@ -11,6 +12,7 @@ import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.ShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.SoundBehaviour;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
+import core.domain.waves.Position;
 
 
 public abstract class Tower extends Defender {
@@ -29,7 +31,13 @@ public abstract class Tower extends Defender {
 	}
 	// decorator parts
 	protected String description;
-
+	public Map<String, Position> CrittersLocation;
+	public Map<String, Position> getCrittersLocation() {
+		return CrittersLocation;
+	}
+	public void setCrittersLocation(Map<String, Position> crittersLocation) {
+		CrittersLocation = crittersLocation;
+	}
 	protected List<Tower> towers;
 	public List<Tower> getTowers() {
 		return towers;
@@ -75,5 +83,9 @@ public abstract class Tower extends Defender {
 			// TODO: handle exception
 		}
 		return towers;
+	}
+	public void alienUpdate(Position alienPosition, String critterId) {
+		
+		this.alienPosition = alienPosition;
 	}
 }

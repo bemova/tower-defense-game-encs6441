@@ -15,11 +15,17 @@ public abstract class Defender implements Observer {
 	 * it is a head position of the wave
 	 */
 	protected Position waveHeadPosition;
+	protected Position alienPosition;
 	/**
 	 * it is implemented for having observer design pattern
 	 */
-	public void update(Position waveHeadPosition) {
+	public void waveUpdate(Position waveHeadPosition) {
 		this.waveHeadPosition = waveHeadPosition;
 	}
+	/**
+	 * it is implemented for having observer design pattern
+	 */
+	public abstract void alienUpdate(Position alienPosition, String CritterId);
+	
 
 }
