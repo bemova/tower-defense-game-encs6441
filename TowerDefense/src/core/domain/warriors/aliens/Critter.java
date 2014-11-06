@@ -19,7 +19,7 @@ public abstract class Critter {
 	/** The moving behaviour. */
 	MovingBehaviour movingBehaviour;
 	
-	/** The sound behaviour. */
+	/** The sound behavior. */
 	SoundBehaviour soundBehaviour;
 	
 	/**
