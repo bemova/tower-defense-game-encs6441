@@ -2,11 +2,14 @@ package core.domain.warriors.defenders.towers;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import core.domain.Subject;
+import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.defenders.Defender;
 import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.ShootingBehaviour;
@@ -31,12 +34,12 @@ public abstract class Tower extends Defender {
 	}
 	// decorator parts
 	protected String description;
-	public Map<String, Position> CrittersLocation;
-	public Map<String, Position> getCrittersLocation() {
-		return CrittersLocation;
+	public Map<Critter, Position> crittersLocation;
+	public Map<Critter, Position> getCrittersLocation() {
+		return crittersLocation;
 	}
-	public void setCrittersLocation(Map<String, Position> crittersLocation) {
-		CrittersLocation = crittersLocation;
+	public void setCrittersLocation(Map<Critter, Position> crittersLocation) {
+		crittersLocation = crittersLocation;
 	}
 	protected List<Tower> towers;
 	public List<Tower> getTowers() {
@@ -84,8 +87,8 @@ public abstract class Tower extends Defender {
 		}
 		return towers;
 	}
-	public void alienUpdate(Position alienPosition, String critterId) {
-		
-		this.alienPosition = alienPosition;
+	public void alienUpdate(Position alienPosition, Critter critter) {
+		crittersLocation.put(critter, alienPosition);
+		//TODO shooting calculation and range calculation 
 	}
 }

@@ -29,7 +29,7 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 * this member is the wave's head reperesenteter</b>
 	 */
 	private Position waveHeadPosition;
-	private String critterId;
+	private Critter critter;
 	private Position alienPosition;
 	/** <b>List of observer that contains the all observer for implementing our observer design pattern</b>
 	 * 
@@ -122,7 +122,7 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	public void notifyDefenders() {
 		try {
 			for (Observer ob : observers) {
-				ob.alienUpdate(alienPosition, critterId);
+				ob.alienUpdate(alienPosition, critter);
 			}
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
@@ -151,11 +151,11 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 * @param y as integer
 	 */
 	@Override
-	public void setAlienPosition(int x, int y, String critterId){
+	public void setAlienPosition(int x, int y, Critter critter){
 		try {
 			this.alienPosition.setX(x);
 			this.alienPosition.setY(y);
-			this.critterId = critterId;
+			this.critter = critter;
 			alienPositionChange();
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
