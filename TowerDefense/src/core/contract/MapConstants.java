@@ -17,4 +17,5 @@ public class MapConstants {
 	public static final Color ANCIENT_TOWER_COLOR = Color.WHITE;
 	public static final Color KING_TOWER_COLOR = Color.CYAN;
 	
+	public static final int UNIT_SIZE = 30;
 }
