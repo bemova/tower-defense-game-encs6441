@@ -3,6 +3,8 @@ package core.domain.maps;
 import java.awt.Graphics;
 import java.io.Serializable;
 
+import core.contract.MapConstants;
+
 /**
  * @author 	Team5
  *
@@ -12,7 +14,7 @@ public class Grid implements Serializable{
 
 	private int width;
 	private int height;
-	private int sizeOfUnit = 30;
+	private int unitSize = MapConstants.UNIT_SIZE;
 	private GridCellContentType[][] content;
 
 	/**
@@ -73,18 +75,18 @@ public class Grid implements Serializable{
 	 */
 	public void draw(Graphics g) {
 
-		for (int i = 0; i < width * sizeOfUnit; i += sizeOfUnit) {
-			for (int j = 0; j < height * sizeOfUnit; j += sizeOfUnit) {
-				g.drawLine(i, 0, i, height * sizeOfUnit);
-				g.drawLine(0, j, width * sizeOfUnit, j);
+		for (int i = 0; i < width * unitSize; i += unitSize) {
+			for (int j = 0; j < height * unitSize; j += unitSize) {
+				g.drawLine(i, 0, i, height * unitSize);
+				g.drawLine(0, j, width * unitSize, j);
 			}
 		}
 
-		g.drawLine(width * sizeOfUnit - 1, height * sizeOfUnit - 1, width
-				* sizeOfUnit - 1, 0); // x1y1 x2y2
+		g.drawLine(width * unitSize - 1, height * unitSize - 1, width
+				* unitSize - 1, 0); // x1y1 x2y2
 
-		g.drawLine(0, height * sizeOfUnit - 1, width * sizeOfUnit - 1, height
-				* sizeOfUnit - 1);
+		g.drawLine(0, height * unitSize - 1, width * unitSize - 1, height
+				* unitSize - 1);
 
 	}
 
@@ -113,7 +115,7 @@ public class Grid implements Serializable{
 	 * @return size of the unit 
 	 */
 	public int getUnitSize() {
-		return sizeOfUnit;
+		return unitSize;
 	}
 
 	/**
