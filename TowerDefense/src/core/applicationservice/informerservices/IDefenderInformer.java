@@ -1,5 +1,6 @@
 package core.applicationservice.informerservices;
 
+import core.domain.warriors.aliens.Critter;
 import core.domain.waves.Position;
 
 /**
@@ -37,8 +38,9 @@ public interface IDefenderInformer {
 	 * set the alien's position
 	 * @param x as integer 
 	 * @param y as integer
+	 * @param critter critter object reference
 	 */
-	public void setAlienPosition(int x, int y, String CritterId);
+	public void setAlienPosition(int x, int y, Critter critter);
 	
 	/**
 	 * <b>signature of the position changes</b>

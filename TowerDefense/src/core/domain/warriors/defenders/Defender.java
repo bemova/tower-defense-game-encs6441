@@ -2,6 +2,7 @@ package core.domain.warriors.defenders;
 
 import core.applicationservice.informerservices.Observer;
 import core.domain.Subject;
+import core.domain.warriors.aliens.Critter;
 import core.domain.waves.Position;
 
 /**
@@ -25,7 +26,7 @@ public abstract class Defender implements Observer {
 	/**
 	 * it is implemented for having observer design pattern
 	 */
-	public abstract void alienUpdate(Position alienPosition, String CritterId);
+	public abstract void alienUpdate(Position alienPosition, Critter critter);
 	
 
 }
