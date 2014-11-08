@@ -6,6 +6,7 @@ import java.util.Map;
 
 import infrastructure.loggin.Log4jLogger;
 import core.contract.DefenderConstants;
+import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 import core.domain.warriors.defenders.towers.features.FirePower;
@@ -157,6 +158,22 @@ public class TowerFactory {
 			logger.writer(this.getClass().getName(), e);
 		}
 		return details;
+	}
+	/**
+	 * this method returns the fire range of tower
+	 * @param tower that we need the fire range of it
+	 * @return range of fire 
+	 */
+	public double getRange(Tower tower){
+		try {
+			Map<String, Integer> featuresCount = getFeaturesCount(tower.objectDetials());
+			int rangeCount = featuresCount.get("FireRange");
+			return rangeCount * MapConstants.UNIT_SIZE;
+			
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
+		return 0;
 	}
 	/**
 	 * 

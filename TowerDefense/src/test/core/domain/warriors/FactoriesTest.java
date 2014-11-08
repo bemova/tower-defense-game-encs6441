@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import core.applicationservice.warriorservices.TowerFactory;
+import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
@@ -33,7 +34,7 @@ public class FactoriesTest {
 
 	@Before
 	public void setUp(){
-	
+
 		try {
 			modern = ModernTower.class.getSimpleName();
 			ancient = AncientTower.class.getSimpleName();
@@ -53,7 +54,7 @@ public class FactoriesTest {
 			String modernExpected = modernObj.getClass().getSimpleName();
 			String ancientExpected = ancientObj.getClass().getSimpleName(); 
 			String kingExpected = kingObj.getClass().getSimpleName();
-			
+
 			// assert part
 			assertEquals(modernExpected, modern);
 			assertEquals(ancientExpected, ancient);
@@ -72,12 +73,12 @@ public class FactoriesTest {
 			expDecorated = new FireRange(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
-			
+
 			Tower tower = towerFactory.getDecoratedTower(expDecorated.objectDetials());
-			
+
 			// assert part
 			assertEquals(expDecorated.cost(), tower.cost());
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -86,7 +87,7 @@ public class FactoriesTest {
 	public void testGetTowerByLevel(){
 		try {
 			Tower tower = towerFactory.getTower("ModernTower", TowerLevel.two);
-			
+
 			// expected
 			Tower expected = towerFactory.getTower("ModernTower");
 			Tower expDecorated = new FirePower(expected);
@@ -95,13 +96,29 @@ public class FactoriesTest {
 			expDecorated = new FireRange(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
-			
+
 			// assert part
 			assertEquals(expDecorated.cost(), tower.cost());
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	@Test
+	public void testGetRange(){
+		try {
+			Tower expected = towerFactory.getTower("ModernTower");
+			Tower expDecorated = new FireRange(expected);
+			expDecorated = new FireRange(expDecorated);
+			expDecorated = new FireRange(expDecorated);
+			expDecorated = new FireRange(expDecorated);
+			double range = towerFactory.getRange(expDecorated);
+			double expecteRange = MapConstants.UNIT_SIZE * 4;
+			assertEquals(expecteRange, range, 0.01);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 	}
 
 }
