@@ -20,17 +20,17 @@ public abstract class CompleteGrid implements  Grid {
 	public void draw(Graphics g) {
 		simpleGrid.draw(g);
 		
-		for(int i = 0; i<((EmptyGrid)simpleGrid).height; i++)
-			for( int j = 0; j < ((EmptyGrid)simpleGrid).width; j++){
-				if(((EmptyGrid)simpleGrid).content[i][j] !=0){
+		for(int i = 0; i<simpleGrid.getHeight(); i++)
+			for( int j = 0; j < simpleGrid.getWidth(); j++){
+				if(simpleGrid.getCellType(i, j) !=0){
 				Color color = Color.gray;
-				if(((EmptyGrid)simpleGrid).content[i][j] == 1) color = Color.gray;
-				else if( ((EmptyGrid)simpleGrid).content[i][j] == 2) color = Color.green;
-				else if( ((EmptyGrid)simpleGrid).content[i][j] == 3) color = Color.red;
-				else if( ((EmptyGrid)simpleGrid).content[i][j] == 4) color = Color.blue;
+				if(simpleGrid.getCellType(i, j) == 1) color = Color.gray;
+				else if( simpleGrid.getCellType(i, j) == 2) color = Color.green;
+				else if( simpleGrid.getCellType(i, j) == 3) color = Color.red;
+				else if( simpleGrid.getCellType(i, j) == 4) color = Color.blue;
 				else color = Color.green;
 			    g.setColor(color);
-			    g.fillRect(j * ((EmptyGrid)simpleGrid).sizeOfUnit, i * ((EmptyGrid)simpleGrid).sizeOfUnit, ((EmptyGrid)simpleGrid).sizeOfUnit, ((EmptyGrid)simpleGrid).sizeOfUnit);
+			    g.fillRect(j * simpleGrid.getUnitSize(), i * simpleGrid.getUnitSize(),simpleGrid.getUnitSize(), simpleGrid.getUnitSize());
 			
 				}	
 				

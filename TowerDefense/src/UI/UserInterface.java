@@ -30,6 +30,7 @@ import UI.TowerParameters;
 import core.domain.maps.CompleteGrid;
 import core.domain.maps.EmptyGrid;
 import core.domain.maps.Grid;
+import core.domain.maps.GridCell;
 import core.domain.maps.Map;
 //import core.domain.warriors.defenders.towers.*;
 import core.domain.warriors.defenders.towers.vikiTowers.*;
@@ -191,9 +192,7 @@ public class UserInterface extends JFrame {
 					towerWindow.levelUp.setEnabled(true);
 					towerWindow.levelDown.setEnabled(true);
 
-					if (grid != null)
-					//	grid = new Map((EmptyGrid)(((CompleteGrid)grid).simpleGrid));
-					
+					if(!(grid instanceof Map))
 					grid = new Map(grid);
 
 					canva.updateGrid(grid);
@@ -619,7 +618,7 @@ public class UserInterface extends JFrame {
 			newParams.towerCurrentLevel = 0;
 
 			Tower tower = towerFactory.creatTower(newParams);
-
+			tower.setPosition(new GridCell(localPoint.y, localPoint.x)); // [i][j]
 			
 			grid.setCell(localPoint.x, localPoint.y, 5); // @TODO: change the
 															// last parameter
@@ -628,7 +627,7 @@ public class UserInterface extends JFrame {
 			String position = Integer.toString(localPoint.y) + " "
 					+ Integer.toString(localPoint.x);
 
-			((Map) grid).addTower(tower, position);
+			grid.addTower(tower, position);
 			moneyControler(localPoint, "buy"); // updates amount of point owned by the player 
 
 			canva.repaint();

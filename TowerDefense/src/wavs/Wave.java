@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import UI.CanvaObject;
 import core.domain.maps.Map;
+import core.domain.warriors.defenders.towers.vikiTowers.Tower;
 import critters.BasicCritter;
 import critters.Critter;
 import critters.CritterMovingStrategy;
@@ -38,16 +39,21 @@ public class Wave {
 	public void start()
 	{
 		// current interval, for each critter this interval is less by intervalSeconds
-		for(int i = 0; i < numberOfCritters; i++)
-		{
+		for(int i = 0; i < numberOfCritters; i++){
 			Critter critter = new BasicCritter();
 			critter = new HigherLevelCritter(critter);
 			// the time interval seconds when the critter should appear on the map
 			double intervalSeconds = (map.getUnitSize() / critter.getSpeed()) *(-i);
 			critter.setAppearTime((long)(intervalSeconds * 500));
 			critter.setPath(map.getPath());
-			map.critters.add(critter);			
-		}		
+			map.critters.add(critter);	
+	
+		}	
+		
+		for(Tower tower: map.towers.values()){
+			tower.createBullet();
+		}
+		
 
 		currentMillis = System.currentTimeMillis();
 		shouldRun = true;
@@ -88,13 +94,17 @@ public class Wave {
 
 	void update() {
 		long newTime = System.currentTimeMillis();
-		long timePassed = newTime - currentMillis;
+		int timePassed = (int)(newTime - currentMillis);
 		currentMillis = newTime;
 
 		for (Critter critter : map.critters) {
 			critter.updatePosition(timePassed);
 		}
 
+		for (Tower tower : map.towers.values()){
+			tower.updateBullets(timePassed);
+		}
+		
 		canva.repaint();
 	}
 }

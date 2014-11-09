@@ -2,6 +2,7 @@ package core.domain.warriors.defenders.towers.vikiTowers;
 
 import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,15 +11,42 @@ import UI.TowerParameters;
 
 import javax.imageio.ImageIO;
 
+import core.domain.maps.GridCell;
+import bullet.Bullet;
+import java.awt.Point;
+
 public class Tower {
 
 	BufferedImage image;
 	public TowerParameters parameters;
+	Bullet bullet;
+	GridCell towerPosition;
 	TowerDataCollection data = new TowerDataCollection();
 
-	public Tower() {
+	 Tower() {
+		
 	};
 
+	public void setPosition(GridCell cell){
+		
+		towerPosition = cell;
+
+	}
+	
+	public Bullet createBullet(){
+		bullet = new Bullet(new Point(towerPosition.j * 30 + 15, towerPosition.i * 30 + 15), new Point(towerPosition.j * 30 + 15 + 50, towerPosition.i * 30 + 15 + 50));
+
+		return bullet;
+	}
+	public void updateBullets(int millisecPassed){
+		
+		bullet.updatePosition(millisecPassed);
+	}
+	
+	private Point createPoint(GridCell cell) {
+		return new Point(cell.j * 30 + 15, cell.i * 30 + 15);
+	}
+	
 	public Tower(TowerParameters newParameters) {
 
 		parameters = newParameters;
@@ -30,12 +58,15 @@ public class Tower {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+
 	};
 
 	public void draw(Graphics g) {
 
 		g.drawImage(image, parameters.position.x * 30,
 				parameters.position.y * 30, null);
+		if( bullet != null) bullet.draw(g);
 
 	};
 

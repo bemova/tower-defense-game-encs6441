@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
 
+import bullet.Bullet;
 import UI.CanvaObject;
 import wavs.Wave;
 import critters.*;
@@ -20,6 +21,7 @@ public class Map extends CompleteGrid {
 	HashMap<String, GridCell > map;
 	ArrayList<GridCell> path = new ArrayList<GridCell>();
 	public ArrayList<Critter> critters = new ArrayList<Critter>();
+	public ArrayList<Bullet> towerBullets = new ArrayList<Bullet>();
 	public HashMap<String,Tower> towers; 
 	String entryPoint = "";
 	String exitPoint = "";
@@ -56,7 +58,7 @@ public class Map extends CompleteGrid {
 	};
 	@Override
 	public void startWave(CanvaObject canva) {
-		// TODO Auto-generated method stub
+		
 		wave = new Wave(canva, this);
 		wave.start();
 		
@@ -78,6 +80,7 @@ public class Map extends CompleteGrid {
 	public void addTower(Tower newTower, String positionKey){
 		
 		towers.put(positionKey , newTower);
+	//	towerBullets.add(newTower.)
 	};
 	
 	public void setPath(Stack<GraphNode> newpath){

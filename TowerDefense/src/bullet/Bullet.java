@@ -8,9 +8,10 @@ public class Bullet {
 	Point startPoint;
 	Point endPoint;
 	Point currentPoint;
-	double speed; // number of pixels in one millisecond 
+	double speed = 15.0 / 1000; // number of pixels in one millisecond 
 
-	double a;
+	// parameters for y= ax + b
+	double a; 
 	double b;
 	double x1;
 	double y1;
@@ -18,6 +19,9 @@ public class Bullet {
 	double y2;
 	
 	public Bullet(Point start, Point end) {
+		startPoint = start;
+		endPoint = end;
+		currentPoint = start;
 		x1 = startPoint.x;
 		y1 = startPoint.y;
 		x2 = endPoint.x;
@@ -28,16 +32,12 @@ public class Bullet {
 	}
 	
 	public void updatePosition(int millisecPassed){
+	
+		x1 = currentPoint.x;
+		y1 = currentPoint.y;
 		
 		double step = speed * millisecPassed;
-		double x1 = currentPoint.x;
-		double y1 = currentPoint.y;
-		double x2 = endPoint.x;
-		double y2 = endPoint.y;
-
-		double a = (y2 - y1) / (x2 - x1);
-		double b = y1 - x1 * ((y2 - y1) / (x2 - x1));
-
+		
 		double angle = Math.atan(a);
 
 		int buletX = 0;
@@ -53,6 +53,9 @@ public class Bullet {
 			buletY = (int) (y1 + (step * Math.sin(angle)));
 		
 		currentPoint = new Point(buletX, buletY);
+		
+		if(Math.abs(currentPoint.x - endPoint.x) < 5 && Math.abs(currentPoint.y - endPoint.y) < 5)
+			currentPoint = startPoint;
 	}
 		
 	public void draw(Graphics g){ 

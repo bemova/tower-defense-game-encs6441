@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.Stack;
 
 import core.applicationService.vikiMapServacs.GraphNode;
+import core.domain.warriors.defenders.towers.vikiTowers.Tower;
 import UI.CanvaObject;
 
 public class EmptyGrid implements Grid {
@@ -92,6 +93,12 @@ public	void draw(Graphics g) {
 	@Override
 	public void startWave(CanvaObject canva) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void addTower(Tower newTower, String positionKey){
+		
 		
 	}
 
