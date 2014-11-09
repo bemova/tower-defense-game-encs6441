@@ -1,8 +1,10 @@
 package core.applicationservice.mapservices.pathfinder;
 
-import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Stack;
 
+import core.domain.waves.Position;
 
 
 public class DepthFirstPaths {
@@ -61,29 +63,35 @@ public class DepthFirstPaths {
     /**
      * Unit tests the <tt>DepthFirstPaths</tt> data type.
      */
-    public static void main(String[] args) {
-        In in = new In("G.txt");
+    public static void demo(Map<Position,Integer> nodes, int start, int end) {
+        In in = new In("src/core/applicationservice/mapservices/pathfinder/S.txt");
         Graph G = new Graph(in);
-        Scanner scanner = new Scanner(System.in);
-        int s = scanner.nextInt();
+        
         //int s = Integer.parseInt(args[1]);
-        DepthFirstPaths dfs = new DepthFirstPaths(G, s);
+        DepthFirstPaths dfs = new DepthFirstPaths(G, start);
 
-        for (int v = 0; v < G.V(); v++) {
-            if (dfs.hasPathTo(v)) {
-                System.out.printf("%d to %d:  ", s, v);
-                for (int x : dfs.pathTo(v)) {
-                    if (x == s) System.out.print(x);
+        PathService pathService = new PathService();
+        Map<Position,Integer> map = pathService.nodes;
+        LinkedList<Position> route = new LinkedList<>();
+            if (dfs.hasPathTo(end)) {
+                System.out.printf("%d to %d:  ", start, end);
+                for (int x : dfs.pathTo(end)) {
+                    if (x == start) System.out.print(x);
                     else        System.out.print(x + "-");
+                    //
+                    //route.add(key);
                 }
                 System.out.println();
+                
             }
 
             else {
-                System.out.printf("%d to %d:  not connected\n", s, v);
+                System.out.printf("%d to %d:  not connected\n", start, end);
             }
 
-        }
+         for (Position r : route) {
+			System.out.println(r);
+		}
     }
 
 }

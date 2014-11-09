@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Locale;
 
-
 public class Out {
 
     // force Unicode UTF-8 encoding; otherwise it's system dependent

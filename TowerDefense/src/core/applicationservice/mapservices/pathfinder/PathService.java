@@ -6,19 +6,24 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import test.core.applicationservice.mapservices.MatrixUtility;
+import core.applicationservice.mapservices.MapUtility;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
 
 public class PathService {
+	Map<Position, Integer> nodes;
 
 	/**
 	 * application logger definition
 	 */
 	private static final Log4jLogger logger = new Log4jLogger();
+	
 
 	public GridCellContentType[][] matrixReadre(String file, int matrixHeight,
 			int matrixWidth) {
@@ -29,13 +34,12 @@ public class PathService {
 				matrixWidth);
 	}
 
-	public int[][] graphInput(GridCellContentType[][] matrix) {
+	public List<String> graphInput(GridCellContentType[][] matrix) {
 		try {
 
-			Map<Position, Integer> nodes = initialize(matrix);
+			nodes = initialize(matrix);
 
-			int[][] array = new int[2][30];
-			int columnIndex = 0;
+			List<String> relations = new ArrayList<>();
 
 			
 			Position p = null;
@@ -50,9 +54,7 @@ public class PathService {
 						p = new Position(i, j + 1);
 						int rightNode = nodes.get(p); // right cell node number
 
-						array[0][columnIndex] = node;
-						array[1][columnIndex] = rightNode;
-						columnIndex++;
+						relations.add(node + " " + rightNode);
 						; // should add to an array
 					}
 
@@ -64,10 +66,7 @@ public class PathService {
 						p = new Position(i + 1, j);
 						int bottomNode = nodes.get(p); // bottom cell node
 						// number
-
-						array[0][columnIndex] = node;
-						array[1][columnIndex] = bottomNode;
-						columnIndex++;
+						relations.add(node + " " + bottomNode);
 
 					}
 
@@ -75,9 +74,7 @@ public class PathService {
 
 			}
 
-			array[0][columnIndex] = matrix.length;
-			array[1][columnIndex] = matrix[0].length;
-			return array;
+			return relations;
 
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
@@ -137,11 +134,11 @@ public class PathService {
 				 && i + 1 < matrix.length));
 	}
 
-	public void writeToFile(int[][] array) {
+	public void writeToFile(List<String> relations,int width, int height) {
 
 		try {
 			File file = new File(
-					"src/core/applicationService/mapServices/pathfinder/S.txt");
+					"src/core/applicationservice/mapservices/pathfinder/S.txt");
 
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
@@ -150,13 +147,10 @@ public class PathService {
 
 			FileWriter fw = new FileWriter(file);
 			BufferedWriter bw = new BufferedWriter(fw);
-
-			int columnIndex = 0;
-			for (int i = 0; i < array[0].length; i++) {
-				int a = array[i][columnIndex];
-				int b = array[i + 1][columnIndex];
-				columnIndex++;
-				bw.write(a + " " + b + "\n");
+			bw.write(width * height + "\n");
+			bw.write(relations.size() + "\n");
+			for (String str : relations) {
+				bw.write(str +"\n");
 			}
 
 			bw.close();
@@ -173,12 +167,18 @@ public class PathService {
 
 		PathService p = new PathService();
 		GridCellContentType[][] a = p.matrixReadre("matrix.txt", 4, 8);
-		int[][] array = p.graphInput(a);
-		p.writeToFile(array);
+		MapUtility utility = new MapUtility();
+		Position s = utility.getEnter(a);
+		Position e = utility.getExit(a);
+	    List<String> relations = p.graphInput(a);
+	    int start = p.nodes.get(s);
+		int end = p.nodes.get(e);
+		p.writeToFile(relations,a.length, a[0].length);
+		DepthFirstPaths.demo(p.nodes, start, end);
 
 	}
 
-	private Map<Position, Integer> initialize(GridCellContentType[][] matrix) {
+	public  Map<Position, Integer> initialize(GridCellContentType[][] matrix) {
 
 		Map<Position, Integer> map = new HashMap<Position, Integer>();
 		int key = 0;
