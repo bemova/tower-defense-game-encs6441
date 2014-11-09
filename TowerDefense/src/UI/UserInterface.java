@@ -288,6 +288,15 @@ public class UserInterface extends JFrame {
 
 		});
 
+		addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+            	grid.stopWave();
+            }
+        });
+		
 		save.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

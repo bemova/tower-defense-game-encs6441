@@ -50,6 +50,11 @@ public class BasicCritter implements Critter {
 	
 	@Override
 	public void updatePosition(long timeMillisecs) {
+		if(state == Critter.State.COMPLETEDPATH)
+		{
+			return;
+		}
+		
 		if(appearTimeout <= 0)
 		{
 			appearTimeout += timeMillisecs;
@@ -75,55 +80,63 @@ public class BasicCritter implements Critter {
 		
 		if(currentPosition == null)
 		{
-			System.out.println("COMPLETED!!");
+			// System.out.println("COMPLETED!!");
 			state = Critter.State.COMPLETEDPATH;
 		}
-		else
-			System.out.println("{" + currentPosition.x+", " + currentPosition.y + "}");
+		//else
+			// System.out.println("{" + currentPosition.x+", " + currentPosition.y + "}");
 	}
 	
 	private Point calculate(int pixelsPassed) {
-		System.out.println("calculate");
+		if(pixelsPassed < 0)
+		{
+			// System.out.println("+++");
+		}
+		// System.out.println("calculate");
 		if(startPoint.x > endPoint.x)
 		{
-			System.out.println("startPoint.x > endPoint.x " + pixelsPassed );
+			// System.out.println("startPoint.x > endPoint.x " + pixelsPassed );
 			if(currentPosition.x - pixelsPassed <= endPoint.x)
 			{
+				int extraPixels = endPoint.x - (currentPosition.x - pixelsPassed);  
 				nextCell();
-				return calculate(endPoint.x - (currentPosition.x - pixelsPassed));
+				return calculate(extraPixels);
 			}
 			
 			return new Point(currentPosition.x - pixelsPassed, currentPosition.y);
 		}
 		else if(startPoint.x < endPoint.x)
 		{
-			System.out.println("startPoint.x < endPoint.x " + pixelsPassed );
+			// System.out.println("startPoint.x < endPoint.x " + pixelsPassed );
 			if(currentPosition.x + pixelsPassed >= endPoint.x)
 			{
+				int extraPixels = currentPosition.x + pixelsPassed - endPoint.x; 
 				nextCell();
-				return calculate(currentPosition.x + pixelsPassed - endPoint.x);
+				return calculate(extraPixels);
 			}
 			
 			return new Point(currentPosition.x + pixelsPassed, currentPosition.y);
 		}
 		else if(startPoint.y > endPoint.y)
 		{
-			System.out.println("startPoint.y > endPoint.y " + pixelsPassed );
+			// System.out.println("startPoint.y > endPoint.y " + pixelsPassed );
 			if(currentPosition.y - pixelsPassed <= endPoint.y)
 			{
+				int extraPixels = endPoint.y - (currentPosition.y - pixelsPassed);
 				nextCell();
-				return calculate(endPoint.y - (currentPosition.y - pixelsPassed));
+				return calculate(extraPixels);
 			}
 			
 			return new Point(currentPosition.x, currentPosition.y - pixelsPassed);
 		}
 		else if(startPoint.y < endPoint.y)
 		{
-			System.out.println("startPoint.y < endPoint.y " + pixelsPassed );
+			// System.out.println("startPoint.y < endPoint.y " + pixelsPassed );
 			if(currentPosition.y + pixelsPassed >= endPoint.y)
 			{
+				int extraPixels = currentPosition.y + pixelsPassed - endPoint.y;
 				nextCell();
-				return calculate(currentPosition.y + pixelsPassed - endPoint.y);
+				return calculate(extraPixels);
 			}
 			
 			return new Point(currentPosition.x, currentPosition.y + pixelsPassed);

@@ -29,6 +29,8 @@ public interface Grid {
 	
 	public int[][] getContent();
 	public void setPath(Stack<GraphNode> path);
+
+	public void stopWave();
 	
 	
 }

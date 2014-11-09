@@ -58,7 +58,7 @@ public class Map extends CompleteGrid {
 	public void startWave(CanvaObject canva) {
 		// TODO Auto-generated method stub
 		wave = new Wave(canva, this);
-		wave.Start();
+		wave.start();
 		
 	}
 	
@@ -113,6 +113,11 @@ public class Map extends CompleteGrid {
 		
 		return level;
 		
+	}
+
+	@Override
+	public void stopWave() {
+		wave.stop();		
 	}
 	
 }

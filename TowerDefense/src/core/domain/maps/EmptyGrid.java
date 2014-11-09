@@ -95,4 +95,12 @@ public	void draw(Graphics g) {
 		
 	}
 
+
+
+	@Override
+	public void stopWave() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

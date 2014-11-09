@@ -12,28 +12,30 @@ import critters.HigherLevelCritter;
 
 public class Wave {
 
-	int numberOfCritters = 1;
+	int numberOfCritters = 10;
 	Map map;
 	CanvaObject canva;
-	
-	public Wave(CanvaObject _canva,Map _map) {
+
+	public Wave(CanvaObject _canva, Map _map) {
 		canva = _canva;
 		map = _map;
 	}
 
-	public void timerValue(){
+	public void timerValue() {
 		long start = System.currentTimeMillis();
 
-		// some code executed 
+		// some code executed
 
 		long end = System.currentTimeMillis();
 		long elapsed = end - start;
 		long seconds = elapsed / 1000;
 	}
-	
+
 	Timer timer = null;
+	Thread thread = null;
 	boolean shouldRun = true;
-	public void Start()
+
+	public void start()
 	{
 		// current interval, for each critter this interval is less by intervalSeconds
 		for(int i = 0; i < numberOfCritters; i++)
@@ -42,14 +44,14 @@ public class Wave {
 			critter = new HigherLevelCritter(critter);
 			// the time interval seconds when the critter should appear on the map
 			double intervalSeconds = (map.getUnitSize() / critter.getSpeed()) *(-i);
-			critter.setAppearTime((long)(intervalSeconds * 1000));
+			critter.setAppearTime((long)(intervalSeconds * 500));
 			critter.setPath(map.getPath());
 			map.critters.add(critter);			
 		}		
 
 		currentMillis = System.currentTimeMillis();
 		shouldRun = true;
-		
+	/*	
 		timer = new Timer();
 		timer.schedule(new TimerTask() {			
 			@Override
@@ -57,25 +59,29 @@ public class Wave {
 				update();
 			}
 		}, 200, 200);
-		
-		/*
-		while(shouldRun)
-		{
-			update();
-			try {
-				Thread.sleep(30);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		*/
+		
+		thread = new Thread(){
+		    public void run(){
+		    	while(shouldRun)
+				{
+					update();
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}      
+		    }
+		};
+		
+		thread.start();
 	}
-	
-	public void Stop()
-	{
-		//shouldRun = false;
-		timer.cancel();
+
+	public void stop() {
+		shouldRun = false;
+		//timer.cancel();
 	}
 
 	long currentMillis = 0;
@@ -84,13 +90,11 @@ public class Wave {
 		long newTime = System.currentTimeMillis();
 		long timePassed = newTime - currentMillis;
 		currentMillis = newTime;
-		
-		for(Critter critter : map.critters)
-		{
+
+		for (Critter critter : map.critters) {
 			critter.updatePosition(timePassed);
 		}
-		
-		canva.repaint(); 
-		System.out.println("hit");
+
+		canva.repaint();
 	}
 }
