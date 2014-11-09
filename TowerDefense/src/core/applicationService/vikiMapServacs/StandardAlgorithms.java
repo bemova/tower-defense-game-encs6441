@@ -16,6 +16,7 @@ public class StandardAlgorithms {
 	int sizeY = 0;
 	String source = "";
 	String destination = "";
+	public Stack<GraphNode> path = new Stack<GraphNode>();
 
 	HashMap<String, GraphNode> graphMap = new HashMap<String, GraphNode>(); // contains
 																			// the
@@ -36,10 +37,10 @@ public class StandardAlgorithms {
 	};
 
 	public StandardAlgorithms(Grid grid) {
-		sizeX = ((EmptyGrid)grid).getHeight();
-		sizeY = ((EmptyGrid)grid).getWidth();
+		sizeX = grid.getHeight();
+		sizeY = grid.getWidth();
 		this.map = new int[sizeX][sizeY];
-		this.map = ((EmptyGrid)grid).content;
+		this.map = grid.getContent();
 	};
 
 	
@@ -330,9 +331,10 @@ public class StandardAlgorithms {
 		String ErrorMessage = "";
 		if ((ErrorMessage = validateEntryExit()).isEmpty()) {
 			if ((ErrorMessage = fillGraph()).isEmpty())
-				if (shortestPathfinding() == null)
+				if ((path = shortestPathfinding()) == null)
 					ErrorMessage = "Invalid Map: Path does not found between Entry and Exit points";
-		}
+	
+	}
 
 		return ErrorMessage;
 

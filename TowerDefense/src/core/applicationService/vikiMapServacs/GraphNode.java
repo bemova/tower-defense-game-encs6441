@@ -9,8 +9,8 @@ public class GraphNode {
 	public GraphNode(String name, int cordinateX, int cordinateY){
 		this.name = name;
 		stateColor = "green";
-		this.cordinateX = cordinateX;
-		this.cordinateY = cordinateY;
+		this.cordinateX = cordinateX; // corresponds to i 
+		this.cordinateY = cordinateY;// corresponds to j
 		
 	};
 	
@@ -23,8 +23,8 @@ public class GraphNode {
 	String name;
 	String stateColor;
 	int outputState = 0;
-	int cordinateX;
-	int cordinateY;
+	public int cordinateX;
+	public int cordinateY;
 	void AddNeighbor(GraphNode node){
 		neighbors.add(node);
 		

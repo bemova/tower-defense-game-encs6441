@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import wavs.Wave;
 import UI.FactoryTower;
 import core.applicationService.vikiMapServacs.MoneyManager;
 import core.applicationService.vikiMapServacs.StandardAlgorithms;
@@ -53,8 +54,9 @@ public class UserInterface extends JFrame {
 	JButton load = new JButton("Load Map");
 	JButton designMap = new JButton("Design Map");
 	JButton playGame = new JButton("Start Playing");
+	JButton startWave = new JButton("Start wave");
 	JTextField moneyView = new JTextField(); // display of view accumulated
-												// points during the game
+													// points during the game
 	JLabel acumulatedMoney = new JLabel("POINTS :");
 
 	JButton designTowers = new JButton("Design Towers");
@@ -99,7 +101,8 @@ public class UserInterface extends JFrame {
 		upper.add(load);
 		upper.add(designMap);
 		upper.add(playGame);
-
+		upper.add(startWave);
+		
 		upper.add(towerWindow);
 		towerWindow.setVisible(false);
 
@@ -123,7 +126,8 @@ public class UserInterface extends JFrame {
 		xField.setVisible(false);
 		yField.setVisible(false);
 		playGame.setVisible(false);
-
+		startWave.setVisible(false);
+		
 		mapManager = new MapManager();
 
 		xField.addActionListener(new java.awt.event.ActionListener() {
@@ -164,16 +168,34 @@ public class UserInterface extends JFrame {
 
 			}
 		});
+		
+		startWave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+			//		grid = new Map(mapManager.LoadMapFromFile(openFile.getSelectedFile().getAbsolutePath()));
+
+					grid.startWave(canva);
+				}
+				catch(Exception ex)
+				{
+					ex.printStackTrace();
+				}
+			}}
+			);
 
 		playGame.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					startWave.setVisible(true);
 					towerWindow.setVisible(true);
 					towerWindow.levelUp.setEnabled(true);
 					towerWindow.levelDown.setEnabled(true);
 
 					if (grid != null)
-						grid = new Map((EmptyGrid)(((CompleteGrid)grid).simpleGrid));
+					//	grid = new Map((EmptyGrid)(((CompleteGrid)grid).simpleGrid));
+					
+					grid = new Map(grid);
+
 					canva.updateGrid(grid);
 					upper.add(acumulatedMoney);
 					upper.add(moneyView);
@@ -206,13 +228,14 @@ public class UserInterface extends JFrame {
 		designMap.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					startWave.setVisible(true);
 					xField.setVisible(true);
 					yField.setVisible(true);
 					xField.setEnabled(true);
 					yField.setEnabled(true);
 					// load.setEnabled(false);
 					// designMap.setVisible(false);
-					grid = new CompleteGrid((EmptyGrid)grid);
+					grid = new EmptyGrid(10,10);
 					canva.updateGrid(grid);
 					pack();
 				} catch (java.lang.Exception ex) {
@@ -230,28 +253,29 @@ public class UserInterface extends JFrame {
 					JFileChooser openFile = new JFileChooser();
 					if (JFileChooser.APPROVE_OPTION == openFile
 							.showOpenDialog(null)) {
-					//	grid = new CompleteGrid(grid);
-						grid = new CompleteGrid(mapManager.LoadMapFromFile(openFile.getSelectedFile().getAbsolutePath()));
+					//	grid = new  (grid);
+						grid = new Map(mapManager.LoadMapFromFile(openFile.getSelectedFile().getAbsolutePath()));
 			
-					/*	grid.gridAssignmentOperator(mapManager // TODO
-								.LoadMapFromFile(openFile.getSelectedFile()
-										.getAbsolutePath())); */
+
 						canva.updateGrid(grid); 
-						width = ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getWidth();
-						height = ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getHeight();
-						lower.setSize(width * ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getUnitSize(),
-								height * ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getUnitSize());
-						canva.setSize(width * ((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getUnitSize(),
-								height *((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).getUnitSize());
+						width = grid.getWidth();
+						height = grid.getHeight();
+						lower.setSize(width * grid.getUnitSize(),height * grid.getUnitSize());
+						canva.setSize(width * grid.getUnitSize(),height *grid.getUnitSize());
 						// designMap.setEnabled(false);
 
 						add(entryP, BorderLayout.CENTER);
 
-						String message = mapManager.validateMapContent(((EmptyGrid)(((CompleteGrid) grid).simpleGrid)));
+						String message = mapManager.validateMapContent(grid);
 						if (!message.equals(""))
 							JOptionPane.showMessageDialog(null, message);
-						else
+						else{
 							playGame.setVisible(true);
+							startWave.setVisible(true);
+							grid.setPath(mapManager.algorithms.path);
+						}
+						
+						
 						pack();
 
 						setLocationRelativeTo(null);
@@ -274,8 +298,7 @@ public class UserInterface extends JFrame {
 						String fileName = saveFile.getSelectedFile()
 								.getAbsolutePath();
 
-						String errorMessage = mapManager.SaveMapIntoFle((EmptyGrid)(((CompleteGrid)grid).simpleGrid),
-								fileName);
+						String errorMessage = mapManager.SaveMapIntoFle(grid,fileName);
 
 						load.setEnabled(true);
 
@@ -385,15 +408,15 @@ public class UserInterface extends JFrame {
 						throw new java.lang.Exception(
 								"Error size max size: ....., min size: ....");
 
-
-							// (((CompleteGrid)grid).simpleGrid)
-					((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).setSize(width, height);
+							
+					grid.setSize(width, height);
+					grid = new Map(grid);
 					canva.updateGrid(grid);
 
-					lower.setSize(width * ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize(),
-							height * ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize());
-					canva.setSize(width * ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize(),
-							height * ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize());
+					lower.setSize(width * grid.getUnitSize(),
+							height * grid.getUnitSize());
+					canva.setSize(width * grid.getUnitSize(),
+							height * grid.getUnitSize());
 
 					add(entryP, BorderLayout.CENTER);
 					pack();
@@ -411,17 +434,17 @@ public class UserInterface extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (designMap.isEnabled()) { 
-					int i = e.getY() / ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize();
+					int i = e.getY() / grid.getUnitSize();
 					
-					int j = e.getX() / ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getUnitSize();
+					int j = e.getX() / grid.getUnitSize();
 					
-					if ((i < ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getHeight()) && (j < ((EmptyGrid)(((CompleteGrid)grid).simpleGrid)).getWidth())
-							&& ((((EmptyGrid)(((CompleteGrid)grid).simpleGrid))).content[i][j] != colorInInteger)) {
+					if ((i < grid.getHeight()) && (j < grid.getWidth())
+							&& (grid.getCellType(i, j) != colorInInteger)) {
 						
-						if ((((EmptyGrid)(((CompleteGrid)grid).simpleGrid))).content[i][j] == 5) {
+						if (grid.getCellType(i, j) == 5) {
 							Point point = canva.getLocationOnScreen();//getLocation();
-							int x = point.x + (j + 1) * (((EmptyGrid)(((CompleteGrid)grid).simpleGrid))).getUnitSize();
-							int y = point.y + (i + 1) * (((EmptyGrid)(((CompleteGrid)grid).simpleGrid))).getUnitSize();
+							int x = point.x + (j + 1) * grid.getUnitSize();
+							int y = point.y + (i + 1) * grid.getUnitSize();
 							Point pointOnScreen = new Point(x, y);//e.getLocationOnScreen();
 							// add(towerPropertyPanel);
 
@@ -463,7 +486,7 @@ public class UserInterface extends JFrame {
 
 						} else {
 							if( !(gameStatus == EnumGameStatValue.PLAYGAME))
-								((EmptyGrid)(((CompleteGrid) grid).simpleGrid)).content[i][j] = colorInInteger;
+								grid.setCell(j, i, colorInInteger); // i =y j =x // setCell(int cordinatX, int cordinatY, int type)
 						}
 
 						canva.repaint();
@@ -479,11 +502,11 @@ public class UserInterface extends JFrame {
 
 					//((EmptyGrid)(((Map) grid).simpleGrid))
 					
-					int i = e.getY() /((EmptyGrid) grid).getUnitSize();
-					int j = e.getX() / ((EmptyGrid) grid).getUnitSize();
-					if ((i < ((EmptyGrid) grid).getHeight()) && (j < ((EmptyGrid) grid).getWidth())
-							&& (((EmptyGrid) grid).content[i][j] != colorInInteger)) {
-						((EmptyGrid) grid).content[i][j] = colorInInteger;
+					int i = e.getY() / grid.getUnitSize();
+					int j = e.getX() / grid.getUnitSize();
+					if ((i < grid.getHeight()) && (j < grid.getWidth())
+							&& (grid.getCellType(i, j) != colorInInteger)) {
+						grid.setCell(j, i, colorInInteger);
 						canva.repaint();
 
 					}
@@ -498,11 +521,13 @@ public class UserInterface extends JFrame {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				if (designMap.isEnabled()) {
-					int i = e.getY() / ((EmptyGrid)((CompleteGrid)grid).simpleGrid).getUnitSize();
-					int j = e.getX() / ((EmptyGrid) ((CompleteGrid)grid).simpleGrid).getUnitSize();
-					if ((i < ((EmptyGrid) ((CompleteGrid)grid).simpleGrid).getHeight()) && (j < ((EmptyGrid) ((CompleteGrid)grid).simpleGrid).getWidth())
-							&& (((EmptyGrid) ((CompleteGrid)grid).simpleGrid).content[i][j] != colorInInteger)) {
-						((EmptyGrid) ((CompleteGrid)grid).simpleGrid).content[i][j] = colorInInteger;
+					int y = e.getY() / grid.getUnitSize();
+					int x = e.getX() / grid.getUnitSize();
+					if ((y < grid.getHeight()) && (x < grid.getWidth())
+							&& (grid.getCellType(y, x) != colorInInteger)) {
+						grid.setCell(x, y, colorInInteger);
+						
+					//	((EmptyGrid) ((CompleteGrid)grid).simpleGrid).content[y][x] = colorInInteger;
 						canva.repaint();
 
 					}
@@ -510,10 +535,8 @@ public class UserInterface extends JFrame {
 			}
 		});
 
-		canva.setSize(((EmptyGrid) grid).getHeight() * ((EmptyGrid) grid).getUnitSize(), ((EmptyGrid) grid).getWidth()
-				* ((EmptyGrid) grid).getUnitSize());
-		lower.setSize(((EmptyGrid) grid).getHeight() * ((EmptyGrid) grid).getUnitSize(), ((EmptyGrid) grid).getWidth()
-				* ((EmptyGrid) grid).getUnitSize());
+		canva.setSize( grid.getHeight() * grid.getUnitSize(), grid.getWidth() * grid.getUnitSize());
+		lower.setSize( grid.getHeight() * grid.getUnitSize(), grid.getWidth() * grid.getUnitSize());
 		lower.add(canva);
 
 		add(upper, BorderLayout.NORTH);
@@ -537,15 +560,15 @@ public class UserInterface extends JFrame {
 	}
 
 	void setMapSize(int width, int height) {
-		lower.setSize(width * ((EmptyGrid)grid).getUnitSize(), height * ((EmptyGrid)grid).getUnitSize());
-		canva.setSize(width * ((EmptyGrid)grid).getUnitSize(), height * ((EmptyGrid)grid).getUnitSize());
+		lower.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
+		canva.setSize(width * grid.getUnitSize(), height * grid.getUnitSize());
 		pack();
 		setLocationRelativeTo(null);
 	}
 
 	public boolean canPlaceTower(Point point) {
 		CanvasCoordinate coordinate = toCanvasCoordinates(point);
-		return (((EmptyGrid)grid).getCellType(coordinate.x, coordinate.y) == 2);
+		return (grid.getCellType(coordinate.x, coordinate.y) == 2);
 	}
 
 	public class CanvasCoordinate extends Point {
@@ -558,8 +581,8 @@ public class UserInterface extends JFrame {
 		Point canvasLocation = canva.getLocationOnScreen();
 		int relativeX = point.x - canvasLocation.x;
 		int relativeY = point.y - canvasLocation.y;
-		int i = relativeX / ((EmptyGrid)((Map)grid).simpleGrid).getUnitSize();
-		int j = relativeY / ((EmptyGrid)((Map)grid).simpleGrid).getUnitSize();
+		int i = relativeX / grid.getUnitSize();
+		int j = relativeY / grid.getUnitSize();
 		return new CanvasCoordinate(i, j);
 	}
 
@@ -570,14 +593,13 @@ public class UserInterface extends JFrame {
 	public void placeTowerOnMap(Point point, int towerType) {
 		CanvasCoordinate localPoint = toCanvasCoordinates(point);
 		
-		if(localPoint.x < 0 || localPoint.y < 0 || 
-				localPoint.x > ((EmptyGrid)(((Map) grid).simpleGrid)).height || 
-				localPoint.y > ((EmptyGrid)(((Map) grid).simpleGrid)).width)
+		if(localPoint.x < 0 || localPoint.y < 0 || 	localPoint.x > grid.getHeight()|| 
+				localPoint.y > grid.getWidth())
 		{
 			return;
 		}
 		
-		if(  ((EmptyGrid)(((Map) grid).simpleGrid)).content[localPoint.y][localPoint.x] == 2)
+		if(  grid.getCellType(localPoint.y, localPoint.x) == 2)
 				//if ( canPlaceTower(point))
 		{
 			TowerParameters newParams = new TowerParameters();
@@ -590,7 +612,7 @@ public class UserInterface extends JFrame {
 			Tower tower = towerFactory.creatTower(newParams);
 
 			
-			((EmptyGrid)(((Map) grid).simpleGrid)).setCell(localPoint.x, localPoint.y, 5); // @TODO: change the
+			grid.setCell(localPoint.x, localPoint.y, 5); // @TODO: change the
 															// last parameter
 															// set proper tower
 															// value

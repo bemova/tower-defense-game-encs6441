@@ -1,8 +1,12 @@
 package core.domain.maps;
 
 import java.awt.Graphics;
+import java.util.Stack;
 
-public class EmptyGrid extends Grid {
+import core.applicationService.vikiMapServacs.GraphNode;
+import UI.CanvaObject;
+
+public class EmptyGrid implements Grid {
 	public int height = 15;
 	public int width = 15;
 	public int sizeOfUnit = 30;
@@ -10,15 +14,13 @@ public class EmptyGrid extends Grid {
 	
 	
 	public EmptyGrid(int newheiht, int newwidth){
-		super();
+	//	super();
 		height = newheiht;
 		width = newwidth;
 	}
 	
-	public EmptyGrid(){
-		
-	}
-	
+
+
 	public int  getHeight(){
 		
 		return height;
@@ -34,6 +36,16 @@ public class EmptyGrid extends Grid {
 		return sizeOfUnit;
 	}
 	
+	public void setContent(int[][] newContent){
+		
+		content = newContent;
+	}
+	
+	public int[][] getContent(){
+		
+		return content;
+	}
+	
 	public void setSize(int newWidth, int newheight){
 		
 		height = newheight;
@@ -41,6 +53,7 @@ public class EmptyGrid extends Grid {
 		content = new int[height][width];
 	};
 
+	public void setPath(Stack<GraphNode> path){};
 	
 	public int getCellType(int i, int j)
 	{
@@ -73,6 +86,13 @@ public	void draw(Graphics g) {
 		g.drawLine(0, height * sizeOfUnit - 1, width * sizeOfUnit - 1,
 				height * sizeOfUnit - 1);
 
+	}
+	
+
+	@Override
+	public void startWave(CanvaObject canva) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

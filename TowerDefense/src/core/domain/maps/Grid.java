@@ -1,32 +1,34 @@
 package core.domain.maps;
 
 import java.awt.Graphics;
-import java.awt.Point;
+import java.util.Stack;
+
+import core.applicationService.vikiMapServacs.GraphNode;
+import UI.CanvaObject;
 
 
+public interface Grid {
 
-public abstract class Grid {
+	public void draw(Graphics g);
 
- 
-	public Grid(){
-		
-	};
+	public int getHeight();
+
+	public int getWidth();
+
+	public int getUnitSize();
+
+	public void setSize(int newWidth, int newheight);
+
+	public int getCellType(int i, int j);
+
+	public void setCell(int cordinatX, int cordinatY, int type);
 	
-	abstract public void draw(Graphics g);
+	public void startWave(CanvaObject canva);
 	
-
+	public void setContent(int[][] newContent);
+	
+	public int[][] getContent();
+	public void setPath(Stack<GraphNode> path);
 	
 	
-/*	public void gridAssignmentOperator(Grid newGrid){
-		
-		width  = newGrid.getWidth();
-		height = newGrid.getHeight();
-		
-		for(int i = 0; i< height; i++)
-			for(int j = 0; j < width; j++)
-				content[i][j] = newGrid.content[i][j];
-		
-	}  */
-	
-
 }

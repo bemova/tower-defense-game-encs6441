@@ -3,30 +3,42 @@ package core.domain.maps;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Stack;
+
+import UI.CanvaObject;
+import wavs.Wave;
+import critters.*;
+import core.applicationService.vikiMapServacs.GraphNode;
 import core.domain.warriors.defenders.towers.vikiTowers.*;
-//import core.domain.warriors.defenders.towers.*; // This is Mojtaba towers
+
 
 
 public class Map extends CompleteGrid {
 
 	HashMap<String, GridCell > map;
-	ArrayList<GridCell> path;
+	ArrayList<GridCell> path = new ArrayList<GridCell>();
+	public ArrayList<Critter> critters = new ArrayList<Critter>();
 	public HashMap<String,Tower> towers; 
 	String entryPoint = "";
 	String exitPoint = "";
+	Wave wave;
 	
 	
 	
 	//contructor's section
-	public Map(){};
+
 	public Map(Grid grid){
 		super(grid);
 		towers = new HashMap<String,Tower>();
 		
 	};
 	
-	
+	public void addCritter(Critter newCritter){
+		
+		critters.add(newCritter);
+	}
 	
 	@Override
 	public void draw(Graphics g){
@@ -37,7 +49,18 @@ public class Map extends CompleteGrid {
 			tower.draw(g);
 		}
 	
+		for(Critter critter: critters)
+		{
+			critter.draw(g);
+		}
 	};
+	@Override
+	public void startWave(CanvaObject canva) {
+		// TODO Auto-generated method stub
+		wave = new Wave(canva, this);
+		wave.Start();
+		
+	}
 	
 
 	
@@ -57,6 +80,21 @@ public class Map extends CompleteGrid {
 		towers.put(positionKey , newTower);
 	};
 	
+	public void setPath(Stack<GraphNode> newpath){
+		
+		while(!newpath.empty()){
+			path.add(new GridCell(newpath.peek().cordinateX,newpath.peek().cordinateY ));
+			newpath.pop();
+		}
+		
+		Collections.reverse(path);
+	}
+	
+	public ArrayList<GridCell> getPath()
+	{
+		return path;
+	}
+	
 	public int updateLevel(String towerKey, String upOrDown){
 		int level = 0;
 		level = towers.get(towerKey).levelUpDown(upOrDown);
@@ -73,7 +111,7 @@ public class Map extends CompleteGrid {
 		
 		}
 		
-			return level;
+		return level;
 		
 	}
 	

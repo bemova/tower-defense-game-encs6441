@@ -3,9 +3,9 @@ package core.domain.maps;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class CompleteGrid extends Grid {
+public abstract class CompleteGrid implements  Grid {
 
-	public Grid simpleGrid;
+	protected final Grid simpleGrid;
 	
 	
 	//constructor's section 
@@ -16,11 +16,6 @@ public class CompleteGrid extends Grid {
 		
 	}
 	
-public 	CompleteGrid(){
-	
-	}
-	
-
 	@Override
 	public void draw(Graphics g) {
 		simpleGrid.draw(g);
@@ -44,12 +39,60 @@ public 	CompleteGrid(){
 		
 	}
 	
-	public void setSize(int newWidth, int newheight){
+/*	public void setSize(int newWidth, int newheight){
 		
 		((EmptyGrid)simpleGrid).setSize(newWidth, newheight);
 		((EmptyGrid)simpleGrid).width = newWidth;
 		((EmptyGrid)simpleGrid).height = newheight;
 		((EmptyGrid)simpleGrid).content = new int[newheight][newWidth];
+	}; */
+	
+	
+	
+	//===============
+	
+	public int  getHeight(){
+		
+		return simpleGrid.getHeight();
+	}
+	
+	public int getWidth(){
+		
+		return simpleGrid.getWidth();
+	}
+	
+	public int getUnitSize(){
+		
+		return simpleGrid.getUnitSize();
+	}
+	
+	public void setSize(int newWidth, int newheight){
+		
+		simpleGrid.setSize(newWidth, newheight);
 	};
+
+	
+	public int getCellType(int i, int j)
+	{
+
+
+		return simpleGrid.getCellType(i, j);
+	}
+	
+	public void setCell(int cordinatX, int cordinatY, int type)
+	{
+		simpleGrid.setCell(cordinatX, cordinatY, type);
+	}
+	
+	public void setContent(int[][] newContent){
+		
+		simpleGrid.setContent(newContent);
+	}
+	 public int[][] getContent(){
+		 return simpleGrid.getContent();
+		 
+	 }
+	
+//====	
 
 }

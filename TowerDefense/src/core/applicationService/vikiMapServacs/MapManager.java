@@ -62,7 +62,9 @@ public Grid LoadMapFromFile(String fileName){
         grid = new EmptyGrid(height_, wdth_);
 
         pathInMatrix = new int [height_][wdth_];
-        ((EmptyGrid)grid).content = pathInMatrix;
+     //   grid.setSize(wdth_, height_);
+        grid.setContent(pathInMatrix);
+     //   ((EmptyGrid)grid).content = pathInMatrix;
         
         int i = 0;
         for(String lineComponent : containerForMap)
@@ -90,8 +92,8 @@ return grid;
 
 public String SaveMapIntoFle(Grid grid, String FileName){
 	
-	int widht = ((EmptyGrid)grid).getWidth();
-	int height = ((EmptyGrid)grid).getHeight();
+	int widht = grid.getWidth();
+	int height = grid.getHeight();
 	String errorMessage = "";
 	
 	try {
