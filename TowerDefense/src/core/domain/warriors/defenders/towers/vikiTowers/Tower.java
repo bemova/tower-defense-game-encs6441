@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import UI.TowerParameters;
 
@@ -13,18 +15,22 @@ import javax.imageio.ImageIO;
 
 import core.domain.maps.GridCell;
 import bullet.Bullet;
+import bullet.Bullet.State;
+
 import java.awt.Point;
 
-public class Tower {
+public class Tower implements Observer {
 
 	BufferedImage image;
 	public TowerParameters parameters;
-	Bullet bullet;
+	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+//	Bullet bullet;
 	GridCell towerPosition;
 	TowerDataCollection data = new TowerDataCollection();
+	
 
 	 Tower() {
-		
+	
 	};
 
 	public void setPosition(GridCell cell){
@@ -32,15 +38,24 @@ public class Tower {
 		towerPosition = cell;
 
 	}
-	
-	public Bullet createBullet(){
-		bullet = new Bullet(new Point(towerPosition.j * 30 + 15, towerPosition.i * 30 + 15), new Point(towerPosition.j * 30 + 15 + 50, towerPosition.i * 30 + 15 + 50));
 
-		return bullet;
+	public GridCell getPosition(){
+		
+		return towerPosition;
+	}
+	
+	public void createBullet(Point newDestination){
+		bullets.add( new Bullet(new Point(towerPosition.j * 30 + 15, towerPosition.i * 30 + 15), new Point(newDestination.x * 30 + 15 , newDestination.y * 30 + 15)));
+
+		//return bullet;
 	}
 	public void updateBullets(int millisecPassed){
+
+		if(bullets != null){
+			for(Bullet bullet: bullets)
+				bullet.updatePosition(millisecPassed);
 		
-		bullet.updatePosition(millisecPassed);
+		}
 	}
 	
 	private Point createPoint(GridCell cell) {
@@ -63,11 +78,18 @@ public class Tower {
 	};
 
 	public void draw(Graphics g) {
-
+		State state ;
 		g.drawImage(image, parameters.position.x * 30,
 				parameters.position.y * 30, null);
-		if( bullet != null) bullet.draw(g);
-
+		for(int i = 0; i < bullets.size(); i++)
+			if(bullets.get(i).getState() == Bullet.State.FINISHED)
+				bullets.remove(i);
+				
+		for(Bullet bullet: bullets){
+			
+			bullet.draw(g); 
+		}
+		
 	};
 
 	public int levelUpDown(String upgradeLevel) {
@@ -122,6 +144,20 @@ public class Tower {
 		
 		return level;
 
+	}
+
+
+	long lastCreationTime = 0;
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		long currentTime = System.currentTimeMillis();
+		if(currentTime - lastCreationTime > 1000)
+		{
+			Point destination = ((GridCell)arg0).returnPosition();
+			createBullet(destination);
+			lastCreationTime = currentTime;
+		}
+		
 	}
 
 }

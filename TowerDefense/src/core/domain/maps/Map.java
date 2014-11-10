@@ -34,6 +34,13 @@ public class Map extends CompleteGrid {
 	public Map(Grid grid){
 		super(grid);
 		towers = new HashMap<String,Tower>();
+		map = new HashMap<String, GridCell >();
+		for(int i = 0; i < grid.getHeight(); i++)
+			for(int j = 0; j< grid.getWidth(); j++){
+				map.put(i +" " + j, new GridCell(i, j));
+				map.get(i +" " + j).cellType = grid.getCellType(i, j);
+			}
+		
 		
 	};
 	
@@ -64,6 +71,7 @@ public class Map extends CompleteGrid {
 		
 	}
 	
+	
 
 	
 	public String getEntryPoint(){
@@ -80,13 +88,15 @@ public class Map extends CompleteGrid {
 	public void addTower(Tower newTower, String positionKey){
 		
 		towers.put(positionKey , newTower);
-	//	towerBullets.add(newTower.)
+			
+		
 	};
 	
 	public void setPath(Stack<GraphNode> newpath){
 		
 		while(!newpath.empty()){
-			path.add(new GridCell(newpath.peek().cordinateX,newpath.peek().cordinateY ));
+			path.add(map.get(newpath.peek().cordinateX + " " + newpath.peek().cordinateY ));
+		//	path.add(new GridCell(newpath.peek().cordinateX,newpath.peek().cordinateY ));
 			newpath.pop();
 		}
 		
@@ -121,6 +131,15 @@ public class Map extends CompleteGrid {
 	@Override
 	public void stopWave() {
 		wave.stop();		
+	}
+
+	@Override
+	public void registerTowerAsObserver(int positionx, int positiony, Tower tower) {
+		int radius = 1;
+		for(int i = positiony -radius; i <= positiony + 1 ; i++ )
+			for(int j = positionx - radius; j <= positionx; j++)
+				if(simpleGrid.getCellType(i, j) == 1)
+					map.get(i + " " + j).addObserver(tower);
 	}
 	
 }

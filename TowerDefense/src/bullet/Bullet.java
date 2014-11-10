@@ -5,6 +5,12 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 public class Bullet {
+	
+	public enum State { MOVING, FINISHED }
+	State state = State.MOVING;
+	
+	public State getState() { return state; }
+	
 	Point startPoint;
 	Point endPoint;
 	Point currentPoint;
@@ -29,7 +35,14 @@ public class Bullet {
 
 		a = (y2 - y1) / (x2 - x1);
 		b = y1 - x1 * ((y2 - y1) / (x2 - x1));
+		pathLength = length(startPoint, endPoint);
 	}
+	
+	private double length(Point start, Point end) {
+		return Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2));
+	}
+
+	double pathLength = 0.0;
 	
 	public void updatePosition(int millisecPassed){
 	
@@ -54,8 +67,10 @@ public class Bullet {
 		
 		currentPoint = new Point(buletX, buletY);
 		
-		if(Math.abs(currentPoint.x - endPoint.x) < 5 && Math.abs(currentPoint.y - endPoint.y) < 5)
-			currentPoint = startPoint;
+		//if(Math.abs(currentPoint.x - endPoint.x) < 5 && Math.abs(currentPoint.y - endPoint.y) < 5)
+		//	currentPoint = startPoint;
+		if(length(startPoint, currentPoint) >= pathLength)
+			state = State.FINISHED;
 	}
 		
 	public void draw(Graphics g){ 

@@ -101,6 +101,9 @@ public	void draw(Graphics g) {
 		
 		
 	}
+	
+	@Override
+	public void registerTowerAsObserver(int positionx, int positiony, Tower tower){}
 
 
 

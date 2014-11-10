@@ -1,5 +1,6 @@
 package wavs;
 
+import java.awt.Point;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,21 +52,13 @@ public class Wave {
 		}	
 		
 		for(Tower tower: map.towers.values()){
-			tower.createBullet();
+			//tower.createBullet(new Point(tower.getPosition().i,tower.getPosition().j ));
 		}
 		
 
 		currentMillis = System.currentTimeMillis();
 		shouldRun = true;
-	/*	
-		timer = new Timer();
-		timer.schedule(new TimerTask() {			
-			@Override
-			public void run() {
-				update();
-			}
-		}, 200, 200);
-		*/
+
 		
 		thread = new Thread(){
 		    public void run(){

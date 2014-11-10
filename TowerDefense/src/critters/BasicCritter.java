@@ -95,6 +95,12 @@ public class BasicCritter implements Critter {
 		// System.out.println("calculate");
 		if(startPoint.x > endPoint.x)
 		{
+			if(startPoint.x - currentPosition.x - pixelsPassed >=15){
+				
+				path.get(numberOfCellsPassed + 1).changeState(true);
+				path.get(numberOfCellsPassed).changeState(false);
+			}
+				
 			// System.out.println("startPoint.x > endPoint.x " + pixelsPassed );
 			if(currentPosition.x - pixelsPassed <= endPoint.x)
 			{
@@ -107,6 +113,11 @@ public class BasicCritter implements Critter {
 		}
 		else if(startPoint.x < endPoint.x)
 		{
+			if(currentPosition.x - startPoint.x   + pixelsPassed >=15){
+				
+				path.get(numberOfCellsPassed + 1).changeState(true);
+				path.get(numberOfCellsPassed).changeState(false);
+			}
 			// System.out.println("startPoint.x < endPoint.x " + pixelsPassed );
 			if(currentPosition.x + pixelsPassed >= endPoint.x)
 			{
@@ -119,6 +130,11 @@ public class BasicCritter implements Critter {
 		}
 		else if(startPoint.y > endPoint.y)
 		{
+			if(startPoint.y - currentPosition.y - pixelsPassed >=15){
+				
+				path.get(numberOfCellsPassed + 1).changeState(true);
+				path.get(numberOfCellsPassed).changeState(false);
+			}
 			// System.out.println("startPoint.y > endPoint.y " + pixelsPassed );
 			if(currentPosition.y - pixelsPassed <= endPoint.y)
 			{
@@ -130,7 +146,15 @@ public class BasicCritter implements Critter {
 			return new Point(currentPosition.x, currentPosition.y - pixelsPassed);
 		}
 		else if(startPoint.y < endPoint.y)
+			
 		{
+			if(currentPosition.y - startPoint.y   + pixelsPassed >=15){
+				
+				path.get(numberOfCellsPassed + 1).changeState(true);
+				path.get(numberOfCellsPassed).changeState(false);
+			}
+	
+			
 			// System.out.println("startPoint.y < endPoint.y " + pixelsPassed );
 			if(currentPosition.y + pixelsPassed >= endPoint.y)
 			{
@@ -151,6 +175,8 @@ public class BasicCritter implements Critter {
 		if(numberOfCellsPassed + 1 < path.size())
 		{
 			endPoint = createPoint(path.get(numberOfCellsPassed + 1));
+			
+		//	path.get(numberOfCellsPassed - ).changeState(false);
 		}
 	}
 	private Point createPoint(GridCell cell) {
@@ -180,7 +206,7 @@ public class BasicCritter implements Critter {
 		{
 			Color c = g.getColor();
 			g.setColor(Color.white);
-			g.fillOval(currentPosition.x, currentPosition.y, 10, 10);
+			g.fillOval(currentPosition.x, currentPosition.y, 15, 15);
 			g.setColor(c);
 		}		
 	}	

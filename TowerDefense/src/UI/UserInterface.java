@@ -628,6 +628,7 @@ public class UserInterface extends JFrame {
 					+ Integer.toString(localPoint.x);
 
 			grid.addTower(tower, position);
+			grid.registerTowerAsObserver(localPoint.x, localPoint.y, tower);
 			moneyControler(localPoint, "buy"); // updates amount of point owned by the player 
 
 			canva.repaint();

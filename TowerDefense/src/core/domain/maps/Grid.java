@@ -33,6 +33,7 @@ public interface Grid {
 	public void addTower(Tower newTower, String positionKey);
 
 	public void stopWave();
+	public void registerTowerAsObserver(int positionx, int positiony,  Tower tower);
 	
 	
 }
