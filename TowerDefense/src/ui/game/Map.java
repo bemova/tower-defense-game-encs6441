@@ -15,7 +15,7 @@ import core.domain.warriors.defenders.towers.Tower;
 @SuppressWarnings("serial")
 public class Map extends Grid {
 
-	Tower[][] towers;
+	private Tower[][] towers;
 
 	/**
 	 * @param width Map width
@@ -23,6 +23,7 @@ public class Map extends Grid {
 	 */
 	public Map(int width, int height) {
 		super(width, height);
+		towers = new Tower[width][height];
 	}
 
 	/**
@@ -31,13 +32,14 @@ public class Map extends Grid {
 	 */
 	public Map(Grid grid) {
 		super(grid);
+		towers = new Tower[grid.getWidth()][grid.getHeight()];
 	}
 
 	/**
 	 * <b>Used in Observer design pattern which updates the towers that are on the map.</b>
 	 * @param towers list of towers on the grid
 	 */
-	public void updateTowers(Tower[][] towers) {
+	public void setTowers(Tower[][] towers) {
 		if(towers != null) { 
 			this.towers = Arrays.copyOf(towers, towers.length); 
 		} 
@@ -64,7 +66,7 @@ public class Map extends Grid {
 					color = MapConstants.EXIT_COLOR;
 					break;
 				case TOWER:
-					color = towers[x][y].display();
+//					color = towers[x][y].display();
 					break;
 				}
 				g.setColor(color);
@@ -77,4 +79,10 @@ public class Map extends Grid {
 
 	}
 
+public Tower[][] getTowers() {
+	return towers;
+}
+
+
+	
 }
