@@ -47,7 +47,7 @@ public class FireSpeed extends TowerFeatureDecorator {
 	 * @return Color, that is color of the button that is representative of a tower
 	 */
 	@Override
-	public Color display() {
+	public String display() {
 		return this.tower.display();
 		
 	}

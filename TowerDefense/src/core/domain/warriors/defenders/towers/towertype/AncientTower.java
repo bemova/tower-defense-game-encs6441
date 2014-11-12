@@ -30,8 +30,8 @@ public class AncientTower extends Tower {
 	 * @return Color, that is color of the button that is representative of a tower
 	 */
 	@Override
-	public Color display() {
-		return MapConstants.ANCIENT_TOWER_COLOR;
+	public String display() {
+		return MapConstants.ANCIENT_TOWER_IMG;
 
 	}
 	/**

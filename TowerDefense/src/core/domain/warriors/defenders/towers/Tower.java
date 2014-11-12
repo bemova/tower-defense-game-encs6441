@@ -72,7 +72,7 @@ public abstract class Tower extends Defender {
 		this.subject.registerObserver(this);
 	}
 
-	public abstract Color display();
+	public abstract String display();
 	public abstract long cost();
 	public List<Tower> objectDetials(){
 		try {

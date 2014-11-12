@@ -28,8 +28,8 @@ public class KingTower extends Tower {
 	 * @return Color, that is color of the button that is representative of a tower
 	 */
 	@Override
-	public Color display() {
-		return MapConstants.KING_TOWER_COLOR;
+	public String display() {
+		return MapConstants.KING_TOWER_IMG;
 	}
 	/**
 	 * 

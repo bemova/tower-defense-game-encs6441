@@ -34,7 +34,7 @@ public class FirePower extends TowerFeatureDecorator {
 	 * @return Color, that is color of the button that can  representative of a feature
 	 */
 	@Override
-	public Color display() {
+	public String display() {
 		return this.tower.display();
 	}
 	/**
