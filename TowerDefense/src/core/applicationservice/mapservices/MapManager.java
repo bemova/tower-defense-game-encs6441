@@ -27,7 +27,7 @@ public class MapManager {
 	 * @param fileName is the address of the file
 	 * @return Grid
 	 */
-	public Grid LoadMapFromFile(String fileName) {
+	public Grid loadMapFromFile(String fileName) {
 		Grid grid = null;
 		try {
 			FileInputStream streamIn = new FileInputStream(fileName);
@@ -50,7 +50,7 @@ public class MapManager {
 	 * @param fileName absolute file path and name
 	 * 
 	 */
-	public void SaveMapIntoFle(Grid grid, String fileName) {
+	public void saveMapIntoFle(Grid grid, String fileName) {
 		try {
 			StartEndChecker startEndChecker = new StartEndChecker();
 			if(!startEndChecker.hasEnd(grid.getContent()))
