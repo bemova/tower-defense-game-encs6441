@@ -1,6 +1,7 @@
 package core.domain.maps;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.io.Serializable;
 
 import core.contract.MapConstants;
@@ -20,7 +21,12 @@ public class Grid implements Serializable{
 	/**
 	 * This is a dummy constructor 
 	 */
-	public Grid() {}
+	public Grid() {
+		this.width = 1;
+		this.height = 1;
+		this.content = new GridCellContentType[width][height];
+		initializeCellContents(GridCellContentType.SCENERY);
+	}
 
 	/**
 	 * <b>Creates a Grid using width and height and initializes the content as Scenery</b>
@@ -74,19 +80,19 @@ public class Grid implements Serializable{
 	 * @param g draw graphics after iteration
 	 */
 	public void draw(Graphics g) {
-
-		for (int i = 0; i < width * unitSize; i += unitSize) {
-			for (int j = 0; j < height * unitSize; j += unitSize) {
-				g.drawLine(i, 0, i, height * unitSize);
-				g.drawLine(0, j, width * unitSize, j);
-			}
-		}
-
-		g.drawLine(width * unitSize - 1, height * unitSize - 1, width
-				* unitSize - 1, 0); // x1y1 x2y2
-
-		g.drawLine(0, height * unitSize - 1, width * unitSize - 1, height
-				* unitSize - 1);
+//
+//		for (int i = 0; i < width * unitSize; i += unitSize) {
+//			for (int j = 0; j < height * unitSize; j += unitSize) {
+//				g.drawLine(i, 0, i, height * unitSize);
+//				g.drawLine(0, j, width * unitSize, j);
+//			}
+//		}
+//
+//		g.drawLine(width * unitSize - 1, height * unitSize - 1, width
+//				* unitSize - 1, 0); // x1y1 x2y2
+//
+//		g.drawLine(0, height * unitSize - 1, width * unitSize - 1, height
+//				* unitSize - 1);
 
 	}
 
@@ -158,6 +164,26 @@ public class Grid implements Serializable{
 		return null;
 	}
 
+	public Point getEntranceLocation(){
+		for (int x=0; x<width; x++){
+			for (int y=0; y<height; y++){
+				if (content[x][y]==GridCellContentType.ENTRANCE){
+					return new Point(x,y);
+				}
+			}
+		}
+		return null;
+	}
 
+	public Point getExitLocation(){
+		for (int x=0; x<width; x++){
+			for (int y=0; y<height; y++){
+				if (content[x][y]==GridCellContentType.EXIT){
+					return new Point(x,y);
+				}
+			}
+		}
+		return null;
+	}
 
 }
