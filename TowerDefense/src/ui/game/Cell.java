@@ -7,8 +7,6 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
-import ui.modified.Screen;
-import core.contract.DefenderConstants;
 import core.contract.MapConstants;
 import core.domain.maps.GridCellContentType;
 import core.domain.warriors.defenders.towers.Tower;
