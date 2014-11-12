@@ -4,7 +4,8 @@ import java.awt.Graphics;
 import java.util.Stack;
 
 import core.applicationService.vikiMapServacs.GraphNode;
-import core.domain.warriors.defenders.towers.vikiTowers.Tower;
+import core.domain.warriors.defenders.towers.vikiTowers.BasicTower;
+import core.domain.warriors.defenders.towers.vikiTowers.TowerInterface;
 import UI.CanvaObject;
 
 
@@ -30,10 +31,12 @@ public interface Grid {
 	
 	public int[][] getContent();
 	public void setPath(Stack<GraphNode> path);
-	public void addTower(Tower newTower, String positionKey);
+	public void addTower(TowerInterface newTower, String positionKey);
 
 	public void stopWave();
-	public void registerTowerAsObserver(int positionx, int positiony,  Tower tower);
+	public void registerTowerAsObserver(int positionx, int positiony,  TowerInterface tower);
+	void unregisterObserver(TowerInterface tower);
+	TowerInterface getTower(String towerPosition); 
 	
 	
 }

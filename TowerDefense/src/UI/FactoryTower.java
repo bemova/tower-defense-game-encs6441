@@ -1,12 +1,16 @@
 package UI;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import org.omg.Dynamic.Parameter;
 
 import core.domain.warriors.defenders.towers.vikiTowers.BasicTower;
-import core.domain.warriors.defenders.towers.vikiTowers.FiringTower;
-import core.domain.warriors.defenders.towers.vikiTowers.FreezingTower;
-import core.domain.warriors.defenders.towers.vikiTowers.Tower;
+import core.domain.warriors.defenders.towers.vikiTowers.FireShooting;
+import core.domain.warriors.defenders.towers.vikiTowers.IceShooting;
 import core.domain.warriors.defenders.towers.vikiTowers.TowerDataCollection;
+import core.domain.warriors.defenders.towers.vikiTowers.TowerInterface;
 
 public class FactoryTower {
 	TowerDataCollection towerData = new TowerDataCollection();
@@ -18,10 +22,10 @@ public class FactoryTower {
 	 */
 
 	//
-	public Tower creatTower(TowerParameters newParameters) {
+/*	public Tower creatTower(TowerParameters newParameters) {
 		Tower obj = null;
 
-		TowerParameters configParams = towerData.towerLevelConfig.get(
+	TowerParameters configParams = towerData.towerLevelConfig.get(
 				newParameters.towerType).get(newParameters.towerCurrentLevel);
 
 		newParameters.buyPrice = configParams.buyPrice;
@@ -36,10 +40,40 @@ public class FactoryTower {
 			obj = new FiringTower(newParameters);
 		} else if (newParameters.towerType == 30) {
 			obj = new BasicTower(newParameters);
-		}
+		} 
 
 		return obj;
+	}; */
+	
+	// 10 => fireShooting, 20 => IceShooting
+	
+	public TowerInterface creatTower(int towerType) {
+		TowerInterface obj = null;
+
+		obj = new BasicTower();
+		if (towerType == 10) {
+			obj.SetShootingStrategy(new FireShooting());
+			((BasicTower)obj).imagePath = "/tower1_0.png";
+			
+		} else if (towerType == 20) {
+			obj.SetShootingStrategy(new IceShooting());
+			((BasicTower)obj).imagePath = "/tower2_0.png";
+		} else if (towerType == 30) {
+			
+		} 
+
+		try {
+			((BasicTower)obj).image = ImageIO.read(this.getClass().getResource(
+					((BasicTower)obj).imagePath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+		return obj;
 	};
+	
 
 	public void updateTowerParameters() {
 

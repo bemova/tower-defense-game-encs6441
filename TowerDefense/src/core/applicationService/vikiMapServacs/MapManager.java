@@ -107,9 +107,9 @@ public String SaveMapIntoFle(Grid grid, String FileName){
 			String line = "";
 			for (int j = 0; j < widht; j++) {
 				if(j < widht -1)
-					line = line +((EmptyGrid)grid).content[i][j] + " ";
+					line = line +grid.getCellType(i, j) + " ";
 				else 
-					line = line + ((EmptyGrid)grid).content[i][j];	
+					line = line + grid.getCellType(i, j);	
 
 			}
 			out.println(line);
@@ -132,12 +132,12 @@ public String validateEntryExit(Grid grid){
 	int numberOfExit = 0;
 	int numberofEmptyCells = 0;
 	int numberOfTowers = 0;
-	for(int i = 0; i < ((EmptyGrid)grid).getHeight(); i++)
-		for(int j =0; j < ((EmptyGrid)grid).getWidth(); j++){
-			if(((EmptyGrid)grid).content[i][j] == 0) numberofEmptyCells++;
-			else if(((EmptyGrid)grid).content[i][j] == 3) numberOfEntry++;
-			else if(((EmptyGrid)grid).content[i][j] == 4) numberOfExit++;
-			else if(((EmptyGrid)grid).content[i][j] == 5) numberOfTowers++;
+	for(int i = 0; i < grid.getHeight(); i++)
+		for(int j =0; j < grid.getWidth(); j++){
+			if(grid.getCellType(i, j) == 0) numberofEmptyCells++;
+			else if(grid.getCellType(i, j) == 3) numberOfEntry++;
+			else if(grid.getCellType(i, j) == 4) numberOfExit++;
+			else if(grid.getCellType(i, j) == 5) numberOfTowers++;
 	
 		}
 	if( numberofEmptyCells >0) message = "Invalid Map: not all the cells are covered";

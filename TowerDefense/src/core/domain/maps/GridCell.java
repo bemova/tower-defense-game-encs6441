@@ -2,18 +2,22 @@ package core.domain.maps;
 
 import java.awt.Point;
 import java.util.Observable;
+import java.util.Observer;
 
 public class GridCell extends Observable{
 	public int i; //  (0,0) is the same as for the canvas 
 	public int j; //
 	int cellType; // type could be scenary, path, or tower that corresponds to what that particular cell contains
-	private boolean containsCritter;
+	public	 boolean containsCritter;
+	public boolean containsBullet;
+	
 
 public GridCell( int newi, int newj){
 	
 	i = newi;
 	j = newj;
-	containsCritter = false;
+	 containsCritter = false;
+	 containsBullet = false;
 }
 
 public Point returnPosition(){
@@ -29,4 +33,7 @@ public void  changeState(Boolean newState){
 			notifyObservers();
 	}
 }
+
+
+
 }

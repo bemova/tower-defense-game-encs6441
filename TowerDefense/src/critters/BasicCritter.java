@@ -20,7 +20,7 @@ public class BasicCritter implements Critter {
 	ArrayList<GridCell> path;
 	public BasicCritter() {
 		speed = 15.0 / 1000; // 15 pixel per 1000 milliseconds and 15 / 1000 per on millisecond
-		maximumHitPoints = 10;
+		maximumHitPoints = 2;
 		currentHitPoint = 0;
 		demageHitPoint = 1; // TODO move to tower
 		
@@ -71,6 +71,11 @@ public class BasicCritter implements Critter {
 		{
 			startPoint = createPoint(path.get(numberOfCellsPassed));
 			endPoint = createPoint(path.get(numberOfCellsPassed + 1));
+			if(path.get(numberOfCellsPassed).containsBullet){
+				maximumHitPoints = maximumHitPoints -1;
+				path.get(numberOfCellsPassed).containsBullet = false;
+			}
+				
 			currentPosition = startPoint;
 		}
 		
@@ -174,6 +179,10 @@ public class BasicCritter implements Critter {
 		numberOfCellsPassed++;
 		if(numberOfCellsPassed + 1 < path.size())
 		{
+			if(path.get(numberOfCellsPassed).containsBullet)
+				maximumHitPoints = maximumHitPoints - 1;
+			if(maximumHitPoints == 0)
+				state = State.DEAD;
 			endPoint = createPoint(path.get(numberOfCellsPassed + 1));
 			
 		//	path.get(numberOfCellsPassed - ).changeState(false);

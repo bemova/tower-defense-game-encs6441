@@ -4,7 +4,8 @@ import java.awt.Graphics;
 import java.util.Stack;
 
 import core.applicationService.vikiMapServacs.GraphNode;
-import core.domain.warriors.defenders.towers.vikiTowers.Tower;
+import core.domain.warriors.defenders.towers.vikiTowers.BasicTower;
+import core.domain.warriors.defenders.towers.vikiTowers.TowerInterface;
 import UI.CanvaObject;
 
 public class EmptyGrid implements Grid {
@@ -97,18 +98,33 @@ public	void draw(Graphics g) {
 	}
 	
 	@Override
-	public void addTower(Tower newTower, String positionKey){
-		
+	public void addTower(TowerInterface newTower, String positionKey){
 		
 	}
 	
 	@Override
-	public void registerTowerAsObserver(int positionx, int positiony, Tower tower){}
+	public void registerTowerAsObserver(int positionx, int positiony, TowerInterface tower){}
 
 
 
 	@Override
 	public void stopWave() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public TowerInterface getTower(String towerPosition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void unregisterObserver(TowerInterface tower) {
 		// TODO Auto-generated method stub
 		
 	}

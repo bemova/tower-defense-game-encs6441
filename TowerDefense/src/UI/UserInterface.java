@@ -464,8 +464,10 @@ public class UserInterface extends JFrame {
 							String position = Integer.toString(i) + " "
 									+ Integer.toString(j);
 
-							towerParam = ((Map) grid).towers.get(position).parameters;
-							if(towerParam.towerCurrentLevel == 2){
+							//towerParam = ((Map) grid).towers.get(position).parameters;
+							TowerInterface tower =grid.getTower(position);
+							
+							if(tower.getCurrentLevel() == 2){
 								towerWindow.levelUp.setEnabled(false);
 							towerWindow.levelDown.setEnabled(true);
 							}
@@ -477,13 +479,13 @@ public class UserInterface extends JFrame {
 							String view = "<html>\n"
 									+ "Tower characteristics:\n" + "<ul>\n"
 									+ "<li><font color=red>Distance: "
-									+ towerParam.range + "</font>\n"
+									+ tower.getRange() + "</font>\n"
 									+ "<li><font color=blue>Frequency:"
-									+ towerParam.firingSpeed + "</font>\n"
+									+ tower.getSpeed() + "</font>\n"
 									+ "<li><font color=green>Buy price: "
-									+ towerParam.buyPrice + "</font>\n"
+									+ tower.getUgradePrice() + "</font>\n"
 									+ "<li><font color=green>Sale price: "
-									+ towerParam.salePrice + "</font>\n"
+									+ tower.getSellPrice() + "</font>\n"
 									+ "</ul>\n";
 
 
@@ -617,7 +619,7 @@ public class UserInterface extends JFrame {
 			newParams.towerType = towerType;
 			newParams.towerCurrentLevel = 0;
 
-			Tower tower = towerFactory.creatTower(newParams);
+			TowerInterface tower = towerFactory.creatTower(towerType);
 			tower.setPosition(new GridCell(localPoint.y, localPoint.x)); // [i][j]
 			
 			grid.setCell(localPoint.x, localPoint.y, 5); // @TODO: change the
@@ -641,14 +643,14 @@ public class UserInterface extends JFrame {
 				+ Integer.toString(point.x);
 		((Map) grid).updateLevel(position, levelUpDown);
 
-		// double price = ((Map) grid).towers.get(position).cost();
+		TowerInterface tower =  grid.getTower(position);
 
 		String view = "<html>\n" + "Tower characteristics:\n" + "<ul>\n"
-				+ "<li><font color=red>Distance: " + towerParam.range
+				+ "<li><font color=red>Distance: " + tower.getRange()
 				+ "</font>\n" + "<li><font color=blue>Frequency:"
-				+ towerParam.firingSpeed + "</font>\n"
-				+ "<li><font color=green>Buy price: " +towerParam.buyPrice + "</font>\n"
-				+ "<li><font color=green>Sale price: " + towerParam.salePrice + "</font>\n" + "</ul>\n";
+				+ tower.getSpeed() + "</font>\n"
+				+ "<li><font color=green>Buy price: " +tower.getUgradePrice() + "</font>\n"
+				+ "<li><font color=green>Sale price: " + tower.getSellPrice() + "</font>\n" + "</ul>\n";
 
 		// Point currentPosition = new Point(j,i);
 		// towerWindow.updateCurrentPosition(currentPosition);
@@ -667,9 +669,9 @@ public class UserInterface extends JFrame {
 		String position = Integer.toString(point.y) + " "
 				+ Integer.toString(point.x);	
 		if(buysell.equals("buy"))
-			amount = ((Map) grid).towers.get(position).parameters.buyPrice;
+			amount = grid.getTower(position).getUgradePrice();
 		else
-			amount = ((Map) grid).towers.get(position).parameters.salePrice;
+			amount = grid.getTower(position).getSellPrice();
 		
 		Double value = (this.moneyManager.update(buysell, amount));
 		if(value < 0){
@@ -678,7 +680,7 @@ public class UserInterface extends JFrame {
 		}else 	this.moneyView.setText(Double.toString(value)); 
 		
 		
-		int level = ((Map) grid).towers.get(position).parameters.towerCurrentLevel;
+		int level =  grid.getTower(position).getCurrentLevel();
 		
 		if(buysell.equals("sell") && (level == 0) || (buysell.equals("buy") && level == 2))
 			anableSellBuy = false;

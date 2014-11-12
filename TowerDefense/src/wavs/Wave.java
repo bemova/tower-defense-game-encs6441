@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 import UI.CanvaObject;
 import core.domain.maps.Map;
-import core.domain.warriors.defenders.towers.vikiTowers.Tower;
+import core.domain.warriors.defenders.towers.vikiTowers.TowerInterface;
 import critters.BasicCritter;
 import critters.Critter;
 import critters.CritterMovingStrategy;
@@ -51,7 +51,7 @@ public class Wave {
 	
 		}	
 		
-		for(Tower tower: map.towers.values()){
+		for(TowerInterface tower: map.towers.values()){
 			//tower.createBullet(new Point(tower.getPosition().i,tower.getPosition().j ));
 		}
 		
@@ -94,7 +94,7 @@ public class Wave {
 			critter.updatePosition(timePassed);
 		}
 
-		for (Tower tower : map.towers.values()){
+		for (TowerInterface tower : map.towers.values()){
 			tower.updateBullets(timePassed);
 		}
 		
