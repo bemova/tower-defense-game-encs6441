@@ -1,11 +1,14 @@
 package core.domain.maps;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 import core.applicationService.vikiMapServacs.GraphNode;
 import core.domain.warriors.defenders.towers.vikiTowers.BasicTower;
 import core.domain.warriors.defenders.towers.vikiTowers.TowerInterface;
+import critters.Critter;
 import UI.CanvaObject;
 
 public class EmptyGrid implements Grid {
@@ -91,12 +94,7 @@ public	void draw(Graphics g) {
 	}
 	
 
-	@Override
-	public void startWave(CanvaObject canva) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+
 	@Override
 	public void addTower(TowerInterface newTower, String positionKey){
 		
@@ -104,14 +102,6 @@ public	void draw(Graphics g) {
 	
 	@Override
 	public void registerTowerAsObserver(int positionx, int positiony, TowerInterface tower){}
-
-
-
-	@Override
-	public void stopWave() {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 
@@ -128,5 +118,46 @@ public	void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	@Override
+	public ArrayList<GridCell> getPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void addCritter(Critter newCritter) {
+		// TODO Auto-generated method stub
+	
+	}
+
+
+
+	@Override
+	public ArrayList<Critter> getCritters() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public HashMap<String, TowerInterface> getTowers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void getState(int state) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 }

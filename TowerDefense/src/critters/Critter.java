@@ -19,5 +19,6 @@ public interface Critter {
 	double getAppearTime();
 	void setPath(ArrayList<GridCell> path);
 	void draw(Graphics g);
+	int getHitPoints();
 }
 

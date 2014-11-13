@@ -5,18 +5,18 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Observable;
 import java.util.Observer;
 import java.util.Stack;
 
 import bullet.Bullet;
 import UI.CanvaObject;
-import wavs.Wave;
 import critters.*;
 import core.applicationService.vikiMapServacs.GraphNode;
 import core.domain.warriors.defenders.towers.vikiTowers.*;
 
-public class Map extends CompleteGrid {
-
+public class Map extends CompleteGrid implements Observer {
+	public int state = 0;
 	HashMap<String, GridCell> map;
 	ArrayList<GridCell> path = new ArrayList<GridCell>();
 	public ArrayList<Critter> critters = new ArrayList<Critter>();
@@ -24,7 +24,6 @@ public class Map extends CompleteGrid {
 	public HashMap<String, TowerInterface> towers;
 	String entryPoint = "";
 	String exitPoint = "";
-	Wave wave;
 
 	// contructor's section
 
@@ -47,6 +46,7 @@ public class Map extends CompleteGrid {
 
 	@Override
 	public void draw(Graphics g) {
+		
 		super.draw(g);
 
 		for (TowerInterface tower : towers.values()) {
@@ -58,13 +58,8 @@ public class Map extends CompleteGrid {
 		}
 	};
 
-	@Override
-	public void startWave(CanvaObject canva) {
 
-		wave = new Wave(canva, this);
-		wave.start();
 
-	}
 
 	public String getEntryPoint() {
 
@@ -95,6 +90,7 @@ public class Map extends CompleteGrid {
 		Collections.reverse(path);
 	}
 
+	@Override
 	public ArrayList<GridCell> getPath() {
 		return path;
 	}
@@ -129,10 +125,6 @@ public class Map extends CompleteGrid {
 
 	}
 
-	@Override
-	public void stopWave() {
-		wave.stop();
-	}
 
 	@Override
 	public void registerTowerAsObserver(int positionx, int positiony,
@@ -169,5 +161,32 @@ public class Map extends CompleteGrid {
 	
 		
 	}
+
+	@Override
+	public ArrayList<Critter> getCritters() {
+
+		return critters;
+		
+	}
+
+	@Override
+	public HashMap<String, TowerInterface> getTowers() {
+		
+		return towers;
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+	//	critters.remove((Critter)arg0);
+		
+	}
+
+	@Override
+	public void getState(int newstate) {
+		state = newstate;
+		
+	}
+
+
 
 }

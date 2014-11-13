@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import wavs.Wave;
+
 import UI.FactoryTower;
 import core.applicationService.vikiMapServacs.MoneyManager;
 import core.applicationService.vikiMapServacs.StandardAlgorithms;
@@ -64,7 +64,7 @@ public class UserInterface extends JFrame {
 	Color colorToDrawGreed = Color.green;
 	int colorInInteger = 1; // 1 = gray , 2 = green, 3 = red, 4 = blue
 
-	Grid grid = new EmptyGrid(height, width);
+	public Grid grid = new EmptyGrid(height, width);
 	MapManager mapManager;
 	FactoryTower towerFactory = new FactoryTower(); // //////////????????????
 	CanvaObject canva = new CanvaObject(grid);
@@ -77,12 +77,12 @@ public class UserInterface extends JFrame {
 	MoneyManager moneyManager = new MoneyManager();
 	public enum EnumGameStatValue {DESIGN,PLAYGAME};
 	public EnumGameStatValue gameStatus;
-
+	public GameController game ;
 
 	JPanel upper = new JPanel();
 
 	UserInterface() {
-
+		game = new GameController(this);
 		entryP.add(entryPoint);
 		entryP.add(exitPoint);
 		entryP.add(drowMapButton);
@@ -173,9 +173,9 @@ public class UserInterface extends JFrame {
 		startWave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-			//		grid = new Map(mapManager.LoadMapFromFile(openFile.getSelectedFile().getAbsolutePath()));
+					grid.getState(1);
+					game.startWave(canva);
 
-					grid.startWave(canva);
 				}
 				catch(Exception ex)
 				{
@@ -292,7 +292,7 @@ public class UserInterface extends JFrame {
             @Override
             public void windowClosing(WindowEvent e)
             {
-            	grid.stopWave();
+            	//game.stopWave();
             }
         });
 		

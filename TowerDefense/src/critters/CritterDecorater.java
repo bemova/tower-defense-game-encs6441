@@ -1,6 +1,8 @@
 package critters;
 
-public abstract class CritterDecorater implements  Critter {
+import java.util.Observable;
+
+public abstract class CritterDecorater extends Observable implements  Critter {
 protected final Critter criterObject;
 	
 

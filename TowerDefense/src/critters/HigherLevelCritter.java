@@ -14,7 +14,7 @@ public class HigherLevelCritter extends CritterDecorater{
 	
 	@Override
 	public void setMovingBehaviour(CritterMovingStrategy newBehaviour) {
-		criterObject.setMovingBehaviour(newBehaviour);;
+		criterObject.setMovingBehaviour(newBehaviour);
 	}
 	@Override
 	public CritterMovingStrategy getMovingBehaviour() {
@@ -22,12 +22,13 @@ public class HigherLevelCritter extends CritterDecorater{
 	}
 	@Override
 	public void setSpeed(double newspeed) {
-		//criterObject.setSpeed(newspeed);
+		criterObject.setSpeed(newspeed);
 		
 	}
 	@Override
 	public double getSpeed() {
-		return criterObject.getSpeed() + 5;
+	
+		return criterObject.getSpeed() ;
 	}
 
 	@Override
@@ -58,5 +59,11 @@ public class HigherLevelCritter extends CritterDecorater{
 	@Override
 	public void draw(Graphics g) {
 		criterObject.draw(g);
+	}
+
+	@Override
+	public int getHitPoints() {
+		
+		return criterObject.getHitPoints() + 3;
 	}
 }
