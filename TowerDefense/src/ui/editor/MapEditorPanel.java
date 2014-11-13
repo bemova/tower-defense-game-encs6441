@@ -367,7 +367,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 					String fileName = saveFile.getSelectedFile()
 							.getAbsolutePath();
 
-					mapManager.SaveMapIntoFle(grid, fileName);
+					mapManager.saveMapIntoFle(grid, fileName);
 
 				}
 			}
@@ -403,7 +403,7 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		try {
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
-				grid = mapManager.LoadMapFromFile(openFile.getSelectedFile()
+				grid = mapManager.loadMapFromFile(openFile.getSelectedFile()
 						.getAbsolutePath());
 				canvas.setGrid(grid);
 				width = grid.getWidth();
