@@ -36,26 +36,17 @@ public class Graph {
      * @throws java.lang.IndexOutOfBoundsException if the endpoints of any edge are not in prescribed range
      * @throws java.lang.IllegalArgumentException if the number of vertices or edges is negative
      */
-    public Graph(In in) {
-        this(in.readInt());
-        int E = in.readInt();
+    public Graph(List<String> graphInfo, int nodes){
+    	this(nodes);
+        int E = graphInfo.size();
         if (E < 0) throw new IllegalArgumentException("Number of edges must be nonnegative");
-        for (int i = 0; i < E; i++) {
-            int v = in.readInt();
-            int w = in.readInt();
-            addEdge(v, w);
-        }
+        for (String str : graphInfo) {
+			String[] strs = str.split(" ");
+			int v = Integer.parseInt(strs[0]);
+			int w = Integer.parseInt(strs[1]);
+			addEdge(v, w);
+		}
     }
-//    public Graph(List<String> graphInfo){
-//    	this(in.readInt());
-//        int E = in.readInt();
-//        if (E < 0) throw new IllegalArgumentException("Number of edges must be nonnegative");
-//        for (int i = 0; i < E; i++) {
-//            int v = in.readInt();
-//            int w = in.readInt();
-//            addEdge(v, w);
-//        }
-//    }
 
     /**
      * Initializes a new graph that is a deep copy of <tt>G</tt>.
@@ -123,37 +114,5 @@ public class Graph {
         validateVertex(v);
         return adj[v];
     }
-
-
-    /**
-     * Returns a string representation of the graph.
-     * This method takes time proportional to <em>E</em> + <em>V</em>.
-     * @return the number of vertices <em>V</em>, followed by the number of edges <em>E</em>,
-     *    followed by the <em>V</em> adjacency lists
-     */
-    public String toString() {
-        StringBuilder s = new StringBuilder();
-        String NEWLINE = System.getProperty("line.separator");
-        s.append(V + " vertices, " + E + " edges " + NEWLINE);
-        for (int v = 0; v < V; v++) {
-            s.append(v + ": ");
-            for (int w : adj[v]) {
-                s.append(w + " ");
-            }
-            s.append(NEWLINE);
-        }
-        return s.toString();
-    }
-
-
-//    /**
-//     * Unit tests the <tt>Graph</tt> data type.
-//     */
-//    public static void main(String[] args) {
-//    	
-//        In in = new In("G.txt");
-//        Graph G = new Graph(in);
-//        System.out.println(G);
-//    }
 
 }

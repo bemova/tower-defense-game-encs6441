@@ -105,54 +105,23 @@ public class PathService {
 				|| matrix[i + 1][j] == GridCellContentType.ENTRANCE || matrix[i + 1][j] == GridCellContentType.EXIT) && i + 1 < matrix.length));
 	}
 
-	public void writeToFile(List<String> relations, int width, int height) {
-
-		try {
-			File file = new File(
-					"src/core/applicationservice/mapservices/pathfinder/S.txt");
-
-			// if file doesnt exists, then create it
-			if (!file.exists()) {
-				file.createNewFile();
-			}
-
-			FileWriter fw = new FileWriter(file);
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(width * height + "\n");
-			bw.write(relations.size() + "\n");
-			for (String str : relations) {
-				bw.write(str + "\n");
-			}
-
-			bw.close();
-
-			System.out.println("Done");
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	public Position[] pathFinder(GridCellContentType[][] grid) {
 		Position[] path = null;
 		try {
 			PathService p = new PathService();
 			List<String> strs = p.graphInput(grid);
-			p.writeToFile(strs, grid.length, grid[0].length);
 			MapUtility utility = new MapUtility();
 			Position s = utility.getEnter(grid);
 			Position e = utility.getExit(grid);
 			int start = p.nodes.get(s);
 			int end = p.nodes.get(e);
-			path = DepthFirstPaths.getPath(p.nodes, start, end);
+			path = DepthFirstPaths.getPath(p.nodes, strs, start, end, grid.length * grid[0].length);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return path; 
 
 	}
-
 	public Map<Position, Integer> initialize(GridCellContentType[][] matrix) {
 
 		Map<Position, Integer> map = new HashMap<Position, Integer>();
@@ -164,10 +133,7 @@ public class PathService {
 
 				map.put(p, key++);
 			}
-
 		}
-
 		return map;
-
 	}
 }

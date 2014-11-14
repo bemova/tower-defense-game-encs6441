@@ -2,6 +2,7 @@ package core.applicationservice.mapservices.pathfinder;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
@@ -64,10 +65,12 @@ public class DepthFirstPaths {
 
     /**
      * Unit tests the <tt>DepthFirstPaths</tt> data type.
+     * @param height 
+     * @param length 
      */
-    public static Position[] getPath(Map<Position,Integer> nodes, int start, int end) {
-    	In in = new In("S.txt");
-        Graph G = new Graph(in);
+    public static Position[] getPath(Map<Position,Integer> nodes, List<String> graphInfo, int start, int end, int nodesNum) {
+    	
+        Graph G = new Graph(graphInfo, nodesNum);
         DepthFirstPaths dfs = new DepthFirstPaths(G, start);
         Map<Position,Integer> map = nodes;
         LinkedList<Position> route = new LinkedList<>();
