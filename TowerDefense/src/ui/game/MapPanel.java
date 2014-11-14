@@ -16,12 +16,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ui.towerdesign.SimpleInspection;
+import core.applicationservice.mapservices.pathfinder.PathService;
 import core.applicationservice.warriorservices.TowerFactory;
 import core.contract.DefenderConstants;
 import core.domain.account.BankManager;
 import core.domain.maps.GridCellContentType;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
+import core.domain.waves.Position;
 
 public class MapPanel extends JPanel implements Observer, ActionListener,
 		MouseListener, Runnable {
@@ -39,6 +41,7 @@ public class MapPanel extends JPanel implements Observer, ActionListener,
 	public Thread critterT, mapT;
 	private boolean mapJustLoaded;
 	private Cell cell;
+	private Position[] path;
 
 	private int xPos = 50;
 
@@ -50,8 +53,10 @@ public class MapPanel extends JPanel implements Observer, ActionListener,
 		// System.out.println(getLocationOnScreen());
 		setMapTopLeft(new Point(0, 0));
 		setMapButtomRight(new Point(0, 0));
+		PathService pathService = new PathService();
+		this.path = pathService.pathFinder(grid.getContent());
 		critter = new Critter((int) mapTopLeft.getX() + 50,
-				(int) mapTopLeft.getY() + 50);
+				(int) mapTopLeft.getY() + 50, this.path);
 		bullet = new Bullet((int) mapTopLeft.getX() + 50,
 				(int) mapTopLeft.getY() + 50);
 		// add(critter);
@@ -77,12 +82,11 @@ public class MapPanel extends JPanel implements Observer, ActionListener,
 
 		Point entryPoint = grid.getEntranceLocation();
 		entryPoint = new Point((int) (initX+(entryPoint.getX()*grid.getUnitSize())), (int) (initY+(entryPoint.getY()*grid.getUnitSize())));
-		
-		critter = new Critter((int) entryPoint.getX(), (int) entryPoint.getY()-1);
+		PathService pathService = new PathService();
+		this.path = pathService.pathFinder(grid.getContent());
+		critter = new Critter((int) entryPoint.getX(), (int) entryPoint.getY()-1, this.path);
 		bullet = new Bullet(initX + 100, initY + 153);
 		lineBullet = new LineBullet(initX + 125, initY + 123);
-		
-		
 	}
 
 	public void paintComponent(Graphics g) {

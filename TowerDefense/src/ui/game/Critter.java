@@ -9,47 +9,50 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 import core.contract.MapConstants;
+import core.domain.maps.GridCellContentType;
+import core.domain.waves.Position;
 
 public class Critter extends JComponent implements Runnable {
 	public int xC = 0, yC = 0;
 	int xPos = 50;
 	int x, y;
 	Icon critterImg;
-	Point[] path;
+	Position[] path;
 	Icon pathImg;
 	Icon sceneryImg;
 	int currPathCell;
 	int xStep, yStep;
-//	int cellStep;
+	//	int cellStep;
 
-	public Critter(int initX, int initY) {
+	public Critter(int initX, int initY, Position[] path) {
 		this.x = initX;
 		this.y = initY;
 		currPathCell = 0;
 
 		this.xPos = initX;
+		this.path = path;
 
-		this.path = new Point[15];
-
-		path[0] = new Point(0, 2);
-		path[1] = new Point(1, 2);
-		path[2] = new Point(2, 2);
-		path[3] = new Point(3, 2);
-		path[4] = new Point(4, 2);
-
-		path[5] = new Point(4, 3);
-		path[6] = new Point(4, 4);
-
-		path[7] = new Point(5, 4);
-
-		path[8] = new Point(5, 5);
-		path[9] = new Point(5, 6);
-		path[10] = new Point(5, 7);
-
-		path[11] = new Point(6, 7);
-		path[12] = new Point(7, 7);
-		path[13] = new Point(8, 7);
-		path[14] = new Point(0, 2);
+		//		this.path = new Point[15];
+		//
+		//		path[0] = new Point(0, 2);
+		//		path[1] = new Point(1, 2);
+		//		path[2] = new Point(2, 2);
+		//		path[3] = new Point(3, 2);
+		//		path[4] = new Point(4, 2);
+		//
+		//		path[5] = new Point(4, 3);
+		//		path[6] = new Point(4, 4);
+		//
+		//		path[7] = new Point(5, 4);
+		//
+		//		path[8] = new Point(5, 5);
+		//		path[9] = new Point(5, 6);
+		//		path[10] = new Point(5, 7);
+		//
+		//		path[11] = new Point(6, 7);
+		//		path[12] = new Point(7, 7);
+		//		path[13] = new Point(8, 7);
+		//		path[14] = new Point(0, 2);
 
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("knight.png").getFile());
@@ -74,36 +77,45 @@ public class Critter extends JComponent implements Runnable {
 
 	public void walk() {
 		if (currPathCell != path.length) {
+			Position currCell = path[currPathCell];
+			Position nextCell = path[currPathCell + 1];
 
-			Point currCell = path[currPathCell];
-			Point nextCell = path[currPathCell + 1];
-
-			// walk horizontally
 			if (currCell.getY() == nextCell.getY()) {
-				x+=1;
-				xStep+=1;
-				if(xStep >= MapConstants.UNIT_SIZE-1){
-					xStep=0;
-					currPathCell++;
+				if(currCell.getX() + 1 == nextCell.getX())
+				{
+					x+=1;
+					xStep+=1;
+					if(xStep >= MapConstants.UNIT_SIZE-1){
+						xStep=0;
+						currPathCell++;
+					}
+
+				}else if (currCell.getX() - 1 == nextCell.getX()) {
+					x-=1;
+					xStep+=1;
+					if(xStep >= MapConstants.UNIT_SIZE-1){
+						xStep=0;
+						currPathCell++;
+					}
 				}
+				
 			}
-			// walk vertically
-			if (currCell.getX() == nextCell.getX()) {
-				y+=1;
-				yStep+=1;
+			if(currCell.getX() == nextCell.getX()){
+				if(currCell.getY() + 1 == nextCell.getY())
+				{
+					y+=1;
+					yStep+=1;
+
+				}else if (currCell.getY() - 1 == nextCell.getY()) {
+					y-=1;
+					yStep+=1;
+				}
 				if(yStep >= MapConstants.UNIT_SIZE-1){
 					yStep=0;
 					currPathCell++;
 				}
 			}
-			
-
 		}
-
-//		if (xPos > x + 500) {
-//			xPos = x;
-//		}
-//		xPos++;
 	}
 
 	public void run() {
