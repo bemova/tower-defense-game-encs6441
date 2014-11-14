@@ -22,7 +22,16 @@ public abstract class Critter {
 	
 	/** The sound behaviour. */
 	SoundBehaviour soundBehaviour;
+	private int life;
 	
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+
 	/**
 	 * Sets the moving behaviour.
 	 *

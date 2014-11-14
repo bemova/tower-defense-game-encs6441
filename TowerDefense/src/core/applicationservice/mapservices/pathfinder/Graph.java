@@ -1,6 +1,7 @@
 package core.applicationservice.mapservices.pathfinder;
 
 
+import java.util.List;
 import java.util.Stack;
 
 
@@ -45,6 +46,16 @@ public class Graph {
             addEdge(v, w);
         }
     }
+//    public Graph(List<String> graphInfo){
+//    	this(in.readInt());
+//        int E = in.readInt();
+//        if (E < 0) throw new IllegalArgumentException("Number of edges must be nonnegative");
+//        for (int i = 0; i < E; i++) {
+//            int v = in.readInt();
+//            int w = in.readInt();
+//            addEdge(v, w);
+//        }
+//    }
 
     /**
      * Initializes a new graph that is a deep copy of <tt>G</tt>.
@@ -135,14 +146,14 @@ public class Graph {
     }
 
 
-    /**
-     * Unit tests the <tt>Graph</tt> data type.
-     */
-    public static void main(String[] args) {
-    	
-        In in = new In("G.txt");
-        Graph G = new Graph(in);
-        System.out.println(G);
-    }
+//    /**
+//     * Unit tests the <tt>Graph</tt> data type.
+//     */
+//    public static void main(String[] args) {
+//    	
+//        In in = new In("G.txt");
+//        Graph G = new Graph(in);
+//        System.out.println(G);
+//    }
 
 }

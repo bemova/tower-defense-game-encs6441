@@ -17,8 +17,16 @@ import core.domain.warriors.aliens.Critter;
 public class Wave {
 	public List<Critter> aliens;
 	public Position headPosition;
-	public Wave(int x, int y) {
-		headPosition = new Position(x, y);
+	
+	public Position getHeadPosition() {
+		return headPosition;
+	}
+
+	public void setHeadPosition(Position headPosition) {
+		this.headPosition = headPosition;
+	}
+
+	public Wave() {
 		aliens = new ArrayList<>();
 	}
 

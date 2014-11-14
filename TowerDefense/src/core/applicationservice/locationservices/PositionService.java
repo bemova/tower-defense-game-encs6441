@@ -1,7 +1,6 @@
 package core.applicationservice.locationservices;
 
 import infrastructure.loggin.Log4jLogger;
-import core.domain.warriors.defenders.towers.Tower;
 import core.domain.waves.Position;
 
 public class PositionService {

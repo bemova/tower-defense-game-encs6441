@@ -14,6 +14,7 @@ public class IntelligentCritter extends Critter {
 	 */
 	public IntelligentCritter() {
 		this.description = "IntelligentCritter";
+		this.setLife(7);
 	}
 
 	/**

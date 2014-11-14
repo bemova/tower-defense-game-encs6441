@@ -113,8 +113,40 @@ public class FactoriesTest {
 			expDecorated = new FireRange(expDecorated);
 			expDecorated = new FireRange(expDecorated);
 			double range = towerFactory.getRange(expDecorated);
-			double expecteRange = MapConstants.UNIT_SIZE * 4;
-			assertEquals(expecteRange, range, 0.01);
+			double expecteRange = 4;
+			assertEquals((Double)expecteRange, (Double)range);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+	@Test
+	public void testGetSpeed(){
+		try {
+			Tower expected = towerFactory.getTower("ModernTower");
+			Tower expDecorated = new FireSpeed(expected);
+			expDecorated = new FireSpeed(expDecorated);
+			expDecorated = new FireSpeed(expDecorated);
+			expDecorated = new FireSpeed(expDecorated);
+			double speed = towerFactory.getSpeed(expDecorated);
+			double expectedSpeed = 4;
+			assertEquals((Double)expectedSpeed, (Double)speed);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+	@Test
+	public void testGetPower(){
+		try {
+			Tower expected = towerFactory.getTower("ModernTower");
+			Tower expDecorated = new FirePower(expected);
+			expDecorated = new FirePower(expDecorated);
+			expDecorated = new FirePower(expDecorated);
+			expDecorated = new FirePower(expDecorated);
+			double power = towerFactory.getPower(expDecorated);
+			double expectePower = 4;
+			assertEquals((Double)expectePower, (Double)power);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

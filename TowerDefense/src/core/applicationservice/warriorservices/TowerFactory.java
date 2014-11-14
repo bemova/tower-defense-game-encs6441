@@ -164,11 +164,43 @@ public class TowerFactory {
 	 * @param tower that we need the fire range of it
 	 * @return range of fire 
 	 */
-	public double getRange(Tower tower){
+	public int getRange(Tower tower){
 		try {
 			Map<String, Integer> featuresCount = getFeaturesCount(tower.objectDetials());
 			int rangeCount = featuresCount.get("FireRange");
-			return rangeCount * MapConstants.UNIT_SIZE;
+			return rangeCount;
+			
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
+		return 0;
+	}
+	/**
+	 * this method returns the fire Shooting speed of tower
+	 * @param tower that we need the fire speed of it
+	 * @return speed of fire 
+	 */
+	public int getSpeed(Tower tower){
+		try {
+			Map<String, Integer> featuresCount = getFeaturesCount(tower.objectDetials());
+			int speedCount = featuresCount.get("FireSpeed");
+			return speedCount;
+			
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
+		return 0;
+	}
+	/**
+	 * this method returns the fire Shooting power of tower
+	 * @param tower that we need the fire power of it
+	 * @return power of fire 
+	 */
+	public int getPower(Tower tower){
+		try {
+			Map<String, Integer> featuresCount = getFeaturesCount(tower.objectDetials());
+			int powerCount = featuresCount.get("FirePower");
+			return powerCount;
 			
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);

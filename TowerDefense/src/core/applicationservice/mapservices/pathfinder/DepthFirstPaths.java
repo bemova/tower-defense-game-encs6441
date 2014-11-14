@@ -1,7 +1,9 @@
 package core.applicationservice.mapservices.pathfinder;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Stack;
 
 import core.domain.waves.Position;
@@ -63,35 +65,30 @@ public class DepthFirstPaths {
     /**
      * Unit tests the <tt>DepthFirstPaths</tt> data type.
      */
-    public static void demo(Map<Position,Integer> nodes, int start, int end) {
-        In in = new In("src/core/applicationservice/mapservices/pathfinder/S.txt");
+    public static Position[] getPath(Map<Position,Integer> nodes, int start, int end) {
+    	In in = new In("S.txt");
         Graph G = new Graph(in);
-        
-        //int s = Integer.parseInt(args[1]);
         DepthFirstPaths dfs = new DepthFirstPaths(G, start);
-
-        PathService pathService = new PathService();
-        Map<Position,Integer> map = pathService.nodes;
+        Map<Position,Integer> map = nodes;
         LinkedList<Position> route = new LinkedList<>();
             if (dfs.hasPathTo(end)) {
-                System.out.printf("%d to %d:  ", start, end);
                 for (int x : dfs.pathTo(end)) {
-                    if (x == start) System.out.print(x);
-                    else        System.out.print(x + "-");
-                    //
-                    //route.add(key);
+                    Iterator<Entry<Position, Integer>> iteratotr = map.entrySet().iterator();
+                    while (iteratotr.hasNext()) {
+            			Entry<Position,Integer> obj = (Entry<Position,Integer>) iteratotr.next();
+            			if(x == obj.getValue()){
+            				route.add(obj.getKey());
+            				break;
+            			}
+            		}
                 }
-                System.out.println();
-                
             }
-
-            else {
-                System.out.printf("%d to %d:  not connected\n", start, end);
-            }
-
-         for (Position r : route) {
-			System.out.println(r);
-		}
+            Position[]  array = new Position[route.size()];
+            int i = route.size();
+            for (Position r : route) {
+				array[i - 1] = r;
+				i --;
+			}
+            return array;
     }
-
 }
