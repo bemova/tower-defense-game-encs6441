@@ -1,16 +1,16 @@
 package core.domain.warriors.defenders.towers;
 
-import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 import core.domain.Subject;
 import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.defenders.Defender;
+import core.domain.warriors.defenders.towers.behaviours.BulletShootingBehaviour;
+import core.domain.warriors.defenders.towers.behaviours.IceShootingBehaviour;
+import core.domain.warriors.defenders.towers.behaviours.LineShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.ShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.SoundBehaviour;
@@ -21,11 +21,22 @@ import core.domain.waves.Position;
 public abstract class Tower extends Defender {
 
 	public String Id= UUID.randomUUID().toString();
-	MovingBehaviour movingBehaviour;
-	ShootingBehaviour shootingBehaviour;
-	SoundBehaviour soundBehaviour;
+	private MovingBehaviour movingBehaviour;
+	private ShootingBehaviour shootingBehaviour;
+	private SoundBehaviour soundBehaviour;
+	private BulletShootingBehaviour  bulletShootingBehaviour;
+	private IceShootingBehaviour iceShootingBehaviour;
+	private LineShootingBehaviour lineShootingBehaviour;
 	private TowerLevel level;
+	private Position towerPosition;
 	
+	
+	public Position getTowerPosition() {
+		return towerPosition;
+	}
+	public void setTowerPosition(Position towerPosition) {
+		this.towerPosition = towerPosition;
+	}
 	public TowerLevel getLevel() {
 		return level;
 	}
@@ -58,6 +69,34 @@ public abstract class Tower extends Defender {
 	public void setSoundBehaviour(SoundBehaviour soundBehaviour) {
 		this.soundBehaviour = soundBehaviour;
 	}
+	/**
+	 * Sets the sound behaviour.
+	 *
+	 * @param soundBehaviour the new sound behaviour
+	 */
+	public void setBulletShootingBehaviour(BulletShootingBehaviour bulletShootingBehaviour) {
+		this.bulletShootingBehaviour = bulletShootingBehaviour;
+	}
+	
+	public IceShootingBehaviour getIceShootingBehaviour() {
+		return iceShootingBehaviour;
+	}
+
+	public void setIceShootingBehaviour(IceShootingBehaviour iceShootingBehaviour) {
+		this.iceShootingBehaviour = iceShootingBehaviour;
+	}
+
+	public LineShootingBehaviour getLineShootingBehaviour() {
+		return lineShootingBehaviour;
+	}
+
+	public void setLineShootingBehaviour(LineShootingBehaviour lineShootingBehaviour) {
+		this.lineShootingBehaviour = lineShootingBehaviour;
+	}
+
+	public BulletShootingBehaviour getBulletShootingBehaviour() {
+		return bulletShootingBehaviour;
+	}
 	public void performMovingBehaviour(){
 		movingBehaviour.move();
 	}
@@ -89,6 +128,13 @@ public abstract class Tower extends Defender {
 	}
 	public void alienUpdate(Position alienPosition, Critter critter) {
 		crittersLocation.put(critter, alienPosition);
-		//TODO shooting calculation and range calculation 
 	}
+	public void removeDeadCritter(Critter critter){
+		try {
+			crittersLocation.remove(critter);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
 }

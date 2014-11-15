@@ -6,6 +6,7 @@ import java.awt.Color;
 import core.contract.DefenderConstants;
 import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
+import core.domain.warriors.defenders.towers.behaviourimp.LineShooting;
 import core.domain.warriors.defenders.towers.behaviourimp.NoMove;
 import core.domain.warriors.defenders.towers.behaviourimp.NoSound;
 import core.domain.warriors.defenders.towers.behaviourimp.ShootTrap;
@@ -22,6 +23,7 @@ public class AncientTower extends Tower {
 		setMovingBehaviour(new NoMove());
 		setShootingBehaviour(new ShootTrap());
 		setSoundBehaviour(new NoSound());
+		setLineShootingBehaviour(new LineShooting());
 		//this.description = "Ancient Tower";
 	}
 	/**

@@ -1,10 +1,11 @@
 package core.domain.warriors.defenders.towers.towertype;
 
-import java.awt.Color;
-
 import core.contract.DefenderConstants;
 import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
+import core.domain.warriors.defenders.towers.behaviourimp.BulletShooting;
+import core.domain.warriors.defenders.towers.behaviourimp.IceShooting;
+import core.domain.warriors.defenders.towers.behaviourimp.LineShooting;
 import core.domain.warriors.defenders.towers.behaviourimp.NoMove;
 import core.domain.warriors.defenders.towers.behaviourimp.NoSound;
 import core.domain.warriors.defenders.towers.behaviourimp.ShootTrap;
@@ -21,6 +22,9 @@ public class KingTower extends Tower {
 		setMovingBehaviour(new NoMove());
 		setShootingBehaviour(new ShootTrap());
 		setSoundBehaviour(new NoSound());
+		setBulletShootingBehaviour(new BulletShooting());
+		setIceShootingBehaviour( new IceShooting());
+		setLineShootingBehaviour(new LineShooting());
 	}
 	/**
 	 * 
