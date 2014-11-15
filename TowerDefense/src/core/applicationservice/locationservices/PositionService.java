@@ -5,12 +5,15 @@ import core.domain.waves.Position;
 
 public class PositionService {
 	private static final Log4jLogger logger = new Log4jLogger();
-/**
- * 
- * @param p first position 
- * @param q goal position
- * @return the distance between two places
- */
+
+	/**
+	 * 
+	 * @param p
+	 *            first position
+	 * @param q
+	 *            goal position
+	 * @return the distance between two places
+	 */
 	public double getDistance(Position p, Position q) {
 		double result = 0;
 		try {
@@ -24,14 +27,20 @@ public class PositionService {
 	}
 	/**
 	 * 
-	 * @param p first position 
-	 * @param q goal position
-	 * @param range the range that is used as a scale
+	 * @param p
+	 *            first position
+	 * @param q
+	 *            goal position
+	 * @param range
+	 *            the range that is used as a scale
 	 * @return true, if position q is in the range
 	 */
-	public boolean isInRange(Position p, Position q, double range){
+	public boolean isInRange(Position source, Position destination, int range) {
 		try {
-			return getDistance(p, q) < range;
+			return (((source.getX() + range > destination.getX()) || 
+					 (source.getX() - range < destination.getX())) &&
+					 ((source.getY() + range > destination.getY()) ||
+				      (source.getY() - range < destination.getY())));
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
 		}

@@ -21,15 +21,22 @@ import core.domain.waves.Position;
 public abstract class Tower extends Defender {
 
 	public String Id= UUID.randomUUID().toString();
-	MovingBehaviour movingBehaviour;
-	ShootingBehaviour shootingBehaviour;
-	SoundBehaviour soundBehaviour;
-	BulletShootingBehaviour  bulletShootingBehaviour;
-	IceShootingBehaviour iceShootingBehaviour;
-	LineShootingBehaviour lineShootingBehaviour;
+	private MovingBehaviour movingBehaviour;
+	private ShootingBehaviour shootingBehaviour;
+	private SoundBehaviour soundBehaviour;
+	private BulletShootingBehaviour  bulletShootingBehaviour;
+	private IceShootingBehaviour iceShootingBehaviour;
+	private LineShootingBehaviour lineShootingBehaviour;
 	private TowerLevel level;
+	private Position towerPosition;
 	
 	
+	public Position getTowerPosition() {
+		return towerPosition;
+	}
+	public void setTowerPosition(Position towerPosition) {
+		this.towerPosition = towerPosition;
+	}
 	public TowerLevel getLevel() {
 		return level;
 	}
@@ -121,6 +128,13 @@ public abstract class Tower extends Defender {
 	}
 	public void alienUpdate(Position alienPosition, Critter critter) {
 		crittersLocation.put(critter, alienPosition);
-		//TODO shooting calculation and range calculation 
 	}
+	public void removeDeadCritter(Critter critter){
+		try {
+			crittersLocation.remove(critter);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
 }

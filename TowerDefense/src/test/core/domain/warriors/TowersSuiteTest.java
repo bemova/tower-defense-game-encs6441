@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TowerCostCalTest.class, FactoriesTest.class, WaveFactoryTest.class})
+@SuiteClasses({ TowerCostCalTest.class, FactoriesTest.class,
+		WaveFactoryTest.class, ShootingServiceTest.class })
 public class TowersSuiteTest {
 
 }
