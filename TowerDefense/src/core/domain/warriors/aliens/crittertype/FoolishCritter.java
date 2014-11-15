@@ -1,6 +1,7 @@
 package core.domain.warriors.aliens.crittertype;
 
 import core.domain.warriors.aliens.Critter;
+import core.domain.warriors.aliens.behaviourimp.SimpleMoving;
 
 /**
  * <b>this type of critters can not decide by themself and by game strategy and AI Algorithms</b>
@@ -13,6 +14,7 @@ public class FoolishCritter extends Critter {
 	 * Instantiates a new foolish critter.
 	 */
 	public FoolishCritter() {
+		setMovingBehaviour(new SimpleMoving());
 		this.description = "FoolishCritter";
 		this.setLife(5);
 	}
