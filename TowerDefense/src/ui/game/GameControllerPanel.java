@@ -26,7 +26,9 @@ public class GameControllerPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 //				mapPanel.critterT.start();
-				mapPanel.mapT.start();
+				mapPanel.getOtherItemsPanel().mapT.start();
+//				LayeredMapPanelOtherItems otherItemsPanel = mapPanel.getOtherItemsPanel(); 
+//				otherItemsPanel.performScene();
 			}
 		});
 		GridBagConstraints gbc_tglbtnNewToggleButton = new GridBagConstraints();

@@ -77,8 +77,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		EmptyBarPanel emptyBarPanel_1 = new EmptyBarPanel();
 		contentPane.add(emptyBarPanel_1, BorderLayout.EAST);
 
-		gameControllerPanel = new GameControllerPanel(mapPanel);
-		contentPane.add(gameControllerPanel, BorderLayout.SOUTH);
+		
 
 		
 		// mapPanel = new MapPanel();
@@ -86,6 +85,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		// mapPanel.setBackground(Color.RED);
 		contentPane.add(mapPanel, BorderLayout.CENTER);
 
+		gameControllerPanel = new GameControllerPanel(mapPanel);
+		contentPane.add(gameControllerPanel, BorderLayout.SOUTH);
+		
 		addMouseListener(new Handler(mapPanel));
 		addMouseMotionListener(new Handler(mapPanel));
 

@@ -26,7 +26,7 @@ import core.domain.warriors.defenders.towers.towertype.TowerLevel;
 import core.domain.waves.Position;
 
 public class LayeredMapPanelOtherItems extends JPanel implements Observer, ActionListener,
-		MouseListener {
+		MouseListener, Runnable {
 	/**
 	 * 
 	 */
@@ -42,7 +42,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Actio
 	private Critter critter;
 	private Bullet bullet;
 	private LineBullet lineBullet;
-//	public Thread critterT, mapT;
+	public Thread critterT, mapT;
 	private boolean mapJustLoaded;
 	private Cell cell;
 	private Position[] path;
@@ -64,7 +64,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Actio
 				(int) mapTopLeft.getY() + 50);
 		// add(critter);
 //		critterT = new Thread(critter);
-//		mapT = new Thread(this);
+		mapT = new Thread(this);
 		// t.run();
 		setOpaque(false);
 		setDimension(dimension);
@@ -336,19 +336,19 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Actio
 		}
 	}
 
-//	public void run() {
-//		while (true) {
-//			critter.walk();
-//			bullet.physic();
-//			repaint();
-//			
-//			try {
-//				Thread.sleep(10);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+	public void run() {
+		while (true) {
+			critter.walk();
+			bullet.physic();
+			repaint();
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	protected Point getMapTopLeft() {
 		return mapTopLeft;
@@ -372,8 +372,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Actio
 	}
 
 	public void performScene() {
-		critter.walk();
-		bullet.physic();
+//		critter.walk();
+		Point entryPoint = grid.getEntranceLocation();
+		critter = new Critter((int) entryPoint.getX()+200, (int) entryPoint.getY()-1, this.path);
+//		bullet.physic();
 		repaint();
 	}
 

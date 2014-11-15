@@ -99,6 +99,9 @@ System.out.println("Mouse Clicked");
 	}
 
 
+	public LayeredMapPanelOtherItems getOtherItemsPanel(){
+		return otherItemsLayer;
+	}
 	public void setGrid(Map grid) {
 		this.grid = grid;
 		gridLayer.setGrid(grid);
