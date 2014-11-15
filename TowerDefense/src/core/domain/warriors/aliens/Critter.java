@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import core.domain.warriors.aliens.behaviours.MovingBehaviour;
 import core.domain.warriors.aliens.behaviours.SoundBehaviour;
+import core.domain.waves.Position;
 
 
 /**
@@ -16,6 +17,7 @@ public abstract class Critter {
 	
 	/** The Id. */
 	public String Id= UUID.randomUUID().toString();
+	private Position currentPosition;
 	
 	/** The moving behaviour. */
 	MovingBehaviour movingBehaviour;
@@ -31,6 +33,15 @@ public abstract class Critter {
 
 	public void setLife(int life) {
 		this.life = life;
+	}
+
+	
+	public Position getCurrentPosition() {
+		return currentPosition;
+	}
+
+	public void setCurrentPosition(Position currentPosition) {
+		this.currentPosition = currentPosition;
 	}
 
 	/**
