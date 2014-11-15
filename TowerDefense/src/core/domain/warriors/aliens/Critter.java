@@ -17,7 +17,7 @@ public abstract class Critter {
 	
 	/** The Id. */
 	public String Id= UUID.randomUUID().toString();
-	private Position currentPosition;
+	private int currentPosition;
 	
 	/** The moving behaviour. */
 	MovingBehaviour movingBehaviour;
@@ -36,11 +36,11 @@ public abstract class Critter {
 	}
 
 	
-	public Position getCurrentPosition() {
+	public int getCurrentPosition() {
 		return currentPosition;
 	}
 
-	public void setCurrentPosition(Position currentPosition) {
+	public void setCurrentPosition(int currentPosition) {
 		this.currentPosition = currentPosition;
 	}
 
