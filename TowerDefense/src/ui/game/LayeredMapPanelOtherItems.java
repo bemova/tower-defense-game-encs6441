@@ -1,6 +1,6 @@
+
 package ui.game;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -12,8 +12,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import ui.towerdesign.SimpleInspection;
 import core.applicationservice.mapservices.pathfinder.PathService;
@@ -25,8 +25,12 @@ import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
 import core.domain.waves.Position;
 
-public class MapPanel extends JLayeredPane implements Observer, ActionListener,
-		MouseListener, Runnable {
+public class LayeredMapPanelOtherItems extends JPanel implements Observer, ActionListener,
+		MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Tower[][] towers;
 	private int x, y;
 	private BankManager bank;
@@ -38,15 +42,13 @@ public class MapPanel extends JLayeredPane implements Observer, ActionListener,
 	private Critter critter;
 	private Bullet bullet;
 	private LineBullet lineBullet;
-	public Thread critterT, mapT;
+//	public Thread critterT, mapT;
 	private boolean mapJustLoaded;
 	private Cell cell;
 	private Position[] path;
 
-	private int xPos = 50;
 
-	public MapPanel() {
-		
+	public LayeredMapPanelOtherItems(Dimension dimension) {
 		this.grid = new Map(1, 1);
 		this.bank = BankManager.getInstance();
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
@@ -61,143 +63,77 @@ public class MapPanel extends JLayeredPane implements Observer, ActionListener,
 		bullet = new Bullet((int) mapTopLeft.getX() + 50,
 				(int) mapTopLeft.getY() + 50);
 		// add(critter);
-		critterT = new Thread(critter);
-		mapT = new Thread(this);
+//		critterT = new Thread(critter);
+//		mapT = new Thread(this);
 		// t.run();
+		setOpaque(false);
+		setDimension(dimension);
+
 	}
 
 	public void setGrid(Map grid) {
 		cell = new Cell();
-		mapJustLoaded = true;
+//		mapJustLoaded = true;
 		this.grid = grid;
 
 		towers = new Tower[grid.getWidth()][grid.getHeight()];
 
-		int initX = (int) getMapStartingPoint().getX();
-		int initY = (int) getMapStartingPoint().getY();
 
-		setMapTopLeft(new Point(initX, initY));
-		setMapButtomRight(new Point(initX
-				+ (grid.getWidth() * grid.getUnitSize()), initY
-				+ (grid.getHeight() * grid.getUnitSize())));
+		
+		
+	}
 
+	protected Point calcCritterStartingPoint() {
+		int initX = (int) mapTopLeft.getX();
+		int initY = (int) mapTopLeft.getY();
+		
 		Point entryPoint = grid.getEntranceLocation();
 		entryPoint = new Point((int) (initX+(entryPoint.getX()*grid.getUnitSize())), (int) (initY+(entryPoint.getY()*grid.getUnitSize())));
+		
+		// temp
 		PathService pathService = new PathService();
 		this.path = pathService.pathFinder(grid.getContent());
 		critter = new Critter((int) entryPoint.getX(), (int) entryPoint.getY()-1, this.path);
 		bullet = new Bullet(initX + 100, initY + 153);
 		lineBullet = new LineBullet(initX + 125, initY + 123);
+		//temp end
+		
+		return entryPoint;
 	}
 
 	public void paintComponent(Graphics g) {
 
-		// super.paintComponent(g);
+		 super.paintComponent(g);
 
-		int initX = (int) getMapStartingPoint().getX();
-		int initY = (int) getMapStartingPoint().getY();
+		int initX = (int) mapTopLeft.getX();
+		int initY = (int) mapTopLeft.getY();
 
 		setMapTopLeft(new Point(initX, initY));
 		setMapButtomRight(new Point(initX + grid.getWidth()
 				* grid.getUnitSize(), initY + grid.getHeight()
 				* grid.getUnitSize()));
 
-		if (grid.getWidth() > 1) {
-			if (mapJustLoaded) {
-				super.paintComponent(g);
-				for (int x = 0; x < grid.getWidth(); x++) {
-					for (int y = 0; y < grid.getHeight(); y++) {
-						int xCoordinate = grid.getUnitSize() * x + initX;
-						int yCoordinate = grid.getUnitSize() * y + initY;
-						if (grid.getTowers() == null) {
-							grid.setTowers(new Tower[1][1]);
-						}
-						cell.draw(g, grid.getCell(x, y), grid.getTowers(),
-								xCoordinate, yCoordinate, x, y);
-					}
+		
+		
+		
+		
+		for (int x = 0; x < grid.getWidth(); x++) {
+			for (int y = 0; y < grid.getHeight(); y++) {
+				int xCoordinate = grid.getUnitSize() * x + initX;
+				int yCoordinate = grid.getUnitSize() * y + initY;
+				if (grid.getTowers() == null) {
+					grid.setTowers(new Tower[1][1]);
 				}
-			} else {
-				for (int x = 0; x < grid.getWidth(); x++) {
-					for (int y = 0; y < grid.getHeight(); y++) {
-						int xCoordinate = grid.getUnitSize() * x + initX;
-						int yCoordinate = grid.getUnitSize() * y + initY;
-						if (grid.getTowers() == null) {
-							grid.setTowers(new Tower[1][1]);
-						}
-						if (grid.getCell(x, y).getValue() == 1) {
-							cell.draw(g, grid.getCell(x, y), grid.getTowers(),
-									xCoordinate, yCoordinate, x, y);
-						}
-//						Point p = getObjLocation(critter.getX(), critter.getY(),
-//								initX, initY);
-//						if (p.getX() == x && p.getY() == y) {
-//							cell.draw(g, grid.getCell(x, y), grid.getTowers(),
-//									xCoordinate, yCoordinate, x, y);
-//						}
-					}
+				if (grid.getCell(x, y).getValue() == 11) {
+					cell.draw(g, grid.getCell(x, y), grid.getTowers(),
+							xCoordinate, yCoordinate, x, y);
 				}
-				critter.draw(g);
-//				bullet.draw(g);
-				for(int x=0; x<grid.getWidth();x++){
-					for(int y=0; y<grid.getHeight(); y++){
-						if(towers[x][y]!= null){
-							lineBullet = new LineBullet(initX + (x*grid.getUnitSize()), initY + (y*grid.getUnitSize()));
-							lineBullet.draw(g, critter.xPos, critter.y + 26);
-							break;
-						}
-					}
-				}
-//				lineBullet.draw(g, critter.xPos, critter.y + 26);
-//			}
-
-			// for(int z=0; z<200; z++ ){
-
-			// critter.draw(g);
-			// t.run();
-			 }
-//		} else {
-			// show an initial test or image
-			setBackground(Color.RED);
+			}
 		}
-
-	}
-
-	private Point getObjLocation(int xCoordinate, int yCoordinate, int initX,
-			int initY) {
-		int i = (xCoordinate - initX) / grid.getUnitSize();
-		int j = (yCoordinate - initY) / grid.getUnitSize();
-		return new Point(i, j);
-	}
-
-	private Point getMapStartingPoint() {
-		int initX = 0;
-		int initY = 0;
-		// if (this.getWidth() > grid.getWidth() * grid.getUnitSize()
-		// && this.getHeight() > grid.getWidth() * grid.getUnitSize()) {
-		// int panelWidth = this.getWidth();
-		// int panelHeight = this.getHeight();
-		// int mapWidth = grid.getWidth() * grid.getUnitSize();
-		// int mapHeight = grid.getHeight() * grid.getUnitSize();
-		//
-		// initX = (panelWidth - mapWidth) / 2;
-		// initY = (panelHeight - mapHeight) / 2;
-		// }
-
-		int panelWidth = this.getWidth();
-		int panelHeight = this.getHeight();
-		int mapWidth = grid.getWidth() * grid.getUnitSize();
-		int mapHeight = grid.getHeight() * grid.getUnitSize();
-
-		if (this.getWidth() > grid.getWidth() * grid.getUnitSize()) {
-			initX = (panelWidth - mapWidth) / 2;
-
-		}
-		if (this.getHeight() > grid.getWidth() * grid.getUnitSize()) {
-
-			initY = (panelHeight - mapHeight) / 2;
-		}
-
-		return new Point(initX, initY);
+		
+		
+	
+		critter.draw(g);
 	}
 
 	@Override
@@ -211,9 +147,7 @@ public class MapPanel extends JLayeredPane implements Observer, ActionListener,
 	@Override
 	public void mouseClicked(MouseEvent event) {
 		System.out.println("clicked");
-		int[] coordinate = cellCoordinate(event.getX(), event.getY());
-		// int x = coordinate[0];
-		// int y = coordinate[1];
+//		int[] coordinate = cellCoordinate(event.getX(), event.getY());
 
 		if (x <= grid.getWidth() & y <= grid.getHeight()) {
 			boolean addTowerFlag = SelectedTower.getAddTowerFlag();
@@ -324,22 +258,6 @@ public class MapPanel extends JLayeredPane implements Observer, ActionListener,
 		System.out.println("action");
 	}
 
-	public Point getMapTopLeft() {
-		return mapTopLeft;
-	}
-
-	private void setMapTopLeft(Point mapTopLeft) {
-		this.mapTopLeft = mapTopLeft;
-	}
-
-	public Point getMapButtomRight() {
-		return mapButtomRight;
-	}
-
-	private void setMapButtomRight(Point mapButtomRight) {
-		this.mapButtomRight = mapButtomRight;
-	}
-
 	public void towerOperation() {
 
 		boolean addTowerFlag = SelectedTower.getAddTowerFlag();
@@ -418,55 +336,46 @@ public class MapPanel extends JLayeredPane implements Observer, ActionListener,
 		}
 	}
 
-	public void run() {
-		mapJustLoaded = false;
-		long lastFrame = System.currentTimeMillis();
-//		int frames = 0;
-//		int fps = 0;
-		while (true) {
-			critter.walk();
-			bullet.physic();
-			repaint();
-			
-//			frames++;
-			if(System.currentTimeMillis()-1000 >= lastFrame){
-//				fps = frames;
-//				frames = 0;
-				lastFrame = System.currentTimeMillis();
-			}
-//			System.out.println(fps);
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			// if (xPos > 200) {
-			// xPos = 50;
-			// }
-			// xPos++;
-		}
+//	public void run() {
+//		while (true) {
+//			critter.walk();
+//			bullet.physic();
+//			repaint();
+//			
+//			try {
+//				Thread.sleep(10);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+
+	protected Point getMapTopLeft() {
+		return mapTopLeft;
 	}
 
-	// public void run(){
-	// while(true){
-	// if(!isFirst && health < 60){
-	// room.physic();
-	// mobSpawner();
-	// for(int i=0; i< mobs.length;i++){
-	// mobs[i].physic();
-	// }
-	// }
-	//
-	//
-	// repaint();
-	//
-	// try{
-	// Thread.sleep(1);
-	// } catch(Exception e){}
-	//
-	// }
-	// }
+	protected void setMapTopLeft(Point mapTopLeft) {
+		this.mapTopLeft = mapTopLeft;
+	}
+
+	protected Point getMapButtomRight() {
+		return mapButtomRight;
+	}
+
+	protected void setMapButtomRight(Point mapButtomRight) {
+		this.mapButtomRight = mapButtomRight;
+	}
+
+	protected void setDimension(Dimension mapPanelDimension) {
+		setSize(mapPanelDimension);
+		
+	}
+
+	public void performScene() {
+		critter.walk();
+		bullet.physic();
+		repaint();
+	}
+
 
 }

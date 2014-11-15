@@ -13,7 +13,7 @@ public class GameControllerPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GameControllerPanel(MapPanel mapPanel) {
+	public GameControllerPanel(LayeredMapPanel mapPanel) {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

@@ -4,9 +4,11 @@ import java.awt.event.*;
 import java.awt.*;
 public class Handler implements MouseListener, MouseMotionListener{
 
-	MapPanel mapPanel;
+//	MapPanel mapPanel;
+	LayeredMapPanel mapPanel;
 	
-	public Handler(MapPanel mapPanel){
+//	public Handler(MapPanel mapPanel){
+	public Handler(LayeredMapPanel mapPanel){
 		this.mapPanel = mapPanel;
 	}
 	
@@ -26,11 +28,11 @@ public class Handler implements MouseListener, MouseMotionListener{
 		int mouseX = event.getX();
 		int mouseY = event.getY();
 		
-		if((mouseX>=mapPanel.getMapTopLeft().getX() && mouseX<=mapPanel.getMapButtomRight().getX()) &&
-				(mouseY>=mapPanel.getMapTopLeft().getY() && mouseY<=mapPanel.getMapButtomRight().getY())){
-			mapPanel.setCellLocation(mouseX, mouseY);
-			mapPanel.towerOperation();
-		}
+//		if((mouseX>=mapPanel.getMapTopLeft().getX() && mouseX<=mapPanel.getMapButtomRight().getX()) &&
+//				(mouseY>=mapPanel.getMapTopLeft().getY() && mouseY<=mapPanel.getMapButtomRight().getY())){
+//			mapPanel.setCellLocation(mouseX, mouseY);
+//			mapPanel.towerOperation();
+//		}
 	}
 
 	
