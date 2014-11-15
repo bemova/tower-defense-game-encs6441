@@ -21,6 +21,8 @@ public class MapConstants {
 	public static final String MODERN_TOWER_IMG = "ModernTower.png";
 	public static final String ANCIENT_TOWER_IMG = "AncientTower.png";
 	public static final String KING_TOWER_IMG = "KingTower.png";
-	
+
+	public static final String FOOLISH_CRITTER_IMG = "knight.png";
+
 	public static final int UNIT_SIZE = 52;
 }

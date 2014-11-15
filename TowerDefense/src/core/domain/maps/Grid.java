@@ -1,10 +1,10 @@
 package core.domain.maps;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.io.Serializable;
 
 import core.contract.MapConstants;
+import core.domain.waves.Position;
 
 /**
  * @author 	Team5
@@ -164,22 +164,22 @@ public class Grid implements Serializable{
 		return null;
 	}
 
-	public Point getEntranceLocation(){
+	public Position getEntranceLocation(){
 		for (int x=0; x<width; x++){
 			for (int y=0; y<height; y++){
 				if (content[x][y]==GridCellContentType.ENTRANCE){
-					return new Point(x,y);
+					return new Position(x,y);
 				}
 			}
 		}
 		return null;
 	}
 
-	public Point getExitLocation(){
+	public Position getExitLocation(){
 		for (int x=0; x<width; x++){
 			for (int y=0; y<height; y++){
 				if (content[x][y]==GridCellContentType.EXIT){
-					return new Point(x,y);
+					return new Position(x,y);
 				}
 			}
 		}

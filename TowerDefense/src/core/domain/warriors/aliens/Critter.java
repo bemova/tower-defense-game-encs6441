@@ -18,6 +18,9 @@ public abstract class Critter {
 	/** The Id. */
 	public String Id= UUID.randomUUID().toString();
 	private int currentPosition;
+	private Position[] path;
+	private Position initialPixel;
+
 	
 	/** The moving behaviour. */
 	MovingBehaviour movingBehaviour;
@@ -53,6 +56,10 @@ public abstract class Critter {
 		this.movingBehaviour = movingBehaviour;
 	}
 	
+	public MovingBehaviour getMovingBehaviour() {
+		return this.movingBehaviour;
+	}
+	
 	/**
 	 * Sets the sound behaviour.
 	 *
@@ -62,6 +69,15 @@ public abstract class Critter {
 		this.soundBehaviour = soundBehaviour;
 	}
 	
+
+	
+	public Position getInitialPixel() {
+		return initialPixel;
+	}
+
+	public void setInitialPixel(Position initialPixel) {
+		this.initialPixel = initialPixel;
+	}
 
 	/**
 	 * Perform moving behaviour.
@@ -89,10 +105,19 @@ public abstract class Critter {
 		return description;
 	}
 	
+	
+	public Position[] getPath() {
+		return path;
+	}
+
+	public void setPath(Position[] path) {
+		this.path = path;
+	}
+
 	/**
 	 * Display.
 	 */
-	public abstract void display();
+	public abstract String display();
 	
 	/**
 	 * Life booster.

@@ -49,7 +49,8 @@ public class GameControllerPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				System.out.println("Start New Wave");
-				mapPanel.getOtherItemsPanel().mapT.start();
+//				mapPanel.getOtherItemsPanel().mapT.start();
+				mapPanel.getOtherItemsPanel().startFoolishWave();
 			}
 		});
 		

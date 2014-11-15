@@ -98,7 +98,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 
 		setSize(713, 508);
-		 setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		 setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
 		
 		

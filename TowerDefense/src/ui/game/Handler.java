@@ -28,11 +28,11 @@ public class Handler implements MouseListener, MouseMotionListener{
 		int mouseX = event.getX();
 		int mouseY = event.getY();
 		
-//		if((mouseX>=mapPanel.getMapTopLeft().getX() && mouseX<=mapPanel.getMapButtomRight().getX()) &&
-//				(mouseY>=mapPanel.getMapTopLeft().getY() && mouseY<=mapPanel.getMapButtomRight().getY())){
-//			mapPanel.setCellLocation(mouseX, mouseY);
-//			mapPanel.towerOperation();
-//		}
+		if((mouseX>=mapPanel.getOtherItemsPanel().getMapTopLeft().getX() && mouseX<=mapPanel.getOtherItemsPanel().getMapButtomRight().getX()) &&
+				(mouseY>=mapPanel.getOtherItemsPanel().getMapTopLeft().getY() && mouseY<=mapPanel.getOtherItemsPanel().getMapButtomRight().getY())){
+			mapPanel.getOtherItemsPanel().setCellLocation(mouseX, mouseY);
+			mapPanel.getOtherItemsPanel().towerOperation();
+		}
 	}
 
 	

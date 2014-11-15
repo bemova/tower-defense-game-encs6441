@@ -3,13 +3,14 @@ package ui.game;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
 import core.domain.warriors.defenders.towers.Tower;
 
-public class LayeredMapPanelGrid extends JPanel
-		  {
+public class LayeredMapPanelGrid extends JPanel {
 	private Point mapTopLeft;
 	private Point mapButtomRight;
 	private Map grid;
@@ -95,5 +96,6 @@ public class LayeredMapPanelGrid extends JPanel
 		
 	}
 
+	
 
 }

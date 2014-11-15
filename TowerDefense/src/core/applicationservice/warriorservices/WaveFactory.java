@@ -15,7 +15,7 @@ public class WaveFactory {
 	 * @param wave that contains a list of critter
 	 * @return Wave 
 	 */
-	public Wave getWave(String waveType,Position start) {
+	public Wave getWave(String waveType,Position start, Position[] path) {
 		Wave wave = new Wave();
 		wave.setHeadPosition(start);
 		try {
@@ -24,7 +24,7 @@ public class WaveFactory {
 			}
 			if (waveType.equalsIgnoreCase("FoolishCritter")) {
 				for (int i = 0; i < 10; i++) {
-					FoolishCritter critter = new FoolishCritter();
+					FoolishCritter critter = new FoolishCritter(start, path);
 					wave.aliens.add(critter);
 				}
 				return wave;
