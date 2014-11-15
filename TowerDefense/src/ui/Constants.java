@@ -23,5 +23,8 @@ public class Constants {
 	public static final String EDITOR_TITLE = "Tower Defence - Map Editor";
 	public static final String GAME_TITLE = "Tower Defence - Game";
 	public static final String MAP_MENU = "Map";
+	public static final String LIFE_ICON = "life_icon.png";
+	public static final String WAVE_ICON = "wave_icon.png";
+	public static final String BANK_ICON = "bank_icon.png";
 		
 }

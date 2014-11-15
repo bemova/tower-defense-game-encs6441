@@ -380,4 +380,5 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Actio
 	}
 
 
+	
 }
