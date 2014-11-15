@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -55,6 +57,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		
+		
+		
 
 		setUpMenuBar();
 
@@ -91,15 +96,42 @@ public class MainFrame extends JFrame implements ActionListener {
 		addMouseListener(new Handler(mapPanel));
 		addMouseMotionListener(new Handler(mapPanel));
 
-		Thread tRace = new Thread(gameInfoPanel);
-		// tRace.start();
 
 		setSize(713, 508);
-		// setExtendedState(JFrame.MAXIMIZED_BOTH);
+		 setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
+		
+		
+		
+		
+		this.addComponentListener(new ComponentListener() {
+		    public void componentResized(ComponentEvent e) {
+		        System.out.println("resized");    
+		        mapPanel.resetSize(getMapPanelDimention());
+		    }
+
+			@Override
+			public void componentHidden(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentShown(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 	}
 
-	private Dimension getMapPanelDimention() {
+	public Dimension getMapPanelDimention() {
 		int width = gameInfoPanel.getWidth() - (emptyBarPanel.getWidth() * 2);
 		int height = emptyBarPanel.getHeight();
 
@@ -167,4 +199,5 @@ public class MainFrame extends JFrame implements ActionListener {
 		mapPanel.resetSize(getMapPanelDimention());
 	}
 
+	
 }

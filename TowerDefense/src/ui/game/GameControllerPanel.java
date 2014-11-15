@@ -1,12 +1,14 @@
 package ui.game;
 
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import javax.swing.JToggleButton;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 public class GameControllerPanel extends JPanel {
 
@@ -26,7 +28,7 @@ public class GameControllerPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 //				mapPanel.critterT.start();
-				mapPanel.getOtherItemsPanel().mapT.start();
+				
 //				LayeredMapPanelOtherItems otherItemsPanel = mapPanel.getOtherItemsPanel(); 
 //				otherItemsPanel.performScene();
 			}
@@ -43,6 +45,13 @@ public class GameControllerPanel extends JPanel {
 		gbc_tglbtnNewToggleButton_1.gridx = 1;
 		gbc_tglbtnNewToggleButton_1.gridy = 0;
 		add(tglbtnNewToggleButton_1, gbc_tglbtnNewToggleButton_1);
+		tglbtnNewToggleButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.out.println("Start New Wave");
+				mapPanel.getOtherItemsPanel().mapT.start();
+			}
+		});
 		
 		TowerPanel towerPanel = new TowerPanel();
 		GridBagConstraints gbc_towerPanel = new GridBagConstraints();
