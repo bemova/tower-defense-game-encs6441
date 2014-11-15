@@ -22,6 +22,7 @@ public abstract class Critter {
 	
 	/** The sound behaviour. */
 	SoundBehaviour soundBehaviour;
+	
 	private int life;
 	
 	public int getLife() {
@@ -50,6 +51,7 @@ public abstract class Critter {
 		this.soundBehaviour = soundBehaviour;
 	}
 	
+
 	/**
 	 * Perform moving behaviour.
 	 */

@@ -3,6 +3,7 @@ package core.applicationservice.warriorservices;
 import infrastructure.loggin.Log4jLogger;
 import core.domain.warriors.aliens.crittertype.FoolishCritter;
 import core.domain.warriors.aliens.crittertype.IntelligentCritter;
+import core.domain.warriors.aliens.features.Resistance;
 import core.domain.waves.Position;
 import core.domain.waves.Wave;
 
@@ -30,7 +31,8 @@ public class WaveFactory {
 			} else if (waveType.equalsIgnoreCase("IntelligentCritter")) {
 				for (int i = 0; i < 10; i++) {
 					IntelligentCritter critter = new IntelligentCritter();
-					wave.aliens.add(critter);
+					Resistance resistance = new Resistance(critter);
+					wave.aliens.add(resistance);
 				}
 				return wave;
 			} 

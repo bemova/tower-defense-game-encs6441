@@ -1,11 +1,11 @@
 package core.domain.warriors.defenders.towers.towertype;
 
 
-import java.awt.Color;
-
 import core.contract.DefenderConstants;
 import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
+import core.domain.warriors.defenders.towers.behaviourimp.BulletShooting;
+import core.domain.warriors.defenders.towers.behaviourimp.LineShooting;
 import core.domain.warriors.defenders.towers.behaviourimp.MoveByMouse;
 import core.domain.warriors.defenders.towers.behaviourimp.ShootWithWeapon;
 import core.domain.warriors.defenders.towers.behaviourimp.ShootingSound;
@@ -20,6 +20,8 @@ public class ModernTower extends Tower {
 		setMovingBehaviour(new MoveByMouse());
 		setShootingBehaviour(new ShootWithWeapon());
 		setSoundBehaviour(new ShootingSound());
+		setBulletShootingBehaviour(new BulletShooting());
+		setLineShootingBehaviour(new LineShooting());
 		this.description = "ModernTower";
 	}
 	/**
