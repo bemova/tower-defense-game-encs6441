@@ -26,6 +26,7 @@ import core.applicationservice.informerservices.imp.DefenderInformer;
 import core.applicationservice.mapservices.pathfinder.PathService;
 import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.WaveFactory;
+import core.contract.AccountConstants;
 import core.contract.DefenderConstants;
 import core.contract.WaveConstants;
 import core.domain.account.BankManager;
@@ -76,6 +77,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private GameInfoPanel gameInfoPanel;
 
 	public LayeredMapPanelOtherItems(Dimension dimension, GameInfoPanel gameInfoPanel) {
+		this.gameInfoPanel = gameInfoPanel;
 		this.grid = new GridMap(1, 1);
 		this.bank = BankManager.getInstance();
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
@@ -516,8 +518,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 	private void updatePlayerLife(int escapedCritters) {
 		// TODO Auto-generated method stub
-		int life = Constants.MAX_ALLOWED_ESCAPED_CRITTER_PER_WAVE
-				- escapedCritters;
+		int life = AccountConstants.DEFAULT_LIFE- escapedCritters;
 		System.out.println("life: " + life);
 		gameInfoPanel.setLife(life);
 		if (life <= 0) {
