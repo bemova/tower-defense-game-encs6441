@@ -25,7 +25,7 @@ public class WaveFactory {
 			}
 			if (waveType.equalsIgnoreCase("FoolishCritter")) {
 				for (int i = 0; i < WaveConstants.WAVE_SIZE; i++) {
-					FoolishCritter critter = new FoolishCritter(start, path);
+					FoolishCritter critter = new FoolishCritter(start, path);critter.Id= (new Integer(i)).toString();
 					wave.aliens.add(critter);
 				}
 				return wave;

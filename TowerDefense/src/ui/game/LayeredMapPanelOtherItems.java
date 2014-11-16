@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import ui.Constants;
 import ui.towerdesign.SimpleInspection;
 import core.applicationservice.informerservices.imp.DefenderInformer;
 import core.applicationservice.mapservices.pathfinder.PathService;
@@ -68,9 +69,13 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private Tower defender;
 	private Critter target;
 
+	private int escapedCritter = 0;
+
 	private Map<Tower, Critter> defenderTargetPair;
 	
-	public LayeredMapPanelOtherItems(Dimension dimension) {
+	private GameInfoPanel gameInfoPanel;
+
+	public LayeredMapPanelOtherItems(Dimension dimension, GameInfoPanel gameInfoPanel) {
 		this.grid = new GridMap(1, 1);
 		this.bank = BankManager.getInstance();
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
@@ -96,7 +101,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		setDimension(dimension);
 		critterImage = new Icon[WaveConstants.WAVE_SIZE];
 		informer = new DefenderInformer();
-		defenderTargetPair = new HashMap<Tower,Critter>();
+		defenderTargetPair = new HashMap<Tower, Critter>();
 
 	}
 
@@ -192,74 +197,62 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				new CritterShape().draw(g, critterImage[i], pos.getX(),
 						pos.getY());
 			}
-			
-			
-			
-//			for (Tower key : defenderTargetPair.keySet()) {
-//			    System.out.println("Key = " + key + " - " + hm.get(key));
-//				
-//			}
 
-			for(int i=0; i<defenderTargetPair.size(); i++){
+			for (int i = 0; i < defenderTargetPair.size(); i++) {
 				Iterator it = defenderTargetPair.entrySet().iterator();
-			    while (it.hasNext()) {
-			        Map.Entry<Tower, Critter> pairs = (Map.Entry<Tower, Critter>)it.next();
-//			        System.out.println(pairs.getKey() + " = " + pairs.getValue());
-//			        it.remove(); // avoids a ConcurrentModificationException
-//			    }
-				
-				
-				
-				Tower t2 = pairs.getKey();//key;
-				Critter c = pairs.getValue();//defenderTargetPair.get(key);
-				
-				// shoot only if target is in range
-				int range = 1;
-				if ((path[c.getCurrentPosition()].getY() <= t2
-						.getTowerPosition().getY() + range && path[c
-						.getCurrentPosition()].getY() >= t2
-						.getTowerPosition().getY() - range)
-						&& (path[c.getCurrentPosition()].getX() <= t2
-								.getTowerPosition().getX() + range && path[c
-								.getCurrentPosition()].getX() >= t2
-								.getTowerPosition().getX() - range)) {
+				while (it.hasNext()) {
+					Map.Entry<Tower, Critter> pairs = (Map.Entry<Tower, Critter>) it
+							.next();
 
-					new LineBullet().draw(g, convertCellToPixel(t2
-							.getTowerPosition()),
-							convertCellToPixel(path[c
-									.getCurrentPosition()]));
+					Tower t2 = pairs.getKey();// key;
+					Critter c = pairs.getValue();// defenderTargetPair.get(key);
+
+					// shoot only if target is in range
+					int range = 1;
+					if ((path[c.getCurrentPosition()].getY() <= t2
+							.getTowerPosition().getY() + range && path[c
+							.getCurrentPosition()].getY() >= t2
+							.getTowerPosition().getY() - range)
+							&& (path[c.getCurrentPosition()].getX() <= t2
+									.getTowerPosition().getX() + range && path[c
+									.getCurrentPosition()].getX() >= t2
+									.getTowerPosition().getX() - range)) {
+
+						new LineBullet()
+								.draw(g, convertCellToPixel(t2
+										.getTowerPosition()),
+										convertCellToPixel(path[c
+												.getCurrentPosition()]));
+					}
+					it.remove(); // avoids a ConcurrentModificationException
 				}
-//				defenderTargetPair.remove(key);
-				it.remove(); // avoids a ConcurrentModificationException
 			}
-			}
-		
-			
-//			for (Tower[] t : towers) {
-//				for (Tower t2 : t) {
-//					if (t2 != null) {
-//						Critter c = ((TowerFeatureDecorator) t2).getTarget();
-//						if (c != null) {
-//							// shoot only if target is in range
-//							int range = 1;
-//							if ((path[c.getCurrentPosition()].getY() <= t2
-//									.getTowerPosition().getY() + range && path[c
-//									.getCurrentPosition()].getY() >= t2
-//									.getTowerPosition().getY() - range)
-//									&& (path[c.getCurrentPosition()].getX() <= t2
-//											.getTowerPosition().getX() + range && path[c
-//											.getCurrentPosition()].getX() >= t2
-//											.getTowerPosition().getX() - range)) {
-//
-//								new LineBullet().draw(g, convertCellToPixel(t2
-//										.getTowerPosition()),
-//										convertCellToPixel(path[c
-//												.getCurrentPosition()]));
-//							}
-//						}
-//					}
-//				}
-//			}
+
+			// for (Tower[] t : towers) {
+			// for (Tower t2 : t) {
+			// if (t2 != null) {
+			// Critter c = ((TowerFeatureDecorator) t2).getTarget();
+			// if (c != null) {
+			// // shoot only if target is in range
+			// int range = 1;
+			// if ((path[c.getCurrentPosition()].getY() <= t2
+			// .getTowerPosition().getY() + range && path[c
+			// .getCurrentPosition()].getY() >= t2
+			// .getTowerPosition().getY() - range)
+			// && (path[c.getCurrentPosition()].getX() <= t2
+			// .getTowerPosition().getX() + range && path[c
+			// .getCurrentPosition()].getX() >= t2
+			// .getTowerPosition().getX() - range)) {
+			//
+			// new LineBullet().draw(g, convertCellToPixel(t2
+			// .getTowerPosition()),
+			// convertCellToPixel(path[c
+			// .getCurrentPosition()]));
+			// }
+			// }
+			// }
+			// }
+			// }
 		}
 	}
 
@@ -437,16 +430,18 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// switch (inspection.getPerformedAction()) {
-		// case "Upgrade":
-		// upgradeTower();
-		// break;
-		// case "Sell":
-		// clearTower(x, y);
-		// break;
-		// default:
-		// break;
-		// }
+		if (arg0 instanceof SimpleInspection) {
+			switch (inspection.getPerformedAction()) {
+			case "Upgrade":
+				upgradeTower();
+				break;
+			case "Sell":
+				clearTower(x, y);
+				break;
+			default:
+				break;
+			}
+		}
 
 		// shoot
 		if (arg0 instanceof TowerFeatureDecorator) {
@@ -454,7 +449,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			defender = ((TowerFeatureDecorator) arg0).getDefender();
 			defenderTargetPair.put(defender, target);
 			// repaint();
-			System.out.println("shooting");
+			System.out.println("shooting :" + defender.Id + " --> " + target.Id
+					+ "(" + target.getCurrentPosition() + ")");
 		}
 	}
 
@@ -482,7 +478,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	public void run() {
 		while (true) {
 			// critter.walk();
-			for (Critter critter : wave.aliens) {
+			Iterator it = wave.aliens.iterator();
+			while (it.hasNext()) {
+				// for (Critter critter : wave.aliens) {
+				Critter critter = (Critter) it.next();
 				if (critter.getCurrentPosition() != ((RegularMove) critter
 						.getMovingBehaviour()).getPath().length - 1) {
 					critter.performMovingBehaviour();
@@ -496,7 +495,11 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 				} else {
 					System.out.println("At exit point.");
-//					wave.aliens.remove(critter);
+					escapedCritter++;
+					updatePlayerLife(escapedCritter);
+					it.remove();
+					// wave.aliens.remove(critter);
+
 				}
 			}
 
@@ -509,6 +512,35 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void updatePlayerLife(int escapedCritters) {
+		// TODO Auto-generated method stub
+		int life = Constants.MAX_ALLOWED_ESCAPED_CRITTER_PER_WAVE
+				- escapedCritters;
+		System.out.println("life: " + life);
+		gameInfoPanel.setLife(life);
+		if (life <= 0) {
+			gameOver();
+		}
+	}
+
+	private void gameOver() {
+		System.out.println("Game Over");
+		JOptionPane.showMessageDialog(null, "Game Over");
+		mapT.stop();
+		int o = 1;
+		o = o;
+		//
+
+	}
+
+	public void startWave() {
+		mapT.start();
+	}
+
+	public void pauseGame() {
+		mapT.suspend();
 	}
 
 	protected Point getMapTopLeft() {

@@ -86,7 +86,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		
 		// mapPanel = new MapPanel();
-		mapPanel = new LayeredMapPanel(getMapPanelDimention());
+		mapPanel = new LayeredMapPanel(getMapPanelDimention(),gameInfoPanel);
 		// mapPanel.setBackground(Color.RED);
 		contentPane.add(mapPanel, BorderLayout.CENTER);
 

@@ -17,7 +17,8 @@ import ui.Constants;
 
 public class GameInfoPanel extends JPanel {
 
-	
+	private JLabel lblLife;
+	private JLabel lblBank;
 
 	/**
 	 * Create the panel.
@@ -73,18 +74,26 @@ public class GameInfoPanel extends JPanel {
 		gbc_lblWave.gridy = 1;
 		add(lblWave, gbc_lblWave);
 		
-		JLabel lblLife = new JLabel("Life");
+		lblLife = new JLabel(new Integer(Constants.MAX_ALLOWED_ESCAPED_CRITTER_PER_WAVE).toString());
 		GridBagConstraints gbc_lblLife = new GridBagConstraints();
 		gbc_lblLife.insets = new Insets(0, 0, 0, 5);
 		gbc_lblLife.gridx = 2;
 		gbc_lblLife.gridy = 1;
 		add(lblLife, gbc_lblLife);
 		
-		JLabel lblBank = new JLabel("Bank");
+		lblBank = new JLabel("Bank");
 		GridBagConstraints gbc_lblBank = new GridBagConstraints();
 		gbc_lblBank.gridx = 4;
 		gbc_lblBank.gridy = 1;
 		add(lblBank, gbc_lblBank);
+	}
+
+	public void setLife(int life) {
+		lblLife.setText(new Integer(life).toString());
+	}
+	
+	public void setBank(int bank) {
+		lblLife.setText(new Integer(bank).toString());
 	}
 	
 //	public void paintComponent(Graphics g) {
