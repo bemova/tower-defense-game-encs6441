@@ -33,7 +33,7 @@ public class MovingSpeed extends CritterFeatureDecorator {
 	 */
 	@Override
 	public String display() {
-		this.critter.display();
+		return null;
 	}
 	/**
 	 * in this method we will use to build 2 
