@@ -6,46 +6,52 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import core.domain.maps.GridCell;
+import maps.GridCell;
 import critters.Critter.State;
 
-public class BasicCritter extends Observable implements Critter {
+public class BasicCritter  extends Observable implements Critter {
 	
-	protected CritterMovingStrategy movement;
+	protected CritterMovingStrategy movingStrategy;
 	protected Critter.State state = Critter.State.INVISIBLE;
 	protected int maximumHitPoints;
 	protected int currentHitPoint;
-	protected int demageHitPoint;
+	protected int demage;
 	protected double speed; // number of pixels per 1 millisecond
+	
 	protected long appearTimeout;
 	
 	ArrayList<GridCell> path;
 	
 	Point currentPosition = null;
-	Point startPoint = null;
-	Point endPoint = null;
 	public int numberOfCellsPassed = 0;
+	
+	Point startPoint;
+	Point endPoint ;
+	
+
+	
+
 	
 	public BasicCritter() {
 		speed = (15.0 / 1000); // 15 pixel per 1000 milliseconds and 15 / 1000 per on millisecond
-		maximumHitPoints = 2;
+		maximumHitPoints = 1;
 		currentHitPoint = 0;
-		demageHitPoint = 1; // TODO move to tower
-		
+		demage = 0; // TODO move to tower
+		numberOfCellsPassed = 0;
+
 	}
 	
-	@Override
-	public void setMovingBehaviour(CritterMovingStrategy newBehaviour) {
-		movement = newBehaviour;
+	private Point createPoint(GridCell cell) {
+		return new Point(cell.j * 30 + 15, cell.i * 30 + 15);
 	}
+	
+
 	@Override
 	public CritterMovingStrategy getMovingBehaviour() {
-		return movement;
+		return movingStrategy;
 	}
-	@Override
-	public void setSpeed(double newspeed) {
-		speed = newspeed;
-	}
+
+
 	@Override
 	public double getSpeed() {
 		return speed;
@@ -53,54 +59,11 @@ public class BasicCritter extends Observable implements Critter {
 	
 	
 	@Override
-	public void updatePosition(long timeMillisecs) {
-		if(state == Critter.State.COMPLETEDPATH)
-		{
-			return;
-		}
-		
-		if(appearTimeout <= 0)
-		{
-			appearTimeout += timeMillisecs;
-			if(appearTimeout < 0)
-			{
-				return;
-			}
-			
-			state = Critter.State.MOVING;
-			timeMillisecs = appearTimeout;
-		}
-		
-		if(currentPosition == null)
-		{
-			startPoint = createPoint(path.get(numberOfCellsPassed));
-			endPoint = createPoint(path.get(numberOfCellsPassed + 1));
-			if(path.get(numberOfCellsPassed).containsBullet){
-				maximumHitPoints = maximumHitPoints -1;
-				path.get(numberOfCellsPassed).containsBullet = false;
-			}
-				
-			currentPosition = startPoint;
-		}
-		
-		int pixelsPassed = (int)(speed * timeMillisecs);
-		
-		currentPosition = calculate(pixelsPassed);
-		
-		if(currentPosition == null)
-		{
-			// System.out.println("COMPLETED!!");
-			state = Critter.State.COMPLETEDPATH;
-		//	setChanged();
-		//	notifyObservers();
-		}
-
+	public void updatePosition(long timeMillisecs, Critter critter) {
+		executeStrategy(timeMillisecs, critter);
 	}
 	
 
-	private Point createPoint(GridCell cell) {
-		return new Point(cell.j * 30 + 15, cell.i * 30 + 15);
-	}
 	@Override
 	public void setAppearTime(long currentInterval) {
 		appearTimeout = currentInterval;
@@ -126,7 +89,10 @@ public class BasicCritter extends Observable implements Critter {
 			Color c = g.getColor();
 			g.setColor(Color.white);
 			g.fillOval(currentPosition.x, currentPosition.y, 15, 15);
+			g.setColor(Color.black);
+			g.drawString(demage + "", currentPosition.x, currentPosition.y);
 			g.setColor(c);
+			
 		}		
 	}
 
@@ -137,110 +103,130 @@ public class BasicCritter extends Observable implements Critter {
 	}	
 	
 	
-	
-	
-	private Point calculate(int pixelsPassed) {
-		Point returnPoint = null;
+	private void executeStrategy(long timeMillisecs, Critter critter) {
 
-
-		if(startPoint.x > endPoint.x)
-		{
-			if(startPoint.x - currentPosition.x - pixelsPassed >=15){
-				
-				path.get(numberOfCellsPassed + 1).changeState(true);
-				path.get(numberOfCellsPassed).changeState(false);
-			}		
-
-			if(currentPosition.x - pixelsPassed <= endPoint.x)
-			{
-				int extraPixels = endPoint.x - (currentPosition.x - pixelsPassed);  
-				nextCell();
-				returnPoint = calculate(extraPixels);
-
-			}else 	returnPoint = new Point(currentPosition.x - pixelsPassed, currentPosition.y);
-	
-		}
-		else if(startPoint.x < endPoint.x)
-		{
-			if(currentPosition.x - startPoint.x   + pixelsPassed >=15){
-				
-				path.get(numberOfCellsPassed + 1).changeState(true);
-				path.get(numberOfCellsPassed).changeState(false);
-			}
-
-			if(currentPosition.x + pixelsPassed >= endPoint.x)
-			{
-				int extraPixels = currentPosition.x + pixelsPassed - endPoint.x; 
-				nextCell();
-				returnPoint = calculate(extraPixels);
-
-			}else returnPoint = new Point(currentPosition.x + pixelsPassed, currentPosition.y);
-
-		}
-		else if(startPoint.y > endPoint.y)
-		{
-			if(startPoint.y - currentPosition.y - pixelsPassed >=15){
-				
-				path.get(numberOfCellsPassed + 1).changeState(true);
-				path.get(numberOfCellsPassed).changeState(false);
-			}
-
-			if(currentPosition.y - pixelsPassed <= endPoint.y)
-			{
-				int extraPixels = endPoint.y - (currentPosition.y - pixelsPassed);
-				nextCell();
-				returnPoint = calculate(extraPixels);
-
-			}else 	returnPoint = new Point(currentPosition.x, currentPosition.y - pixelsPassed);
-
-		}
-		else if(startPoint.y < endPoint.y)
+		if(state != Critter.State.COMPLETEDPATH && state != Critter.State.DEAD){
 			
+		if(appearTimeout <= 0)
 		{
-			if(currentPosition.y - startPoint.y   + pixelsPassed >=15){
-				
-				path.get(numberOfCellsPassed + 1).changeState(true);
-				path.get(numberOfCellsPassed).changeState(false);
-			}
-	
-		
-			if(currentPosition.y + pixelsPassed >= endPoint.y)
+			appearTimeout += timeMillisecs;
+			if(appearTimeout < 0)
 			{
-				int extraPixels = currentPosition.y + pixelsPassed - endPoint.y;
-				nextCell();
-				returnPoint = calculate(extraPixels); 
-
-			}else returnPoint = new Point(currentPosition.x, currentPosition.y + pixelsPassed);
-	
-		}
-	
-		return returnPoint;
-	}
-	
-	
-
-	private void nextCell() {
-		startPoint = endPoint;
-		currentPosition = endPoint;
-		numberOfCellsPassed++;
-		if(numberOfCellsPassed + 1 < path.size())
-		{
-			if(path.get(numberOfCellsPassed).containsBullet)
-				maximumHitPoints = maximumHitPoints - 1;
-			if(maximumHitPoints == 0){
-				state = State.DEAD;
-				setChanged();
-				notifyObservers();
+				return;
 			}
+			
+			state = Critter.State.MOVING;
+			timeMillisecs = appearTimeout;
+		}
+		
+		
+		if(currentPosition == null)
+		{
+			startPoint = createPoint(path.get(numberOfCellsPassed));
 			endPoint = createPoint(path.get(numberOfCellsPassed + 1));
 
-
+			currentPosition = startPoint;
+		} 
+		
+		if((currentPosition = movingStrategy.executeMovement(timeMillisecs, critter)) == null){
+			state = Critter.State.COMPLETEDPATH;
+			
 		}
+		
+		}
+		
+	}
+
+	@Override
+	public ArrayList<GridCell> getPath() {
+		
+		return path;
+	}
+
+	@Override
+	public int getNumberOfCellsPassed() {
+		
+		return numberOfCellsPassed;
+	}
+
+	@Override
+	public Point getCurrentPosition() {
+		
+		return currentPosition;
+	}
+
+	@Override
+	public void setNumberOfCellsPassed(int newPassedCells) {
+
+		numberOfCellsPassed = newPassedCells;
+		
+	}
+
+	@Override
+	public void setcurrentPosition(Point newPosition) {
+		currentPosition = newPosition;
+		
+	}
+
+	@Override
+	public Point getStartPoint() {
+		
+		return startPoint;
+	}
+
+	@Override
+	public Point getEnedPoint() {
+		
+		return endPoint;
+	}
+
+	@Override
+	public void setStartPoint(Point newValue) {
+		startPoint = newValue;
+		
+	}
+
+	@Override
+	public void setEnedPoint(Point newValue) {
+		endPoint = newValue;
+		
+	}
+
+	@Override
+	public void setMovingStrategy(CritterMovingStrategy newMovingStrategy) {
+		movingStrategy = newMovingStrategy;
+		
+	}
+
+
+
+
+	@Override
+	public int getDemageAmount() {
+		
+		return demage;
+	}
+
+	@Override
+	public void setDemage() {
+		demage ++;
+		
+	}
+
+	@Override
+	public void setState(State newState) {
+		state = newState;
+		
+	}
+
+	@Override
+	public void notifyregisteredObservers() {
+		setChanged();
+		notifyObservers();
+		
 	}
 	
 
-	
-	
 
 	
 }

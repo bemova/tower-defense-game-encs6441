@@ -4,13 +4,14 @@ import static org.junit.Assert.*;
 
 import java.util.Stack;
 
+import maps.EmptyGrid;
+import maps.Grid;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import core.applicationService.vikiMapServacs.GraphNode;
-import core.applicationService.vikiMapServacs.StandardAlgorithms;
-import core.domain.maps.EmptyGrid;
-import core.domain.maps.Grid;
+import MapServacs.GraphNode;
+import MapServacs.StandardAlgorithms;
 /**
  * 7) Path is correct 
  * 8) invalid path is recognized 

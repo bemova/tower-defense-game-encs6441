@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import core.domain.maps.GridCell;
+import maps.GridCell;
 
-public class Bullet {
+public abstract class Bullet {
 	
 	public enum State { MOVING, FINISHED }
 	State state = State.MOVING;
@@ -68,19 +68,22 @@ GridCell target;
 		else
 			buletY = (int) (y1 + (step * Math.sin(angle)));
 		
-		
-		if(currentPoint.x/30+1 == endPoint.x/30 +1 && currentPoint.y/30+1 == endPoint.y/30 +1)
-			//state = State.FINISHED;
-			target.containsBullet = true;
 		currentPoint = new Point(buletX, buletY);
 		
+		if(changeTargetState())
+			target.containsBullet = true;
+			
+
+
 		
-		//if(Math.abs(currentPoint.x - endPoint.x) < 5 && Math.abs(currentPoint.y - endPoint.y) < 5)
-		//	currentPoint = startPoint;
+
 		if(length(startPoint, currentPoint) >= pathLength){
 			state = State.FINISHED;
-			target.containsBullet = false;
+			target.containsBullet = false;	
 		}
+		
+
+		
 	}
 		
 	public void draw(Graphics g){ 
@@ -95,6 +98,10 @@ GridCell target;
 	public void setSpeed(double newspeed){
 		movingSpeed = newspeed / 1000;
 		
+	}
+
+	public boolean changeTargetState(){
+		return false;
 	}
 
 }

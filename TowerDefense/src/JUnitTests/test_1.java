@@ -1,13 +1,13 @@
 package JUnitTests;
 
 import static org.junit.Assert.*;
+import maps.EmptyGrid;
+import maps.Grid;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import core.applicationService.vikiMapServacs.MapManager;
-import core.domain.maps.EmptyGrid;
-import core.domain.maps.Grid;
+import MapServacs.MapManager;
 
 public class test_1 {
 

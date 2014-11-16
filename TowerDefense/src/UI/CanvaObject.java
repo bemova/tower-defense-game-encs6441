@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import core.domain.maps.Grid;
+import maps.Grid;
 
 public class CanvaObject extends Canvas {
 

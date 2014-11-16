@@ -1,16 +1,16 @@
 package JUnitTests;
 
 import static org.junit.Assert.*;
+import maps.*;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import MapServacs.*;
+
 import java.nio.file.attribute.GroupPrincipal;
 import java.util.Stack;
-
-import  core.applicationService.vikiMapServacs.*;
-import core.domain.maps.*;
 /**
  * This set of test cases are related to the validation of map => loading, save, entry exit points, existing path
  * To be more concrete :

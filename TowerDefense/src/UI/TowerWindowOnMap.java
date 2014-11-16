@@ -24,8 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-import core.domain.maps.Grid;
-import core.domain.maps.Map;
+import maps.Grid;
+import maps.Map;
 
 
 public class TowerWindowOnMap extends JPanel{

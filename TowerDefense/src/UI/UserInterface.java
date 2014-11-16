@@ -22,18 +22,20 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
+
+
+
+import maps.CompleteGrid;
+import maps.EmptyGrid;
+import maps.Grid;
+import maps.GridCell;
+import maps.Map;
+import MapServacs.MapManager;
+import MapServacs.MoneyManager;
+import MapServacs.StandardAlgorithms;
+import Towers.*;
 import UI.FactoryTower;
-import core.applicationService.vikiMapServacs.MoneyManager;
-import core.applicationService.vikiMapServacs.StandardAlgorithms;
-import core.applicationService.vikiMapServacs.MapManager;
 import UI.TowerParameters;
-import core.domain.maps.CompleteGrid;
-import core.domain.maps.EmptyGrid;
-import core.domain.maps.Grid;
-import core.domain.maps.GridCell;
-import core.domain.maps.Map;
-//import core.domain.warriors.defenders.towers.*;
-import core.domain.warriors.defenders.towers.vikiTowers.*;
 
 public class UserInterface extends JFrame {
 
@@ -56,7 +58,7 @@ public class UserInterface extends JFrame {
 	JButton designMap = new JButton("Design Map");
 	JButton playGame = new JButton("Start Playing");
 	JButton startWave = new JButton("Start wave");
-	JTextField moneyView = new JTextField(); // display of view accumulated
+public JTextField moneyView = new JTextField(); // display of view accumulated
 													// points during the game
 	JLabel acumulatedMoney = new JLabel("POINTS :");
 
@@ -74,7 +76,7 @@ public class UserInterface extends JFrame {
 
 	TowerParameters towerParam = new TowerParameters();
 //	DesignToweerDialog towerDialogWindow = new DesignToweerDialog(this);
-	MoneyManager moneyManager = new MoneyManager();
+	MoneyManager moneyManager = new MoneyManager(this);
 	public enum EnumGameStatValue {DESIGN,PLAYGAME};
 	public EnumGameStatValue gameStatus;
 	public GameController game ;
@@ -496,7 +498,7 @@ public class UserInterface extends JFrame {
 
 						} else {
 							if( !(gameStatus == EnumGameStatValue.PLAYGAME))
-								grid.setCell(j, i, colorInInteger); // i =y j =x // setCell(int cordinatX, int cordinatY, int type)
+								grid.setContentXY(j, i, colorInInteger); // i =y j =x // setCell(int cordinatX, int cordinatY, int type)
 						}
 
 						canva.repaint();
@@ -516,7 +518,7 @@ public class UserInterface extends JFrame {
 					int j = e.getX() / grid.getUnitSize();
 					if ((i < grid.getHeight()) && (j < grid.getWidth())
 							&& (grid.getCellType(i, j) != colorInInteger)) {
-						grid.setCell(j, i, colorInInteger);
+						grid.setContentXY(j, i, colorInInteger);
 						canva.repaint();
 
 					}
@@ -535,7 +537,7 @@ public class UserInterface extends JFrame {
 					int x = e.getX() / grid.getUnitSize();
 					if ((y < grid.getHeight()) && (x < grid.getWidth())
 							&& (grid.getCellType(y, x) != colorInInteger)) {
-						grid.setCell(x, y, colorInInteger);
+						grid.setContentXY(x, y, colorInInteger);
 						
 					//	((EmptyGrid) ((CompleteGrid)grid).simpleGrid).content[y][x] = colorInInteger;
 						canva.repaint();
@@ -622,7 +624,7 @@ public class UserInterface extends JFrame {
 			TowerInterface tower = towerFactory.creatTower(towerType);
 			tower.setPosition(new GridCell(localPoint.y, localPoint.x)); // [i][j]
 			
-			grid.setCell(localPoint.x, localPoint.y, 5); // @TODO: change the
+			grid.setContentXY(localPoint.x, localPoint.y, 5); // @TODO: change the
 															// last parameter
 															// set proper tower
 															// value
@@ -673,7 +675,7 @@ public class UserInterface extends JFrame {
 		else
 			amount = grid.getTower(position).getSellPrice();
 		
-		Double value = (this.moneyManager.update(buysell, amount));
+		Double value = (this.moneyManager.setState(buysell, amount));
 		if(value < 0){
 			towerControler(point, "down");
 			JOptionPane.showMessageDialog(null, "Not enouph money to buy a tower!");

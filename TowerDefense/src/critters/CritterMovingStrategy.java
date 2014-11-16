@@ -1,8 +1,10 @@
 package critters;
 
-public interface CritterMovingStrategy {
+import java.awt.Point;
 
-public void move(Critter critter);
+public interface CritterMovingStrategy {
+	
+	Point executeMovement(long timeMillisecs, Critter critter); 
 
 
 }

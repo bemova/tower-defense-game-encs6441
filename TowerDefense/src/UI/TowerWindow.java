@@ -22,11 +22,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import core.applicationService.vikiMapServacs.MoneyManager;
-import core.domain.maps.CompleteGrid;
-import core.domain.maps.Grid;
-import core.domain.maps.Map;
-import core.domain.warriors.defenders.towers.vikiTowers.TowerDataCollection;
+import maps.CompleteGrid;
+import maps.Grid;
+import maps.Map;
+import MapServacs.MoneyManager;
+import Towers.TowerDataCollection;
 
 public class TowerWindow extends JPanel {
 
@@ -49,7 +49,7 @@ public class TowerWindow extends JPanel {
 	JLabel htmlTextArea = new JLabel();
 	
 	Point currentPosition = new Point();
-	MoneyManager moneyManager = new MoneyManager();
+//	MoneyManager moneyManager = new MoneyManager();
 	// public TowerWindow(Grid grid)
 	public TowerWindow(UserInterface ui) {
 		userInterface = ui;

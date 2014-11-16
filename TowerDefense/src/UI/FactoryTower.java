@@ -6,11 +6,11 @@ import javax.imageio.ImageIO;
 
 import org.omg.Dynamic.Parameter;
 
-import core.domain.warriors.defenders.towers.vikiTowers.BasicTower;
-import core.domain.warriors.defenders.towers.vikiTowers.FireShooting;
-import core.domain.warriors.defenders.towers.vikiTowers.IceShooting;
-import core.domain.warriors.defenders.towers.vikiTowers.TowerDataCollection;
-import core.domain.warriors.defenders.towers.vikiTowers.TowerInterface;
+import Towers.BasicTower;
+import Towers.FireShooting;
+import Towers.IceShooting;
+import Towers.TowerDataCollection;
+import Towers.TowerInterface;
 
 public class FactoryTower {
 	TowerDataCollection towerData = new TowerDataCollection();
@@ -59,7 +59,8 @@ public class FactoryTower {
 			obj.SetShootingStrategy(new IceShooting());
 			((BasicTower)obj).imagePath = "/tower2_0.png";
 		} else if (towerType == 30) {
-			
+			obj.SetShootingStrategy(new IceShooting());
+			((BasicTower)obj).imagePath = "/tower3_0.png";
 		} 
 
 		try {

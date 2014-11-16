@@ -1,6 +1,7 @@
 package JUnitTests;
 
 import static org.junit.Assert.*;
+import maps.*;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -8,8 +9,7 @@ import org.junit.Ignore;
 import java.nio.file.attribute.GroupPrincipal;
 import java.util.Stack;
 
-import  core.applicationService.vikiMapServacs.*;
-import core.domain.maps.*;
+import MapServacs.*;
 
 import org.junit.Test;
 /**

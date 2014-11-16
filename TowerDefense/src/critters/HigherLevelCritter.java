@@ -1,9 +1,10 @@
 package critters;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 
-import core.domain.maps.GridCell;
+import maps.GridCell;
 
 public class HigherLevelCritter extends CritterDecorater{
 
@@ -12,28 +13,22 @@ public class HigherLevelCritter extends CritterDecorater{
 		
 	}
 	
-	@Override
-	public void setMovingBehaviour(CritterMovingStrategy newBehaviour) {
-		criterObject.setMovingBehaviour(newBehaviour);
-	}
+
 	@Override
 	public CritterMovingStrategy getMovingBehaviour() {
 		return criterObject.getMovingBehaviour();
 	}
-	@Override
-	public void setSpeed(double newspeed) {
-		criterObject.setSpeed(newspeed);
-		
-	}
+
+
 	@Override
 	public double getSpeed() {
 	
-		return criterObject.getSpeed() ;
+		return criterObject.getSpeed() + 5.0/1000;
 	}
 
 	@Override
-	public void updatePosition(long timeMillisecs) {
-		criterObject.updatePosition(timeMillisecs);
+	public void updatePosition(long timeMillisecs, Critter critter) {
+		criterObject.updatePosition(timeMillisecs, critter);
 	}
 
 	@Override
@@ -64,6 +59,98 @@ public class HigherLevelCritter extends CritterDecorater{
 	@Override
 	public int getHitPoints() {
 		
-		return criterObject.getHitPoints() + 3;
+		return criterObject.getHitPoints() + 2;
 	}
+
+	@Override
+	public ArrayList<GridCell> getPath() {
+
+		return criterObject.getPath();
+	}
+
+	@Override
+	public int getNumberOfCellsPassed() {
+		
+		return criterObject.getNumberOfCellsPassed();
+	}
+
+	@Override
+	public Point getCurrentPosition() {
+		
+		return criterObject.getCurrentPosition();
+	}
+
+	@Override
+	public Point getStartPoint() {
+		
+		return criterObject.getStartPoint();
+	}
+
+	@Override
+	public Point getEnedPoint() {
+		
+		return criterObject.getEnedPoint();
+	}
+
+	@Override
+	public void setNumberOfCellsPassed(int newPassedCells) {
+		criterObject.setNumberOfCellsPassed(newPassedCells);
+		
+	}
+
+	@Override
+	public void setcurrentPosition(Point newPosition) {
+		criterObject.setcurrentPosition(newPosition);
+		
+	}
+
+	@Override
+	public void setStartPoint(Point newValue) {
+		criterObject.setStartPoint(newValue);
+		
+	}
+
+	@Override
+	public void setEnedPoint(Point newValue) {
+		criterObject.setEnedPoint(newValue); 
+		
+	}
+
+	@Override
+	public void setMovingStrategy(CritterMovingStrategy newMovingStrategy) {
+		criterObject.setMovingStrategy(newMovingStrategy);
+		
+	}
+
+
+	@Override
+	public int getDemageAmount() {
+		
+		return criterObject.getDemageAmount();
+	}
+
+
+	@Override
+	public void setDemage() { 
+		criterObject.setDemage();
+		
+	}
+
+
+	@Override
+	public void setState(State newState) {
+		criterObject.setState(newState);
+		
+	}
+
+
+	@Override
+	public void notifyregisteredObservers() {
+		setChanged();
+		notifyObservers();
+		
+	}
+
+
+
 }
