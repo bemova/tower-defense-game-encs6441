@@ -21,8 +21,8 @@ public class IntelligentCritter extends Critter {
 	 * <b>Move method will be used in the second build to display critters and it is not complete yet</b>
 	 */
 	@Override
-	public void display() {
-		System.out.println("I am IntelligentCritter!");
+	public String display() {
+		return "I am IntelligentCritter!";
 
 	}
 
