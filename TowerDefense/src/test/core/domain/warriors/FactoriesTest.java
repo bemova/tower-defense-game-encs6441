@@ -96,7 +96,7 @@ public class FactoriesTest {
 			expDecorated = new FireRange(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
-
+			
 			// assert part
 			assertEquals(expDecorated.cost(), tower.cost());
 

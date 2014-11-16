@@ -1,5 +1,7 @@
 package core.domain.warriors.defenders;
 
+import java.util.Observable;
+
 import core.applicationservice.informerservices.Observer;
 import core.domain.Subject;
 import core.domain.warriors.aliens.Critter;
@@ -10,7 +12,7 @@ import core.domain.waves.Position;
  * @author Team5
  * @version 0.1
  */
-public abstract class Defender implements Observer {
+public abstract class Defender extends Observable {
 	protected Subject subject;
 	/**
 	 * it is a head position of the wave
@@ -23,10 +25,6 @@ public abstract class Defender implements Observer {
 	public void waveUpdate(Position waveHeadPosition) {
 		this.waveHeadPosition = waveHeadPosition;
 	}
-	/**
-	 * it is implemented for having observer design pattern
-	 */
-	public abstract void alienUpdate(Position alienPosition, Critter critter);
 	
 
 }

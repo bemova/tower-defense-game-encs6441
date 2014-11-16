@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import core.applicationservice.locationservices.PositionService;
 import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.defenders.towers.Tower;
+import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 import core.domain.waves.Position;
 
 public class ShootingService {
@@ -19,7 +20,7 @@ public class ShootingService {
 			PositionService positionService = new PositionService();
 			TowerFactory towerFactory = new TowerFactory();
 			int range = towerFactory.getRange(tower);
-			Iterable<Entry<Critter, Position>> it = (tower.getCrittersLocation()).entrySet();
+			Iterable<Entry<Critter, Position>> it = (((TowerFeatureDecorator)tower).getCrittersLocation()).entrySet();
 			for (Entry<Critter, Position> entry : it) {
 				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range)){
 					if(nearest != null){
@@ -48,7 +49,7 @@ public class ShootingService {
 			PositionService positionService = new PositionService();
 			TowerFactory towerFactory = new TowerFactory();
 			int range = towerFactory.getRange(tower);
-			Iterable<Entry<Critter, Position>> it = (tower.getCrittersLocation()).entrySet();
+			Iterable<Entry<Critter, Position>> it = (((TowerFeatureDecorator)tower).getCrittersLocation()).entrySet();
 			for (Entry<Critter, Position> entry : it) {
 				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range)){
 					if(weakest != null){
@@ -77,7 +78,7 @@ public class ShootingService {
 			PositionService positionService = new PositionService();
 			TowerFactory towerFactory = new TowerFactory();
 			int range = towerFactory.getRange(tower);
-			Iterable<Entry<Critter, Position>> it = (tower.getCrittersLocation()).entrySet();
+			Iterable<Entry<Critter, Position>> it = (((TowerFeatureDecorator)tower).getCrittersLocation()).entrySet();
 			for (Entry<Critter, Position> entry : it) {
 				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range)){
 					if(strongest != null){

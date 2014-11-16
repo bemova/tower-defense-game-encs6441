@@ -1,14 +1,18 @@
 package core.domain.warriors.defenders.towers.towertype;
 
 
+import java.util.HashMap;
+
 import core.contract.DefenderConstants;
 import core.contract.MapConstants;
+import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourimp.BulletShooting;
 import core.domain.warriors.defenders.towers.behaviourimp.LineShooting;
 import core.domain.warriors.defenders.towers.behaviourimp.MoveByMouse;
 import core.domain.warriors.defenders.towers.behaviourimp.ShootWithWeapon;
 import core.domain.warriors.defenders.towers.behaviourimp.ShootingSound;
+import core.domain.waves.Position;
 /**
  * <b>this type of tower has ShootWithWeapon as a weapon and it has MoveByMouse and ShootingSound </b>
  * @author Team5
@@ -22,6 +26,7 @@ public class ModernTower extends Tower {
 		setSoundBehaviour(new ShootingSound());
 		setBulletShootingBehaviour(new BulletShooting());
 		setLineShootingBehaviour(new LineShooting());
+//		super.crittersLocation = new HashMap<Critter, Position>();
 		this.description = "ModernTower";
 	}
 	/**

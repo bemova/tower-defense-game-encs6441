@@ -1,12 +1,14 @@
 package core.domain.warriors.defenders.towers.features;
 
-import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import core.contract.DefenderConstants;
+import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
+import core.domain.waves.Position;
 /**
  * <b>this class used to implement decorator pattern for Towers
  * that is one of the feature that are used for towers</b>
@@ -16,8 +18,13 @@ import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 public class FireSpeed extends TowerFeatureDecorator {
 	private Tower tower;
 	
+	public Tower getTower() {
+		return tower;
+	}
+
 	public FireSpeed(Tower tower) {
 		this.tower = tower;
+		crittersLocation = new HashMap<Critter, Position>();
 		// TODO Auto-generated constructor stub
 	}
 

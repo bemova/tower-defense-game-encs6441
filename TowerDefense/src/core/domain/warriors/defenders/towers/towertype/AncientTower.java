@@ -2,14 +2,17 @@ package core.domain.warriors.defenders.towers.towertype;
 
 
 import java.awt.Color;
+import java.util.HashMap;
 
 import core.contract.DefenderConstants;
 import core.contract.MapConstants;
+import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.behaviourimp.LineShooting;
 import core.domain.warriors.defenders.towers.behaviourimp.NoMove;
 import core.domain.warriors.defenders.towers.behaviourimp.NoSound;
 import core.domain.warriors.defenders.towers.behaviourimp.ShootTrap;
+import core.domain.waves.Position;
 /**
  * <b>this type of tower has shoot trap as a weapon and it doesn't have any sound and moving </b>
  * @author Team5
@@ -24,6 +27,7 @@ public class AncientTower extends Tower {
 		setShootingBehaviour(new ShootTrap());
 		setSoundBehaviour(new NoSound());
 		setLineShootingBehaviour(new LineShooting());
+//		crittersLocation = new HashMap<Critter, Position>();
 		//this.description = "Ancient Tower";
 	}
 	/**

@@ -38,7 +38,8 @@ public class RegularMove implements MovingBehaviour {
 			int xPixel = PixelPosition.getX();
 			int yPixel = PixelPosition.getY();
 			int currPathCell = currentPosition;
-			if (currPathCell != path.length) {
+			if (currPathCell != path.length-1) {
+				
 				Position currCell = path[currPathCell];
 				Position nextCell = path[currPathCell + 1];
 
@@ -85,10 +86,19 @@ public class RegularMove implements MovingBehaviour {
 		}
 	}
 
+	
 	public Position getPixelPosition() {
 		return PixelPosition;
 	}
 
+
+	public int getCurrentPosition() {
+		return currentPosition;
+	}
+	
+	public Position[] getPath(){
+		return path;
+	}
 	public void setFreezeTime(int freezeTime) {
 		this.freezeTime = freezeTime;
 	}

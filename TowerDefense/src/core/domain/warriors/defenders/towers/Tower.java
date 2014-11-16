@@ -2,11 +2,9 @@ package core.domain.warriors.defenders.towers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import core.domain.Subject;
-import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.defenders.Defender;
 import core.domain.warriors.defenders.towers.behaviours.BulletShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.IceShootingBehaviour;
@@ -45,13 +43,7 @@ public abstract class Tower extends Defender {
 	}
 	// decorator parts
 	protected String description;
-	public Map<Critter, Position> crittersLocation;
-	public Map<Critter, Position> getCrittersLocation() {
-		return crittersLocation;
-	}
-	public void setCrittersLocation(Map<Critter, Position> crittersLocation) {
-		crittersLocation = crittersLocation;
-	}
+	
 	protected List<Tower> towers;
 	public List<Tower> getTowers() {
 		return towers;
@@ -106,11 +98,7 @@ public abstract class Tower extends Defender {
 	public void performSoundBehaviour(){
 		soundBehaviour.sound();
 	}
-	public void register(Subject defenderInformer) {
-		this.subject = defenderInformer;
-		this.subject.registerObserver(this);
-	}
-
+	
 	public abstract String display();
 	public abstract long cost();
 	public List<Tower> objectDetials(){
@@ -125,16 +113,6 @@ public abstract class Tower extends Defender {
 			// TODO: handle exception
 		}
 		return towers;
-	}
-	public void alienUpdate(Position alienPosition, Critter critter) {
-		crittersLocation.put(critter, alienPosition);
-	}
-	public void removeDeadCritter(Critter critter){
-		try {
-			crittersLocation.remove(critter);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 	}
 	
 }

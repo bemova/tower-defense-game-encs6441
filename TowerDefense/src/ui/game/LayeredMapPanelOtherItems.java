@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,16 +18,21 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.springframework.core.DecoratingClassLoader;
+
 import ui.towerdesign.SimpleInspection;
+import core.applicationservice.informerservices.imp.DefenderInformer;
 import core.applicationservice.mapservices.pathfinder.PathService;
 import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.WaveFactory;
 import core.contract.DefenderConstants;
+import core.contract.WaveConstants;
 import core.domain.account.BankManager;
 import core.domain.maps.GridCellContentType;
 import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.aliens.behaviourimp.RegularMove;
 import core.domain.warriors.defenders.towers.Tower;
+import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
 import core.domain.waves.Position;
 import core.domain.waves.Wave;
@@ -55,8 +61,12 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private Wave wave;
 
 	private Icon[] critterImage;
-	
+
 	private boolean startWave;
+
+	private DefenderInformer informer;
+	private Tower defender;
+	private Critter target;
 
 	public LayeredMapPanelOtherItems(Dimension dimension) {
 		this.grid = new Map(1, 1);
@@ -82,7 +92,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		// t.run();
 		setOpaque(false);
 		setDimension(dimension);
-		critterImage = new Icon[100];
+		critterImage = new Icon[WaveConstants.WAVE_SIZE];
+		informer = new DefenderInformer();
 
 	}
 
@@ -111,9 +122,35 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			// critterShape = new CritterShape((int) entryPoint.getX(), (int)
 			// entryPoint.getY()-1, this.path);
 			bullet = new Bullet(initX + 100, initY + 153);
-			lineBullet = new LineBullet(initX + 125, initY + 123);
+			// lineBullet = new LineBullet(initX + 125, initY + 123);
 			// temp end
 
+			return entryPoint;
+		}
+		return null;
+	}
+
+	protected Position convertCellToPixel(Position cell) {
+		int initX = (int) mapTopLeft.getX();
+		int initY = (int) mapTopLeft.getY();
+
+		Position entryPoint;
+		if (cell != null) {
+			entryPoint = new Position(
+					(int) (initX + (cell.getX() * grid.getUnitSize())),
+					(int) (initY + (cell.getY() * grid.getUnitSize())));
+
+			// temp
+			PathService pathService = new PathService();
+			this.path = pathService.pathFinder(grid.getContent());
+			// critterShape = new CritterShape((int) entryPoint.getX(), (int)
+			// entryPoint.getY()-1, this.path);
+			bullet = new Bullet(initX + 100, initY + 153);
+			// lineBullet = new LineBullet(initX + 125, initY + 123);
+			// temp end
+
+			entryPoint.setX(entryPoint.getX()+grid.getUnitSize()/2);
+			entryPoint.setY(entryPoint.getY()+grid.getUnitSize()/2);
 			return entryPoint;
 		}
 		return null;
@@ -147,9 +184,21 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 		if (startWave) {
 			for (int i = 0; i < wave.aliens.size(); i++) {
-				Position pos = ((RegularMove) (wave.aliens.get(i).getMovingBehaviour())).getPixelPosition();
+				Position pos = ((RegularMove) (wave.aliens.get(i)
+						.getMovingBehaviour())).getPixelPosition();
 				new CritterShape().draw(g, critterImage[i], pos.getX(),
 						pos.getY());
+			}
+			
+			for(Tower[] t : towers){
+				for(Tower t2 : t){
+					Critter c = ((TowerFeatureDecorator)t2).getTarget();
+					if (c!=null){
+						new LineBullet().draw(g,
+								convertCellToPixel(t2.getTowerPosition()),
+								convertCellToPixel(path[c.getCurrentPosition()]));
+					}
+				}
 			}
 		}
 	}
@@ -251,6 +300,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				tower.setTowerPosition(new Position(x, y));
 				grid.setCell(x, y, GridCellContentType.TOWER);
 				grid.setTowers(towers);
+				((TowerFeatureDecorator) tower)
+						.setCrittersLocation(new HashMap<Critter, Position>());
+				informer.registerObserver((TowerFeatureDecorator) tower);
+				((TowerFeatureDecorator) tower).addObserver(this);
 				// draw(x, y);
 				repaint();
 			} else {
@@ -324,15 +377,23 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		switch (inspection.getPerformedAction()) {
-		case "Upgrade":
-			upgradeTower();
-			break;
-		case "Sell":
-			clearTower(x, y);
-			break;
-		default:
-			break;
+		// switch (inspection.getPerformedAction()) {
+		// case "Upgrade":
+		// upgradeTower();
+		// break;
+		// case "Sell":
+		// clearTower(x, y);
+		// break;
+		// default:
+		// break;
+		// }
+
+		// shoot
+		if (arg0 instanceof TowerFeatureDecorator) {
+			target = ((TowerFeatureDecorator) arg0).getTarget();
+			defender = ((TowerFeatureDecorator) arg0).getDefender();
+//			repaint();
+			System.out.println("shooting");
 		}
 	}
 
@@ -349,6 +410,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
 			String str = new Long(availFunds).toString();
 			// this.bankLbl.setText("$" + str);
+			informer.removeObserver((TowerFeatureDecorator) towers[x][y]);
 			towers[x][y] = null;
 			grid.setTowers(towers);
 			grid.setCell(x, y, GridCellContentType.SCENERY);
@@ -360,7 +422,20 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		while (true) {
 			// critter.walk();
 			for (Critter critter : wave.aliens) {
-				critter.performMovingBehaviour();
+				if (critter.getCurrentPosition() != ((RegularMove) critter
+						.getMovingBehaviour()).getPath().length - 1) {
+					critter.performMovingBehaviour();
+					// Position p = path[critter.getCurrentPosition()];
+					// informer.setAlienPosition(p.getX(), p.getY(), critter);
+					int i = ((RegularMove) critter.getMovingBehaviour())
+							.getCurrentPosition();
+					Position p = path[i];
+					critter.setCurrentPosition(i);
+					informer.setAlienPosition(p.getX(), p.getY(), critter);
+
+				} else {
+					System.out.println("At exit point.");
+				}
 			}
 
 			bullet.physic();
@@ -406,16 +481,17 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 	public void startFoolishWave() {
 		WaveFactory waveFactory = new WaveFactory();
-		Position[] path  = new PathService().pathFinder(grid.getContent());
-		wave = waveFactory
-				.getWave("FoolishCritter", calcCritterStartingPoint(), path);
+		Position[] path = new PathService().pathFinder(grid.getContent());
+		wave = waveFactory.getWave("FoolishCritter",
+				calcCritterStartingPoint(), path);
 
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file;
 
 		for (int i = 0; i < wave.aliens.size(); i++) {
-				((RegularMove)(wave.aliens.get(i).getMovingBehaviour())).setFreezeTime(i*100);
-						
+			((RegularMove) (wave.aliens.get(i).getMovingBehaviour()))
+					.setFreezeTime(i * 100);
+
 			file = new File(classLoader.getResource(
 					wave.aliens.get(i).display()).getFile());
 			critterImage[i] = new ImageIcon(file.getPath());

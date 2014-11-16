@@ -1,52 +1,18 @@
 package ui.game;
 
 import java.awt.Graphics;
-import java.io.File;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
-import core.contract.MapConstants;
+import core.domain.waves.Position;
 
-public class LineBullet extends JComponent implements Runnable {
-	public int xC=0,yC=0;
-	int xt,yt;
-	int xc,yc;
-	Icon critterImg;
-
-	Icon pathImg;
+public class LineBullet extends JComponent {
 	
-	public LineBullet(int xt, int yt){
-		this.xt = xt;
-		this.yt = yt;
-		
+	public LineBullet(){
 	}
 	
-	public void physic(){
-	}
-	
-	public void run() {
-		
-		while (true) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			repaint();
-		}
-	}
-	
-	public void paintComponent(Graphics g) {
-//		super.paintComponent(g);
-//		draw(g);//, xPos, y);
-		
-	}
-	
-	public void draw(Graphics g, int xc, int yc){
+	public void draw(Graphics g, Position source, Position target){
 		super.paintComponent(g);
-		g.drawLine(xt, yt, xc, yc);
+		g.drawLine(source.getX(), source.getY(), target.getX(), target.getY());
 	}
 }

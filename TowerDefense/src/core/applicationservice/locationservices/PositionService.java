@@ -25,6 +25,7 @@ public class PositionService {
 		}
 		return result;
 	}
+
 	/**
 	 * 
 	 * @param p
@@ -37,10 +38,11 @@ public class PositionService {
 	 */
 	public boolean isInRange(Position source, Position destination, int range) {
 		try {
-			return (((source.getX() + range > destination.getX()) || 
-					 (source.getX() - range < destination.getX())) &&
-					 ((source.getY() + range > destination.getY()) ||
-				      (source.getY() - range < destination.getY())));
+			return ((destination.getY() <= source.getY() + range && destination
+					.getY() >= source.getY() - range) && (destination.getX() <= source
+					.getX() + range && destination.getX() >= source.getX()
+					- range));
+
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
 		}

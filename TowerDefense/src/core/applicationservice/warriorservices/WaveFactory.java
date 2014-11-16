@@ -1,6 +1,7 @@
 package core.applicationservice.warriorservices;
 
 import infrastructure.loggin.Log4jLogger;
+import core.contract.WaveConstants;
 import core.domain.warriors.aliens.crittertype.FoolishCritter;
 import core.domain.warriors.aliens.crittertype.IntelligentCritter;
 import core.domain.warriors.aliens.features.Resistance;
@@ -23,13 +24,13 @@ public class WaveFactory {
 				return null;
 			}
 			if (waveType.equalsIgnoreCase("FoolishCritter")) {
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < WaveConstants.WAVE_SIZE; i++) {
 					FoolishCritter critter = new FoolishCritter(start, path);
 					wave.aliens.add(critter);
 				}
 				return wave;
 			} else if (waveType.equalsIgnoreCase("IntelligentCritter")) {
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < WaveConstants.WAVE_SIZE; i++) {
 					IntelligentCritter critter = new IntelligentCritter();
 					Resistance resistance = new Resistance(critter);
 					wave.aliens.add(resistance);

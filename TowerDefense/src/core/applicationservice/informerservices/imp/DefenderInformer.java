@@ -43,7 +43,8 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 * Instantiates a new defender informer.
 	 */
 	public DefenderInformer(){
-		observers = new ArrayList<Observer>(); 
+		observers = new ArrayList<Observer>();
+		alienPosition = new Position(0,0);
 	}
 	
 	/**
