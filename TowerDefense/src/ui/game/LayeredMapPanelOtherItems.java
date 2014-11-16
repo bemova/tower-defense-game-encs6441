@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,8 +18,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import org.springframework.core.DecoratingClassLoader;
 
 import ui.towerdesign.SimpleInspection;
 import core.applicationservice.informerservices.imp.DefenderInformer;
@@ -68,6 +67,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private Tower defender;
 	private Critter target;
 
+	private HashMap<Tower, Critter> defenderTargetPair;
+	
 	public LayeredMapPanelOtherItems(Dimension dimension) {
 		this.grid = new Map(1, 1);
 		this.bank = BankManager.getInstance();
@@ -94,6 +95,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		setDimension(dimension);
 		critterImage = new Icon[WaveConstants.WAVE_SIZE];
 		informer = new DefenderInformer();
+		defenderTargetPair = new HashMap<Tower,Critter>();
 
 	}
 
@@ -149,8 +151,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			// lineBullet = new LineBullet(initX + 125, initY + 123);
 			// temp end
 
-			entryPoint.setX(entryPoint.getX()+grid.getUnitSize()/2);
-			entryPoint.setY(entryPoint.getY()+grid.getUnitSize()/2);
+			entryPoint.setX(entryPoint.getX() + grid.getUnitSize() / 2);
+			entryPoint.setY(entryPoint.getY() + grid.getUnitSize() / 2);
 			return entryPoint;
 		}
 		return null;
@@ -189,14 +191,60 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				new CritterShape().draw(g, critterImage[i], pos.getX(),
 						pos.getY());
 			}
+
+//			for(int i=0; i<defenderTargetPair.size(); i++){
+//				Iterator it = defenderTargetPair.entrySet().iterator();
+//			    while (it.hasNext()) {
+//			        Tower pairs = (Tower)it.next();
+//			        System.out.println(pairs.getKey() + " = " + pairs.getValue());
+//			        it.remove(); // avoids a ConcurrentModificationException
+//			    }
+//				
+//				
+//				
+//				
+//				Critter c = defenderTargetPair.get(arg0)
+//				// shoot only if target is in range
+//				int range = 1;
+//				if ((path[c.getCurrentPosition()].getY() <= t2
+//						.getTowerPosition().getY() + range && path[c
+//						.getCurrentPosition()].getY() >= t2
+//						.getTowerPosition().getY() - range)
+//						&& (path[c.getCurrentPosition()].getX() <= t2
+//								.getTowerPosition().getX() + range && path[c
+//								.getCurrentPosition()].getX() >= t2
+//								.getTowerPosition().getX() - range)) {
+//
+//					new LineBullet().draw(g, convertCellToPixel(t2
+//							.getTowerPosition()),
+//							convertCellToPixel(path[c
+//									.getCurrentPosition()]));
+//				}
+//				
+//			}
 			
-			for(Tower[] t : towers){
-				for(Tower t2 : t){
-					Critter c = ((TowerFeatureDecorator)t2).getTarget();
-					if (c!=null){
-						new LineBullet().draw(g,
-								convertCellToPixel(t2.getTowerPosition()),
-								convertCellToPixel(path[c.getCurrentPosition()]));
+			for (Tower[] t : towers) {
+				for (Tower t2 : t) {
+					if (t2 != null) {
+						Critter c = ((TowerFeatureDecorator) t2).getTarget();
+						if (c != null) {
+							// shoot only if target is in range
+							int range = 1;
+							if ((path[c.getCurrentPosition()].getY() <= t2
+									.getTowerPosition().getY() + range && path[c
+									.getCurrentPosition()].getY() >= t2
+									.getTowerPosition().getY() - range)
+									&& (path[c.getCurrentPosition()].getX() <= t2
+											.getTowerPosition().getX() + range && path[c
+											.getCurrentPosition()].getX() >= t2
+											.getTowerPosition().getX() - range)) {
+
+								new LineBullet().draw(g, convertCellToPixel(t2
+										.getTowerPosition()),
+										convertCellToPixel(path[c
+												.getCurrentPosition()]));
+							}
+						}
 					}
 				}
 			}
@@ -392,7 +440,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		if (arg0 instanceof TowerFeatureDecorator) {
 			target = ((TowerFeatureDecorator) arg0).getTarget();
 			defender = ((TowerFeatureDecorator) arg0).getDefender();
-//			repaint();
+			defenderTargetPair.put(defender, target);
+			// repaint();
 			System.out.println("shooting");
 		}
 	}
