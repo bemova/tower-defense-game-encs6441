@@ -22,7 +22,7 @@ public class IntelligentCritter extends Critter {
 	 */
 	@Override
 	public String display() {
-		System.out.println("I am IntelligentCritter!");
+		return "I am IntelligentCritter!";
 
 	}
 
