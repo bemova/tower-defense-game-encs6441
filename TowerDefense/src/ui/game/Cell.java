@@ -19,7 +19,6 @@ public class Cell extends Rectangle {
 	private Image modernTowerImg, ancientTowerImg, kingTowerImg;
 	
 	public Cell(){
-//		setup();
 		setupImages();
 	}
 
