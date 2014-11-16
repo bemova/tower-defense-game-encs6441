@@ -23,7 +23,7 @@ public class LayeredMapPanel extends JLayeredPane implements Observer, ActionLis
 	 */
 	private static final long serialVersionUID = 1L;
 	public Thread mapT;
-	private Map grid;
+	private GridMap grid;
 	
 	private Point mapTopLeft;
 	private Point mapButtomRight;
@@ -35,7 +35,7 @@ public class LayeredMapPanel extends JLayeredPane implements Observer, ActionLis
 
 
 	public LayeredMapPanel(Dimension dimension) {
-		this.grid = new Map(1, 1);
+		this.grid = new GridMap(1, 1);
 		setMapTopLeft(new Point(0, 0));
 		setMapButtomRight(new Point(0, 0));
 		
@@ -102,7 +102,7 @@ System.out.println("Mouse Clicked");
 	public LayeredMapPanelOtherItems getOtherItemsPanel(){
 		return otherItemsLayer;
 	}
-	public void setGrid(Map grid) {
+	public void setGrid(GridMap grid) {
 		this.grid = grid;
 		gridLayer.setGrid(grid);
 		otherItemsLayer.setGrid(grid);

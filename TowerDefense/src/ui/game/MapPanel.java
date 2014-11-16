@@ -33,7 +33,7 @@ public class MapPanel extends JLayeredPane implements Observer, ActionListener,
 	private long availFunds;
 	private Point mapTopLeft;
 	private Point mapButtomRight;
-	private Map grid;
+	private GridMap grid;
 	private SimpleInspection inspection;
 	private Critter critter;
 	private Bullet bullet;
@@ -47,7 +47,7 @@ public class MapPanel extends JLayeredPane implements Observer, ActionListener,
 
 	public MapPanel() {
 		
-		this.grid = new Map(1, 1);
+		this.grid = new GridMap(1, 1);
 		this.bank = BankManager.getInstance();
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
 		// MouseInfo.getPointerInfo().getLocation();
@@ -66,7 +66,7 @@ public class MapPanel extends JLayeredPane implements Observer, ActionListener,
 		// t.run();
 	}
 
-	public void setGrid(Map grid) {
+	public void setGrid(GridMap grid) {
 		cell = new Cell();
 		mapJustLoaded = true;
 		this.grid = grid;
@@ -363,7 +363,7 @@ public class MapPanel extends JLayeredPane implements Observer, ActionListener,
 		return towers;
 	}
 
-	public Map getGrid() {
+	public GridMap getGrid() {
 		return grid;
 	}
 

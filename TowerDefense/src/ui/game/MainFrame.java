@@ -179,7 +179,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
 				MapManager mapManager = new MapManager();
-				Map grid = new Map((Grid) mapManager.loadMapFromFile(openFile
+				GridMap grid = new GridMap((Grid) mapManager.loadMapFromFile(openFile
 						.getSelectedFile().getAbsolutePath()));
 				mapPanel.setGrid(grid);
 				resetGameState();

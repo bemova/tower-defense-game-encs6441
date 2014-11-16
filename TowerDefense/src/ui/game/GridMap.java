@@ -13,7 +13,7 @@ import core.domain.warriors.defenders.towers.Tower;
  *
  */
 @SuppressWarnings("serial")
-public class Map extends Grid {
+public class GridMap extends Grid {
 
 	private Tower[][] towers;
 
@@ -21,7 +21,7 @@ public class Map extends Grid {
 	 * @param width Map width
 	 * @param height Map height
 	 */
-	public Map(int width, int height) {
+	public GridMap(int width, int height) {
 		super(width, height);
 		towers = new Tower[width][height];
 	}
@@ -30,7 +30,7 @@ public class Map extends Grid {
 	 * <b>Constructs a Map using a grid.</b>
 	 * @param grid Grid object 
 	 */
-	public Map(Grid grid) {
+	public GridMap(Grid grid) {
 		super(grid);
 		towers = new Tower[grid.getWidth()][grid.getHeight()];
 	}

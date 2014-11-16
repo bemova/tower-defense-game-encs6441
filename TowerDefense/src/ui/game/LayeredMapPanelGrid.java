@@ -13,19 +13,19 @@ import core.domain.warriors.defenders.towers.Tower;
 public class LayeredMapPanelGrid extends JPanel {
 	private Point mapTopLeft;
 	private Point mapButtomRight;
-	private Map grid;
+	private GridMap grid;
 	private Cell cell;
 	
 
 	public LayeredMapPanelGrid(Dimension dimension) {
-		this.grid = new Map(1, 1);
+		this.grid = new GridMap(1, 1);
 		setMapTopLeft(new Point(0, 0));
 		setMapButtomRight(new Point(0, 0));
 		setOpaque(false);
 		setDimension(dimension);
 	}
 
-	public void setGrid(Map grid) {
+	public void setGrid(GridMap grid) {
 		cell = new Cell();
 		this.grid = grid;
 	}
@@ -87,7 +87,7 @@ public class LayeredMapPanelGrid extends JPanel {
 	}
 
 
-	public Map getGrid() {
+	public GridMap getGrid() {
 		return grid;
 	}
 
