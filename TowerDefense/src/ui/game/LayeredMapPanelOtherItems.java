@@ -150,7 +150,6 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				Position pos = ((RegularMove) (wave.aliens.get(i).getMovingBehaviour())).getPixelPosition();
 				new CritterShape().draw(g, critterImage[i], pos.getX(),
 						pos.getY());
-				break;
 			}
 		}
 	}
@@ -362,7 +361,6 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			// critter.walk();
 			for (Critter critter : wave.aliens) {
 				critter.performMovingBehaviour();
-				break;
 			}
 
 			bullet.physic();
@@ -416,6 +414,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		File file;
 
 		for (int i = 0; i < wave.aliens.size(); i++) {
+				((RegularMove)(wave.aliens.get(i).getMovingBehaviour())).setFreezeTime(i*100);
+						
 			file = new File(classLoader.getResource(
 					wave.aliens.get(i).display()).getFile());
 			critterImage[i] = new ImageIcon(file.getPath());

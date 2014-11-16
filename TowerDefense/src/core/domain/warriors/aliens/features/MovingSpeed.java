@@ -32,7 +32,7 @@ public class MovingSpeed extends CritterFeatureDecorator {
 	 * it will be show the appearance of the critter
 	 */
 	@Override
-	public void display() {
+	public String display() {
 		this.critter.display();
 	}
 	/**

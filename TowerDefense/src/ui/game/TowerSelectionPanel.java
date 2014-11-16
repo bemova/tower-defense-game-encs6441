@@ -23,7 +23,7 @@ import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
 
-public class TowerSelectionPanel extends JPanel implements ActionListener {
+public class TowerSelectionPanel extends JPanel {
 
 	private boolean addTowerFlag;
 
@@ -148,24 +148,24 @@ public class TowerSelectionPanel extends JPanel implements ActionListener {
 	
 	
 	
-	public void actionPerformed(ActionEvent event) {
-		String command = event.getActionCommand();
-
-		switch (command) {
-		case DefenderConstants.MODERN_TOWER_TYPE:
-			towertype = DefenderConstants.MODERN_TOWER_TYPE;
-			tower(towertype);
-			break;
-		case DefenderConstants.ANCIENT_TOWER_TYPE:
-			towertype = DefenderConstants.ANCIENT_TOWER_TYPE;
-			tower(towertype);
-			break;
-		case DefenderConstants.KING_TOWER_TYPE:
-			towertype = DefenderConstants.KING_TOWER_TYPE;
-			tower(towertype);
-			break;
-		}
-	}
+//	public void actionPerformed(ActionEvent event) {
+//		String command = event.getActionCommand();
+//
+//		switch (command) {
+//		case DefenderConstants.MODERN_TOWER_TYPE:
+//			towertype = DefenderConstants.MODERN_TOWER_TYPE;
+//			tower(towertype);
+//			break;
+//		case DefenderConstants.ANCIENT_TOWER_TYPE:
+//			towertype = DefenderConstants.ANCIENT_TOWER_TYPE;
+//			tower(towertype);
+//			break;
+//		case DefenderConstants.KING_TOWER_TYPE:
+//			towertype = DefenderConstants.KING_TOWER_TYPE;
+//			tower(towertype);
+//			break;
+//		}
+//	}
 
 	private void tower(String towerType) {
 		TowerFactory towerFactory = new TowerFactory();
