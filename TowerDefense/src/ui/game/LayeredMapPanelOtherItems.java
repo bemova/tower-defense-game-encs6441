@@ -441,7 +441,20 @@ ActionListener, MouseListener, Runnable {
 
 	private void shoot(Tower defender, Critter target) {
 		defenderTargetPair.put(defender, target);
-		target.setLife(target.getLife() - 1);// must be: -tower power/impact
+		TowerFactory factory = new TowerFactory();
+		String defenderType = factory.getDecoratedName(defender.objectDetials());
+		switch (defenderType) {
+		case DefenderConstants.KING_TOWER_TYPE:
+			target.setLife(target.getLife() / 2);
+			break;
+		case DefenderConstants.MODERN_TOWER_TYPE:
+			target.setLife(target.getLife() - 1);// must be: -tower power/impact
+			break;
+		case DefenderConstants.ANCIENT_TOWER_TYPE:
+			((RegularMove)target.getMovingBehaviour()).setFreezeTime(1000);
+			break;
+		}
+		
 		try {
 			throw new Exception();
 		} catch (Exception e2) {
@@ -536,9 +549,10 @@ ActionListener, MouseListener, Runnable {
 						if (t != null) {
 							Map<Critter, Position> map = ((TowerFeatureDecorator) t)
 									.getCrittersLocation();
+
+							map.remove(c);
 							((TowerFeatureDecorator) t)
 							.setCrittersLocation(map);
-							map.remove(c);
 							System.out.println(c.Id);
 						}
 					}

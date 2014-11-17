@@ -13,6 +13,7 @@ import core.domain.warriors.defenders.towers.behaviours.MovingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.ShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.SoundBehaviour;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
+import core.domain.warriors.defenders.towers.towertype.TowerType;
 import core.domain.waves.Position;
 
 
@@ -28,8 +29,15 @@ public abstract class Tower extends Defender {
 	private TowerLevel level;
 	private Position towerPosition;
 	private String shootingStrategy;
+	private TowerType towerType; 
 	
 	
+	public TowerType getTowerType() {
+		return towerType;
+	}
+	public void setTowerType(TowerType towerType) {
+		this.towerType = towerType;
+	}
 	public String getShootingStrategy() {
 		return shootingStrategy;
 	}

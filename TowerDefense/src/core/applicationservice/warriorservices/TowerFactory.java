@@ -16,6 +16,7 @@ import core.domain.warriors.defenders.towers.towertype.AncientTower;
 import core.domain.warriors.defenders.towers.towertype.KingTower;
 import core.domain.warriors.defenders.towers.towertype.ModernTower;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
+import core.domain.warriors.defenders.towers.towertype.TowerType;
 /**
  * <b>this class is used as a application service to create a difrent type of factories by difrent features</b>
  * @author Team5
@@ -34,11 +35,17 @@ public class TowerFactory {
 			return null;
 		}
 		if (towertype.equalsIgnoreCase("ModernTower")) {
-			return new ModernTower();
+			ModernTower tower = new ModernTower();
+			tower.setTowerType(TowerType.Modern);
+			return tower;
 		} else if (towertype.equalsIgnoreCase("AncientTower")) {
-			return new AncientTower();
+			AncientTower tower = new AncientTower();
+			tower.setTowerType(TowerType.Ancient);
+			return tower;
 		} else if (towertype.equalsIgnoreCase("KingTower")) {
-			return new KingTower();
+			KingTower tower = new KingTower();
+			tower.setTowerType(TowerType.King);
+			return tower;
 		}
 		return null;
 	}
