@@ -592,7 +592,7 @@ ActionListener, MouseListener, Runnable {
 		// TODO Auto-generated method stub
 		LifeManager lifeManager = LifeManager.getInstance();
 		
-		int life = LifeManager.getLife() - escapedCritters;
+		int life = lifeManager.getLife() - escapedCritters;
 		System.out.println("life: " + life);
 		gameInfoPanel.setLife(life);
 		if (life <= 0) {

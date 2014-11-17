@@ -17,10 +17,14 @@ public class LifeManager {
 		}
 		return instance;
 	}
-	public static int getLife() {
+	@Override
+	public boolean equals(Object arg0) {
+		return super.equals(arg0);
+	}
+	public int getLife() {
 		return life;
 	}
-	public static void setLife(int life) {
+	public  void setLife(int life) {
 		LifeManager.life = life;
 	}
 	public void addLife(long life) {
