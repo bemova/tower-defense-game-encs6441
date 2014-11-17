@@ -17,6 +17,8 @@ import core.domain.waves.Position;
 public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	private Critter target;
 	public Map<Critter, Position> crittersLocation;
+	public double nearestDistance;
+	
 	public Map<Critter, Position> getCrittersLocation() {
 		return crittersLocation;
 	}
@@ -31,7 +33,7 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 		ShootingService service =  new ShootingService();
 		Critter c = service.nearestCritter(this);
 		if(c !=null){
-			setTarget(c);
+			//setTarget(c);
 			setChanged();
 			notifyObservers();
 		}
@@ -61,7 +63,7 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	public TowerFeatureDecorator getDefender(){
 		return this;
 	}
-	private void setTarget(Critter target) {
+	public void setTarget(Critter target) {
 		this.target = target;
 	}
 

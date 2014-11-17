@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import core.applicationservice.locationservices.PositionService;
 import core.domain.warriors.aliens.Critter;
+import core.domain.warriors.aliens.crittertype.IntelligentCritter;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 import core.domain.waves.Position;
@@ -13,9 +14,18 @@ import core.domain.waves.Position;
 public class ShootingService {
 	private static final Log4jLogger logger = new Log4jLogger();
 	public Critter nearestCritter(Tower tower){
-		Critter nearest = null;
-		Position nearestPosition =null;
 		double nearestDistance = Double.MAX_VALUE;
+		Critter critter = null;
+		if(((TowerFeatureDecorator)tower).getTarget() !=null){
+			Critter target = ((TowerFeatureDecorator)tower).getTarget();
+			Position targetPosition = target.getPath()[target.getCurrentPosition()];
+			nearestDistance = ((TowerFeatureDecorator)tower).nearestDistance;
+		}else{
+//			Critter target = null;
+//			target.setCurrentPosition(0);
+//			((TowerFeatureDecorator)tower).setTarget(target);
+//			Position targetPosition = new Position(0, 0);
+		}
 		try {
 			PositionService positionService = new PositionService();
 			TowerFactory towerFactory = new TowerFactory();
@@ -23,23 +33,19 @@ public class ShootingService {
 			Iterable<Entry<Critter, Position>> it = (((TowerFeatureDecorator)tower).getCrittersLocation()).entrySet();
 			for (Entry<Critter, Position> entry : it) {
 				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range)){
-					if(nearest != null){
-						if (positionService.getDistance(nearestPosition, tower.getTowerPosition()) < nearestDistance) {
-							nearestDistance= positionService.getDistance(nearestPosition, tower.getTowerPosition());
-							 nearest = entry.getKey();
-							 nearestPosition = entry.getValue();
+					double dis = positionService.getDistance(tower.getTowerPosition(), entry.getValue());
+						if ( dis < nearestDistance) {
+							((TowerFeatureDecorator)tower).nearestDistance = positionService.getDistance(tower.getTowerPosition(), entry.getValue());
+							((TowerFeatureDecorator)tower).setTarget(entry.getKey());
+							((TowerFeatureDecorator)tower).getTarget();
+							nearestDistance = positionService.getDistance(tower.getTowerPosition(), entry.getValue());
 						}
-					}else{
-						 nearest = entry.getKey();
-						 nearestPosition = entry.getValue();
-						 nearestDistance = positionService.getDistance(nearestPosition, tower.getTowerPosition());
-					}
 				}
 			}
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
 		}
-		return nearest;
+		return ((TowerFeatureDecorator)tower).getTarget();
 	}
 	public Critter weakestCritter(Tower tower){
 		Critter weakest = null;

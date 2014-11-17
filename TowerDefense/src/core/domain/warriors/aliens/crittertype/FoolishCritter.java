@@ -20,6 +20,7 @@ public class FoolishCritter extends Critter {
 		this.regularMove = new RegularMove(path, initalPosition);
 		setMovingBehaviour(regularMove);
 		this.description = "FoolishCritter";
+		setPath(path);
 		this.setLife(5);
 	}
 

@@ -14,22 +14,22 @@ import core.domain.waves.Position;
  * @version 0.1
  */
 public abstract class Critter {
-	
+
 	/** The Id. */
 	public String Id= UUID.randomUUID().toString();
 	private int currentPosition;
 	private Position[] path;
 	private Position initialPixel;
 
-	
+
 	/** The moving behaviour. */
 	MovingBehaviour movingBehaviour;
-	
+
 	/** The sound behaviour. */
 	SoundBehaviour soundBehaviour;
-	
+
 	private int life;
-	
+
 	public int getLife() {
 		return life;
 	}
@@ -38,7 +38,7 @@ public abstract class Critter {
 		this.life = life;
 	}
 
-	
+
 	public int getCurrentPosition() {
 		return currentPosition;
 	}
@@ -55,11 +55,11 @@ public abstract class Critter {
 	public void setMovingBehaviour(MovingBehaviour movingBehaviour) {
 		this.movingBehaviour = movingBehaviour;
 	}
-	
+
 	public MovingBehaviour getMovingBehaviour() {
 		return this.movingBehaviour;
 	}
-	
+
 	/**
 	 * Sets the sound behaviour.
 	 *
@@ -68,9 +68,9 @@ public abstract class Critter {
 	public void setSoundBehaviour(SoundBehaviour soundBehaviour) {
 		this.soundBehaviour = soundBehaviour;
 	}
-	
 
-	
+
+
 	public Position getInitialPixel() {
 		return initialPixel;
 	}
@@ -85,7 +85,7 @@ public abstract class Critter {
 	public void performMovingBehaviour(){
 		movingBehaviour.move();
 	}
-	
+
 	/**
 	 * Perform sound behaviour.
 	 */
@@ -95,7 +95,7 @@ public abstract class Critter {
 
 	/** The description. */
 	protected String description;
-	
+
 	/**
 	 * Gets the description.
 	 *
@@ -104,21 +104,22 @@ public abstract class Critter {
 	public String getDescription() {
 		return description;
 	}
-	
-	
+
+
 	public Position[] getPath() {
 		return path;
 	}
 
 	public void setPath(Position[] path) {
-		this.path = path;
+		if(path != null)
+			this.path = path;
 	}
 
 	/**
 	 * Display.
 	 */
 	public abstract String display();
-	
+
 	/**
 	 * Life booster.
 	 *
