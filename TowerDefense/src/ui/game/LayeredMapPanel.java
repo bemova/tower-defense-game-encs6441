@@ -2,25 +2,19 @@ package ui.game;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 import core.domain.account.BankManager;
 import core.domain.maps.Grid;
 import core.domain.warriors.defenders.towers.Tower;
 
-public class LayeredMapPanel extends JLayeredPane implements Observer, ActionListener,
-		MouseListener, Runnable {
-	/**
-	 * 
-	 */
+/**
+ * @author Team 5
+ * This class is JLayeredPane that has two layers, one for map and one for towers and critters.
+ */
+public class LayeredMapPanel extends JLayeredPane {
+
 	private static final long serialVersionUID = 1L;
 	public Thread mapT;
 	private GridMap grid;
@@ -28,7 +22,6 @@ public class LayeredMapPanel extends JLayeredPane implements Observer, ActionLis
 	private Point mapTopLeft;
 	private Point mapButtomRight;
 	
-	private JPanel topBar;
 	
 	private LayeredMapPanelGrid gridLayer;
 	private LayeredMapPanelOtherItems otherItemsLayer;
@@ -55,59 +48,6 @@ public class LayeredMapPanel extends JLayeredPane implements Observer, ActionLis
 		otherItemsLayer = new LayeredMapPanelOtherItems(dimension, gameInfoPanel, mainFrame);
 		add(gridLayer,new Integer(1));
 		add(otherItemsLayer,new Integer(2));
-
-		mapT = new Thread(this);
-		
-//		setVisible(true);
-	}
-
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-System.out.println("Mouse Clicked");		
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
@@ -118,7 +58,6 @@ System.out.println("Mouse Clicked");
 		this.grid = grid;
 		gridLayer.setGrid(grid);
 		otherItemsLayer.setGrid(grid);
-		
 	}
 
 
@@ -136,6 +75,11 @@ System.out.println("Mouse Clicked");
 		return otherItemsLayer.getBank();
 	}
 
+	/**
+	 * This method calculates the starting point of the map on the screen in pixels to draw the map right in the center of the screen.
+	 * @param mapPanelDimension dimension of the map panel. 
+	 * @return a point in pixel that represents the top-left corner of the map on the screen.
+	 */
 	private Point calcMapStartingPoint(Dimension mapPanelDimension) {
 		int initX = 0;
 		int initY = 0;
@@ -157,6 +101,10 @@ System.out.println("Mouse Clicked");
 		return new Point(initX, initY);
 	}
 	
+	/** This method calculates the bottom-right corner of the map on the screen in pixels to know the boundary of the map on the screen.
+	 * @param mapPanelDimension dimension of the map panel.
+	 * @return a point in pixel that represents the bottom-right corner of the map on the screen.
+	 */
 	private Point calcMapButtomRight(Dimension mapPanelDimension){
 		int initX = 0;
 		int initY = 0;
@@ -204,6 +152,10 @@ System.out.println("Mouse Clicked");
 	}
 
 
+	/**
+	 * When a map is loaded, this method is called to resize the panel and its layers.
+	 * @param mapPanelDimension width and height of the map in cell numbers.
+	 */
 	public void resetSize(Dimension mapPanelDimension) {
 		Point mapTopLeft = calcMapStartingPoint(mapPanelDimension);
 		Point mapBottomRight = calcMapButtomRight(mapPanelDimension);
@@ -218,20 +170,4 @@ System.out.println("Mouse Clicked");
 		otherItemsLayer.calcCritterStartingPoint();
 		
 	}
-
-	public void run() {
-		while (true) {
-			otherItemsLayer.performScene();
-//			critter.walk();
-//			bullet.physic();
-//			repaint();
-			
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
 }
