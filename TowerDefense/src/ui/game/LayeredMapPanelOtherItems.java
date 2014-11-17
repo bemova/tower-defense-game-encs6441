@@ -600,7 +600,8 @@ ActionListener, MouseListener, Runnable {
 	private void gameOver() {
 		System.out.println("Game Over");
 		JOptionPane.showMessageDialog(null, "Game Over");
-		// mapT.stop();
+		 mapT.stop();
+		 System.exit(0);
 	}
 
 	// public void startWave() {
@@ -671,7 +672,7 @@ ActionListener, MouseListener, Runnable {
 
 	public void resumeGame() {
 		// TODO Auto-generated method stub
-
+mapT.resume();
 	}
 
 }
