@@ -61,8 +61,8 @@ public class ShootingService {
 	}
 	/**
 	 * Calculate weakest Critter based on critter life
-	 * @param tower
-	 * @return weakestCritter
+	 * @param tower a tower
+	 * @return weakestCritter weakest in the range
 	 */
 	public Critter weakestCritter(Tower tower){
 		Critter weakest = null;

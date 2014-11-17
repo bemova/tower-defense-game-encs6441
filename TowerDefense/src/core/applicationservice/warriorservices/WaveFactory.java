@@ -14,6 +14,7 @@ public class WaveFactory {
 	/**
 	 * it takes wave type name and it will create a type of wave
 	 * @param waveType wave that contains a list of critter
+	 * @param start start point
 	 * @param path valid path
 	 * @return Wave correct wave for walking 
 	 * 

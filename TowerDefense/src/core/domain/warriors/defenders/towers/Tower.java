@@ -119,7 +119,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * Set shooting behavior
-	 * @param shootingBehaviour
+	 * @param shootingBehaviour shooting behaviour
 	 */
 	public void setShootingBehaviour(ShootingBehaviour shootingBehaviour) {
 		this.shootingBehaviour = shootingBehaviour;
@@ -134,7 +134,7 @@ public abstract class Tower extends Defender {
 	/**
 	 * Sets the sound behaviour.
 	 *
-	 * @param soundBehaviour the new sound behaviour
+	 * @param bulletShootingBehaviour the new sound behaviour
 	 */
 	public void setBulletShootingBehaviour(BulletShootingBehaviour bulletShootingBehaviour) {
 		this.bulletShootingBehaviour = bulletShootingBehaviour;

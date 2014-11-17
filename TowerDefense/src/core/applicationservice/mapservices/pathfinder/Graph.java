@@ -20,7 +20,7 @@ public class Graph {
 
 	/**
 	 * Initializes an empty graph with <tt>V</tt> vertices and 0 edges.
-	 * param V the number of vertices
+	 * @param V the number of vertices
 	 */
 	public Graph(int V) {
 		if (V < 0) throw new IllegalArgumentException("Number of vertices must be nonnegative");
@@ -36,7 +36,8 @@ public class Graph {
 	 * The format is the number of vertices <em>V</em>,
 	 * followed by the number of edges <em>E</em>,
 	 * followed by <em>E</em> pairs of vertices, with each entry separated by whitespace.
-	 * @param in the input stream
+	 * @param igraphInfo  the input stream
+	 * @param nodes graph nodes
 	 */
 	public Graph(List<String> graphInfo, int nodes){
 		this(nodes);
