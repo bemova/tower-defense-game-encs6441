@@ -27,8 +27,15 @@ public abstract class Tower extends Defender {
 	private LineShootingBehaviour lineShootingBehaviour;
 	private TowerLevel level;
 	private Position towerPosition;
+	private String shootingStrategy;
 	
 	
+	public String getShootingStrategy() {
+		return shootingStrategy;
+	}
+	public void setShootingStrategy(String shootingStrategy) {
+		this.shootingStrategy = shootingStrategy;
+	}
 	public Position getTowerPosition() {
 		return towerPosition;
 	}

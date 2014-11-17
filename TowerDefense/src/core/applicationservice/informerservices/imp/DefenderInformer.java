@@ -30,6 +30,7 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	private Position waveHeadPosition;
 	private Critter critter;
 	private Position alienPosition;
+	private String shootingStrategy;
 	/** <b>List of observer that contains the all observer for implementing our observer design pattern</b>
 	 * 
 	 */
@@ -122,7 +123,7 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	public void notifyDefenders() {
 		try {
 			for (Observer ob : observers) {
-				ob.alienUpdate(alienPosition, critter);
+				ob.alienUpdate(alienPosition, critter, shootingStrategy);
 			}
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
@@ -151,11 +152,12 @@ public class DefenderInformer implements Subject, IDefenderInformer {
 	 * @param y as integer
 	 */
 	@Override
-	public void setAlienPosition(int x, int y, Critter critter){
+	public void setAlienPosition(int x, int y, Critter critter, String strategy){
 		try {
 			this.alienPosition.setX(x);
 			this.alienPosition.setY(y);
 			this.critter = critter;
+			this.shootingStrategy = strategy;
 			alienPositionChange();
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);

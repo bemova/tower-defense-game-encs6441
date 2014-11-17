@@ -40,7 +40,7 @@ public interface IDefenderInformer {
 	 * @param y as integer
 	 * @param critter critter object reference
 	 */
-	public void setAlienPosition(int x, int y, Critter critter);
+	public void setAlienPosition(int x, int y, Critter critter, String strategy);
 	
 	/**
 	 * <b>signature of the position changes</b>

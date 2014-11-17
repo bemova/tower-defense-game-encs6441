@@ -26,7 +26,7 @@ public class ModernTower extends Tower {
 		setSoundBehaviour(new ShootingSound());
 		setBulletShootingBehaviour(new BulletShooting());
 		setLineShootingBehaviour(new LineShooting());
-//		super.crittersLocation = new HashMap<Critter, Position>();
+		//super.crittersLocation = new HashMap<Critter, Position>();
 		this.description = "ModernTower";
 	}
 	/**

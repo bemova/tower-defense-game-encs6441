@@ -1,6 +1,8 @@
 package core.domain.warriors.aliens.behaviourimp;
 
 import core.applicationservice.informerservices.imp.DefenderInformer;
+import core.applicationservice.locationservices.PositionService;
+import core.applicationservice.warriorservices.ShootingService;
 import core.contract.MapConstants;
 import core.domain.warriors.aliens.behaviours.MovingBehaviour;
 import core.domain.waves.Position;

@@ -1,5 +1,7 @@
 package ui.game;
 
+import infrastructure.loggin.Log4jLogger;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -8,13 +10,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -41,7 +44,7 @@ import core.domain.waves.Position;
 import core.domain.waves.Wave;
 
 public class LayeredMapPanelOtherItems extends JPanel implements Observer,
-		ActionListener, MouseListener, Runnable {
+ActionListener, MouseListener, Runnable {
 	/**
 	 * 
 	 */
@@ -77,10 +80,11 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 	private GameInfoPanel gameInfoPanel;
 
-	private CopyOnWriteArrayList<Critter> currentWaveAlienList;
+	private List<Critter> currentWaveAlienList;
 
 	private MainFrame mainFrame;
-
+	private static final Log4jLogger logger = new Log4jLogger();
+	
 	public LayeredMapPanelOtherItems(Dimension dimension,
 			GameInfoPanel gameInfoPanel, MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
@@ -218,21 +222,21 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 					int range = 1;
 					if ((path[c.getCurrentPosition()].getY() <= t2
 							.getTowerPosition().getY() + range && path[c
-							.getCurrentPosition()].getY() >= t2
-							.getTowerPosition().getY() - range)
-							&& (path[c.getCurrentPosition()].getX() <= t2
-									.getTowerPosition().getX() + range && path[c
-									.getCurrentPosition()].getX() >= t2
-									.getTowerPosition().getX() - range)) {
+							                                           .getCurrentPosition()].getY() >= t2
+							                                           .getTowerPosition().getY() - range)
+							                                           && (path[c.getCurrentPosition()].getX() <= t2
+							                                           .getTowerPosition().getX() + range && path[c
+							                                                                                      .getCurrentPosition()].getX() >= t2
+							                                                                                      .getTowerPosition().getX() - range)) {
 
 						new LineBullet()
-								.draw(g, convertCellToPixel(t2
-										.getTowerPosition()),
-										convertCellToPixel(path[c
-												.getCurrentPosition()]));
+						.draw(g, convertCellToPixel(t2
+								.getTowerPosition()),
+								convertCellToPixel(path[c
+								                        .getCurrentPosition()]));
 					}
 					its.remove(pairs);// avoids a
-										// ConcurrentModificationException
+					// ConcurrentModificationException
 				}
 			}
 		}
@@ -336,8 +340,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				tower.setTowerPosition(new Position(x, y));
 				grid.setCell(x, y, GridCellContentType.TOWER);
 				grid.setTowers(towers);
-				((TowerFeatureDecorator) tower)
-						.setCrittersLocation(new HashMap<Critter, Position>());
+//				((TowerFeatureDecorator) tower)
+//				.setCrittersLocation(new HashMap<Critter, Position>());
 				informer.registerObserver((TowerFeatureDecorator) tower);
 				((TowerFeatureDecorator) tower).addObserver(this);
 				// draw(x, y);
@@ -438,8 +442,16 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private void shoot(Tower defender, Critter target) {
 		defenderTargetPair.put(defender, target);
 		target.setLife(target.getLife() - 1);// must be: -tower power/impact
-		System.out.println("shooting :" + defender.Id + " --> " + target.Id
-				+ "(" + target.getCurrentPosition() + ")");
+		try {
+			throw new Exception();
+		} catch (Exception e2) {
+			logger.writer("shooting :" + defender.Id + " --> " + target.Id
+					+ "(" + target.getCurrentPosition() + ")", e2);
+			
+			System.out.println("shooting :" + defender.Id + " --> " + target.Id
+					+ "(" + target.getCurrentPosition() + ")");
+		}
+		
 	}
 
 	private void upgradeTower() {
@@ -463,7 +475,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			towers[x][y] = null;
 			grid.setTowers(towers);
 			grid.setCell(x, y, GridCellContentType.SCENERY);
-			 repaint();
+			repaint();
 		}
 	}
 
@@ -480,7 +492,9 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 								.getCurrentPosition();
 						Position p = path[i];
 						critter.setCurrentPosition(i);
-						informer.setAlienPosition(p.getX(), p.getY(), critter);
+						//PositionService positionService = new PositionService();
+						//if(positionService.isInRange( towers[x][y].getTowerPosition(), p, 1))
+							informer.setAlienPosition(p.getX(), p.getY(), critter,towers[x][y].getShootingStrategy());
 
 					} else {
 						System.out.println("At exit point.");
@@ -523,7 +537,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 							Map<Critter, Position> map = ((TowerFeatureDecorator) t)
 									.getCrittersLocation();
 							((TowerFeatureDecorator) t)
-									.setCrittersLocation(map);
+							.setCrittersLocation(map);
 							map.remove(c);
 							System.out.println(c.Id);
 						}
@@ -612,14 +626,14 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		File file;
 
 		// currentWaveAlienList.addAll(wave.aliens);
-		currentWaveAlienList = new CopyOnWriteArrayList<>();
+		currentWaveAlienList = new ArrayList<>();
 		for (int i = 0; i < wave.aliens.size(); i++) {
 			currentWaveAlienList.add(wave.aliens.get(i));
 		}
 
 		for (int i = 0; i < currentWaveAlienList.size(); i++) {
 			((RegularMove) (currentWaveAlienList.get(i).getMovingBehaviour()))
-					.setFreezeTime(i * 100);
+			.setFreezeTime(i * 100);
 
 			file = new File(classLoader.getResource(
 					currentWaveAlienList.get(i).display()).getFile());

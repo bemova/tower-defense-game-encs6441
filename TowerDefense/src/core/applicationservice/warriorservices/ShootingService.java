@@ -2,6 +2,7 @@ package core.applicationservice.warriorservices;
 
 import infrastructure.loggin.Log4jLogger;
 
+import java.util.Map;
 import java.util.Map.Entry;
 
 import core.applicationservice.locationservices.PositionService;
@@ -21,25 +22,30 @@ public class ShootingService {
 			Position targetPosition = target.getPath()[target.getCurrentPosition()];
 			nearestDistance = ((TowerFeatureDecorator)tower).nearestDistance;
 		}else{
-//			Critter target = null;
-//			target.setCurrentPosition(0);
-//			((TowerFeatureDecorator)tower).setTarget(target);
-//			Position targetPosition = new Position(0, 0);
+			//			Critter target = null;
+			//			target.setCurrentPosition(0);
+			//			((TowerFeatureDecorator)tower).setTarget(target);
+			//			Position targetPosition = new Position(0, 0);
 		}
 		try {
 			PositionService positionService = new PositionService();
 			TowerFactory towerFactory = new TowerFactory();
 			int range = towerFactory.getRange(tower);
+			Map<Critter, Position> map =  (((TowerFeatureDecorator)tower).getCrittersLocation());
 			Iterable<Entry<Critter, Position>> it = (((TowerFeatureDecorator)tower).getCrittersLocation()).entrySet();
+			Critter c = null;
 			for (Entry<Critter, Position> entry : it) {
 				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range)){
 					double dis = positionService.getDistance(tower.getTowerPosition(), entry.getValue());
-						if ( dis < nearestDistance) {
-							((TowerFeatureDecorator)tower).nearestDistance = positionService.getDistance(tower.getTowerPosition(), entry.getValue());
-							((TowerFeatureDecorator)tower).setTarget(entry.getKey());
-							((TowerFeatureDecorator)tower).getTarget();
-							nearestDistance = positionService.getDistance(tower.getTowerPosition(), entry.getValue());
-						}
+					//nearestDistance = positionService.getDistance(tower.getTowerPosition(), entry.getValue());
+					if ( dis <= nearestDistance) {
+						((TowerFeatureDecorator)tower).nearestDistance = positionService.getDistance(tower.getTowerPosition(), entry.getValue());
+						((TowerFeatureDecorator)tower).setTarget(entry.getKey());
+						((TowerFeatureDecorator)tower).getTarget();
+						nearestDistance = positionService.getDistance(tower.getTowerPosition(), entry.getValue());
+						map.remove(entry);
+						((TowerFeatureDecorator)tower).setCrittersLocation(map);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -55,20 +61,13 @@ public class ShootingService {
 			PositionService positionService = new PositionService();
 			TowerFactory towerFactory = new TowerFactory();
 			int range = towerFactory.getRange(tower);
+			Map<Critter, Position> map = ((TowerFeatureDecorator)tower).getCrittersLocation();
 			Iterable<Entry<Critter, Position>> it = (((TowerFeatureDecorator)tower).getCrittersLocation()).entrySet();
 			for (Entry<Critter, Position> entry : it) {
-				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range)){
-					if(weakest != null){
-						if (((Critter)entry.getKey()).getLife() < lowestLife) {
-							lowestLife= ((Critter)entry.getKey()).getLife();
-							 weakest = entry.getKey();
-							 weakestPosition = entry.getValue();
-						}
-					}else{
-						 weakest = entry.getKey();
-						 weakestPosition = entry.getValue();
-						 lowestLife= ((Critter)entry.getKey()).getLife();
-					}
+				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range) && entry.getKey().getLife() < lowestLife){
+					lowestLife= ((Critter)entry.getKey()).getLife();
+					weakest = entry.getKey();
+					weakestPosition = entry.getValue();
 				}
 			}
 		} catch (Exception e) {
@@ -84,25 +83,62 @@ public class ShootingService {
 			PositionService positionService = new PositionService();
 			TowerFactory towerFactory = new TowerFactory();
 			int range = towerFactory.getRange(tower);
+			Map<Critter, Position> map = ((TowerFeatureDecorator)tower).getCrittersLocation();
 			Iterable<Entry<Critter, Position>> it = (((TowerFeatureDecorator)tower).getCrittersLocation()).entrySet();
 			for (Entry<Critter, Position> entry : it) {
-				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range)){
-					if(strongest != null){
-						if (((Critter)entry.getKey()).getLife() > highestLife) {
-							highestLife= ((Critter)entry.getKey()).getLife();
-							strongest = entry.getKey();
-							strongestPosition = entry.getValue();
-						}
-					}else{
-						 strongest = entry.getKey();
-						 strongestPosition = entry.getValue();
-						 highestLife= ((Critter)entry.getKey()).getLife();
-					}
+				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range) && entry.getKey().getLife() > highestLife){
+					highestLife= ((Critter)entry.getKey()).getLife();
+					strongest = entry.getKey();
+					strongestPosition = entry.getValue();
 				}
 			}
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
 		}
 		return strongest;
+	}
+	public Critter nearToEndCritter(Tower tower,Position[] path){
+		Critter nearToEnd = null;
+		Position nearToEndPosition =null;
+		int nearestDistance = path.length - 1;
+		try {
+			PositionService positionService = new PositionService();
+			TowerFactory towerFactory = new TowerFactory();
+			int range = towerFactory.getRange(tower);
+			Map<Critter, Position> map = ((TowerFeatureDecorator)tower).getCrittersLocation();
+			Iterable<Entry<Critter, Position>> it = (((TowerFeatureDecorator)tower).getCrittersLocation()).entrySet();
+			for (Entry<Critter, Position> entry : it) {
+				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range) && ((path.length -1) - entry.getKey().getCurrentPosition())<= nearestDistance){
+					nearestDistance= (path.length -1) - entry.getKey().getCurrentPosition();
+					nearToEnd = entry.getKey();
+					nearToEndPosition = entry.getValue();
+				}
+			}
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
+		return nearToEnd;
+	}
+	public Critter nearToStartCritter(Tower tower,Position[] path){
+		Critter nearToStart = null;
+		Position nearToStartPosition =null;
+		int nearestDistance = path.length - 1;
+		try {
+			PositionService positionService = new PositionService();
+			TowerFactory towerFactory = new TowerFactory();
+			int range = towerFactory.getRange(tower);
+			Map<Critter, Position> map = ((TowerFeatureDecorator)tower).getCrittersLocation();
+			Iterable<Entry<Critter, Position>> it = (((TowerFeatureDecorator)tower).getCrittersLocation()).entrySet();
+			for (Entry<Critter, Position> entry : it) {
+				if(positionService.isInRange(tower.getTowerPosition(), entry.getValue(), range) && entry.getKey().getCurrentPosition() <= nearestDistance){
+					nearestDistance= (path.length -1) - entry.getKey().getCurrentPosition();
+					nearToStart = entry.getKey();
+					nearToStartPosition = entry.getValue();
+				}
+			}
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
+		return nearToStart;
 	}
 }

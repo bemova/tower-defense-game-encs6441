@@ -21,7 +21,7 @@ public class FoolishCritter extends Critter {
 		setMovingBehaviour(regularMove);
 		this.description = "FoolishCritter";
 		setPath(path);
-		this.setLife(5);
+		this.setLife(200);
 	}
 
 	public RegularMove getRegularMove() {

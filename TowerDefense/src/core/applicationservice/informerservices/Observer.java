@@ -14,6 +14,6 @@ public interface Observer {
 	 * @param position  as Position that represent the position of the wave's head
 	 */
 	public void waveUpdate(Position position);
-	public void alienUpdate(Position position, Critter critter);
+	public void alienUpdate(Position position, Critter critter,String shootingStrategy);
 
 }

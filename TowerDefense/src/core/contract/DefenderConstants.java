@@ -20,5 +20,11 @@ public class DefenderConstants {
 	public static final String MODERN_TOWER_TYPE = "ModernTower";
 	public static final String ANCIENT_TOWER_TYPE = "AncientTower";
 	public static final String KING_TOWER_TYPE = "KingTower";
+	
+	public static final String NearToEnd_Strategy = "Nearest To End";
+	public static final String NearToStart_Strategy = "Nearest To Start";
+	public static final String Weakest_Strategy = "Weakest";
+	public static final String Strangest_Strategy = "Strangest";
+	
 
 }
