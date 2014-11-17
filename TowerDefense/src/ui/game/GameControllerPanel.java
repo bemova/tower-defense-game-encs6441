@@ -102,5 +102,8 @@ public class GameControllerPanel extends JPanel {
 	public void wavaCompleted() {
 		this.gameState = "completed";
 		tglbtnNewToggleButton_1.setText("New Wave");
+		int waveNum = (mapPanel.getGameInfoPanel()).getWave();
+		(mapPanel.getGameInfoPanel()).setWave(waveNum + 1);
+		(mapPanel.getGameInfoPanel()).repaint();
 	}
 }

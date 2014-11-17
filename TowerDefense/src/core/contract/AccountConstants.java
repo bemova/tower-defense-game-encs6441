@@ -6,5 +6,5 @@ package core.contract;
  */
 public class AccountConstants {
 	public static final int DEFAULT_BALANCE = 250;
-	public static final int DEFAULT_LIFE = 1;
+	public static final int DEFAULT_LIFE = 5;
 }

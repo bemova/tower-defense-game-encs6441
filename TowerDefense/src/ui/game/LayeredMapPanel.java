@@ -32,9 +32,21 @@ public class LayeredMapPanel extends JLayeredPane implements Observer, ActionLis
 	
 	private LayeredMapPanelGrid gridLayer;
 	private LayeredMapPanelOtherItems otherItemsLayer;
+	private GameInfoPanel gameInfoPanel;
+
+
+	public GameInfoPanel getGameInfoPanel() {
+		return gameInfoPanel;
+	}
+
+
+	public void setGameInfoPanel(GameInfoPanel gameInfoPanel) {
+		this.gameInfoPanel = gameInfoPanel;
+	}
 
 
 	public LayeredMapPanel(Dimension dimension, GameInfoPanel gameInfoPanel, MainFrame mainFrame) {
+		this.gameInfoPanel = gameInfoPanel;
 		this.grid = new GridMap(1, 1);
 		setMapTopLeft(new Point(0, 0));
 		setMapButtomRight(new Point(0, 0));

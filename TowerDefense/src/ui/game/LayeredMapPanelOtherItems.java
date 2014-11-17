@@ -553,6 +553,7 @@ ActionListener, MouseListener, Runnable {
 			Critter c = currentWaveAlienList.get(i);
 			if (c.getLife() <= 0) {
 				bank.addBalance(((long) c.lifeBooster()));
+				//bank.addBalance(((long) ));
 				availFunds = (long) (this.bank.getBalance() + c.lifeBooster());
 				gameInfoPanel.setBank((int) availFunds);
 				for (Tower[] t1 : towers) {
