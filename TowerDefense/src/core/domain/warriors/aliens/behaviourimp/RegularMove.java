@@ -116,7 +116,7 @@ public class RegularMove implements MovingBehaviour {
 	}
 	/**
 	 * Set freez time for ice tower
-	 * @param freezeTime
+	 * @param freezeTime time for freezing a critter
 	 */
 	public void setFreezeTime(int freezeTime) {
 		this.freezeTime = freezeTime;

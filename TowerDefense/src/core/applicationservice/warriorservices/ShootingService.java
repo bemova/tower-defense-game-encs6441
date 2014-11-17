@@ -88,8 +88,8 @@ public class ShootingService {
 	}
 	/**
 	 * Calculate strongest Critter Critter based on critter life
-	 * @param tower
-	 * @return strongestCritter
+	 * @param tower tower
+	 * @return strongestCritter return the strongest
 	 */
 	public Critter strongestCritter(Tower tower){
 		Critter strongest = null;
@@ -115,9 +115,9 @@ public class ShootingService {
 	}
 	/**
 	 * Calculate nearest critter to exit gate
-	 * @param tower
-	 * @param path
-	 * @return nearToEndCritter
+	 * @param tower tower
+	 * @param path path in amap
+	 * @return nearToEndCritter nearest critter that is in the range of the tower
 	 */
 	public Critter nearToEndCritter(Tower tower,Position[] path){
 		Critter nearToEnd = null;
@@ -143,9 +143,9 @@ public class ShootingService {
 	}
 	/**
 	 * Calculate nearest critter to entrance gate
-	 * @param tower
-	 * @param path
-	 * @return nearToStartCritter
+	 * @param tower tower
+	 * @param path walid path
+	 * @return nearToStartCritter nearest to start
 	 */
 	public Critter nearToStartCritter(Tower tower,Position[] path){
 		Critter nearToStart = null;

@@ -15,6 +15,8 @@ public class FoolishCritter extends Critter {
 	
 	/**
 	 * Instantiates a new foolish critter.
+	 * @param initalPosition init position 
+	 * @param path correct phat in the map
 	 */
 	public FoolishCritter(Position initalPosition, Position[] path) {
 		this.regularMove = new RegularMove(path, initalPosition);

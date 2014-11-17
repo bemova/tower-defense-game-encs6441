@@ -71,8 +71,12 @@ public class DepthFirstPaths {
 
     /**
      * Unit tests the <tt>DepthFirstPaths</tt> data type.
-     * @param height 
-     * @param length 
+     * @param nodes all node of graph
+     * @param graphInfo graph info that contains the relations
+     * @param start start point
+     * @param end end point
+     * @param nodesNum nodes number in the graph
+     * @return Position[] it will return the currect path 
      */
     public static Position[] getPath(Map<Position,Integer> nodes, List<String> graphInfo, int start, int end, int nodesNum) {
     	

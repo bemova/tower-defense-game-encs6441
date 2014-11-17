@@ -39,6 +39,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Launch the application.
+	 * @param args for running
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

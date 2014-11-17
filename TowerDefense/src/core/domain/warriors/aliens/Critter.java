@@ -42,7 +42,7 @@ public abstract class Critter {
 	/**
 	 * set critters life
 	 *  
-	 * @param life
+	 * @param life life of player
 	 */
 	public void setLife(int life) {
 		this.life = life;
@@ -60,7 +60,7 @@ public abstract class Critter {
 	/**
 	 * set critter current position
 	 * 
-	 * @param currentPosition
+	 * @param currentPosition current position 
 	 */
 	public void setCurrentPosition(int currentPosition) {
 		this.currentPosition = currentPosition;
@@ -97,7 +97,7 @@ public abstract class Critter {
 	/**
 	 * get initialPixel of a critter
 	 * 
-	 * @return
+	 * @return position 
 	 */
 	public Position getInitialPixel() {
 		return initialPixel;
@@ -106,7 +106,7 @@ public abstract class Critter {
 	/**
 	 * Set initalPixel for a critter
 	 * 
-	 * @param initialPixel
+	 * @param initialPixel initilaziation 
 	 */
 	public void setInitialPixel(Position initialPixel) {
 		this.initialPixel = initialPixel;
@@ -150,22 +150,14 @@ public abstract class Critter {
 	/**
 	 * Set a valid path for critters
 	 * 
-	 * @param path
+	 * @param path correct path
 	 */
 	public void setPath(Position[] path) {
 		if(path != null)
 			this.path = path;
 	}
 
-	/**
-	 * Display.
-	 */
 	public abstract String display();
 
-	/**
-	 * Life booster.
-	 * 
-	 * @return the double
-	 */
 	public abstract double lifeBooster();
 }

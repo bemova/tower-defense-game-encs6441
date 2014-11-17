@@ -36,6 +36,7 @@ public class TowerSelectionPanel extends JPanel {
 	
 	/**
 	 * Create the panel.
+	 * @param towerInfoPanel towerInfoPanel
 	 */
 	public TowerSelectionPanel(TowerInfoPanel towerInfoPanel) {
 		this.towerInfoPanel = towerInfoPanel;

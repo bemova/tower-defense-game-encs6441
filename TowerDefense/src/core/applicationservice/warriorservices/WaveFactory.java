@@ -13,8 +13,10 @@ public class WaveFactory {
 
 	/**
 	 * it takes wave type name and it will create a type of wave
-	 * @param wave that contains a list of critter
-	 * @return Wave 
+	 * @param waveType wave that contains a list of critter
+	 * @param path valid path
+	 * @return Wave correct wave for walking 
+	 * 
 	 */
 	public Wave getWave(String waveType,Position start, Position[] path) {
 		Wave wave = new Wave();
