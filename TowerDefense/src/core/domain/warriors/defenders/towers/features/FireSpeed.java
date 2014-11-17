@@ -26,7 +26,7 @@ public class FireSpeed extends TowerFeatureDecorator {
 	}
 	/**
 	 * Get tower and create a critter map positions
-	 * @param tower
+	 * @param tower the tower that we want to decorate
 	 */
 	public FireSpeed(Tower tower) {
 		this.tower = tower;

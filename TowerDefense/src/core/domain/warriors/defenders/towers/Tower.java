@@ -45,7 +45,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * Set tower type
-	 * @param towerType
+	 * @param towerType tower type is a enum that can describe the decorated object for a tower
 	 */
 	public void setTowerType(TowerType towerType) {
 		this.towerType = towerType;
@@ -59,7 +59,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * Set shooting strategy
-	 * @param shootingStrategy
+	 * @param shootingStrategy shooting strategy for killing the critters
 	 */
 	public void setShootingStrategy(String shootingStrategy) {
 		this.shootingStrategy = shootingStrategy;
@@ -73,7 +73,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * Set tower position
-	 * @param towerPosition
+	 * @param towerPosition tower position on the map
 	 */
 	public void setTowerPosition(Position towerPosition) {
 		this.towerPosition = towerPosition;
@@ -87,7 +87,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * Set tower level
-	 * @param level
+	 * @param level tower level that is a between one  to three
 	 */
 	public void setLevel(TowerLevel level) {
 		this.level = level;
@@ -112,7 +112,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * Set moving behavior
-	 * @param movingBehaviour
+	 * @param movingBehaviour moving behaviour like regular moving and so on.
 	 */
 	public void setMovingBehaviour(MovingBehaviour movingBehaviour) {
 		this.movingBehaviour = movingBehaviour;
@@ -126,7 +126,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * Set sound behavior
-	 * @param soundBehaviour
+	 * @param soundBehaviour sound behaviour for a tower
 	 */
 	public void setSoundBehaviour(SoundBehaviour soundBehaviour) {
 		this.soundBehaviour = soundBehaviour;
@@ -148,7 +148,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * Set ice shooting behavior
-	 * @param iceShootingBehaviour
+	 * @param iceShootingBehaviour by this behaviour we will freez the critter.
 	 */
 	public void setIceShootingBehaviour(IceShootingBehaviour iceShootingBehaviour) {
 		this.iceShootingBehaviour = iceShootingBehaviour;
@@ -162,7 +162,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * Set line shooting behavior
-	 * @param lineShootingBehaviour
+	 * @param lineShootingBehaviour shooting shape will be a line
 	 */
 	public void setLineShootingBehaviour(LineShootingBehaviour lineShootingBehaviour) {
 		this.lineShootingBehaviour = lineShootingBehaviour;

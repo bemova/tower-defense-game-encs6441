@@ -28,9 +28,9 @@ public class PositionService {
 
 	/**
 	 * 
-	 * @param p first position
+	 * @param source first position
 	 *            
-	 * @param q goal position
+	 * @param destination goal position
 	 *            
 	 * @param range the range that is used as a scale
 	 *            

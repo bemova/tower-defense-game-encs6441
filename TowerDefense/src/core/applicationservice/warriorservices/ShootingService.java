@@ -17,8 +17,8 @@ public class ShootingService {
 	
 	/**
 	 * Calculate nearest critter to specific tower
-	 * @param tower
-	 * @return nearestCritter
+	 * @param tower tower that we need for calculate which is the nearest
+	 * @return nearestCritter nearest critter to the tower
 	 */
 	public Critter nearestCritter(Tower tower){
 		double nearestDistance = Double.MAX_VALUE;

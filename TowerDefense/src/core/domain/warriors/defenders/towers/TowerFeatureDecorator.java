@@ -40,7 +40,7 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	}
 	/**
 	 * Set critter locations in the map in our Map data structure
-	 * @param crittersLocation
+	 * @param crittersLocation a key value pair for keeping critter in a range for a tower
 	 */
 	public void setCrittersLocation(Map<Critter, Position> crittersLocation) {
 		crittersLocation = crittersLocation;
@@ -111,7 +111,7 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	}
 	/**
 	 * remove dead critters from our wave
-	 * @param critter
+	 * @param critter critter
 	 */
 	public void removeDeadCritter(Critter critter) {
 		try {
@@ -130,7 +130,7 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	public abstract String getDescription();
 	/**
 	 * 
-	 * @param defenderInformer
+	 * @param defenderInformer defender informer is added for deploy the observer pattern
 	 */
 	public void register(Subject defenderInformer) {
 		this.subject = defenderInformer;
@@ -152,7 +152,7 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	}
 	/**
 	 * Set target for shooting
-	 * @param target
+	 * @param target critter that is calculated as a target
 	 */
 	public void setTarget(Critter target) {
 		this.target = target;

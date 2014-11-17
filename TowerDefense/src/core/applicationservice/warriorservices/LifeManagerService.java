@@ -7,7 +7,7 @@ public class LifeManagerService {
 	private static final Log4jLogger logger = new Log4jLogger();
 	/**
 	 * Manage player life and add life to player 
-	 * @param life
+	 * @param life that will be set for player
 	 */
 	public void LifeManager(long life){
 		try {

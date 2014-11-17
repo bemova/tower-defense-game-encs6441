@@ -11,9 +11,6 @@ import core.domain.warriors.aliens.Critter;
  *  the position of the wave by observer design pattern</p> 
  *  <b>this part it will be implemented for the build 2</b>
  *  
- *  @param aliens list of critters which define a wave
- *  @param headPosition contain wave first critter position
- *  
  *  @author Team5
  *  @version 0.1
  */
@@ -33,7 +30,7 @@ public class Wave {
 	/**
 	 * Set first critter position in a wave
 	 * 
-	 * @param headPosition
+	 * @param headPosition set position of the wave. 
 	 */
 	public void setHeadPosition(Position headPosition) {
 		this.headPosition = headPosition;

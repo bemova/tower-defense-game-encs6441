@@ -23,7 +23,7 @@ public class FirePower extends TowerFeatureDecorator {
 	}
 	/**
 	 * Get tower and create a critter map positions
-	 * @param tower
+	 * @param tower tower that we want to decorate
 	 */
 	public FirePower(Tower tower) {
 		this.tower = tower;

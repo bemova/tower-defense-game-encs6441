@@ -21,6 +21,7 @@ public abstract class Defender extends Observable {
 	protected Position alienPosition;
 	/**
 	 * it is implemented for having observer design pattern
+	 * @param waveHeadPosition the head position of the wave
 	 */
 	public void waveUpdate(Position waveHeadPosition) {
 		this.waveHeadPosition = waveHeadPosition;

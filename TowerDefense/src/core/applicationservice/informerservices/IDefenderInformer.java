@@ -39,6 +39,7 @@ public interface IDefenderInformer {
 	 * @param x as integer 
 	 * @param y as integer
 	 * @param critter critter object reference
+	 * @param strategy strategy for shooting
 	 */
 	public void setAlienPosition(int x, int y, Critter critter, String strategy);
 	
