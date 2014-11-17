@@ -36,7 +36,7 @@ public class Graph {
 	 * The format is the number of vertices <em>V</em>,
 	 * followed by the number of edges <em>E</em>,
 	 * followed by <em>E</em> pairs of vertices, with each entry separated by whitespace.
-	 * @param igraphInfo  the input stream
+	 * @param graphInfo  the input stream
 	 * @param nodes graph nodes
 	 */
 	public Graph(List<String> graphInfo, int nodes){
