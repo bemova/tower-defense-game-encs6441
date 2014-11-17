@@ -23,7 +23,11 @@ public class RegularMove implements MovingBehaviour {
 	private Position PixelPosition;
 	private int currentPosition;
 	private int freezeTime;
-
+	/**
+	 * Set PixelPosition and path for regular move
+	 * @param path valid path
+	 * @param initialPixel initial path pixel
+	 */
 	public RegularMove(Position[] path, Position initialPixel) {
 		this.PixelPosition = initialPixel;
 		this.path = path;
@@ -88,19 +92,32 @@ public class RegularMove implements MovingBehaviour {
 		}
 	}
 
-	
+	/**
+	 * Return pixel position
+	 * @return PixelPosition
+	 */
 	public Position getPixelPosition() {
 		return PixelPosition;
 	}
 
-
+	/**
+	 * Return current position in map
+	 * @return currentPosition
+	 */
 	public int getCurrentPosition() {
 		return currentPosition;
 	}
-	
+	/**
+	 * Return path in array of positions
+	 * @return path
+	 */
 	public Position[] getPath(){
 		return path;
 	}
+	/**
+	 * Set freez time for ice tower
+	 * @param freezeTime
+	 */
 	public void setFreezeTime(int freezeTime) {
 		this.freezeTime = freezeTime;
 	}
