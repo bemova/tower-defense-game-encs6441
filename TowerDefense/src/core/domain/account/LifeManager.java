@@ -4,7 +4,7 @@ import core.contract.AccountConstants;
 
 public class LifeManager {
 	private static LifeManager instance = null;
-	public static long life;
+	public static int life;
 	
 	// Exists only to defeat instantiation.
 	public LifeManager() {
@@ -17,10 +17,10 @@ public class LifeManager {
 		}
 		return instance;
 	}
-	public static long getLife() {
+	public static int getLife() {
 		return life;
 	}
-	public static void setLife(long life) {
+	public static void setLife(int life) {
 		LifeManager.life = life;
 	}
 	public void addLife(long life) {

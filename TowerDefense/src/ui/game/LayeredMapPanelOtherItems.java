@@ -35,6 +35,7 @@ import core.contract.AccountConstants;
 import core.contract.DefenderConstants;
 import core.contract.WaveConstants;
 import core.domain.account.BankManager;
+import core.domain.account.LifeManager;
 import core.domain.maps.GridCellContentType;
 import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.aliens.behaviourimp.RegularMove;
@@ -553,7 +554,6 @@ ActionListener, MouseListener, Runnable {
 			Critter c = currentWaveAlienList.get(i);
 			if (c.getLife() <= 0) {
 				bank.addBalance(((long) c.lifeBooster()));
-				//bank.addBalance(((long) ));
 				availFunds = (long) (this.bank.getBalance() + c.lifeBooster());
 				gameInfoPanel.setBank((int) availFunds);
 				for (Tower[] t1 : towers) {
@@ -590,7 +590,9 @@ ActionListener, MouseListener, Runnable {
 
 	private void updatePlayerLife(int escapedCritters) {
 		// TODO Auto-generated method stub
-		int life = AccountConstants.DEFAULT_LIFE - escapedCritters;
+		LifeManager lifeManager = LifeManager.getInstance();
+		
+		int life = LifeManager.getLife() - escapedCritters;
 		System.out.println("life: " + life);
 		gameInfoPanel.setLife(life);
 		if (life <= 0) {
@@ -601,7 +603,7 @@ ActionListener, MouseListener, Runnable {
 	private void gameOver() {
 		System.out.println("Game Over");
 		JOptionPane.showMessageDialog(null, "Game Over");
-		 mapT.stop();
+		// mapT.stop();
 		 System.exit(0);
 	}
 

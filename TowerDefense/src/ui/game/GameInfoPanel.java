@@ -105,6 +105,7 @@ public class GameInfoPanel extends JPanel {
 
 	public void setLife(int life) {
 		lblLife.setText(new Integer(life).toString());
+		repaint();
 	}
 
 	public void setBank(int bank) {

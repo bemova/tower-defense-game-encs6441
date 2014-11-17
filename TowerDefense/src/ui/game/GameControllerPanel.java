@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import core.domain.account.LifeManager;
+
 public class GameControllerPanel extends JPanel {
 
 	private JToggleButton tglbtnNewToggleButton_1;
@@ -104,6 +106,10 @@ public class GameControllerPanel extends JPanel {
 		tglbtnNewToggleButton_1.setText("New Wave");
 		int waveNum = (mapPanel.getGameInfoPanel()).getWave();
 		(mapPanel.getGameInfoPanel()).setWave(waveNum + 1);
+//		(mapPanel.getGameInfoPanel()).setLife(life);
+		LifeManager lifeManager = LifeManager.getInstance();
+		lifeManager.addLife(5);
+		(mapPanel.getGameInfoPanel()).setLife(lifeManager.getLife());
 		(mapPanel.getGameInfoPanel()).repaint();
 	}
 }
