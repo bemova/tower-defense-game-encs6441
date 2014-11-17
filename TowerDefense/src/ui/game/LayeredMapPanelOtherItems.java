@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 
 import ui.towerdesign.SimpleInspection;
 import core.applicationservice.informerservices.imp.DefenderInformer;
+import core.applicationservice.locationservices.PositionService;
 import core.applicationservice.mapservices.pathfinder.PathService;
 import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.WaveFactory;
@@ -84,7 +85,7 @@ ActionListener, MouseListener, Runnable {
 
 	private MainFrame mainFrame;
 	private static final Log4jLogger logger = new Log4jLogger();
-	
+
 	public LayeredMapPanelOtherItems(Dimension dimension,
 			GameInfoPanel gameInfoPanel, MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
@@ -212,32 +213,39 @@ ActionListener, MouseListener, Runnable {
 						pos.getY());
 			}
 
-			for (int i = 0; i < defenderTargetPair.size(); i++) {
-				Set<Entry<Tower, Critter>> its = defenderTargetPair.entrySet();
+			//for (int i = 0; i < defenderTargetPair.size(); i++) {
+			Map<Tower, Critter> map = defenderTargetPair;
+				Iterable<Entry<Tower, Critter>> its = defenderTargetPair.entrySet();
 				for (Entry<Tower, Critter> pairs : its) {
 					Tower t2 = pairs.getKey();// key;
 					Critter c = pairs.getValue();// defenderTargetPair.get(key);
 
 					// shoot only if target is in range
-//					int range = 1;
-//					if ((path[c.getCurrentPosition()].getY() <= t2
-//							.getTowerPosition().getY() + range && path[c
-//							                                           .getCurrentPosition()].getY() >= t2
-//							                                           .getTowerPosition().getY() - range)
-//							                                           && (path[c.getCurrentPosition()].getX() <= t2
-//							                                           .getTowerPosition().getX() + range && path[c
-//							                                                                                      .getCurrentPosition()].getX() >= t2
-//							                                                                                      .getTowerPosition().getX() - range)) {
-
-						new LineBullet()
-						.draw(g, convertCellToPixel(t2
-								.getTowerPosition()),
-								convertCellToPixel(path[c
-								                        .getCurrentPosition()]));
-//					}
-					its.remove(pairs);// avoids a
-					// ConcurrentModificationException
-				}
+					//					int range = 1;
+					//					if ((path[c.getCurrentPosition()].getY() <= t2
+					//							.getTowerPosition().getY() + range && path[c
+					//							                                           .getCurrentPosition()].getY() >= t2
+					//							                                           .getTowerPosition().getY() - range)
+					//							                                           && (path[c.getCurrentPosition()].getX() <= t2
+					//							                                           .getTowerPosition().getX() + range && path[c
+					//							                                                                                      .getCurrentPosition()].getX() >= t2
+					//							                                                                                      .getTowerPosition().getX() - range)) {
+					
+					PositionService positionService = new PositionService();
+					TowerFactory factory = new TowerFactory();
+					int range = factory.getRange(t2);
+					Position[] pa = c.getPath();
+					int cu = c.getCurrentPosition(); 
+					if(positionService.isInRange(t2.getTowerPosition(), c.getPath()[c.getCurrentPosition()], range)){
+					new LineBullet()
+					.draw(g, convertCellToPixel(t2
+							.getTowerPosition()),
+							convertCellToPixel(path[c
+							                        .getCurrentPosition()]));
+										}
+					//map.remove(pairs);
+					defenderTargetPair = map;
+				//}
 			}
 		}
 	}
@@ -341,8 +349,8 @@ ActionListener, MouseListener, Runnable {
 				tower.setTowerPosition(new Position(x, y));
 				grid.setCell(x, y, GridCellContentType.TOWER);
 				grid.setTowers(towers);
-//				((TowerFeatureDecorator) tower)
-//				.setCrittersLocation(new HashMap<Critter, Position>());
+				//				((TowerFeatureDecorator) tower)
+				//				.setCrittersLocation(new HashMap<Critter, Position>());
 				informer.registerObserver((TowerFeatureDecorator) tower);
 				((TowerFeatureDecorator) tower).addObserver(this);
 				// draw(x, y);
@@ -452,7 +460,10 @@ ActionListener, MouseListener, Runnable {
 			target.setLife(target.getLife() - 1);// must be: -tower power/impact
 			break;
 		case DefenderConstants.ANCIENT_TOWER_TYPE:
-			((RegularMove)target.getMovingBehaviour()).setFreezeTime(52);
+			PositionService positionService = new PositionService();
+			int range = factory.getRange(defender);
+			if(positionService.isInRange(defender.getTowerPosition(), target.getPath()[target.getCurrentPosition()], range))
+				((RegularMove)target.getMovingBehaviour()).setFreezeTime(100);
 			break;
 		}
 		try {
@@ -460,11 +471,11 @@ ActionListener, MouseListener, Runnable {
 		} catch (Exception e2) {
 			logger.writer("shooting :" + defender.Id + " --> " + target.Id
 					+ "(" + target.getCurrentPosition() + ")", e2);
-			
+
 			System.out.println("shooting :" + defender.Id + " --> " + target.Id
 					+ "(" + target.getCurrentPosition() + ")");
 		}
-		
+
 	}
 
 	private void upgradeTower() {
@@ -507,7 +518,7 @@ ActionListener, MouseListener, Runnable {
 						critter.setCurrentPosition(i);
 						//PositionService positionService = new PositionService();
 						//if(positionService.isInRange( towers[x][y].getTowerPosition(), p, 1))
-							informer.setAlienPosition(p.getX(), p.getY(), critter,towers[x][y].getShootingStrategy());
+						informer.setAlienPosition(p.getX(), p.getY(), critter,towers[x][y].getShootingStrategy());
 
 					} else {
 						System.out.println("At exit point.");

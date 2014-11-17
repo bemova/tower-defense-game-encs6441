@@ -36,7 +36,7 @@ public class RegularMove implements MovingBehaviour {
 	 */
 	@Override
 	public void move() {
-		if (freezeTime == 0) {
+		if (freezeTime <= 0) {
 			int xPixel = PixelPosition.getX();
 			int yPixel = PixelPosition.getY();
 			int currPathCell = currentPosition;
