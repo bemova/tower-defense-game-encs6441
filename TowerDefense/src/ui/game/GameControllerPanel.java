@@ -12,6 +12,11 @@ import javax.swing.JToggleButton;
 
 import core.domain.account.LifeManager;
 
+/**
+ * 
+ * @author Team5
+ *
+ */
 public class GameControllerPanel extends JPanel {
 
 	private JToggleButton tglbtnNewToggleButton_1;
@@ -19,7 +24,11 @@ public class GameControllerPanel extends JPanel {
 	private LayeredMapPanel mapPanel;
 
 	/**
-	 * Create the panel.
+	 * Create the panel , for controlling the game status,
+	 * the user can click certain buttons such as new game or critter info
+	 * each one of this buttons will call specific object to reinitialize and show for
+	 * the user
+	 * @param mapPanel receive a panel to create new one
 	 */
 	public GameControllerPanel(LayeredMapPanel mapPanel) {
 		this.gameState = "completed";
@@ -57,6 +66,10 @@ public class GameControllerPanel extends JPanel {
 		add(tglbtnNewToggleButton_1, gbc_tglbtnNewToggleButton_1);
 		tglbtnNewToggleButton_1.addMouseListener(new MouseAdapter() {
 			@Override
+			
+			/**
+			 * @param arg0 catches event from mouse once clicked it will start the game
+			 */
 			public void mouseClicked(MouseEvent arg0) {
 				System.out.println("Start New Wave");
 				// mapPanel.getOtherItemsPanel().mapT.start();
@@ -73,7 +86,10 @@ public class GameControllerPanel extends JPanel {
 		add(towerPanel, gbc_towerPanel);
 
 	}
-
+	/**
+	 * The user can can pause a game and later resume it
+	 * this gets the current state and acts accordingly
+	 */
 	protected void performRequestedAction() {
 		System.out.println(gameState);
 		switch (gameState) {
@@ -100,7 +116,10 @@ public class GameControllerPanel extends JPanel {
 		}
 		
 	}
-
+	/**
+	 * Once a wave is completed , enable the user to start a new wave
+	 * and reinitialize some instances
+	 */
 	public void wavaCompleted() {
 		this.gameState = "completed";
 		tglbtnNewToggleButton_1.setText("New Wave");

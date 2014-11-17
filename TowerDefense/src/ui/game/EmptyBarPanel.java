@@ -5,10 +5,15 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Team5
+ *
+ */
 public class EmptyBarPanel extends JPanel {
 
 	/**
-	 * Create the panel.
+	 * Create the panel, for the empty bar
 	 */
 	public EmptyBarPanel() {
 		Dimension dim = getPreferredSize();
