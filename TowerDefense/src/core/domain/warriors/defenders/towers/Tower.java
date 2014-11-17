@@ -37,56 +37,56 @@ public abstract class Tower extends Defender {
 	private TowerType towerType; 
 	
 	/**
-	 * 
+	 * Return tower type
 	 * @return towerType
 	 */
 	public TowerType getTowerType() {
 		return towerType;
 	}
 	/**
-	 * 
+	 * Set tower type
 	 * @param towerType
 	 */
 	public void setTowerType(TowerType towerType) {
 		this.towerType = towerType;
 	}
 	/**
-	 * 
+	 * Return shooting strategy
 	 * @return getShootingStrategy
 	 */
 	public String getShootingStrategy() {
 		return shootingStrategy;
 	}
 	/**
-	 * 
+	 * Set shooting strategy
 	 * @param shootingStrategy
 	 */
 	public void setShootingStrategy(String shootingStrategy) {
 		this.shootingStrategy = shootingStrategy;
 	}
 	/**
-	 * 
+	 * return tower position
 	 * @return towerPosition
 	 */
 	public Position getTowerPosition() {
 		return towerPosition;
 	}
 	/**
-	 * 
+	 * Set tower position
 	 * @param towerPosition
 	 */
 	public void setTowerPosition(Position towerPosition) {
 		this.towerPosition = towerPosition;
 	}
 	/**
-	 * 
+	 * Return tower level
 	 * @return level
 	 */
 	public TowerLevel getLevel() {
 		return level;
 	}
 	/**
-	 * 
+	 * Set tower level
 	 * @param level
 	 */
 	public void setLevel(TowerLevel level) {
@@ -96,32 +96,36 @@ public abstract class Tower extends Defender {
 	protected String description;
 	
 	protected List<Tower> towers;
+	/**
+	 * Get tower list
+	 * @return towers
+	 */
 	public List<Tower> getTowers() {
 		return towers;
 	}
 	/**
-	 * 
+	 * Return tower description
 	 * @return description
 	 */
 	public String getDescription() {
 		return description;
 	}
 	/**
-	 * 
+	 * Set moving behavior
 	 * @param movingBehaviour
 	 */
 	public void setMovingBehaviour(MovingBehaviour movingBehaviour) {
 		this.movingBehaviour = movingBehaviour;
 	}
 	/**
-	 * 
+	 * Set shooting behavior
 	 * @param shootingBehaviour
 	 */
 	public void setShootingBehaviour(ShootingBehaviour shootingBehaviour) {
 		this.shootingBehaviour = shootingBehaviour;
 	}
 	/**
-	 * 
+	 * Set sound behavior
 	 * @param soundBehaviour
 	 */
 	public void setSoundBehaviour(SoundBehaviour soundBehaviour) {
@@ -136,35 +140,35 @@ public abstract class Tower extends Defender {
 		this.bulletShootingBehaviour = bulletShootingBehaviour;
 	}
 	/**
-	 * 
+	 * Return Ice shooting behavior
 	 * @return iceShootingBehaviour
 	 */
 	public IceShootingBehaviour getIceShootingBehaviour() {
 		return iceShootingBehaviour;
 	}
 	/**
-	 * 
+	 * Set ice shooting behavior
 	 * @param iceShootingBehaviour
 	 */
 	public void setIceShootingBehaviour(IceShootingBehaviour iceShootingBehaviour) {
 		this.iceShootingBehaviour = iceShootingBehaviour;
 	}
 	/**
-	 * 
+	 * Return line shooting behavior
 	 * @return lineShootingBehaviour
 	 */
 	public LineShootingBehaviour getLineShootingBehaviour() {
 		return lineShootingBehaviour;
 	}
 	/**
-	 * 
+	 * Set line shooting behavior
 	 * @param lineShootingBehaviour
 	 */
 	public void setLineShootingBehaviour(LineShootingBehaviour lineShootingBehaviour) {
 		this.lineShootingBehaviour = lineShootingBehaviour;
 	}
 	/**
-	 * 
+	 * Return bullet shooting behavior
 	 * @return bulletShootingBehaviour
 	 */
 	public BulletShootingBehaviour getBulletShootingBehaviour() {
