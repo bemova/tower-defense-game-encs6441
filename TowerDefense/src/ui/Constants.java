@@ -26,6 +26,4 @@ public class Constants {
 	public static final String LIFE_ICON = "life_icon.png";
 	public static final String WAVE_ICON = "wave_icon.png";
 	public static final String BANK_ICON = "bank_icon.png";
-	
-	public static final int MAX_ALLOWED_ESCAPED_CRITTER_PER_WAVE = 5;
 }

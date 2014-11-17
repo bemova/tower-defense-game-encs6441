@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -20,12 +21,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import ui.Constants;
 import ui.towerdesign.SimpleInspection;
 import core.applicationservice.informerservices.imp.DefenderInformer;
 import core.applicationservice.mapservices.pathfinder.PathService;
 import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.WaveFactory;
+import core.contract.AccountConstants;
 import core.contract.DefenderConstants;
 import core.contract.WaveConstants;
 import core.domain.account.BankManager;
@@ -72,10 +73,14 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private int escapedCritter = 0;
 
 	private Map<Tower, Critter> defenderTargetPair;
-	
-	private GameInfoPanel gameInfoPanel;
 
-	public LayeredMapPanelOtherItems(Dimension dimension, GameInfoPanel gameInfoPanel) {
+	private GameInfoPanel gameInfoPanel;
+	
+	private CopyOnWriteArrayList<Critter> currentWaveAlienList;
+
+	public LayeredMapPanelOtherItems(Dimension dimension,
+			GameInfoPanel gameInfoPanel) {
+		this.gameInfoPanel = gameInfoPanel;
 		this.grid = new GridMap(1, 1);
 		this.bank = BankManager.getInstance();
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
@@ -191,8 +196,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		}
 
 		if (startWave) {
-			for (int i = 0; i < wave.aliens.size(); i++) {
-				Position pos = ((RegularMove) (wave.aliens.get(i)
+			for (int i = 0; i < currentWaveAlienList.size(); i++) {
+				Position pos = ((RegularMove) (currentWaveAlienList.get(i)
 						.getMovingBehaviour())).getPixelPosition();
 				new CritterShape().draw(g, critterImage[i], pos.getX(),
 						pos.getY());
@@ -348,7 +353,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				bank.setCurrentBalance(tower.cost());
 				availFunds = this.bank.getBalance()
 						- this.bank.getCurrentBalance();
-				String str = new Long(availFunds).toString();
+				// String str = new Long(availFunds).toString();
+				gameInfoPanel.setBank((int) availFunds);
 				towers[x][y] = tower;
 				tower.setTowerPosition(new Position(x, y));
 				grid.setCell(x, y, GridCellContentType.TOWER);
@@ -447,63 +453,78 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		if (arg0 instanceof TowerFeatureDecorator) {
 			target = ((TowerFeatureDecorator) arg0).getTarget();
 			defender = ((TowerFeatureDecorator) arg0).getDefender();
-			defenderTargetPair.put(defender, target);
-			// repaint();
-			System.out.println("shooting :" + defender.Id + " --> " + target.Id
-					+ "(" + target.getCurrentPosition() + ")");
+			shoot(defender, target);
+			removeDeadCritters();
 		}
+	}
+
+	private void shoot(Tower defender, Critter target) {
+		defenderTargetPair.put(defender, target);
+		target.setLife(target.getLife() - 1);// must be: -tower power/impact
+		System.out.println("shooting :" + defender.Id + " --> " + target.Id
+				+ "(" + target.getCurrentPosition() + ")");
 	}
 
 	private void upgradeTower() {
 		towers[x][y] = inspection.getTower();
+		// bank.setCurrentBalance(tower.cost());
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
-		String str = new Long(availFunds).toString();
+		// String str = new Long(availFunds).toString();
 		// this.bankLbl.setText("$" + str);
+		gameInfoPanel.setBank((int) availFunds);
 	}
 
 	private void clearTower(int x, int y) {
 		if ((x < grid.getWidth()) && (y < grid.getHeight())
 				&& (grid.getCell(x, y) == GridCellContentType.TOWER)) {
 			availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
-			String str = new Long(availFunds).toString();
+			// String str = new Long(availFunds).toString();
 			// this.bankLbl.setText("$" + str);
+			gameInfoPanel.setBank((int) availFunds);
+
 			informer.removeObserver((TowerFeatureDecorator) towers[x][y]);
 			towers[x][y] = null;
 			grid.setTowers(towers);
 			grid.setCell(x, y, GridCellContentType.SCENERY);
-			repaint();
+			// repaint();
 		}
 	}
 
 	public void run() {
 		while (true) {
 			// critter.walk();
-			Iterator it = wave.aliens.iterator();
-			while (it.hasNext()) {
-				// for (Critter critter : wave.aliens) {
-				Critter critter = (Critter) it.next();
-				if (critter.getCurrentPosition() != ((RegularMove) critter
-						.getMovingBehaviour()).getPath().length - 1) {
-					critter.performMovingBehaviour();
-					// Position p = path[critter.getCurrentPosition()];
-					// informer.setAlienPosition(p.getX(), p.getY(), critter);
-					int i = ((RegularMove) critter.getMovingBehaviour())
-							.getCurrentPosition();
-					Position p = path[i];
-					critter.setCurrentPosition(i);
-					informer.setAlienPosition(p.getX(), p.getY(), critter);
+//			Iterator it = currentWaveAlienList.iterator();
+//			while (it.hasNext()) {
+			for(int j=0; j<currentWaveAlienList.size(); j++){
+				// for (Critter critter : currentWaveAlienList) {
+//				if (it.next() instanceof Critter) {
+//					Critter critter = (Critter) it.next();
+				Critter critter = currentWaveAlienList.get(j);
+					if (critter.getCurrentPosition() != ((RegularMove) critter
+							.getMovingBehaviour()).getPath().length - 1) {
+						critter.performMovingBehaviour();
+						// Position p = path[critter.getCurrentPosition()];
+						// informer.setAlienPosition(p.getX(), p.getY(),
+						// critter);
+						int i = ((RegularMove) critter.getMovingBehaviour())
+								.getCurrentPosition();
+						Position p = path[i];
+						critter.setCurrentPosition(i);
+						informer.setAlienPosition(p.getX(), p.getY(), critter);
 
-				} else {
-					System.out.println("At exit point.");
-					escapedCritter++;
-					updatePlayerLife(escapedCritter);
-					it.remove();
-					// wave.aliens.remove(critter);
+					} else {
+						System.out.println("At exit point.");
+						escapedCritter++;
+						updatePlayerLife(escapedCritter);
+//						it.remove();
+						currentWaveAlienList.remove(j);
+						// currentWaveAlienList.remove(critter);
 
-				}
+					}
+//				}
 			}
 
-			bullet.physic();
+			// bullet.physic();
 			repaint();
 
 			try {
@@ -514,10 +535,49 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		}
 	}
 
+	private boolean isWaveComplete() {
+		if (currentWaveAlienList.size() <= 9) {
+			return true;
+		}
+		return false;
+	}
+
+	private void removeDeadCritters() {
+//		Iterator it = currentWaveAlienList.iterator();
+//		while (it.hasNext()) {
+		for(int i=0; i< currentWaveAlienList.size(); i++){
+//			if (it.next() instanceof Critter) {
+//				Critter c = (Critter) it.next();
+			Critter c = currentWaveAlienList.get(i);
+				if (c.getLife() <= 0) {
+					bank.addBalance(((long) c.lifeBooster()));
+					availFunds = (long) (this.bank.getBalance() + c
+							.lifeBooster());
+					// String str = new Long(availFunds).toString();
+					// this.bankLbl.setText("$" + str);
+					gameInfoPanel.setBank((int) availFunds);
+//					c = null;
+//					 it.remove();
+					currentWaveAlienList.remove(i);
+					if (isWaveComplete()) {
+						waveCompleted();
+					}
+				}
+//			}
+		}
+	}
+
+	private void waveCompleted() {
+		// TODO Auto-generated method stub
+		System.out.println("Wave is completed!");
+		// upgrade towers and start a new wave
+		mapT.stop();
+		
+	}
+
 	private void updatePlayerLife(int escapedCritters) {
 		// TODO Auto-generated method stub
-		int life = Constants.MAX_ALLOWED_ESCAPED_CRITTER_PER_WAVE
-				- escapedCritters;
+		int life = AccountConstants.DEFAULT_LIFE - escapedCritters;
 		System.out.println("life: " + life);
 		gameInfoPanel.setLife(life);
 		if (life <= 0) {
@@ -529,15 +589,11 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		System.out.println("Game Over");
 		JOptionPane.showMessageDialog(null, "Game Over");
 		mapT.stop();
-		int o = 1;
-		o = o;
-		//
-
 	}
 
-	public void startWave() {
-		mapT.start();
-	}
+	// public void startWave() {
+	// mapT.start();
+	// }
 
 	public void pauseGame() {
 		mapT.suspend();
@@ -582,12 +638,19 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file;
 
+//		currentWaveAlienList.addAll(wave.aliens);
+		currentWaveAlienList = new CopyOnWriteArrayList<>();
 		for (int i = 0; i < wave.aliens.size(); i++) {
-			((RegularMove) (wave.aliens.get(i).getMovingBehaviour()))
+			currentWaveAlienList.add(wave.aliens.get(i));
+		}
+		
+	
+		for (int i = 0; i < currentWaveAlienList.size(); i++) {
+			((RegularMove) (currentWaveAlienList.get(i).getMovingBehaviour()))
 					.setFreezeTime(i * 100);
 
 			file = new File(classLoader.getResource(
-					wave.aliens.get(i).display()).getFile());
+					currentWaveAlienList.get(i).display()).getFile());
 			critterImage[i] = new ImageIcon(file.getPath());
 		}
 		startWave = true;

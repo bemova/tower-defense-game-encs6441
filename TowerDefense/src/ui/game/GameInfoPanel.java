@@ -1,10 +1,8 @@
 package ui.game;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.io.File;
 
@@ -12,13 +10,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import core.contract.MapConstants;
 import ui.Constants;
+import core.contract.AccountConstants;
 
 public class GameInfoPanel extends JPanel {
 
 	private JLabel lblLife;
 	private JLabel lblBank;
+	private JLabel lblWave;
 
 	/**
 	 * Create the panel.
@@ -67,21 +66,21 @@ public class GameInfoPanel extends JPanel {
 		gbc_lblImage_2.gridy = 0;
 		add(lblImage_2, gbc_lblImage_2);
 
-		JLabel lblWave = new JLabel("Wave");
+		lblWave = new JLabel("Wave");
 		GridBagConstraints gbc_lblWave = new GridBagConstraints();
 		gbc_lblWave.insets = new Insets(0, 0, 0, 5);
 		gbc_lblWave.gridx = 0;
 		gbc_lblWave.gridy = 1;
 		add(lblWave, gbc_lblWave);
 		
-		lblLife = new JLabel(new Integer(Constants.MAX_ALLOWED_ESCAPED_CRITTER_PER_WAVE).toString());
+		lblLife = new JLabel(new Integer(AccountConstants.DEFAULT_LIFE).toString());
 		GridBagConstraints gbc_lblLife = new GridBagConstraints();
 		gbc_lblLife.insets = new Insets(0, 0, 0, 5);
 		gbc_lblLife.gridx = 2;
 		gbc_lblLife.gridy = 1;
 		add(lblLife, gbc_lblLife);
 		
-		lblBank = new JLabel("Bank");
+		lblBank = new JLabel(new Integer(AccountConstants.DEFAULT_BALANCE).toString());
 		GridBagConstraints gbc_lblBank = new GridBagConstraints();
 		gbc_lblBank.gridx = 4;
 		gbc_lblBank.gridy = 1;
@@ -93,7 +92,11 @@ public class GameInfoPanel extends JPanel {
 	}
 	
 	public void setBank(int bank) {
-		lblLife.setText(new Integer(bank).toString());
+		lblBank.setText(new Integer(bank).toString());
+	}
+	
+	public void setWave(int waveNum) {
+		lblWave.setText(new Integer(waveNum).toString());
 	}
 	
 //	public void paintComponent(Graphics g) {
