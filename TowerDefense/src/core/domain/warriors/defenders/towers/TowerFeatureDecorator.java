@@ -1,5 +1,7 @@
 package core.domain.warriors.defenders.towers;
 
+import infrastructure.loggin.Log4jLogger;
+
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -24,6 +26,11 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	public Map<Critter, Position> crittersLocation;
 	public double nearestDistance;
 	
+	
+	/** The logger that was implemented by log4j2 and the logger class is located in infrastructure
+	 */
+	private static final Log4jLogger logger = new Log4jLogger();
+	
 	/**
 	 * Return a map contain critters and their positions
 	 * @return crittersLocation
@@ -43,55 +50,61 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	 * it is implemented for having observer design pattern
 	 */
 	public void alienUpdate(Position alienPosition, Critter critter,String shootingStrategy) {
-		crittersLocation.put(critter, alienPosition);
-		Map<Critter, Position> map = this.getCrittersLocation();
-		Set<Entry<Critter, Position>> it =  map.entrySet();
-		ShootingService service =  new ShootingService();
-		PositionService positionService = new PositionService();
-		TowerFactory factory = new TowerFactory();
-		int range = factory.getRange(this);
-		if(positionService.isInRange(this.getTowerPosition(), 
-				critter.getPath()[critter.getCurrentPosition()], range) && critter.getLife() > 0){
-			map.put(critter, alienPosition);
-			this.setCrittersLocation(map);
-			Critter c = null;
-			if(shootingStrategy == null){
-				this.setShootingStrategy( DefenderConstants.NearToEnd_Strategy);
-				c = service.nearToStartCritter(this, critter.getPath());
-			}else{
-				switch (shootingStrategy) {
-				case DefenderConstants.NearToEnd_Strategy:
-					c = service.nearToEndCritter(this, critter.getPath());
-					break;
-
-				case DefenderConstants.NearToStart_Strategy:
+		try {
+			crittersLocation.put(critter, alienPosition);
+			Map<Critter, Position> map = this.getCrittersLocation();
+			Set<Entry<Critter, Position>> it =  map.entrySet();
+			ShootingService service =  new ShootingService();
+			PositionService positionService = new PositionService();
+			TowerFactory factory = new TowerFactory();
+			int range = factory.getRange(this);
+			if(positionService.isInRange(this.getTowerPosition(), 
+					critter.getPath()[critter.getCurrentPosition()], range) && critter.getLife() > 0){
+				map.put(critter, alienPosition);
+				this.setCrittersLocation(map);
+				Critter c = null;
+				if(shootingStrategy == null){
+					this.setShootingStrategy( DefenderConstants.NearToEnd_Strategy);
 					c = service.nearToStartCritter(this, critter.getPath());
-					break;
+				}else{
+					switch (shootingStrategy) {
+					case DefenderConstants.NearToEnd_Strategy:
+						c = service.nearToEndCritter(this, critter.getPath());
+						break;
 
-				case DefenderConstants.Strangest_Strategy:
-					c = service.strongestCritter(this);
-					break;
+					case DefenderConstants.NearToStart_Strategy:
+						c = service.nearToStartCritter(this, critter.getPath());
+						break;
 
-				case DefenderConstants.Weakest_Strategy:
-					c = service.weakestCritter(this);
-					break;
+					case DefenderConstants.Strangest_Strategy:
+						c = service.strongestCritter(this);
+						break;
+
+					case DefenderConstants.Weakest_Strategy:
+						c = service.weakestCritter(this);
+						break;
+					}
+				}
+				if(c !=null){
+					setTarget(c);
+					setChanged();
+					notifyObservers();
+				}
+			}else{
+				for (Entry<Critter, Position> entry : it) {
+					if(entry.getKey() == critter){
+						map.remove(entry);
+						this.setCrittersLocation(map);
+						break;
+					}
 				}
 			}
-			if(c !=null){
-				setTarget(c);
-				setChanged();
-				notifyObservers();
-			}
-		}else{
-			for (Entry<Critter, Position> entry : it) {
-				if(entry.getKey() == critter){
-					map.remove(entry);
-					this.setCrittersLocation(map);
-					break;
-				}
-			}
+
+			
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
 		}
-
+		
 
 
 

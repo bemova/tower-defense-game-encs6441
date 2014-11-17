@@ -1,6 +1,3 @@
-/*
- * 
- */
 package core.applicationservice.mapservices.connectivity.imp;
 
 import java.io.BufferedReader;
@@ -34,7 +31,7 @@ public class ConnectivityService implements IConnectivityService {
 	 * @param start as Position that represent the entrance point
 	 * @param end as Position that represent the exit point of aliens
 	 * @param matrix as GridCellContentType
-	 * @return boolean
+	 * @return boolean it is true if there is a path
 	 */
 	public boolean isTherePath(Position start, Position end,
 			GridCellContentType[][] matrix) {

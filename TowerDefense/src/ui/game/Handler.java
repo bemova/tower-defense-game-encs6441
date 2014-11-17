@@ -2,12 +2,21 @@ package ui.game;
 
 import java.awt.event.*;
 import java.awt.*;
+/**
+ * 
+ * @author Team5
+ *<b> This class is the mouse listener click and motion</b>
+ */
 public class Handler implements MouseListener, MouseMotionListener{
 
 //	MapPanel mapPanel;
 	LayeredMapPanel mapPanel;
 	
 //	public Handler(MapPanel mapPanel){
+	/**
+	 * 
+	 * @param mapPanel assign the mapPanel to this mapPanel
+	 */
 	public Handler(LayeredMapPanel mapPanel){
 		this.mapPanel = mapPanel;
 	}
@@ -23,7 +32,10 @@ public class Handler implements MouseListener, MouseMotionListener{
 		
 	}
 
-	
+	/**
+	 * @param event the xy coordinate of where the click occurred 
+	 * according to the click we set that tower to the click location
+	 */
 	public void mouseClicked(MouseEvent event) {
 		int mouseX = event.getX();
 		int mouseY = event.getY();

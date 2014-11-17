@@ -10,7 +10,12 @@ import javax.swing.ImageIcon;
 import core.contract.MapConstants;
 import core.domain.maps.GridCellContentType;
 import core.domain.warriors.defenders.towers.Tower;
-
+/**
+ * 
+ * @author Team5
+ *<b>Cell class updates a cell with its image , meaning that if a cell is path , it will put</b>
+ *<b> path image , if a cell is place a specific tower it will put that tower ...</b>
+ */
 public class Cell extends Rectangle {
 
 	private ClassLoader classLoader = getClass().getClassLoader();
@@ -18,10 +23,18 @@ public class Cell extends Rectangle {
 	private Image sceneryImg, pathImg, enteranceImg, exitImg;
 	private Image modernTowerImg, ancientTowerImg, kingTowerImg;
 	
+	/**
+	 * Constructor to set up the images for the cell , depending on the number it has.
+	 */
 	public Cell(){
 		setupImages();
 	}
-
+    /**
+     * This method is called by the constructor to prepare the images
+     */
+	/**
+	 * 
+	 */
 	private void setupImages(){
 		file = new File(classLoader.getResource(MapConstants.SCENERY_IMG).getFile());
 		sceneryImg = new ImageIcon(file.getPath()).getImage();
@@ -49,6 +62,17 @@ public class Cell extends Rectangle {
 	
 	
 	
+	/**
+	 * 
+	 * @param g graphics to draw images
+	 * @param cellType cell type can be path ,exit ,sceneray ,tower,entry
+	 * @param towers array of towers
+	 * @param x  x coordinate of the cell
+	 * @param y  y coordinate of the cell
+	 * @param gridX grid x coordinate 
+	 * @param gridY grid y coordinate
+	 * 
+	 */
 	
 	public void draw(Graphics g, GridCellContentType cellType, Tower[][] towers, int x, int y, int gridX, int gridY) {
 		Image image = setup(cellType, towers, gridX, gridY);
@@ -63,7 +87,28 @@ public class Cell extends Rectangle {
 		g.drawImage(image, x, y, MapConstants.UNIT_SIZE,
 				MapConstants.UNIT_SIZE, null);
 	}
-
+    
+	/**
+	 * @param cellType  celltype is the type of cell scenery,path,entrance,exit,tower
+	 * @param towers array of towers which are 3 types for now Modern,ancient,king
+	 * @param x x location to draw
+	 * @param y y location to draw
+	 * @return Image depnding on its type 
+	 */
+	/**
+	 * @param cellType
+	 * @param towers
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	/**
+	 * @param cellType
+	 * @param towers
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private Image setup(GridCellContentType cellType, Tower[][] towers, int x, int y) {
 		switch (cellType) {
 		case SCENERY:
@@ -90,35 +135,6 @@ public class Cell extends Rectangle {
 		}
 
 	}	
-	
-	
-//	private Image setup(GridCellContentType cellType, Tower[][] towers, int x, int y) {
-//		String imageFileName;
-//		Image image = null;
-//		switch (cellType) {
-//		case SCENERY:
-//			imageFileName = MapConstants.SCENERY_IMG;
-//			break;
-//		case PATH:
-//			imageFileName = MapConstants.PATH_IMG;
-//			break;
-//		case ENTRANCE:
-//			imageFileName = MapConstants.ENTRANCE_IMG;
-//			break;
-//		case EXIT:
-//			imageFileName = MapConstants.EXIT_IMG;
-//			break;
-//		case TOWER:
-//			imageFileName = towers[x][y].display();
-//			break;
-//		default:
-//			imageFileName = MapConstants.SCENERY_IMG;
-//		}
-//
-//		file = new File(classLoader.getResource(imageFileName).getFile());
-//		image = new ImageIcon(file.getPath()).getImage();
-//
-//		return image;
-//	}
+
 
 }

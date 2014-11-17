@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import infrastructure.loggin.Log4jLogger;
 import core.contract.ITDLogger;
 /**
- * this demo was implemented as aDemo for dependecy injection and IOC for the build2
+ * this demo was implemented as aDemo for dependency injection and IOC for the build2
  * @author Team5
  * @version 1.0
  */
