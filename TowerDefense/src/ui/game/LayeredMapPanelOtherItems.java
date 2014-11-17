@@ -454,7 +454,6 @@ ActionListener, MouseListener, Runnable {
 			((RegularMove)target.getMovingBehaviour()).setFreezeTime(1000);
 			break;
 		}
-		
 		try {
 			throw new Exception();
 		} catch (Exception e2) {
