@@ -3,13 +3,17 @@ package ui.game;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
 import core.domain.warriors.defenders.towers.Tower;
 
+/**
+ * This class is a JPanel that contains the map. This map drawn only once (when it is loaded from file). This panel is one of the layers of the LayeredMapPanel. 
+ * @author Team 5
+ *
+ */
+@SuppressWarnings("serial")
 public class LayeredMapPanelGrid extends JPanel {
 	private Point mapTopLeft;
 	private Point mapButtomRight;
@@ -17,6 +21,9 @@ public class LayeredMapPanelGrid extends JPanel {
 	private Cell cell;
 	
 
+	/**
+	 * @param dimension height and width of the panel.
+	 */
 	public LayeredMapPanelGrid(Dimension dimension) {
 		this.grid = new GridMap(1, 1);
 		setMapTopLeft(new Point(0, 0));
@@ -30,6 +37,9 @@ public class LayeredMapPanelGrid extends JPanel {
 		this.grid = grid;
 	}
 
+	/**
+	 * This method draws the map on the screen when the repaint method is called. 
+	 */
 	public void paintComponent(Graphics g) {
 
 		 super.paintComponent(g);
