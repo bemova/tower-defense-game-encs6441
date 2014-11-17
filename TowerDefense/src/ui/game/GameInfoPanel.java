@@ -12,7 +12,12 @@ import javax.swing.JPanel;
 
 import ui.Constants;
 import core.contract.AccountConstants;
-
+/**
+ * 
+ * @author Team5
+ * <b>This Class builds the GUI our game , once game is loaded
+ * it will show the icons , such as life ,start wave,gold</b>
+ */
 public class GameInfoPanel extends JPanel {
 
 	private JLabel lblLife;
@@ -21,16 +26,24 @@ public class GameInfoPanel extends JPanel {
 	private GridBagConstraints gbc_lblWave;
 	private int waveNum;
 
+	/**
+	 * 
+	 * @return label wave
+	 */
 	public JLabel getLblWave() {
 		return lblWave;
 	}
-
+	/**
+	 * 
+	 * @param lblWave label for wave
+	 */
 	public void setLblWave(JLabel lblWave) {
 		this.lblWave = lblWave;
 	}
 
 	/**
-	 * Create the panel.
+	 * Create the panel. which is the basic GUI displayed on the screen
+	 * Wave Icon ,Life Icon Bank Icon
 	 */
 	public GameInfoPanel() {
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -102,37 +115,38 @@ public class GameInfoPanel extends JPanel {
 		gbc_lblBank.gridy = 1;
 		add(lblBank, gbc_lblBank);
 	}
-
+	/**
+	 * 
+	 * @param life set amount of life
+	 */
 	public void setLife(int life) {
 		lblLife.setText(new Integer(life).toString());
 		repaint();
 	}
-
+	/**
+	 * 
+	 * @param bank amount of gold
+	 */
 	public void setBank(int bank) {
 		lblBank.setText(new Integer(bank).toString());
 	}
-
+	/**
+	 * 
+	 * @param waveNum the wave number 
+	 */
 	public void setWave(int waveNum) {
 		lblWave.setText("Wave: "+ new Integer(waveNum).toString());
 		this.waveNum = waveNum;
 		repaint();
 	}
+	/**
+	 * 
+	 * @return wave number
+	 */
 	public int getWave(){
 		return waveNum;
 	}
 
-	//	public void paintComponent(Graphics g) {
-	//        super.paintComponent(g);
-	//        ClassLoader classLoader = getClass().getClassLoader();
-	//		File file = new File(classLoader.getResource(Constants.WAVE_ICON).getFile());
-	//		Image waveIcon = new ImageIcon(file.getPath()).getImage();
-	//		for(int i=0; i<getWidth()/MapConstants.UNIT_SIZE; i++){
-	//			for(int j=0; i<getHeight()/MapConstants.UNIT_SIZE; j++){
-	//				g.drawImage(waveIcon, 0, 0, this);				
-	//			}
-	//		}
-	//        
-	//    }
 
 
 }
