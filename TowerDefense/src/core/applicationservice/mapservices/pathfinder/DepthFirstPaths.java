@@ -1,5 +1,7 @@
 package core.applicationservice.mapservices.pathfinder;
 
+import infrastructure.loggin.Log4jLogger;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +16,7 @@ public class DepthFirstPaths {
     private boolean[] marked;    // marked[v] = is there an s-v path?
     private int[] edgeTo;        // edgeTo[v] = last edge on s-v path
     private final int s;         // source vertex
-
+    private static final Log4jLogger logger = new Log4jLogger();
     /**
      * Computes a path between <tt>s</tt> and every other vertex in graph <tt>G</tt>.
      * @param G the graph
@@ -29,13 +31,17 @@ public class DepthFirstPaths {
 
     // depth first search from v
     private void dfs(Graph G, int v) {
-        marked[v] = true;
-        for (int w : G.adj(v)) {
-            if (!marked[w]) {
-                edgeTo[w] = v;
-                dfs(G, w);
-            }
-        }
+    	try {
+    		 marked[v] = true;
+    	        for (int w : G.adj(v)) {
+    	            if (!marked[w]) {
+    	                edgeTo[w] = v;
+    	                dfs(G, w);
+    	            }
+    	        }
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
     }
 
     /**
