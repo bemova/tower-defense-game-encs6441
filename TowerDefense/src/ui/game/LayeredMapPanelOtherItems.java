@@ -219,22 +219,22 @@ ActionListener, MouseListener, Runnable {
 					Critter c = pairs.getValue();// defenderTargetPair.get(key);
 
 					// shoot only if target is in range
-					int range = 1;
-					if ((path[c.getCurrentPosition()].getY() <= t2
-							.getTowerPosition().getY() + range && path[c
-							                                           .getCurrentPosition()].getY() >= t2
-							                                           .getTowerPosition().getY() - range)
-							                                           && (path[c.getCurrentPosition()].getX() <= t2
-							                                           .getTowerPosition().getX() + range && path[c
-							                                                                                      .getCurrentPosition()].getX() >= t2
-							                                                                                      .getTowerPosition().getX() - range)) {
+//					int range = 1;
+//					if ((path[c.getCurrentPosition()].getY() <= t2
+//							.getTowerPosition().getY() + range && path[c
+//							                                           .getCurrentPosition()].getY() >= t2
+//							                                           .getTowerPosition().getY() - range)
+//							                                           && (path[c.getCurrentPosition()].getX() <= t2
+//							                                           .getTowerPosition().getX() + range && path[c
+//							                                                                                      .getCurrentPosition()].getX() >= t2
+//							                                                                                      .getTowerPosition().getX() - range)) {
 
 						new LineBullet()
 						.draw(g, convertCellToPixel(t2
 								.getTowerPosition()),
 								convertCellToPixel(path[c
 								                        .getCurrentPosition()]));
-					}
+//					}
 					its.remove(pairs);// avoids a
 					// ConcurrentModificationException
 				}
@@ -330,6 +330,7 @@ ActionListener, MouseListener, Runnable {
 						TowerLevel.one);
 			}
 
+			tower.setShootingStrategy(DefenderConstants.NearToEnd_Strategy);
 			if (tower.cost() < bank.getBalance() - bank.getCurrentBalance()) {
 				bank.setCurrentBalance(tower.cost());
 				availFunds = this.bank.getBalance()
@@ -451,11 +452,11 @@ ActionListener, MouseListener, Runnable {
 			target.setLife(target.getLife() - 1);// must be: -tower power/impact
 			break;
 		case DefenderConstants.ANCIENT_TOWER_TYPE:
-			((RegularMove)target.getMovingBehaviour()).setFreezeTime(1000);
+			((RegularMove)target.getMovingBehaviour()).setFreezeTime(52);
 			break;
 		}
 		try {
-			throw new Exception();
+			//throw new Exception();
 		} catch (Exception e2) {
 			logger.writer("shooting :" + defender.Id + " --> " + target.Id
 					+ "(" + target.getCurrentPosition() + ")", e2);

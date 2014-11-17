@@ -25,6 +25,7 @@ public class FireSpeed extends TowerFeatureDecorator {
 	public FireSpeed(Tower tower) {
 		this.tower = tower;
 		crittersLocation = new HashMap<Critter, Position>();
+		
 		// TODO Auto-generated constructor stub
 	}
 

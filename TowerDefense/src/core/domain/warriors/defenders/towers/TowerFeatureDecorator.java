@@ -23,6 +23,7 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	private Critter target;
 	public Map<Critter, Position> crittersLocation;
 	public double nearestDistance;
+	
 
 	public Map<Critter, Position> getCrittersLocation() {
 		return crittersLocation;
