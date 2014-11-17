@@ -17,6 +17,7 @@ public class GameInfoPanel extends JPanel {
 
 	private JLabel lblLife;
 	private JLabel lblBank;
+	private JLabel lblWave;
 
 	/**
 	 * Create the panel.
@@ -65,7 +66,7 @@ public class GameInfoPanel extends JPanel {
 		gbc_lblImage_2.gridy = 0;
 		add(lblImage_2, gbc_lblImage_2);
 
-		JLabel lblWave = new JLabel("Wave");
+		lblWave = new JLabel("Wave");
 		GridBagConstraints gbc_lblWave = new GridBagConstraints();
 		gbc_lblWave.insets = new Insets(0, 0, 0, 5);
 		gbc_lblWave.gridx = 0;
@@ -91,7 +92,11 @@ public class GameInfoPanel extends JPanel {
 	}
 	
 	public void setBank(int bank) {
-		lblLife.setText(new Integer(bank).toString());
+		lblBank.setText(new Integer(bank).toString());
+	}
+	
+	public void setWave(int waveNum) {
+		lblWave.setText(new Integer(waveNum).toString());
 	}
 	
 //	public void paintComponent(Graphics g) {
