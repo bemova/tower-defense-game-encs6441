@@ -17,11 +17,17 @@ import core.domain.waves.Position;
  */
 public class FireSpeed extends TowerFeatureDecorator {
 	private Tower tower;
-	
+	/**
+	 * Return Tower
+	 * @return tower
+	 */
 	public Tower getTower() {
 		return tower;
 	}
-
+	/**
+	 * Get tower and create a critter map positions
+	 * @param tower
+	 */
 	public FireSpeed(Tower tower) {
 		this.tower = tower;
 		crittersLocation = new HashMap<Critter, Position>();

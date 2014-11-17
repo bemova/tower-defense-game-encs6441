@@ -22,6 +22,10 @@ public class FireRange extends TowerFeatureDecorator {
 	public Tower getTower() {
 		return tower;
 	}
+	/**
+	 * Get tower and create a critter map positions
+	 * @param tower
+	 */
 	public FireRange(Tower tower) {
 		this.tower = tower;
 		crittersLocation = new HashMap<Critter, Position>();
