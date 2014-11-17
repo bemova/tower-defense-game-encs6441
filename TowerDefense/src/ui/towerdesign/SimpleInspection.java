@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +25,7 @@ import javax.swing.SwingConstants;
 
 import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.TowerMarket;
+import core.contract.DefenderConstants;
 import core.domain.account.BankManager;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
@@ -49,6 +52,8 @@ public class SimpleInspection extends Observable implements ActionListener {
 	private JButton sellBtn;
 	private JPanel panel;
 	private JDialog dialog;
+	private JComboBox<String> strategyCombo;
+	private String shootingStrategy;
 
 	/**
 	 * Create the panel.
@@ -94,7 +99,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 
 		panel = new JPanel();
 		this.tower = tower;
-		dialog.setLayout(new FlowLayout());
+		dialog.getContentPane().setLayout(new FlowLayout());
 		dialog.setTitle("Tower Inspection");
 
 		List<Tower> towerList = tower.objectDetials();
@@ -156,7 +161,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 		gbc_rangeCount.gridy = 3;
 		panel.add(rangeCount, gbc_rangeCount);
 
-		JLabel valueLable = new JLabel("Value         ");
+		JLabel valueLable = new JLabel("Value       ");
 		valueLable.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_valueLable = new GridBagConstraints();
 		gbc_valueLable.insets = new Insets(0, 0, 5, 5);
@@ -170,6 +175,46 @@ public class SimpleInspection extends Observable implements ActionListener {
 		gbc_valueCount.gridx = 2;
 		gbc_valueCount.gridy = 4;
 		panel.add(valueCount, gbc_valueCount);
+		rangeLable.setHorizontalAlignment(SwingConstants.LEFT);
+		gbc_rangeLable.insets = new Insets(0, 0, 5, 5);
+		gbc_rangeLable.gridx = 1;
+		gbc_rangeLable.gridy = 5;
+
+		///// set combo box//////
+		strategyCombo = new JComboBox<>();
+		DefaultComboBoxModel<String> strategyModel = new DefaultComboBoxModel<>();
+		GridBagConstraints gbc_strategy = new GridBagConstraints();
+		strategyModel.addElement(DefenderConstants.NearToEnd_Strategy);
+		strategyModel.addElement(DefenderConstants.NearToStart_Strategy);
+		strategyModel.addElement(DefenderConstants.Strangest_Strategy);
+		strategyModel.addElement(DefenderConstants.Weakest_Strategy);
+		strategyCombo.setModel(strategyModel);
+		if(tower != null){
+			strategyCombo.setSelectedItem(tower.getShootingStrategy());
+		}
+		strategyCombo.addActionListener (new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				shootingStrategy = (String)strategyCombo.getSelectedItem();
+				if(tower != null){
+					tower.setShootingStrategy(shootingStrategy);
+					sendUpdateSignal();
+				}
+			}
+		});
+
+		JLabel strategyLable = new JLabel("Strategy ");
+		GridBagConstraints gbc_stratgyLable = new GridBagConstraints();
+		gbc_stratgyLable.anchor = GridBagConstraints.WEST;
+		gbc_stratgyLable.insets = new Insets(0, 0, 5, 5);
+		gbc_stratgyLable.gridx = 1;
+		gbc_stratgyLable.gridy = 5;
+		panel.add(strategyLable, gbc_stratgyLable); 
+		strategyCombo.setModel(strategyModel);
+		gbc_strategy.insets = new Insets(0, 0, 5, 0);
+		gbc_strategy.gridx = 2;
+		gbc_strategy.gridy = 5;
+		panel.add(strategyCombo, gbc_strategy);
+
 
 		upgradeBtn = new JButton("Upgrade");
 		upgradeBtn.setSize(30, 20);
@@ -182,47 +227,47 @@ public class SimpleInspection extends Observable implements ActionListener {
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
 		gbc_label_1.insets = new Insets(0, 0, 5, 5);
 		gbc_label_1.gridx = 1;
-		gbc_label_1.gridy = 5;
+		gbc_label_1.gridy = 6;
 		panel.add(label_1, gbc_label_1);
 
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 6;
+		gbc_comboBox.gridy = 7;
 
 		levelLabel = new JLabel("");
 		GridBagConstraints gbc_levelLabel = new GridBagConstraints();
+		gbc_levelLabel.anchor = GridBagConstraints.WEST;
 		gbc_levelLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_levelLabel.gridx = 1;
-		gbc_levelLabel.gridy = 6;
+		gbc_levelLabel.gridy = 7;
 		panel.add(levelLabel, gbc_levelLabel);
 		GridBagConstraints gbc_upgradeBtn = new GridBagConstraints();
 		gbc_upgradeBtn.insets = new Insets(0, 0, 5, 0);
 		gbc_upgradeBtn.gridx = 2;
-		gbc_upgradeBtn.gridy = 6;
+		gbc_upgradeBtn.gridy = 7;
 		panel.add(upgradeBtn, gbc_upgradeBtn);
 
 		JLabel label = new JLabel(" ");
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.insets = new Insets(0, 0, 5, 5);
 		gbc_label.gridx = 1;
-		gbc_label.gridy = 7;
+		gbc_label.gridy = 8;
 		panel.add(label, gbc_label);
 
 		sellPriceLable = new JLabel("Sell Price ");
 		sellPriceLable.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_sellPriceLable = new GridBagConstraints();
-		gbc_sellPriceLable.insets = new Insets(0, 0, 5, 5);
+		gbc_sellPriceLable.insets = new Insets(0, 0, 0, 5);
 		gbc_sellPriceLable.gridx = 1;
-		gbc_sellPriceLable.gridy = 8;
+		gbc_sellPriceLable.gridy = 9;
 		panel.add(sellPriceLable, gbc_sellPriceLable);
 
 		sellPriceCount = new JLabel("");
 		GridBagConstraints gbc_sellPriceCount = new GridBagConstraints();
-		gbc_sellPriceCount.insets = new Insets(0, 0, 5, 0);
 		gbc_sellPriceCount.gridx = 2;
-		gbc_sellPriceCount.gridy = 8;
+		gbc_sellPriceCount.gridy = 9;
 		panel.add(sellPriceCount, gbc_sellPriceCount);
 		List<Tower> towerDetails = tower.objectDetials();
 		TowerFactory factory = new TowerFactory();
@@ -259,9 +304,9 @@ public class SimpleInspection extends Observable implements ActionListener {
 		sellPriceCount.setText(new Long(sellPrice).toString());
 
 		// end of texboxes'text setting
-		dialog.add(panel);
+		dialog.getContentPane().add(panel);
 		dialog.setVisible(true);
-		dialog.setSize(300, 280);
+		dialog.setSize(300, 303);
 		dialog.setLocationRelativeTo(null);
 
 	}

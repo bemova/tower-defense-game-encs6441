@@ -48,26 +48,28 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 			map.put(critter, alienPosition);
 			this.setCrittersLocation(map);
 			Critter c = null;
-			switch (shootingStrategy) {
-			case DefenderConstants.NearToEnd_Strategy:
-				c = service.nearToEndCritter(this, critter.getPath());
-				break;
-				
-			case DefenderConstants.NearToStart_Strategy:
+			if(shootingStrategy == null){
+				this.setShootingStrategy( DefenderConstants.NearToEnd_Strategy);
 				c = service.nearToStartCritter(this, critter.getPath());
-				break;
+			}else{
+				switch (shootingStrategy) {
+				case DefenderConstants.NearToEnd_Strategy:
+					c = service.nearToEndCritter(this, critter.getPath());
+					break;
 
-			case DefenderConstants.Strangest_Strategy:
-				c = service.strongestCritter(this);
-				break;
+				case DefenderConstants.NearToStart_Strategy:
+					c = service.nearToStartCritter(this, critter.getPath());
+					break;
 
-			case DefenderConstants.Weakest_Strategy:
-				c = service.weakestCritter(this);
-				break;
+				case DefenderConstants.Strangest_Strategy:
+					c = service.strongestCritter(this);
+					break;
+
+				case DefenderConstants.Weakest_Strategy:
+					c = service.weakestCritter(this);
+					break;
+				}
 			}
-//			if(c == null){
-//				c = service.nearToStartCritter(this, critter.getPath());
-//			}
 			if(c !=null){
 				setTarget(c);
 				setChanged();
