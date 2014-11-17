@@ -86,7 +86,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		
 		// mapPanel = new MapPanel();
-		mapPanel = new LayeredMapPanel(getMapPanelDimention(),gameInfoPanel);
+		mapPanel = new LayeredMapPanel(getMapPanelDimention(),gameInfoPanel, this);
 		// mapPanel.setBackground(Color.RED);
 		contentPane.add(mapPanel, BorderLayout.CENTER);
 
@@ -131,6 +131,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 	}
 
+	public GameControllerPanel getGameControllerPanel(){
+		return gameControllerPanel;
+	}
 	public Dimension getMapPanelDimention() {
 		int width = gameInfoPanel.getWidth() - (emptyBarPanel.getWidth() * 2);
 		int height = emptyBarPanel.getHeight();
