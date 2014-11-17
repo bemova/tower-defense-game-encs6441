@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import core.applicationservice.warriorservices.WaveFactory;
+import core.contract.WaveConstants;
 import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.aliens.crittertype.FoolishCritter;
 import core.domain.warriors.aliens.crittertype.IntelligentCritter;
@@ -18,12 +19,12 @@ import core.domain.waves.Wave;
 
 public class WaveFactoryTest {
 	WaveFactory testWave;
-	
-	
+
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		
-		
+
+
 	}
 
 	@AfterClass
@@ -44,7 +45,7 @@ public class WaveFactoryTest {
 		for (Critter critter : foolishWave.aliens) {
 			assertTrue(critter instanceof FoolishCritter);
 		}
-		
+
 	}
 	@Test
 	public void testIntelligentFactory() {
@@ -55,7 +56,24 @@ public class WaveFactoryTest {
 		for (Critter critter : intelligentWave.aliens) {
 			assertTrue(critter instanceof Resistance);
 		}
-		
 	}
+	@Test
+	public void testWaveFactory() {
+		Position[] path = {
+				new Position(0, 0),new Position(0, 1),
+				new Position(0, 2),new Position(0, 3),
+				new Position(0, 4),new Position(0, 5),
+				new Position(1, 9),new Position(1, 8),
+				new Position(2, 16),new Position(2, 17),
+				new Position(2, 18)
+		};
+		WaveFactory factory = new WaveFactory();
+		Wave wave = factory.getWave("IntelligentCritter", new Position(0, 0), path);
+		for (Critter c : wave.aliens) {
+			assertTrue(c instanceof Resistance);
+		}
+		assertEquals(wave.aliens.size(),  WaveConstants.WAVE_SIZE);
+	}
+
 
 }
