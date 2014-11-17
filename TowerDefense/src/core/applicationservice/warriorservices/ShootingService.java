@@ -14,6 +14,12 @@ import core.domain.waves.Position;
 
 public class ShootingService {
 	private static final Log4jLogger logger = new Log4jLogger();
+	
+	/**
+	 * Calculate nearest critter to specific tower
+	 * @param tower
+	 * @return nearestCritter
+	 */
 	public Critter nearestCritter(Tower tower){
 		double nearestDistance = Double.MAX_VALUE;
 		Critter critter = null;
@@ -53,6 +59,11 @@ public class ShootingService {
 		}
 		return ((TowerFeatureDecorator)tower).getTarget();
 	}
+	/**
+	 * Calculate weakest Critter based on critter life
+	 * @param tower
+	 * @return weakestCritter
+	 */
 	public Critter weakestCritter(Tower tower){
 		Critter weakest = null;
 		Position weakestPosition =null;
@@ -75,6 +86,11 @@ public class ShootingService {
 		}
 		return weakest;
 	}
+	/**
+	 * Calculate strongest Critter Critter based on critter life
+	 * @param tower
+	 * @return strongestCritter
+	 */
 	public Critter strongestCritter(Tower tower){
 		Critter strongest = null;
 		Position strongestPosition =null;
@@ -97,6 +113,12 @@ public class ShootingService {
 		}
 		return strongest;
 	}
+	/**
+	 * Calculate nearest critter to exit gate
+	 * @param tower
+	 * @param path
+	 * @return nearToEndCritter
+	 */
 	public Critter nearToEndCritter(Tower tower,Position[] path){
 		Critter nearToEnd = null;
 		Position nearToEndPosition =null;
@@ -119,6 +141,12 @@ public class ShootingService {
 		}
 		return nearToEnd;
 	}
+	/**
+	 * Calculate nearest critter to entrance gate
+	 * @param tower
+	 * @param path
+	 * @return nearToStartCritter
+	 */
 	public Critter nearToStartCritter(Tower tower,Position[] path){
 		Critter nearToStart = null;
 		Position nearToStartPosition =null;

@@ -5,6 +5,10 @@ import core.domain.account.LifeManager;
 
 public class LifeManagerService {
 	private static final Log4jLogger logger = new Log4jLogger();
+	/**
+	 * Manage player life and add life to player 
+	 * @param life
+	 */
 	public void LifeManager(long life){
 		try {
 			LifeManager manager = LifeManager.getInstance();
@@ -13,6 +17,9 @@ public class LifeManagerService {
 			logger.writer(this.getClass().getName(), e);
 		}
 	}
+	/**
+	 * Reset player life
+	 */
 	public void resetLife(){
 		try {
 			LifeManager manager = LifeManager.getInstance();

@@ -2,7 +2,7 @@ package core.applicationservice;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 /**
- * this demo was implemented as aDemo for dependecy injection and IOC for the build2
+ * this demo was implemented as aDemo for dependency injection and IOC for the build2
  * @author Team5
  * @version 1.0
  */
