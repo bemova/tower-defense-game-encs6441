@@ -24,11 +24,17 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	public Map<Critter, Position> crittersLocation;
 	public double nearestDistance;
 	
-
+	/**
+	 * Return a map contain critters and their positions
+	 * @return crittersLocation
+	 */
 	public Map<Critter, Position> getCrittersLocation() {
 		return crittersLocation;
 	}
-
+	/**
+	 * Set critter locations in the map in our Map data structure
+	 * @param crittersLocation
+	 */
 	public void setCrittersLocation(Map<Critter, Position> crittersLocation) {
 		crittersLocation = crittersLocation;
 	}
@@ -90,7 +96,10 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 
 
 	}
-
+	/**
+	 * remove dead critters from our wave
+	 * @param critter
+	 */
 	public void removeDeadCritter(Critter critter) {
 		try {
 			crittersLocation.remove(critter);
@@ -106,20 +115,32 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	 * @return descrition of the tower
 	 */
 	public abstract String getDescription();
-
+	/**
+	 * 
+	 * @param defenderInformer
+	 */
 	public void register(Subject defenderInformer) {
 		this.subject = defenderInformer;
 		this.subject.registerObserver(this);
 	}
-
+	/**
+	 * Return target critter which tower has to shoot it
+	 * @return target
+	 */
 	public Critter getTarget() {
 		return target;
 	}
-
+	/**
+	 * 
+	 * @return TowerFeatureDecorator 
+	 */
 	public TowerFeatureDecorator getDefender() {
 		return this;
 	}
-
+	/**
+	 * Set target for shooting
+	 * @param target
+	 */
 	public void setTarget(Critter target) {
 		this.target = target;
 	}
