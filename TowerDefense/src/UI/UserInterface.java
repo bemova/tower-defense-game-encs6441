@@ -37,7 +37,7 @@ import Towers.*;
 import UI.FactoryTower;
 import UI.TowerParameters;
 
-public class UserInterface extends JFrame {
+public class UserInterface extends JFrame implements IUserInterface {
 
 	int width = 15;
 	int height = 15;
@@ -58,8 +58,14 @@ public class UserInterface extends JFrame {
 	JButton designMap = new JButton("Design Map");
 	JButton playGame = new JButton("Start Playing");
 	JButton startWave = new JButton("Start wave");
-public JTextField moneyView = new JTextField(); // display of view accumulated
-													// points during the game
+
+	JTextField moneyViewEdit = new JTextField(); // display of view accumulated
+	@Override
+	public JTextField moneyView() {
+		return moneyViewEdit;
+	}
+	
+	// points during the game
 	JLabel acumulatedMoney = new JLabel("POINTS :");
 
 	JButton designTowers = new JButton("Design Towers");
@@ -199,8 +205,8 @@ public JTextField moneyView = new JTextField(); // display of view accumulated
 
 					canva.updateGrid(grid);
 					upper.add(acumulatedMoney);
-					upper.add(moneyView);
-					moneyView.setText("200");
+					upper.add(moneyViewEdit);
+					moneyViewEdit.setText("200");
 					gameStatus = EnumGameStatValue.PLAYGAME;
 
 					pack();
@@ -679,7 +685,7 @@ public JTextField moneyView = new JTextField(); // display of view accumulated
 		if(value < 0){
 			towerControler(point, "down");
 			JOptionPane.showMessageDialog(null, "Not enouph money to buy a tower!");
-		}else 	this.moneyView.setText(Double.toString(value)); 
+		}else 	this.moneyViewEdit.setText(Double.toString(value)); 
 		
 		
 		int level =  grid.getTower(position).getCurrentLevel();
@@ -691,5 +697,4 @@ public JTextField moneyView = new JTextField(); // display of view accumulated
 		return anableSellBuy;
 			
 	}
-	
 }

@@ -7,7 +7,6 @@ import java.util.Stack;
 import maps.EmptyGrid;
 import maps.Grid;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import MapServacs.GraphNode;

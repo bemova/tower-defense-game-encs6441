@@ -3,14 +3,15 @@ package MapServacs;
 import java.util.Observable;
 import java.util.Observer;
 
+import UI.IUserInterface;
 import UI.UserInterface;
 import critters.Critter;
 
 public class MoneyManager implements Observer {
 	private double money;
-	UserInterface Uinterface;
-	
-	public MoneyManager(UserInterface uinterface) {
+	IUserInterface Uinterface;
+
+	public MoneyManager(IUserInterface uinterface) {
 		money = 200;
 		Uinterface = uinterface;
 	}
@@ -34,16 +35,18 @@ public class MoneyManager implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		
-		if(((Critter)arg0).getState() == Critter.State.DEAD  || ((Critter)arg0).getState() == Critter.State.COMPLETEDPATH){
-		int value = ((Critter)arg0).getHitPoints() - ((Critter)arg0).getDemageAmount();
-		if(value > 0) money = money + value;
-		else
-			money = money - ((Critter)arg0).getHitPoints();
-		
-		Uinterface.moneyView.setText("" + money);
+
+		Critter critter = (Critter)arg0;
+		if (critter.getState() == Critter.State.DEAD || critter.getState() == Critter.State.COMPLETEDPATH) {
+			int value = critter.getHitPoints() - critter.getDemageAmount();
+			if (value < 0)
+				money = money + critter.getHitPoints();
+			else
+				money = money - critter.getHitPoints();
+
+			Uinterface.moneyView().setText("" + money);
 		}
-		
+
 	}
 
 }

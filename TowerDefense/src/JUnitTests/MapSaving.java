@@ -1,16 +1,13 @@
 package JUnitTests;
 
-import static org.junit.Assert.*;
-import maps.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotEquals;
+import maps.EmptyGrid;
+import maps.Grid;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import MapServacs.*;
-
-import java.nio.file.attribute.GroupPrincipal;
-import java.util.Stack;
+import MapServacs.MapManager;
 /**
  * This set of test cases are related to the validation of map => loading, save, entry exit points, existing path
  * To be more concrete :

@@ -1,17 +1,15 @@
 package JUnitTests;
 
-import static org.junit.Assert.*;
-import maps.*;
-
-import org.junit.Before;
-import org.junit.Ignore;
-
-import java.nio.file.attribute.GroupPrincipal;
-import java.util.Stack;
-
-import MapServacs.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import maps.EmptyGrid;
+import maps.Grid;
 
 import org.junit.Test;
+
+import MapServacs.MapManager;
+import MapServacs.StandardAlgorithms;
 /**
  * 1) Map loading returns the exact map from the given file
  * 2) Entry is 1 and Exit is 1
@@ -156,7 +154,6 @@ public class MapLoading {
 		@Test // test 5
 		public void arbitraryEntryPoint(){
 			Grid grid = new EmptyGrid(10,10);
-			MapManager manager =  new MapManager();
 			((EmptyGrid)grid).setSize(10, 10);
 			((EmptyGrid)grid).content = new int [][] {{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
 					{2, 2, 2, 2, 2, 1, 1, 1, 2, 2},
@@ -186,7 +183,6 @@ public class MapLoading {
 		@Test //test 6
 		public void arbitraryExitPoint(){
 			Grid grid = new EmptyGrid(10,10);
-			MapManager manager =  new MapManager();
 			((EmptyGrid)grid).setSize(10, 10);
 			((EmptyGrid)grid).content = new int [][] {{2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
 					{2, 2, 2, 2, 2, 1, 1, 1, 2, 2},
