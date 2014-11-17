@@ -28,12 +28,12 @@ public class PositionService {
 
 	/**
 	 * 
-	 * @param p
-	 *            first position
-	 * @param q
-	 *            goal position
-	 * @param range
-	 *            the range that is used as a scale
+	 * @param p first position
+	 *            
+	 * @param q goal position
+	 *            
+	 * @param range the range that is used as a scale
+	 *            
 	 * @return true, if position q is in the range
 	 */
 	public boolean isInRange(Position source, Position destination, int range) {
