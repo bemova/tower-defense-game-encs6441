@@ -6,7 +6,12 @@ package core.domain.waves;
  * @author Team5
  * @version 0.1
  */
-public class Position {
+public class Position implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1521288002292900413L;
+	
 	private int x;
 	private int y;
 	/**

@@ -12,14 +12,21 @@ import core.domain.warriors.defenders.towers.Tower;
  * @author Team5
  *
  */
-@SuppressWarnings("serial")
+
 public class GridMap extends Grid {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6655562505652432949L;
 
 	private Tower[][] towers;
 
 	/**
-	 * @param width Map width
-	 * @param height Map height
+	 * @param width
+	 *            Map width
+	 * @param height
+	 *            Map height
 	 */
 	public GridMap(int width, int height) {
 		super(width, height);
@@ -28,7 +35,9 @@ public class GridMap extends Grid {
 
 	/**
 	 * <b>Constructs a Map using a grid.</b>
-	 * @param grid Grid object 
+	 * 
+	 * @param grid
+	 *            Grid object
 	 */
 	public GridMap(Grid grid) {
 		super(grid);
@@ -36,18 +45,24 @@ public class GridMap extends Grid {
 	}
 
 	/**
-	 * <b>Used in Observer design pattern which updates the towers that are on the map.</b>
-	 * @param towers list of towers on the grid
+	 * <b>Used in Observer design pattern which updates the towers that are on
+	 * the map.</b>
+	 * 
+	 * @param towers
+	 *            list of towers on the grid
 	 */
 	public void setTowers(Tower[][] towers) {
-		if(towers != null) { 
-			this.towers = Arrays.copyOf(towers, towers.length); 
-		} 
+		if (towers != null) {
+			this.towers = Arrays.copyOf(towers, towers.length);
+		}
 	}
-/**
- * <b>Draws the map on the screen.</b>
- * @param g to paint the component 
- */
+
+	/**
+	 * <b>Draws the map on the screen.</b>
+	 * 
+	 * @param g
+	 *            to paint the component
+	 */
 	public void draw(Graphics g) {
 		for (int x = 0; x < getWidth(); x++) {
 			for (int y = 0; y < getHeight(); y++) {
@@ -66,12 +81,11 @@ public class GridMap extends Grid {
 					color = MapConstants.EXIT_COLOR;
 					break;
 				case TOWER:
-//					color = towers[x][y].display();
+					// color = towers[x][y].display();
 					break;
 				}
 				g.setColor(color);
-				g.fillRect(x * getUnitSize(), y * getUnitSize(), getUnitSize(),
-						getUnitSize());
+				g.fillRect(x * getUnitSize(), y * getUnitSize(), getUnitSize(), getUnitSize());
 
 			}
 
@@ -79,10 +93,8 @@ public class GridMap extends Grid {
 
 	}
 
-public Tower[][] getTowers() {
-	return towers;
-}
+	public Tower[][] getTowers() {
+		return towers;
+	}
 
-
-	
 }

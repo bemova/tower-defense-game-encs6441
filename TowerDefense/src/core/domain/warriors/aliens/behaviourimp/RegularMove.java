@@ -15,8 +15,14 @@ import core.domain.waves.Position;
  * @author Team5
  * @version 0.1
  */
-public class RegularMove implements MovingBehaviour {
+public class RegularMove implements MovingBehaviour, java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7111897498315966069L;
+	
+	
 	private Position[] path;
 	private int xStep;
 	private int yStep;
@@ -29,8 +35,8 @@ public class RegularMove implements MovingBehaviour {
 	 * @param initialPixel initial path pixel
 	 */
 	public RegularMove(Position[] path, Position initialPixel) {
-		this.PixelPosition = initialPixel;
-		this.path = path;
+		this.setPixelPosition(initialPixel);
+		this.setPath(path);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -120,6 +126,38 @@ public class RegularMove implements MovingBehaviour {
 	 */
 	public void setFreezeTime(int freezeTime) {
 		this.freezeTime = freezeTime;
+	}
+
+	private void setPath(Position[] path) {
+		this.path = path;
+	}
+
+	private int getxStep() {
+		return xStep;
+	}
+
+	private void setxStep(int xStep) {
+		this.xStep = xStep;
+	}
+
+	private int getyStep() {
+		return yStep;
+	}
+
+	private void setyStep(int yStep) {
+		this.yStep = yStep;
+	}
+
+	private void setPixelPosition(Position pixelPosition) {
+		PixelPosition = pixelPosition;
+	}
+
+	private void setCurrentPosition(int currentPosition) {
+		this.currentPosition = currentPosition;
+	}
+
+	private int getFreezeTime() {
+		return freezeTime;
 	}
 
 }

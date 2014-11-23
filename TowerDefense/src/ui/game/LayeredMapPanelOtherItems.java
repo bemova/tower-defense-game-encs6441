@@ -61,6 +61,12 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	private Cell cell;
 	private Position[] path;
 	private Wave wave;
+	public Wave getWave() {
+		return wave;
+	}
+	public void setWave(Wave value) {
+		wave = value;
+	}
 
 	private Icon[] critterImage;
 

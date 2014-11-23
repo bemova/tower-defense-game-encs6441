@@ -14,8 +14,14 @@ import core.domain.waves.Position;
  * @author Team5
  * @version 0.1
  */
-public abstract class Critter {
+public abstract class Critter implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7151914372955282259L;
+	
+	
 	/** The Id. */
 	public String Id= UUID.randomUUID().toString();
 	private int currentPosition;
@@ -24,10 +30,10 @@ public abstract class Critter {
 
 
 	/** The moving behaviour. */
-	MovingBehaviour movingBehaviour;
+	transient MovingBehaviour movingBehaviour;
 
 	/** The sound behaviour. */
-	SoundBehaviour soundBehaviour;
+	transient SoundBehaviour soundBehaviour;
 
 	private int life;
 	/**
@@ -136,6 +142,10 @@ public abstract class Critter {
 	 */
 	public String getDescription() {
 		return description;
+	}
+	
+	public void setDescription(String value) {
+		description = value;
 	}
 
 	/**

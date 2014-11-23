@@ -14,8 +14,21 @@ import core.domain.warriors.aliens.Critter;
  *  @author Team5
  *  @version 0.1
  */
-public class Wave {
+public class Wave implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1889317271014210764L;
+	
+	
 	public List<Critter> aliens;
+	public List<Critter> getAliens(){
+		return aliens;
+	}
+	public void setAliens(List<Critter> value){
+		aliens = value;
+	}
+	
 	public Position headPosition;
 	
 	/**

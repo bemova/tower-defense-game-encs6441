@@ -123,6 +123,11 @@ public class GameInfoPanel extends JPanel {
 		lblLife.setText(new Integer(life).toString());
 		repaint();
 	}
+	
+	public int getLife() {
+		return Integer.parseInt(lblLife.getText());
+	}
+	
 	/**
 	 * 
 	 * @param bank amount of gold
@@ -130,6 +135,11 @@ public class GameInfoPanel extends JPanel {
 	public void setBank(int bank) {
 		lblBank.setText(new Integer(bank).toString());
 	}
+	public int getBank() {
+		return Integer.parseInt(lblBank.getText());
+	}
+
+	
 	/**
 	 * 
 	 * @param waveNum the wave number 
@@ -139,6 +149,7 @@ public class GameInfoPanel extends JPanel {
 		this.waveNum = waveNum;
 		repaint();
 	}
+	
 	/**
 	 * 
 	 * @return wave number

@@ -7,6 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -21,6 +26,7 @@ import ui.Constants;
 import core.applicationservice.mapservices.MapManager;
 import core.domain.maps.Grid;
 import core.domain.warriors.defenders.towers.Tower;
+import core.domain.waves.Wave;
 
 public class MainFrame extends JFrame implements ActionListener {
 
@@ -32,6 +38,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JMenuBar menuBar;
 	private JMenu mapMenu;
 	private JMenuItem openMenuItem;
+	private JMenuItem loadGameMenutItem;
+	private JMenuItem saveGameMenuItem; 
 
 	private GameInfoPanel gameInfoPanel;
 	private EmptyBarPanel emptyBarPanel;
@@ -148,18 +156,18 @@ public class MainFrame extends JFrame implements ActionListener {
 		mapMenu = new JMenu("Actions");
 
 		openMenuItem = new JMenuItem(Constants.LOAD_MAP);
-
 		openMenuItem.addActionListener(this);
-
 		mapMenu.add(openMenuItem);
 
 		menuBar.add(mapMenu);
 
-		JMenuItem mntmTest = new JMenuItem("Load Game");
-		mapMenu.add(mntmTest);
+		loadGameMenutItem = new JMenuItem(Constants.LOAD_GAME);
+		loadGameMenutItem.addActionListener(this);
+		mapMenu.add(loadGameMenutItem);
 
-		JMenuItem mntmSameGame = new JMenuItem("Same Game");
-		mapMenu.add(mntmSameGame);
+		saveGameMenuItem = new JMenuItem(Constants.SAVE_GAME);
+		saveGameMenuItem.addActionListener(this);
+		mapMenu.add(saveGameMenuItem);
 
 		setJMenuBar(menuBar);
 
@@ -173,6 +181,12 @@ public class MainFrame extends JFrame implements ActionListener {
 		case Constants.LOAD_MAP:
 			loadMap();
 			// continueMapDesign();
+			break;
+		case Constants.SAVE_GAME:
+			saveGame();
+			break;
+		case Constants.LOAD_GAME:
+			loadGame();
 			break;
 		}
 
@@ -194,6 +208,72 @@ public class MainFrame extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 
+	}
+	
+	protected void saveGame(){
+		try {
+			mapPanel.getOtherItemsPanel().pauseGame();
+			JFileChooser openFile = new JFileChooser();
+			if (JFileChooser.APPROVE_OPTION == openFile.showSaveDialog(null)) {
+				
+				try {
+					FileOutputStream fileOut = new FileOutputStream(openFile.getSelectedFile().getAbsolutePath());
+					ObjectOutputStream out = new ObjectOutputStream(fileOut);
+					out.writeObject(mapPanel.getGrid());
+					out.writeObject(mapPanel.getBank().getBalance());
+					out.writeObject(mapPanel.getBank().getCurrentBalance());
+					out.writeObject(mapPanel.getOtherItemsPanel().getWave());
+					out.close();
+					fileOut.close();
+					System.out.printf("Serialized data is saved in /tmp/employee.ser");
+				} catch (IOException i) {
+					i.printStackTrace();
+				}
+				
+			}
+			mapPanel.getOtherItemsPanel().resumeGame();
+		} catch (java.lang.Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		}
+	}
+	
+	protected void loadGame(){
+		try {
+			mapPanel.getOtherItemsPanel().pauseGame();
+			JFileChooser saveFile = new JFileChooser();
+			if (JFileChooser.APPROVE_OPTION == saveFile.showOpenDialog(null)) {
+				try {
+					FileInputStream fileIn = new FileInputStream(saveFile.getSelectedFile().getAbsolutePath());
+					ObjectInputStream in = new ObjectInputStream(fileIn);
+
+					GridMap map = (GridMap)in.readObject();
+					mapPanel.setGrid(map);
+										
+					mapPanel.getBank().setBalance((long)in.readObject());
+					mapPanel.getBank().setCurrentBalance((long)in.readObject());
+					
+					mapPanel.getOtherItemsPanel().setWave((Wave)in.readObject());
+					
+					mapPanel.setTowers(map.getTowers());
+					mapPanel.resetSize(getMapPanelDimention());
+					
+					mapPanel.repaint();
+					in.close();
+					fileIn.close();
+				} catch (IOException i) {
+					i.printStackTrace();
+					return;
+				} catch (ClassNotFoundException c) {
+					System.out.println("Employee class not found");
+					c.printStackTrace();
+					return;
+				}
+			}
+			mapPanel.getOtherItemsPanel().resumeGame();
+		} catch (java.lang.Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		}
+		
 	}
 
 	private void resetGameState() {

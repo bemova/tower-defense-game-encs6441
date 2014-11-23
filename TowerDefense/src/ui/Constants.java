@@ -14,6 +14,8 @@ public class Constants {
 	public static final String EXIT = "Exit";
 	public static final String SAVE_MAP = "Save Map";
 	public static final String LOAD_MAP = "Load Map";
+	public static final String LOAD_GAME = "Load Game";
+	public static final String SAVE_GAME = "Save Game";
 	public static final String DESIGN_MAP = "Design Map";
 	public static final String EMPTY_STRING = "";
 	public static final String WIDTH = "Width: ";

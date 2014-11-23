@@ -10,9 +10,14 @@ import core.domain.waves.Position;
  * @author 	Team5
  *
  */
-@SuppressWarnings("serial")
+
 public class Grid implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3267090270961396525L;
+	
 	private int width;
 	private int height;
 	private int unitSize = MapConstants.UNIT_SIZE;
@@ -103,11 +108,18 @@ public class Grid implements Serializable{
 		return height;
 	}
 
+	public void setHeight(int value){
+		height = value;
+	}
 	/**
 	 * @return width of map
 	 */
 	public int getWidth() {
 		return width;
+	}
+	
+	public void setWidth(int value) {
+		width = value;
 	}
 
 	/**
@@ -117,12 +129,21 @@ public class Grid implements Serializable{
 		return content;
 	}
 
+	public void setContent(GridCellContentType[][] value) {
+		content = value;
+	}
+	
 	/**
 	 * @return size of the unit 
 	 */
 	public int getUnitSize() {
 		return unitSize;
 	}
+	
+	public void setUnitSize(int value) {
+		unitSize = value;
+	}
+
 
 	/**
 	 * <b>Sets the size of the grid and resets its content to scenery.</b>

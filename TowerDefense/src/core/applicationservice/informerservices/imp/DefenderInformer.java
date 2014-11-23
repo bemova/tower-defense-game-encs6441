@@ -21,8 +21,12 @@ import core.domain.waves.Position;
  * @version 0.1
  */
 @Component
-public class DefenderInformer implements Subject, IDefenderInformer {
+public class DefenderInformer implements Subject, IDefenderInformer, java.io.Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5999028712196865753L;
 	/**
 	 * <b>The wave head position.
 	 * this member is the wave's head reperesenteter</b>

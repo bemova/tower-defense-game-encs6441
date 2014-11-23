@@ -6,8 +6,14 @@ import core.contract.AccountConstants;
  * @author Team5
  *
  */
-public class BankManager { 
+public class BankManager implements java.io.Serializable { 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -54897009666121452L;
+	
+	
 	private static BankManager instance = null;
 	public static long balance;
 	public static long currentBalance;
@@ -43,6 +49,10 @@ public class BankManager {
 	 */	
 	public long getBalance() {
 		return balance;
+	}
+	
+	public void setBalance(long value) {
+		balance = value;
 	}
 	/**
 	 * <b>this method can add the extra money that player can add to the their amount of money</b>

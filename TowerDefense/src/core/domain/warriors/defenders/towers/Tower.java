@@ -24,13 +24,19 @@ import core.domain.waves.Position;
  */
 public abstract class Tower extends Defender {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1260736688387671401L;
+	
+	
 	public String Id= UUID.randomUUID().toString();
-	private MovingBehaviour movingBehaviour;
-	private ShootingBehaviour shootingBehaviour;
-	private SoundBehaviour soundBehaviour;
-	private BulletShootingBehaviour  bulletShootingBehaviour;
-	private IceShootingBehaviour iceShootingBehaviour;
-	private LineShootingBehaviour lineShootingBehaviour;
+	private transient MovingBehaviour movingBehaviour;
+	private transient ShootingBehaviour shootingBehaviour;
+	private transient SoundBehaviour soundBehaviour;
+	private transient BulletShootingBehaviour  bulletShootingBehaviour;
+	private transient IceShootingBehaviour iceShootingBehaviour;
+	private transient LineShootingBehaviour lineShootingBehaviour;
 	private TowerLevel level;
 	private Position towerPosition;
 	private String shootingStrategy;
