@@ -81,6 +81,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	private Map<Tower, Critter> defenderTargetPair;
 
 	private GameInfoPanel gameInfoPanel;
+	
+	public GameInfoPanel getGameInfoPanel() {
+		return gameInfoPanel;
+	}
 
 	private List<Critter> currentWaveAlienList;
 

@@ -253,6 +253,8 @@ public class MainFrame extends JFrame implements ActionListener {
 					mapPanel.getBank().setCurrentBalance((long)in.readObject());
 					
 					mapPanel.getOtherItemsPanel().setWave((Wave)in.readObject());
+					int bank = (int)(mapPanel.getBank().getBalance() - mapPanel.getBank().getCurrentBalance());
+					mapPanel.getOtherItemsPanel().getGameInfoPanel().setBank(bank);
 					
 					mapPanel.setTowers(map.getTowers());
 					mapPanel.resetSize(getMapPanelDimention());
