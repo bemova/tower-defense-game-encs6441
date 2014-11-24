@@ -498,6 +498,9 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 						escapedCritter++;
 						updatePlayerLife(escapedCritter);
 						currentWaveAlienList.remove(j);
+						if (isWaveComplete()) {
+							waveCompleted();
+						}
 
 					}
 				}
