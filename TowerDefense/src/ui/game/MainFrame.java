@@ -224,6 +224,7 @@ public class MainFrame extends JFrame implements ActionListener {
 					out.writeObject(mapPanel.getBank().getBalance());
 					out.writeObject(mapPanel.getBank().getCurrentBalance());
 					out.writeObject(LifeManager.getInstance().getLife());
+					out.writeObject(mapPanel.getGameInfoPanel().getWave());
 					out.writeObject(mapPanel.getOtherItemsPanel().getWave());
 					out.close();
 					fileOut.close();
@@ -256,6 +257,10 @@ public class MainFrame extends JFrame implements ActionListener {
 					int life = (int)in.readObject();
 					LifeManager.getInstance().setLife(life);
 					mapPanel.getOtherItemsPanel().getGameInfoPanel().setLife(life);
+					
+					int wave = (int)in.readObject();
+					mapPanel.getGameInfoPanel().setWave(wave);
+					
 					mapPanel.getOtherItemsPanel().setWave((Wave)in.readObject());
 					int bank = (int)(mapPanel.getBank().getBalance() - mapPanel.getBank().getCurrentBalance());
 					mapPanel.getOtherItemsPanel().getGameInfoPanel().setBank(bank);
