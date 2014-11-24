@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 
 import ui.Constants;
 import core.applicationservice.mapservices.MapManager;
+import core.domain.account.LifeManager;
 import core.domain.maps.Grid;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.waves.Wave;
@@ -222,6 +223,7 @@ public class MainFrame extends JFrame implements ActionListener {
 					out.writeObject(mapPanel.getGrid());
 					out.writeObject(mapPanel.getBank().getBalance());
 					out.writeObject(mapPanel.getBank().getCurrentBalance());
+					out.writeObject(LifeManager.getInstance().getLife());
 					out.writeObject(mapPanel.getOtherItemsPanel().getWave());
 					out.close();
 					fileOut.close();
@@ -251,7 +253,9 @@ public class MainFrame extends JFrame implements ActionListener {
 										
 					mapPanel.getBank().setBalance((long)in.readObject());
 					mapPanel.getBank().setCurrentBalance((long)in.readObject());
-					
+					int life = (int)in.readObject();
+					LifeManager.getInstance().setLife(life);
+					mapPanel.getOtherItemsPanel().getGameInfoPanel().setLife(life);
 					mapPanel.getOtherItemsPanel().setWave((Wave)in.readObject());
 					int bank = (int)(mapPanel.getBank().getBalance() - mapPanel.getBank().getCurrentBalance());
 					mapPanel.getOtherItemsPanel().getGameInfoPanel().setBank(bank);
