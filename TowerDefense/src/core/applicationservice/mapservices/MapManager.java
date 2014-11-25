@@ -1,11 +1,14 @@
 package core.applicationservice.mapservices;
 
+import infrastructure.loggin.Log4jLogger;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Date;
 
-import infrastructure.loggin.Log4jLogger;
 import core.applicationservice.mapservices.connectivity.imp.ConnectivityService;
 import core.applicationservice.mapservices.connectivity.imp.StartEndChecker;
 import core.domain.maps.Grid;
@@ -51,6 +54,7 @@ public class MapManager {
 	 * 
 	 */
 	public void saveMapIntoFle(Grid grid, String fileName) {
+		setLog(grid);
 		try {
 			StartEndChecker startEndChecker = new StartEndChecker();
 			if(!startEndChecker.hasEnd(grid.getContent()))
@@ -74,6 +78,20 @@ public class MapManager {
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
 		}
+	}
+
+	private void setLog(Grid grid) {
+		Date date = new Date();
+		if(grid.getCreationTime() != null && grid.getCreationTime().length() > 0){
+			if(grid.getModificationTime()==null){
+				grid.setModificationTime(new ArrayList<String>());
+			}
+			grid.addModificationTime(date.toString());
+		}
+		else {
+			grid.setCreationTime(date.toString());
+		}
+		
 	}
 
 }

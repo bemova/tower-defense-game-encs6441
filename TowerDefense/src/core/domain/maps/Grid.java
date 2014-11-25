@@ -2,6 +2,7 @@ package core.domain.maps;
 
 import java.awt.Graphics;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import core.contract.MapConstants;
 import core.domain.waves.Position;
@@ -23,6 +24,10 @@ public class Grid implements Serializable{
 	private int unitSize = MapConstants.UNIT_SIZE;
 	private GridCellContentType[][] content;
 
+	private String creationTime;
+	private ArrayList<String> modificationTime;
+	private ArrayList<PlayLog> playLog;
+	
 	/**
 	 * This is a dummy constructor 
 	 */
@@ -207,4 +212,51 @@ public class Grid implements Serializable{
 		return null;
 	}
 
+	public String getCreationTime() {
+		return creationTime;
+	}
+
+	public void setCreationTime(String creationTime) {
+		this.creationTime = creationTime;
+	}
+
+	public ArrayList<String> getModificationTime() {
+		return modificationTime;
+	}
+
+	public void setModificationTime(ArrayList<String> modificationTime) {
+		this.modificationTime = modificationTime;
+	}
+	
+	public void addModificationTime (String modificationTime){
+		this.modificationTime.add(modificationTime);
+	}
+	
+	
+	public ArrayList<PlayLog> getPlayLog() {
+		return playLog;
+	}
+
+	public void setPlayLog(ArrayList<PlayLog> playLog) {
+		this.playLog = playLog;
+	}
+
+	public void addPlayLog (String time, int score){
+		this.playLog.add(new PlayLog(time, score));
+		
+	}
+	
+	
+	class PlayLog {
+		String time;
+		int score;
+		
+		PlayLog(){
+		}
+		
+		PlayLog(String time, int score){
+			this.time = time;
+			this.score = score;
+		}
+	}
 }
