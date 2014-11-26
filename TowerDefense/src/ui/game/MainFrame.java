@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ui.Constants;
+import core.applicationservice.gameservices.GameLogManager;
 import core.applicationservice.mapservices.MapManager;
 import core.domain.account.LifeManager;
 import core.domain.maps.Grid;
@@ -203,6 +204,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				mapPanel.setGrid(grid);
 				resetGameState();
 				mapPanel.repaint();
+				GameLogManager.getInstance().addWaveLog(1, "New wave started");
 			}
 
 		} catch (java.lang.Exception ex) {

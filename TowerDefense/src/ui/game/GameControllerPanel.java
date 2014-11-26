@@ -120,11 +120,11 @@ public class GameControllerPanel extends JPanel {
 	 * Once a wave is completed , enable the user to start a new wave
 	 * and reinitialize some instances
 	 */
-	public void wavaCompleted() {
+	public void wavaCompleted(int waveNumber) {
 		this.gameState = "completed";
 		tglbtnNewToggleButton_1.setText("New Wave");
-		int waveNum = (mapPanel.getGameInfoPanel()).getWave();
-		(mapPanel.getGameInfoPanel()).setWave(waveNum + 1);
+//		int waveNum = (mapPanel.getGameInfoPanel()).getWave();
+		(mapPanel.getGameInfoPanel()).setWave(waveNumber);
 //		(mapPanel.getGameInfoPanel()).setLife(life);
 		LifeManager lifeManager = LifeManager.getInstance();
 		lifeManager.addLife(5);

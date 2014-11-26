@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ui.towerdesign.SimpleInspection;
+import core.applicationservice.gameservices.GameLogManager;
 import core.applicationservice.informerservices.imp.DefenderInformer;
 import core.applicationservice.locationservices.PositionService;
 import core.applicationservice.mapservices.pathfinder.PathService;
@@ -61,6 +62,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	private Cell cell;
 	private Position[] path;
 	private Wave wave;
+	private int waveNumber = 1;
 	public Wave getWave() {
 		return wave;
 	}
@@ -330,6 +332,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 				tower.setTowerPosition(new Position(x, y));
 				grid.setCell(x, y, GridCellContentType.TOWER);
 				grid.setTowers(towers);
+				GameLogManager.getInstance().addTowerLog(waveNumber, tower, "Placement");
 				informer.registerObserver((TowerFeatureDecorator) tower);
 				((TowerFeatureDecorator) tower).addObserver(this);
 				repaint();
@@ -461,6 +464,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 		towers[x][y] = inspection.getTower();
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
 		gameInfoPanel.setBank((int) availFunds);
+		GameLogManager.getInstance().addTowerLog(waveNumber, towers[x][y], "Upgrade");
 	}
 
 	/**
@@ -477,6 +481,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 			towers[x][y] = null;
 			grid.setTowers(towers);
 			grid.setCell(x, y, GridCellContentType.SCENERY);
+			GameLogManager.getInstance().addTowerLog(waveNumber, towers[x][y], "Sell");
 			repaint();
 		}
 	}
@@ -560,7 +565,9 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 
 	private void waveCompleted() {
 		System.out.println("Wave is completed!");
-		mainFrame.getGameControllerPanel().wavaCompleted();
+		GameLogManager.getInstance().addWaveLog(waveNumber, "Wave completed.");
+		mainFrame.getGameControllerPanel().wavaCompleted(waveNumber++);
+		GameLogManager.getInstance().addWaveLog(waveNumber, "New wave started");
 		waveStarted = false;
 
 	}
@@ -639,7 +646,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 			critterImage[i] = new ImageIcon(file.getPath());
 		}
 		waveStarted = true;
-
+		GameLogManager.getInstance().addWaveLog(waveNumber, "Critters entered the map.");
 	}
 
 	@SuppressWarnings("deprecation")
