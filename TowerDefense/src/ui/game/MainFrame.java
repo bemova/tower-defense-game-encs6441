@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -46,6 +47,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	private GameInfoPanel gameInfoPanel;
 	private EmptyBarPanel emptyBarPanel;
 	private GameControllerPanel gameControllerPanel;
+	private JMenuItem mntmLogViewer;
+	
+	private LogViewer logViewerDialog;
 
 	/**
 	 * Launch the application.
@@ -170,6 +174,25 @@ public class MainFrame extends JFrame implements ActionListener {
 		saveGameMenuItem = new JMenuItem(Constants.SAVE_GAME);
 		saveGameMenuItem.addActionListener(this);
 		mapMenu.add(saveGameMenuItem);
+		
+		mntmLogViewer = new JMenuItem("Log Viewer");
+		mntmLogViewer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+//				try {
+					
+					if(logViewerDialog != null){
+						logViewerDialog.dispose();
+					}
+					logViewerDialog = new LogViewer(GameLogManager.getInstance());
+					logViewerDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					logViewerDialog.setSize(500, 500);
+					logViewerDialog.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+			}
+		});
+		mapMenu.add(mntmLogViewer);
 
 		setJMenuBar(menuBar);
 

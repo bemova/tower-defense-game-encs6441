@@ -491,7 +491,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	 */
 	public void run() {
 		while (true) {
-			System.out.println("thread running");
+//			System.out.println("thread running");
 			if (waveStarted) {
 				for (int j = 0; j < currentWaveAlienList.size(); j++) {
 					Critter critter = currentWaveAlienList.get(j);
