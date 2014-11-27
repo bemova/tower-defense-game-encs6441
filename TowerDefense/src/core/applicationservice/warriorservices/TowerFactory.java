@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hamcrest.text.StringEndsWith;
+
 import infrastructure.loggin.Log4jLogger;
 import core.contract.DefenderConstants;
 import core.contract.MapConstants;
+import core.domain.account.LifeManager;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.TowerFeatureDecorator;
 import core.domain.warriors.defenders.towers.features.FirePower;
@@ -78,6 +81,11 @@ public class TowerFactory {
 				break;
 
 			}
+			
+			int latestID = LifeManager.getInstance().getIdManager();
+			tower.Id = (new Integer(latestID +1)).toString();
+			LifeManager.getInstance().setIdManager(latestID + 1);
+			
 			return tower;
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
