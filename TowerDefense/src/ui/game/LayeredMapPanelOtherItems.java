@@ -550,7 +550,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 */
 	public void run() {
 		while (true) {
-			// System.out.println("thread running");
+			 System.out.print("");
 			if (waveStarted) {
 				for (int j = 0; j < currentWaveAlienList.size(); j++) {
 					Critter critter = currentWaveAlienList.get(j);
@@ -668,8 +668,21 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		grid.addPlayLog(new Date().toString(), this.bank.getBalance() - this.bank.getCurrentBalance());
 
 		VisualGrid vg = new VisualGrid((Grid) grid);
+		removeTowers(vg);
 		(new MapManager()).setPlayLog(vg, mainFrame.mapFilePath);
 
+	}
+
+	private void removeTowers(VisualGrid vg) {
+		for(int i=0; i<vg.getWidth(); i++){
+			for(int j=0; j<vg.getHeight(); j++){
+				if(vg.getCell(i, j)== GridCellContentType.TOWER){
+					vg.setCell(i, j, GridCellContentType.SCENERY);
+				}
+			}
+		}
+			
+		
 	}
 
 	@SuppressWarnings("deprecation")
