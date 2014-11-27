@@ -23,6 +23,7 @@ public class CritterShape extends JComponent {
 	 * @param image Critter image
 	 * @param x x coordinate
 	 * @param y y coordinate
+	 * @param hp Critter life
 	 */
 	public void draw(Graphics g, Icon image, int x, int y, int hp){
 		super.paintComponent(g);
