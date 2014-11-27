@@ -30,7 +30,7 @@ public abstract class Tower extends Defender {
 	private static final long serialVersionUID = -1260736688387671401L;
 	
 	
-	public String Id= UUID.randomUUID().toString();
+	public String Id;
 	private transient MovingBehaviour movingBehaviour;
 	private transient ShootingBehaviour shootingBehaviour;
 	private transient SoundBehaviour soundBehaviour;
