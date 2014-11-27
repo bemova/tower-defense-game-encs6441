@@ -241,7 +241,7 @@ public class Grid implements Serializable{
 		this.playLog = playLog;
 	}
 
-	public void addPlayLog (String time, int score){
+	public void addPlayLog (String time, long score){
 		this.playLog.add(new PlayLog(time, score));
 		
 	}
@@ -249,12 +249,12 @@ public class Grid implements Serializable{
 	
 	class PlayLog {
 		String time;
-		int score;
+		long score;
 		
 		PlayLog(){
 		}
 		
-		PlayLog(String time, int score){
+		PlayLog(String time, long score){
 			this.time = time;
 			this.score = score;
 		}

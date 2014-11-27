@@ -51,6 +51,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	private LogViewer logViewerDialog;
 
+	public String mapFilePath = "";
 	/**
 	 * Launch the application.
 	 * @param args for running
@@ -222,8 +223,9 @@ public class MainFrame extends JFrame implements ActionListener {
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
 				MapManager mapManager = new MapManager();
-				GridMap grid = new GridMap((Grid) mapManager.loadMapFromFile(openFile
-						.getSelectedFile().getAbsolutePath()));
+				mapFilePath = openFile.getSelectedFile().getAbsolutePath();
+//				GridMap grid = new GridMap((Grid) mapManager.loadMapFromFile(openFile.getSelectedFile().getAbsolutePath()));
+				GridMap grid = new GridMap((Grid) mapManager.loadMapFromFile(mapFilePath));
 				mapPanel.setGrid(grid);
 				resetGameState();
 				mapPanel.repaint();
