@@ -1,5 +1,6 @@
 package ui.game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -7,6 +8,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import core.applicationservice.warriorservices.TowerFactory;
 import core.contract.MapConstants;
 import core.domain.maps.GridCellContentType;
 import core.domain.warriors.defenders.towers.Tower;
@@ -74,7 +76,7 @@ public class Cell extends Rectangle {
 	 * 
 	 */
 	
-	public void draw(Graphics g, GridCellContentType cellType, Tower[][] towers, int x, int y, int gridX, int gridY) {
+	public void draw(Graphics g, GridCellContentType cellType, Tower[][] towers, int x, int y, int gridX, int gridY, boolean isTower) {
 		Image image = setup(cellType, towers, gridX, gridY);
 		
 		//draw scenery
@@ -84,6 +86,15 @@ public class Cell extends Rectangle {
 				MapConstants.UNIT_SIZE, null);
 		//end 
 		
+		if(isTower){
+			int len = ((new TowerFactory().getRange(towers[gridX][gridY]))*2 + 1)*MapConstants.UNIT_SIZE;
+			int cornerX = (x) - (new TowerFactory().getRange(towers[gridX][gridY])*MapConstants.UNIT_SIZE);
+			int cornerY = (y) - (new TowerFactory().getRange(towers[gridX][gridY])*MapConstants.UNIT_SIZE);
+			g.setColor(Color.RED);
+			g.drawRect(cornerX, cornerY, len, len);
+			g.setColor(Color.BLACK);
+		}
+
 		g.drawImage(image, x, y, MapConstants.UNIT_SIZE,
 				MapConstants.UNIT_SIZE, null);
 	}
