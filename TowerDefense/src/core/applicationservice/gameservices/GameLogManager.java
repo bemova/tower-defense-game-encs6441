@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import core.applicationservice.warriorservices.TowerFactory;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towertype.TowerType;
 
@@ -153,17 +154,19 @@ public class GameLogManager {
 
 	class TowerLog {
 		String id;
-		TowerType towerType;
+		String towerType;
 		String description;
 
 		TowerLog(Tower tower, String description) {
 			this.id = tower.Id;
-			this.towerType = tower.getTowerType();
+			TowerFactory factory = new TowerFactory();
+			String name = factory.getDecoratedName(tower.objectDetials());
+			this.towerType = name;
 			this.description = description;
 		}
 
 		public String toString() {
-			return "id: " + id + " type: " + "towerType.name()" + " desc: "
+			return "id: " + id + " type: " + towerType + " desc: "
 					+ description;
 		}
 	}

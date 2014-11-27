@@ -84,7 +84,7 @@ public class TowerFactory {
 			
 			int latestID = LifeManager.getInstance().getIdManager();
 			tower.Id = (new Integer(latestID +1)).toString();
-			LifeManager.getInstance().setIdManager(latestID + 1);
+			LifeManager.getInstance().setIdManager(latestID +1);
 			
 			return tower;
 		} catch (Exception e) {
