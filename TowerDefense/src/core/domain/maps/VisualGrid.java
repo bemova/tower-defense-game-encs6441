@@ -13,13 +13,14 @@ import core.contract.MapConstants;
  */
 public class VisualGrid extends Grid {
 
-	Grid simpleGrid;
+//	Grid simpleGrid;
 /**
  * 
  * @param grid initializes grid
  */
 	public VisualGrid(Grid grid) {
-		simpleGrid = grid;
+		super(grid);
+//		simpleGrid = grid;
 
 	}
 /**

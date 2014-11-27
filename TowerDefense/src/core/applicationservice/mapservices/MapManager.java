@@ -80,6 +80,17 @@ public class MapManager {
 		}
 	}
 
+	public void setPlayLog(Grid grid, String fileName) {
+		try {
+			FileOutputStream fout = new FileOutputStream(fileName);
+			ObjectOutputStream oos = new ObjectOutputStream(fout);
+			oos.writeObject(grid);
+			oos.close();
+		} catch (Exception e) {
+			logger.writer(this.getClass().getName(), e);
+		}
+	}
+	
 	private void setLog(Grid grid) {
 		Date date = new Date();
 		if(grid.getCreationTime() != null && grid.getCreationTime().length() > 0){

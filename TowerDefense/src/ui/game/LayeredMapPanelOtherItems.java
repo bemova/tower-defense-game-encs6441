@@ -660,7 +660,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		System.out.println("Game Over");
 		JOptionPane.showMessageDialog(null, "Game Over");
 		// mapT.stop();
-//		saveScore();
+		saveScore();
 		System.exit(0);
 	}
 
@@ -668,7 +668,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		grid.addPlayLog(new Date().toString(), this.bank.getBalance() - this.bank.getCurrentBalance());
 
 		VisualGrid vg = new VisualGrid((Grid) grid);
-		(new MapManager()).saveMapIntoFle(vg, mainFrame.mapFilePath);
+		(new MapManager()).setPlayLog(vg, mainFrame.mapFilePath);
 
 	}
 

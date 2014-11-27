@@ -25,8 +25,8 @@ public class Grid implements Serializable{
 	private GridCellContentType[][] content;
 
 	private String creationTime;
-	private ArrayList<String> modificationTime;
-	private ArrayList<PlayLog> playLog;
+	private ArrayList<String> modificationTime = new ArrayList<String>();
+	private ArrayList<PlayLog> playLog = new ArrayList<PlayLog>();
 	
 	/**
 	 * This is a dummy constructor 
@@ -71,6 +71,9 @@ public class Grid implements Serializable{
 		this.width = grid.getWidth();
 		this.height = grid.getHeight();
 		this.content = grid.getContent();
+		this.creationTime = grid.getCreationTime();
+		this.modificationTime.addAll(grid.getModificationTime());
+		this.playLog.addAll(grid.getPlayLog());
 	}
 
 	/**
@@ -242,12 +245,15 @@ public class Grid implements Serializable{
 	}
 
 	public void addPlayLog (String time, long score){
+		if(playLog == null) {
+			playLog = new ArrayList<PlayLog>();
+		}
 		this.playLog.add(new PlayLog(time, score));
 		
 	}
 	
 	
-	class PlayLog {
+	class PlayLog implements Serializable{
 		String time;
 		long score;
 		
