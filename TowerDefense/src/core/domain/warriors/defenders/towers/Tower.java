@@ -110,6 +110,13 @@ public abstract class Tower extends Defender {
 		return towers;
 	}
 	/**
+	 * towers tower description
+	 *
+	 */
+	public void setTowers(List<Tower> towers) {
+		this.towers = towers;
+	}
+	/**
 	 * Return tower description
 	 * @return description
 	 */

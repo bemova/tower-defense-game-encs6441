@@ -1,5 +1,6 @@
 package core.applicationservice.warriorservices;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -180,7 +181,7 @@ public class TowerFactory {
 	 */
 	public int getRange(Tower tower){
 		try {
-			Map<String, Integer> featuresCount = getFeaturesCount(tower.objectDetials());
+			Map<String, Integer> featuresCount = getFeaturesCount(tower.getTowers());
 			int rangeCount = featuresCount.get("FireRange");
 			return rangeCount;
 			
@@ -196,7 +197,7 @@ public class TowerFactory {
 	 */
 	public int getSpeed(Tower tower){
 		try {
-			Map<String, Integer> featuresCount = getFeaturesCount(tower.objectDetials());
+			Map<String, Integer> featuresCount = getFeaturesCount(tower.getTowers());
 			int speedCount = featuresCount.get("FireSpeed");
 			return speedCount;
 			
@@ -212,7 +213,7 @@ public class TowerFactory {
 	 */
 	public int getPower(Tower tower){
 		try {
-			Map<String, Integer> featuresCount = getFeaturesCount(tower.objectDetials());
+			Map<String, Integer> featuresCount = getFeaturesCount(tower.getTowers());
 			int powerCount = featuresCount.get("FirePower");
 			return powerCount;
 			
@@ -250,23 +251,26 @@ public class TowerFactory {
 	 * @param powerCount power feature count
 	 * @return Tower 
 	 */
-	public Tower updateLevel(String towertype, int speedCount, int rangeCount,
+	public Tower updateLevel(Tower tower, String towertype, int speedCount, int rangeCount,
 			int powerCount) {
-
+		List<Tower> lst = new ArrayList<>();
 		TowerFactory factory = new TowerFactory();
-		Tower tower = factory.getTower(towertype);
-
+		Tower newTower = factory.getTower(towertype);
+		
 		for (int i = 0; i < rangeCount; i++){
-			tower = new FireRange(tower);
+			newTower = new FireRange(newTower);
+			lst.add(newTower);
 		}
 		for (int i = 0; i < speedCount; i++){
-			tower = new FireSpeed(tower);
+			newTower = new FireSpeed(newTower);
+			lst.add(newTower);
 		}
 		for (int i = 0; i < powerCount; i++){
-			tower = new FirePower(tower);
+			newTower = new FirePower(newTower);
+			lst.add(newTower);
 		}
-
-		return tower;
+		newTower.setTowers(lst);
+		return newTower;
 	}
 
 }

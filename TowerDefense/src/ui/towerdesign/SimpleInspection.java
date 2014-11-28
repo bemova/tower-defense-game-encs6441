@@ -29,6 +29,7 @@ import core.contract.DefenderConstants;
 import core.domain.account.BankManager;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
+import core.domain.waves.Position;
 
 /**
  * <b>This class is an Observable class</b>
@@ -359,9 +360,13 @@ public class SimpleInspection extends Observable implements ActionListener {
 			str = powerCount.getText();
 			int powerCount = Integer.parseInt(str) + 1;
 
+			String tempId = tower.Id;
+			Position p = tower.getTowerPosition();
 			Tower newTower = upgradeLevel(tower, towertype, speedCount,
 					rangeCount, powerCount);
+			
 			if (newTower != null) {
+				newTower.Id = tempId;
 				this.tower = newTower;
 				this.speedCount.setText(new Integer(speedCount++).toString());
 				this.rangeCount.setText(new Integer(rangeCount++).toString());
@@ -378,6 +383,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 				if (newTower.getLevel().equals(TowerLevel.three)) {
 					this.upgradeBtn.setEnabled(false);
 				}
+				this.tower = newTower;
 			}
 		}
 
@@ -396,7 +402,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 			int rangeCount, int powerCount) {
 		TowerFactory factory = new TowerFactory();
 
-		Tower createdTower = factory.updateLevel(towertype, speedCount,
+		Tower createdTower = factory.updateLevel(tower, towertype, speedCount,
 				rangeCount, powerCount);
 
 		long value = tower.cost();
