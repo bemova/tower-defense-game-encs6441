@@ -38,17 +38,36 @@ public class TowerFactory {
 		if (towertype == null) {
 			return null;
 		}
+		List<Tower> lst = new ArrayList<>();
 		if (towertype.equalsIgnoreCase("ModernTower")) {
 			ModernTower tower = new ModernTower();
 			tower.setTowerType(TowerType.Modern);
+			lst.add(tower);
+			tower.setTowers(lst);
+			int id = LifeManager.getInstance().getIdManager();
+			tower.Id = (new Integer(id).toString());
+			LifeManager.getInstance().setIdManager(id + 1);
+			tower.setShootingStrategy(DefenderConstants.NearToEnd_Strategy);
 			return tower;
 		} else if (towertype.equalsIgnoreCase("AncientTower")) {
 			AncientTower tower = new AncientTower();
 			tower.setTowerType(TowerType.Ancient);
+			lst.add(tower);
+			tower.setTowers(lst);
+			int id = LifeManager.getInstance().getIdManager();
+			tower.Id = (new Integer(id).toString());
+			LifeManager.getInstance().setIdManager(id + 1);
+			tower.setShootingStrategy(DefenderConstants.NearToEnd_Strategy);
 			return tower;
 		} else if (towertype.equalsIgnoreCase("KingTower")) {
 			KingTower tower = new KingTower();
 			tower.setTowerType(TowerType.King);
+			lst.add(tower);
+			tower.setTowers(lst);
+			int id = LifeManager.getInstance().getIdManager();
+			tower.Id = (new Integer(id).toString());
+			LifeManager.getInstance().setIdManager(id + 1);
+			tower.setShootingStrategy(DefenderConstants.NearToEnd_Strategy);
 			return tower;
 		}
 		return null;
@@ -100,9 +119,14 @@ public class TowerFactory {
 	 */
 	Tower getLevelOne(Tower tower) {
 		try {
+			List<Tower> lst = tower.getTowers();
 			tower = new FirePower(tower);
+			lst.add(tower);
 			tower = new FireRange(tower);
+			lst.add(tower);
 			tower = new FireSpeed(tower);
+			lst.add(tower);
+			tower.setTowers(lst);
 			return tower;
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
@@ -253,6 +277,8 @@ public class TowerFactory {
 	 */
 	public Tower updateLevel(Tower tower, String towertype, int speedCount, int rangeCount,
 			int powerCount) {
+		String id = tower.Id;
+		String strategy = tower.getShootingStrategy();
 		List<Tower> lst = new ArrayList<>();
 		TowerFactory factory = new TowerFactory();
 		Tower newTower = factory.getTower(towertype);
@@ -270,6 +296,8 @@ public class TowerFactory {
 			lst.add(newTower);
 		}
 		newTower.setTowers(lst);
+		newTower.Id = id;
+		newTower.setShootingStrategy(strategy);
 		return newTower;
 	}
 
