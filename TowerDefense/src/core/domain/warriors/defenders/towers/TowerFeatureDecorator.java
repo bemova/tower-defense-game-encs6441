@@ -51,13 +51,24 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	 */
 	public void alienUpdate(Position alienPosition, Critter critter,String shootingStrategy) {
 		try {
-			crittersLocation.put(critter, alienPosition);
 			Map<Critter, Position> map = this.getCrittersLocation();
 			Set<Entry<Critter, Position>> it =  map.entrySet();
 			ShootingService service =  new ShootingService();
 			PositionService positionService = new PositionService();
 			TowerFactory factory = new TowerFactory();
 			int range = factory.getRange(this);
+			
+			if(!positionService.isInRange(this.getTowerPosition(), 
+					critter.getPath()[critter.getCurrentPosition()], range)){
+				for (Entry<Critter, Position> entry : it) {
+					if(entry.getKey() == critter){
+						map.remove(entry.getKey());
+						this.setCrittersLocation(map);
+						break;
+					}
+				}
+			}
+			
 			if(positionService.isInRange(this.getTowerPosition(), 
 					critter.getPath()[critter.getCurrentPosition()], range) && critter.getLife() > 0){
 				map.put(critter, alienPosition);
