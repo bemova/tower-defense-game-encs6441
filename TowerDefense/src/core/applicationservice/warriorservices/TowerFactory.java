@@ -2,7 +2,9 @@ package core.applicationservice.warriorservices;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import org.hamcrest.text.StringEndsWith;
@@ -103,8 +105,8 @@ public class TowerFactory {
 			}
 			
 			int latestID = LifeManager.getInstance().getIdManager();
-			tower.Id = (new Integer(latestID +1)).toString();
-			LifeManager.getInstance().setIdManager(latestID +1);
+			tower.Id = (new Integer(latestID)).toString();
+			LifeManager.getInstance().setIdManager(latestID);
 			return tower;
 		} catch (Exception e) {
 			logger.writer(this.getClass().getName(), e);
@@ -279,10 +281,19 @@ public class TowerFactory {
 			int powerCount) {
 		String id = tower.Id;
 		String strategy = tower.getShootingStrategy();
-		List<Tower> lst = new ArrayList<>();
 		TowerFactory factory = new TowerFactory();
+		List<Tower> lst = tower.getTowers();
+		int size = lst.size();
+		for (int i = size - 1; i >= 0; i--) {
+		    if(lst.get(i) instanceof TowerFeatureDecorator){
+		        lst.remove(i);
+		    }
+		}
 		Tower newTower = factory.getTower(towertype);
-		
+		for (int i = 0; i < powerCount; i++){
+			newTower = new FirePower(newTower);
+			lst.add(newTower);
+		}
 		for (int i = 0; i < rangeCount; i++){
 			newTower = new FireRange(newTower);
 			lst.add(newTower);
@@ -291,10 +302,7 @@ public class TowerFactory {
 			newTower = new FireSpeed(newTower);
 			lst.add(newTower);
 		}
-		for (int i = 0; i < powerCount; i++){
-			newTower = new FirePower(newTower);
-			lst.add(newTower);
-		}
+		
 		newTower.setTowers(lst);
 		newTower.Id = id;
 		newTower.setShootingStrategy(strategy);

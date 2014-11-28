@@ -5,7 +5,7 @@ import core.contract.AccountConstants;
 public class LifeManager {
 	private static LifeManager instance = null;
 	public static int life;
-	private int idManager;
+	private static int idManager;
 	
 	// Exists only to defeat instantiation.
 	public LifeManager() {
@@ -15,6 +15,7 @@ public class LifeManager {
 		if(instance == null) {
 			instance = new LifeManager();
 			life = AccountConstants.DEFAULT_LIFE;
+			idManager = 0;
 		}
 		return instance;
 	}

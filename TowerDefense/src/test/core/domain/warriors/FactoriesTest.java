@@ -93,13 +93,13 @@ public class FactoriesTest {
 			// expected
 			Tower expected = towerFactory.getTower("ModernTower");
 			Tower expDecorated = new FirePower(expected);
-			expDecorated = new FirePower(expDecorated);
-			expDecorated = new FirePower(expDecorated);
-			expDecorated = new FireRange(expDecorated);
-			expDecorated = new FireRange(expDecorated);
 			expDecorated = new FireRange(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
+			expDecorated = new FirePower(expDecorated);
+			expDecorated = new FireRange(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
+			expDecorated = new FirePower(expDecorated);
+			expDecorated = new FireRange(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
 			
 			// assert part
