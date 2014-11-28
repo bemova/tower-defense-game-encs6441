@@ -80,7 +80,7 @@ public class MapManager {
 		}
 	}
 
-	public void setPlayLog(Grid grid, String fileName) {
+	public void savePlayLog(Grid grid, String fileName) {
 		try {
 			FileOutputStream fout = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);

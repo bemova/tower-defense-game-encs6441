@@ -581,6 +581,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		gameInfoPanel.setBank((int) availFunds);
 		GameLogManager.getInstance().addTowerLog(waveNumber, towers[x][y],
 				"Upgrade");
+		repaint();
 	}
 
 	/**
@@ -735,7 +736,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 		VisualGrid vg = new VisualGrid((Grid) grid);
 		removeTowers(vg);
-		(new MapManager()).setPlayLog(vg, mainFrame.mapFilePath);
+		(new MapManager()).savePlayLog(vg, mainFrame.mapFilePath);
 
 	}
 
