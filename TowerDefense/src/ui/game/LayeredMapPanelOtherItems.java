@@ -603,6 +603,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 					"Sell");
 			
 			informer.removeObserver((TowerFeatureDecorator) towers[x][y]);
+			defenderTargetPair.remove(towers[x][y]);
 			towers[x][y] = null;
 			grid.setTowers(towers);
 			grid.setCell(x, y, GridCellContentType.SCENERY);
@@ -628,8 +629,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 								.getCurrentPosition();
 						Position p = path[i];
 						critter.setCurrentPosition(i);
-						informer.setAlienPosition(p.getX(), p.getY(), critter,
-								towers[x][y].getShootingStrategy());
+						if(towers[x][y] != null){
+							informer.setAlienPosition(p.getX(), p.getY(), critter,
+									towers[x][y].getShootingStrategy());
+						}
 
 					} else {
 						System.out.println("At exit point.");
