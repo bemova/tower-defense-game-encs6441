@@ -2,9 +2,11 @@ package ui.game;
 
 import infrastructure.loggin.Log4jLogger;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +32,7 @@ import core.applicationservice.mapservices.pathfinder.PathService;
 import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.WaveFactory;
 import core.contract.DefenderConstants;
+import core.contract.MapConstants;
 import core.contract.WaveConstants;
 import core.domain.account.BankManager;
 import core.domain.account.LifeManager;
@@ -463,8 +466,19 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		if (arg0 instanceof TowerFeatureDecorator) {
 			target = ((TowerFeatureDecorator) arg0).getTarget();
 			defender = ((TowerFeatureDecorator) arg0).getDefender();
-			shoot(defender, target);
-			removeDeadCritters();
+			
+			
+			Tower t2 = defender;
+			Critter c = target;
+
+			PositionService positionService = new PositionService();
+			TowerFactory factory = new TowerFactory();
+			int range = factory.getRange(t2);
+			if (positionService.isInRange(t2.getTowerPosition(),
+					c.getPath()[c.getCurrentPosition()], range)) {
+				shoot(defender, target);
+				removeDeadCritters();
+			}
 		}
 	}
 
@@ -485,9 +499,14 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		switch (defenderType) {
 		case DefenderConstants.KING_TOWER_TYPE:
 			target.setLife(target.getLife() / 2);
+//			new java.util.Timer().schedule("hi", 1000);
+//			burn();
 			break;
 		case DefenderConstants.MODERN_TOWER_TYPE:
-			target.setLife(target.getLife() - 1);// must be: -tower power/impact
+//			target.setLife(target.getLife() - 1);// must be: -tower power/impact
+//			new TowerFactory().getPower(defender)
+			
+			splash(defender, target);
 			break;
 		case DefenderConstants.ANCIENT_TOWER_TYPE:
 			PositionService positionService = new PositionService();
@@ -506,6 +525,51 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 					+ "(" + target.getCurrentPosition() + ")");
 		}
 
+	}
+
+	private void splash(Tower defender, Critter target) {
+//		target.setLife(target.getLife() - 1);// must be: -tower power/impact
+		int gridX = path[target.getCurrentPosition()].getX();
+		int gridY = path[target.getCurrentPosition()].getY();
+		Position pixel = convertCellToPixel(new Position(gridX, gridY));
+		
+		
+		
+		
+		int len = (4)*MapConstants.UNIT_SIZE;
+		int cornerX = pixel.getX() - MapConstants.UNIT_SIZE - (MapConstants.UNIT_SIZE/2);
+		int cornerY = pixel.getY() - MapConstants.UNIT_SIZE - (MapConstants.UNIT_SIZE/2);
+		Rectangle areaOfEffect = new Rectangle(cornerX, cornerY, len,len);
+		
+		ArrayList<Critter> critters = new ArrayList<Critter>();
+		critters.addAll(wave.getAliens());
+		for(Critter c: wave.getAliens()){
+			int gX = path[c.getCurrentPosition()].getX();
+			int gY = path[c.getCurrentPosition()].getY();
+			Position p = convertCellToPixel(new Position(gX, gY));
+			int l = (1)*MapConstants.UNIT_SIZE;
+			int cX = (p.getX());
+			int cY = p.getY();
+			Rectangle critterRect = new Rectangle(cX, cY, l,l);
+			      
+			if(critterRect.intersects(areaOfEffect)){
+				c.setLife(c.getLife() - 1);// must be: -tower power/impact
+			}
+			      
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		wave.getAliens()
+		
 	}
 
 	/**
