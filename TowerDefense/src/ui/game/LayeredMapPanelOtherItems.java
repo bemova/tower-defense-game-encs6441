@@ -495,7 +495,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		defenderTargetPair.put(defender, target);
 		TowerFactory factory = new TowerFactory();
 		String defenderType = factory
-				.getDecoratedName(defender.objectDetials());
+				.getDecoratedName(defender.getTowers());
 		switch (defenderType) {
 		case DefenderConstants.KING_TOWER_TYPE:
 			target.setLife(target.getLife() / 2);

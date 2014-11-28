@@ -103,7 +103,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 		dialog.getContentPane().setLayout(new FlowLayout());
 		dialog.setTitle("Tower Inspection");
 
-		List<Tower> towerList = tower.objectDetials();
+		List<Tower> towerList = tower.getTowers();
 		TowerFactory f = new TowerFactory();
 		this.towertype = f.getDecoratedName(towerList);
 		this.bank = BankManager.getInstance();
@@ -270,7 +270,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 		gbc_sellPriceCount.gridx = 2;
 		gbc_sellPriceCount.gridy = 9;
 		panel.add(sellPriceCount, gbc_sellPriceCount);
-		List<Tower> towerDetails = tower.objectDetials();
+		List<Tower> towerDetails = tower.getTowers();
 		TowerFactory factory = new TowerFactory();
 
 		// set texboxes with current feature informations
