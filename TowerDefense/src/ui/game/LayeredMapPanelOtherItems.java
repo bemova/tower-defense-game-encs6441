@@ -226,9 +226,9 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				if (grid.getTowers() == null) {
 					grid.setTowers(new Tower[1][1]);
 				}
-				if (grid.getCell(x, y).getValue() == 11) {
+				if (grid.getCell(x, y) == GridCellContentType.TOWER) {
 					cell.draw(g, grid.getCell(x, y), grid.getTowers(),
-							xCoordinate, yCoordinate, x, y);
+							xCoordinate, yCoordinate, x, y,true);
 				}
 			}
 		}
@@ -238,7 +238,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				Position pos = ((RegularMove) (currentWaveAlienList.get(i)
 						.getMovingBehaviour())).getPixelPosition();
 				new CritterShape().draw(g, critterImage[i], pos.getX(),
-						pos.getY());
+						pos.getY(), currentWaveAlienList.get(i).getLife());
 			}
 
 			Map<Tower, Critter> map = defenderTargetPair;
@@ -534,12 +534,14 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
 			gameInfoPanel.setBank((int) availFunds);
 
+			GameLogManager.getInstance().addTowerLog(waveNumber, towers[x][y],
+					"Sell");
+			
 			informer.removeObserver((TowerFeatureDecorator) towers[x][y]);
 			towers[x][y] = null;
 			grid.setTowers(towers);
 			grid.setCell(x, y, GridCellContentType.SCENERY);
-			GameLogManager.getInstance().addTowerLog(waveNumber, towers[x][y],
-					"Sell");
+			
 			repaint();
 		}
 	}
