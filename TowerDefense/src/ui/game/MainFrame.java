@@ -29,6 +29,7 @@ import core.applicationservice.gameservices.GameStateManager;
 import core.applicationservice.mapservices.MapManager;
 import core.domain.account.LifeManager;
 import core.domain.maps.Grid;
+import core.domain.maps.GridMap;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.waves.Wave;
 
@@ -251,15 +252,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		if (saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 			String fileName = saveFile.getSelectedFile().getAbsolutePath();
-//			mapPanel.saveGame(fileName);
-			
-//			public void saveGame(String fileName){
-				
 				GameStateManager game = new GameStateManager(mapPanel.getGridMap(), mapPanel.getWaveNumber(), mapFilePath);
 				GameStateManager.save(fileName, game);
-//			}
-			
-			
 		}
 	}
 
@@ -268,11 +262,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
 			String fileName = openFile.getSelectedFile().getAbsolutePath();
 			GameStateManager game = GameStateManager.load(fileName);
-//			resetGameState();
 			this.mapFilePath = game.getMapLocation();
 			mapPanel.setGrid(game.getMap());
 			mapPanel.setGameInfo(game);
-//			resetGameState();
 			mapPanel.resetSize(getMapPanelDimention());
 			mapPanel.repaint();
 		}

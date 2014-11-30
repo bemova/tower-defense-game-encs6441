@@ -8,20 +8,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import ui.game.GridMap;
 import core.domain.account.BankManager;
 import core.domain.account.LifeManager;
+import core.domain.maps.GridMap;
 
-public class GameStateManager implements Serializable{
+public class GameStateManager implements Serializable {
 	private static final Log4jLogger logger = new Log4jLogger();
 	private GridMap map;
 	private int wave;
 	private long balance;
 	private long currentBalance;
-	private int life; 
+	private int life;
 	private String mapLocation;
-	
-	public GameStateManager(GridMap map, int wave, String mapLocation){
+
+	public GameStateManager(GridMap map, int wave, String mapLocation) {
 		this.map = map;
 		this.wave = wave;
 		this.mapLocation = mapLocation;
@@ -29,34 +29,33 @@ public class GameStateManager implements Serializable{
 		this.currentBalance = BankManager.getInstance().getCurrentBalance();
 		this.life = LifeManager.getInstance().getLife();
 	}
-	
-	public static void save(String fileName, GameStateManager game){
-		
+
+	public static void save(String fileName, GameStateManager game) {
+
 		FileOutputStream fout;
 		try {
 			fout = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
-	        oos.writeObject(game);
+			oos.writeObject(game);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+
 	}
-	
-	public static GameStateManager load(String fileName){
+
+	public static GameStateManager load(String fileName) {
 		GameStateManager game = null;
 		try {
 			FileInputStream streamIn = new FileInputStream(fileName);
 			ObjectInputStream objectinputstream = new ObjectInputStream(
 					streamIn);
 			Object obj = objectinputstream.readObject();
-			if(obj instanceof GameStateManager){
+			if (obj instanceof GameStateManager) {
 				game = (GameStateManager) obj;
 			}
 			objectinputstream.close();
 		} catch (Exception e) {
-			logger.writer("GameSaver.java", e);
+			logger.writer("GameStateManager.java", e);
 		}
 		return game;
 	}
@@ -68,20 +67,20 @@ public class GameStateManager implements Serializable{
 	public int getWaveNum() {
 		return wave;
 	}
-	
-	public long getBalance(){
+
+	public long getBalance() {
 		return balance;
 	}
 
-	public long getCurrentBalance(){
+	public long getCurrentBalance() {
 		return currentBalance;
 	}
-	
-	public int getLife(){
+
+	public int getLife() {
 		return life;
 	}
-	
-	public String getMapLocation(){
+
+	public String getMapLocation() {
 		return mapLocation;
 	}
 }

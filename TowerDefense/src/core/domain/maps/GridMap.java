@@ -1,11 +1,10 @@
-package ui.game;
+package core.domain.maps;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Arrays;
 
 import core.contract.MapConstants;
-import core.domain.maps.Grid;
 import core.domain.warriors.defenders.towers.Tower;
 
 /**

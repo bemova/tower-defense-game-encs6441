@@ -6,6 +6,7 @@ import java.awt.Point;
 
 import javax.swing.JPanel;
 
+import core.domain.maps.GridMap;
 import core.domain.warriors.defenders.towers.Tower;
 
 /**

@@ -8,6 +8,7 @@ import javax.swing.JLayeredPane;
 import core.applicationservice.gameservices.GameStateManager;
 import core.domain.account.BankManager;
 import core.domain.maps.Grid;
+import core.domain.maps.GridMap;
 import core.domain.warriors.defenders.towers.Tower;
 
 /**
@@ -46,7 +47,7 @@ public class LayeredMapPanel extends JLayeredPane {
 		setMapButtomRight(new Point(0, 0));
 		
 		gridLayer = new LayeredMapPanelGrid(dimension);
-		otherItemsLayer = new LayeredMapPanelOtherItems(dimension, gameInfoPanel, mainFrame, this);
+		otherItemsLayer = new LayeredMapPanelOtherItems(dimension, gameInfoPanel, mainFrame);
 		add(gridLayer,new Integer(1));
 		add(otherItemsLayer,new Integer(2));
 	}
