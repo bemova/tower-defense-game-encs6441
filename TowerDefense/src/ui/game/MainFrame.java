@@ -50,7 +50,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JMenuItem mntmLogViewer;
 	
 	private LogViewer logViewerDialog;
-
+	private ScoreBoard scoreBoardDialog;
+	
+	public String mapFilePath = "";
 	/**
 	 * Launch the application.
 	 * @param args for running
@@ -222,8 +224,9 @@ public class MainFrame extends JFrame implements ActionListener {
 			JFileChooser openFile = new JFileChooser();
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
 				MapManager mapManager = new MapManager();
-				GridMap grid = new GridMap((Grid) mapManager.loadMapFromFile(openFile
-						.getSelectedFile().getAbsolutePath()));
+				mapFilePath = openFile.getSelectedFile().getAbsolutePath();
+				GridMap grid = new GridMap((Grid) mapManager.loadMapFromFile(mapFilePath));
+				displayScoreBoard(grid);
 				mapPanel.setGrid(grid);
 				resetGameState();
 				mapPanel.repaint();
@@ -236,6 +239,16 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	}
 	
+	private void displayScoreBoard(Grid grid) {
+		if(scoreBoardDialog != null){
+			scoreBoardDialog.dispose();
+		}
+		scoreBoardDialog = new ScoreBoard(grid);
+		scoreBoardDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		scoreBoardDialog.setSize(500, 500);
+		scoreBoardDialog.setVisible(true);
+	}
+
 	protected void saveGame(){
 		mapPanel.saveGame();
 //		try {

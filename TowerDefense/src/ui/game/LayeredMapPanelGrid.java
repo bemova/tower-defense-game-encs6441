@@ -62,7 +62,7 @@ public class LayeredMapPanelGrid extends JPanel {
 							grid.setTowers(new Tower[1][1]);
 						}
 						cell.draw(g, grid.getCell(x, y), grid.getTowers(),
-								xCoordinate, yCoordinate, x, y);
+								xCoordinate, yCoordinate, x, y, false);
 					}
 				}
 		}

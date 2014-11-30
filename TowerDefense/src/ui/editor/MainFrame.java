@@ -155,8 +155,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		mapSizeDialog.setSize(200, 150);
 		mapSizeDialog.setLocationRelativeTo(this);
 
-		widthTextField = new JTextField("15", 1);
-		heightTextField = new JTextField("15", 1);
+		widthTextField = new JTextField("10", 1);
+		heightTextField = new JTextField("10", 1);
 
 		JLabel widthLable = new JLabel(Constants.WIDTH);
 		JLabel heightLable = new JLabel(Constants.HEIGHT);

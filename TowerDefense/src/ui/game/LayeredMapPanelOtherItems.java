@@ -2,11 +2,14 @@ package ui.game;
 
 import infrastructure.loggin.Log4jLogger;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +28,18 @@ import core.applicationservice.gameservices.GameLogManager;
 import core.applicationservice.gameservices.GameStateManager;
 import core.applicationservice.informerservices.imp.DefenderInformer;
 import core.applicationservice.locationservices.PositionService;
+import core.applicationservice.mapservices.MapManager;
 import core.applicationservice.mapservices.pathfinder.PathService;
 import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.WaveFactory;
 import core.contract.DefenderConstants;
+import core.contract.MapConstants;
 import core.contract.WaveConstants;
 import core.domain.account.BankManager;
 import core.domain.account.LifeManager;
+import core.domain.maps.Grid;
 import core.domain.maps.GridCellContentType;
+import core.domain.maps.VisualGrid;
 import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.aliens.behaviourimp.RegularMove;
 import core.domain.warriors.defenders.towers.Tower;
@@ -42,11 +49,13 @@ import core.domain.waves.Position;
 import core.domain.waves.Wave;
 
 /**
- * @author Team 5
- * This Class is a Jpanel that gets rendered as a layer in LayeredMapPanel class. It is responsible for tasks related to Towers and Critters on the ui side.
+ * @author Team 5 This Class is a Jpanel that gets rendered as a layer in
+ *         LayeredMapPanel class. It is responsible for tasks related to Towers
+ *         and Critters on the ui side.
  */
 
-public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runnable {
+public class LayeredMapPanelOtherItems extends JPanel implements Observer,
+		Runnable {
 	/**
 	 * 
 	 */
@@ -64,9 +73,11 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	private Position[] path;
 	private Wave wave;
 	private int waveNumber = 1;
+
 	public Wave getWave() {
 		return wave;
 	}
+
 	public void setWave(Wave value) {
 		wave = value;
 	}
@@ -84,7 +95,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	private Map<Tower, Critter> defenderTargetPair;
 
 	private GameInfoPanel gameInfoPanel;
-	
+
 	public GameInfoPanel getGameInfoPanel() {
 		return gameInfoPanel;
 	}
@@ -95,11 +106,17 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	private static final Log4jLogger logger = new Log4jLogger();
 
 	/**
-	 * @param dimension height and width of the panel
-	 * @param gameInfoPanel a reference to the instance of the game info panel that appears on top of the game ui (life, bank, wave info) 
-	 * @param mainFrame a reference to the instance of the main frame that contains ui components.
+	 * @param dimension
+	 *            height and width of the panel
+	 * @param gameInfoPanel
+	 *            a reference to the instance of the game info panel that
+	 *            appears on top of the game ui (life, bank, wave info)
+	 * @param mainFrame
+	 *            a reference to the instance of the main frame that contains ui
+	 *            components.
 	 */
-	public LayeredMapPanelOtherItems(Dimension dimension, GameInfoPanel gameInfoPanel, MainFrame mainFrame) {
+	public LayeredMapPanelOtherItems(Dimension dimension,
+			GameInfoPanel gameInfoPanel, MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.gameInfoPanel = gameInfoPanel;
 		this.grid = new GridMap(1, 1);
@@ -122,7 +139,9 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 
 	/**
 	 * this re-initializes the grid when a map is loaded/
-	 * @param grid the map that is loaded from a file
+	 * 
+	 * @param grid
+	 *            the map that is loaded from a file
 	 */
 	public void setGrid(GridMap grid) {
 		cell = new Cell();
@@ -134,7 +153,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 
 	/**
 	 * Calculates the critters' starting point on the map in pixels.
-	 * @return initial position of the critters. 
+	 * 
+	 * @return initial position of the critters.
 	 */
 	protected Position calcCritterStartingPoint() {
 		int initX = (int) mapTopLeft.getX();
@@ -142,7 +162,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 
 		Position entryPoint = grid.getEntranceLocation();
 		if (entryPoint != null) {
-			entryPoint = new Position((int) (initX + (entryPoint.getX() * grid.getUnitSize())),
+			entryPoint = new Position(
+					(int) (initX + (entryPoint.getX() * grid.getUnitSize())),
 					(int) (initY + (entryPoint.getY() * grid.getUnitSize())));
 
 			// temp
@@ -157,7 +178,9 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 
 	/**
 	 * This method converts a map cell to a pixel position on the screen
-	 * @param cell a cell position on the grid
+	 * 
+	 * @param cell
+	 *            a cell position on the grid
 	 * @return pixel position on the screen
 	 */
 	protected Position convertCellToPixel(Position cell) {
@@ -166,7 +189,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 
 		Position entryPoint;
 		if (cell != null) {
-			entryPoint = new Position((int) (initX + (cell.getX() * grid.getUnitSize())),
+			entryPoint = new Position(
+					(int) (initX + (cell.getX() * grid.getUnitSize())),
 					(int) (initY + (cell.getY() * grid.getUnitSize())));
 
 			// temp
@@ -183,7 +207,9 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 
 	/**
 	 * This method draws everything that needs to be drawn at this iteration.
-	 * @param g Graphics component
+	 * 
+	 * @param g
+	 *            Graphics component
 	 */
 	public void paintComponent(Graphics g) {
 
@@ -193,7 +219,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 		int initY = (int) mapTopLeft.getY();
 
 		setMapTopLeft(new Point(initX, initY));
-		setMapButtomRight(new Point(initX + grid.getWidth() * grid.getUnitSize(), initY + grid.getHeight()
+		setMapButtomRight(new Point(initX + grid.getWidth()
+				* grid.getUnitSize(), initY + grid.getHeight()
 				* grid.getUnitSize()));
 
 		for (int x = 0; x < grid.getWidth(); x++) {
@@ -203,16 +230,19 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 				if (grid.getTowers() == null) {
 					grid.setTowers(new Tower[1][1]);
 				}
-				if (grid.getCell(x, y).getValue() == 11) {
-					cell.draw(g, grid.getCell(x, y), grid.getTowers(), xCoordinate, yCoordinate, x, y);
+				if (grid.getCell(x, y) == GridCellContentType.TOWER) {
+					cell.draw(g, grid.getCell(x, y), grid.getTowers(),
+							xCoordinate, yCoordinate, x, y,true);
 				}
 			}
 		}
 
 		if (waveStarted) {
 			for (int i = 0; i < currentWaveAlienList.size(); i++) {
-				Position pos = ((RegularMove) (currentWaveAlienList.get(i).getMovingBehaviour())).getPixelPosition();
-				new CritterShape().draw(g, critterImage[i], pos.getX(), pos.getY());
+				Position pos = ((RegularMove) (currentWaveAlienList.get(i)
+						.getMovingBehaviour())).getPixelPosition();
+				new CritterShape().draw(g, critterImage[i], pos.getX(),
+						pos.getY(), currentWaveAlienList.get(i).getLife());
 			}
 
 			Map<Tower, Critter> map = defenderTargetPair;
@@ -224,8 +254,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 				PositionService positionService = new PositionService();
 				TowerFactory factory = new TowerFactory();
 				int range = factory.getRange(t2);
-				if (positionService.isInRange(t2.getTowerPosition(), c.getPath()[c.getCurrentPosition()], range)) {
-					new LineBullet().draw(g, convertCellToPixel(t2.getTowerPosition()),
+				if (positionService.isInRange(t2.getTowerPosition(),
+						c.getPath()[c.getCurrentPosition()], range)) {
+					new LineBullet().draw(g,
+							convertCellToPixel(t2.getTowerPosition()),
 							convertCellToPixel(path[c.getCurrentPosition()]));
 				}
 				defenderTargetPair = map;
@@ -241,49 +273,49 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 		return new Dimension(width, height);
 	}
 
-//	/**
-//	 * 
-//	 * @param event
-//	 */
-//	@Override
-//	public void mouseClicked(MouseEvent event) {
-//		event.consume();
-//		System.out.println("clicked");
-//
-//		if (x <= grid.getWidth() & y <= grid.getHeight()) {
-//			boolean addTowerFlag = SelectedTower.getAddTowerFlag();
-//			if (addTowerFlag) {
-//				addTower(x, y);
-//			} else {
-//				towerUpgradePanels();
-//			}
-//		}
-//
-//	}
+	// /**
+	// *
+	// * @param event
+	// */
+	// @Override
+	// public void mouseClicked(MouseEvent event) {
+	// event.consume();
+	// System.out.println("clicked");
+	//
+	// if (x <= grid.getWidth() & y <= grid.getHeight()) {
+	// boolean addTowerFlag = SelectedTower.getAddTowerFlag();
+	// if (addTowerFlag) {
+	// addTower(x, y);
+	// } else {
+	// towerUpgradePanels();
+	// }
+	// }
+	//
+	// }
 
-//	@Override
-//	public void mouseEntered(MouseEvent arg0) {
-//		System.out.println("entered");
-//	}
-//
-//	@Override
-//	public void mouseExited(MouseEvent arg0) {
-//		System.out.println("exited");
-//	}
-//
-//	@Override
-//	public void mousePressed(MouseEvent arg0) {
-//		System.out.println("perssed");
-//	}
-//
-//	@Override
-//	public void mouseReleased(MouseEvent arg0) {
-//		System.out.println("released");
-//
-//	}
+	// @Override
+	// public void mouseEntered(MouseEvent arg0) {
+	// System.out.println("entered");
+	// }
+	//
+	// @Override
+	// public void mouseExited(MouseEvent arg0) {
+	// System.out.println("exited");
+	// }
+	//
+	// @Override
+	// public void mousePressed(MouseEvent arg0) {
+	// System.out.println("perssed");
+	// }
+	//
+	// @Override
+	// public void mouseReleased(MouseEvent arg0) {
+	// System.out.println("released");
+	//
+	// }
 
 	/**
-	 * Displays the tower upgrade panel. 
+	 * Displays the tower upgrade panel.
 	 */
 	private void towerUpgradePanels() {
 		if (towers[x][y] != null) {
@@ -299,9 +331,13 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	}
 
 	/**
-	 * This method adds a tower to the map and also displays in the UI. Before adding the tower it makes sure the user has enough money.
-	 * @param x x coordinate of the cell that towers is going to be placed. 
-	 * @param y y coordinate of the cell that towers is going to be placed.
+	 * This method adds a tower to the map and also displays in the UI. Before
+	 * adding the tower it makes sure the user has enough money.
+	 * 
+	 * @param x
+	 *            x coordinate of the cell that towers is going to be placed.
+	 * @param y
+	 *            y coordinate of the cell that towers is going to be placed.
 	 */
 	private void addTower(int x, int y) {
 
@@ -311,44 +347,52 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 			String towerType = SelectedTower.getTowerType();
 			switch (towerType) {
 			case DefenderConstants.MODERN_TOWER_TYPE:
-				tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE, TowerLevel.one);
+				tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE,
+						TowerLevel.one);
 				break;
 			case DefenderConstants.ANCIENT_TOWER_TYPE:
-				tower = factory.getTower(DefenderConstants.ANCIENT_TOWER_TYPE, TowerLevel.one);
+				tower = factory.getTower(DefenderConstants.ANCIENT_TOWER_TYPE,
+						TowerLevel.one);
 				break;
 			case DefenderConstants.KING_TOWER_TYPE:
-				tower = factory.getTower(DefenderConstants.KING_TOWER_TYPE, TowerLevel.one);
+				tower = factory.getTower(DefenderConstants.KING_TOWER_TYPE,
+						TowerLevel.one);
 				break;
 
 			default:
-				tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE, TowerLevel.one);
+				tower = factory.getTower(DefenderConstants.MODERN_TOWER_TYPE,
+						TowerLevel.one);
 			}
 
 			tower.setShootingStrategy(DefenderConstants.NearToEnd_Strategy);
 			if (tower.cost() < bank.getBalance() - bank.getCurrentBalance()) {
 				bank.setCurrentBalance(tower.cost());
-				availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
+				availFunds = this.bank.getBalance()
+						- this.bank.getCurrentBalance();
 				gameInfoPanel.setBank((int) availFunds);
 				towers[x][y] = tower;
 				tower.setTowerPosition(new Position(x, y));
 				grid.setCell(x, y, GridCellContentType.TOWER);
 				grid.setTowers(towers);
-				GameLogManager.getInstance().addTowerLog(waveNumber, tower, "Placement");
+				GameLogManager.getInstance().addTowerLog(waveNumber, tower,
+						"Placement");
 				informer.registerObserver((TowerFeatureDecorator) tower);
 				((TowerFeatureDecorator) tower).addObserver(this);
 				repaint();
 			} else {
-				JOptionPane.showMessageDialog(new JFrame(), "you don't have enough money :(", "Alert",
+				JOptionPane.showMessageDialog(new JFrame(),
+						"you don't have enough money :(", "Alert",
 						JOptionPane.WARNING_MESSAGE);
 			}
-			SelectedTower.setInstance(SelectedTower.getTowerType(), SelectedTower.getTower(), false);
+			SelectedTower.setInstance(SelectedTower.getTowerType(),
+					SelectedTower.getTower(), false);
 		}
 	}
 
-//	@Override
-//	public void actionPerformed(ActionEvent arg0) {
-//		System.out.println("action");
-//	}
+	// @Override
+	// public void actionPerformed(ActionEvent arg0) {
+	// System.out.println("action");
+	// }
 
 	public void towerOperation() {
 
@@ -362,12 +406,17 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	}
 
 	/**
-	 * When a mouse click occurs, this method converts the pixel location of the pointer to a cell location. 
-	 * @param mouseX x coordinate of mouse pointer
-	 * @param mouseY y coordinate of mouse pointer
+	 * When a mouse click occurs, this method converts the pixel location of the
+	 * pointer to a cell location.
+	 * 
+	 * @param mouseX
+	 *            x coordinate of mouse pointer
+	 * @param mouseY
+	 *            y coordinate of mouse pointer
 	 */
 	public void setCellLocation(int mouseX, int mouseY) {
-		int i = (mouseX - (int) mapTopLeft.getX() - 75 / 2) / grid.getUnitSize();
+		int i = (mouseX - (int) mapTopLeft.getX() - 75 / 2)
+				/ grid.getUnitSize();
 		int j = (mouseY - (int) mapTopLeft.getY() - 120) / grid.getUnitSize();
 		this.x = i;
 		this.y = j;
@@ -391,7 +440,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 
 	/**
 	 * <b>This method updates the tower stats and the bank balance and removes
-	 * the a tower from the map. It also performs the required actions after a target has been identified for a tower.</b>
+	 * the a tower from the map. It also performs the required actions after a
+	 * target has been identified for a tower.</b>
 	 * 
 	 * @param arg1
 	 *            is object is of type tower perform operation
@@ -417,45 +467,110 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 		if (arg0 instanceof TowerFeatureDecorator) {
 			target = ((TowerFeatureDecorator) arg0).getTarget();
 			defender = ((TowerFeatureDecorator) arg0).getDefender();
-			shoot(defender, target);
-			removeDeadCritters();
+			
+			
+			Tower t2 = defender;
+			Critter c = target;
+
+			PositionService positionService = new PositionService();
+			TowerFactory factory = new TowerFactory();
+			int range = factory.getRange(t2);
+			if (positionService.isInRange(t2.getTowerPosition(),
+					c.getPath()[c.getCurrentPosition()], range)) {
+				shoot(defender, target);
+				removeDeadCritters();
+			}
 		}
 	}
 
-	
 	/**
-	 * This method does the tasks that happen when a critter is shot by a tower, like decreasing life.  
-	 * @param defender tower (shooter)
-	 * @param target critter (to be shot)
+	 * This method does the tasks that happen when a critter is shot by a tower,
+	 * like decreasing life.
+	 * 
+	 * @param defender
+	 *            tower (shooter)
+	 * @param target
+	 *            critter (to be shot)
 	 */
 	private void shoot(Tower defender, Critter target) {
 		defenderTargetPair.put(defender, target);
 		TowerFactory factory = new TowerFactory();
-		String defenderType = factory.getDecoratedName(defender.objectDetials());
+		String defenderType = factory
+				.getDecoratedName(defender.getTowers());
 		switch (defenderType) {
 		case DefenderConstants.KING_TOWER_TYPE:
 			target.setLife(target.getLife() / 2);
+//			new java.util.Timer().schedule("hi", 1000);
+//			burn();
 			break;
 		case DefenderConstants.MODERN_TOWER_TYPE:
-			target.setLife(target.getLife() - 1);// must be: -tower power/impact
+//			target.setLife(target.getLife() - 1);// must be: -tower power/impact
+//			new TowerFactory().getPower(defender)
+			
+			splash(defender, target);
 			break;
 		case DefenderConstants.ANCIENT_TOWER_TYPE:
 			PositionService positionService = new PositionService();
 			int range = factory.getRange(defender);
-			if (positionService.isInRange(defender.getTowerPosition(), target.getPath()[target.getCurrentPosition()],
-					range))
+			if (positionService.isInRange(defender.getTowerPosition(),
+					target.getPath()[target.getCurrentPosition()], range))
 				((RegularMove) target.getMovingBehaviour()).setFreezeTime(100);
 			break;
 		}
 		try {
 		} catch (Exception e2) {
-			logger.writer("shooting :" + defender.Id + " --> " + target.Id + "(" + target.getCurrentPosition() + ")",
-					e2);
+			logger.writer("shooting :" + defender.Id + " --> " + target.Id
+					+ "(" + target.getCurrentPosition() + ")", e2);
 
-			System.out.println("shooting :" + defender.Id + " --> " + target.Id + "(" + target.getCurrentPosition()
-					+ ")");
+			System.out.println("shooting :" + defender.Id + " --> " + target.Id
+					+ "(" + target.getCurrentPosition() + ")");
 		}
 
+	}
+
+	private void splash(Tower defender, Critter target) {
+//		target.setLife(target.getLife() - 1);// must be: -tower power/impact
+		int gridX = path[target.getCurrentPosition()].getX();
+		int gridY = path[target.getCurrentPosition()].getY();
+		Position pixel = convertCellToPixel(new Position(gridX, gridY));
+		
+		
+		
+		
+		int len = (4)*MapConstants.UNIT_SIZE;
+		int cornerX = pixel.getX() - MapConstants.UNIT_SIZE - (MapConstants.UNIT_SIZE/2);
+		int cornerY = pixel.getY() - MapConstants.UNIT_SIZE - (MapConstants.UNIT_SIZE/2);
+		Rectangle areaOfEffect = new Rectangle(cornerX, cornerY, len,len);
+		
+		ArrayList<Critter> critters = new ArrayList<Critter>();
+		critters.addAll(wave.getAliens());
+		for(Critter c: wave.getAliens()){
+			int gX = path[c.getCurrentPosition()].getX();
+			int gY = path[c.getCurrentPosition()].getY();
+			Position p = convertCellToPixel(new Position(gX, gY));
+			int l = (1)*MapConstants.UNIT_SIZE;
+			int cX = (p.getX());
+			int cY = p.getY();
+			Rectangle critterRect = new Rectangle(cX, cY, l,l);
+			      
+			if(critterRect.intersects(areaOfEffect)){
+				c.setLife(c.getLife() - 1);// must be: -tower power/impact
+			}
+			      
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		wave.getAliens()
+		
 	}
 
 	/**
@@ -465,43 +580,60 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 		towers[x][y] = inspection.getTower();
 		availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
 		gameInfoPanel.setBank((int) availFunds);
-		GameLogManager.getInstance().addTowerLog(waveNumber, towers[x][y], "Upgrade");
+		GameLogManager.getInstance().addTowerLog(waveNumber, towers[x][y],
+				"Upgrade");
+		repaint();
 	}
 
 	/**
-	 * When a user sells a tower, this method get's called to remove it from the map.
-	 * @param x x location of the tower to be removed
-	 * @param y y location of the tower to be removed.
+	 * When a user sells a tower, this method get's called to remove it from the
+	 * map.
+	 * 
+	 * @param x
+	 *            x location of the tower to be removed
+	 * @param y
+	 *            y location of the tower to be removed.
 	 */
 	private void clearTower(int x, int y) {
-		if ((x < grid.getWidth()) && (y < grid.getHeight()) && (grid.getCell(x, y) == GridCellContentType.TOWER)) {
+		if ((x < grid.getWidth()) && (y < grid.getHeight())
+				&& (grid.getCell(x, y) == GridCellContentType.TOWER)) {
 			availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
 			gameInfoPanel.setBank((int) availFunds);
 
+			GameLogManager.getInstance().addTowerLog(waveNumber, towers[x][y],
+					"Sell");
+			
 			informer.removeObserver((TowerFeatureDecorator) towers[x][y]);
+			defenderTargetPair.remove(towers[x][y]);
 			towers[x][y] = null;
 			grid.setTowers(towers);
 			grid.setCell(x, y, GridCellContentType.SCENERY);
-			GameLogManager.getInstance().addTowerLog(waveNumber, towers[x][y], "Sell");
+			
 			repaint();
 		}
 	}
 
-	/** 
-	 * This method runs as long as the thread is running to update the screen and all properties of this class.
+	/**
+	 * This method runs as long as the thread is running to update the screen
+	 * and all properties of this class.
 	 */
 	public void run() {
 		while (true) {
-//			System.out.println("thread running");
+			 System.out.print("");
 			if (waveStarted) {
 				for (int j = 0; j < currentWaveAlienList.size(); j++) {
 					Critter critter = currentWaveAlienList.get(j);
-					if (critter.getCurrentPosition() != ((RegularMove) critter.getMovingBehaviour()).getPath().length - 1) {
+					if (critter.getCurrentPosition() != ((RegularMove) critter
+							.getMovingBehaviour()).getPath().length - 1) {
 						critter.performMovingBehaviour();
-						int i = ((RegularMove) critter.getMovingBehaviour()).getCurrentPosition();
+						int i = ((RegularMove) critter.getMovingBehaviour())
+								.getCurrentPosition();
 						Position p = path[i];
 						critter.setCurrentPosition(i);
-						informer.setAlienPosition(p.getX(), p.getY(), critter, towers[x][y].getShootingStrategy());
+						if(towers[x][y] != null){
+							informer.setAlienPosition(p.getX(), p.getY(), critter,
+									towers[x][y].getShootingStrategy());
+						}
 
 					} else {
 						System.out.println("At exit point.");
@@ -526,6 +658,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 
 	/**
 	 * This method checks the wave to see if there are any critters left in it.
+	 * 
 	 * @return true if there all critters are killed.
 	 */
 	private boolean isWaveComplete() {
@@ -536,7 +669,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	}
 
 	/**
-	 * This method is called every time a critter is shot. it removes dead critters from the map. 
+	 * This method is called every time a critter is shot. it removes dead
+	 * critters from the map.
 	 */
 	private void removeDeadCritters() {
 		for (int i = 0; i < currentWaveAlienList.size(); i++) {
@@ -548,10 +682,12 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 				for (Tower[] t1 : towers) {
 					for (Tower t : t1) {
 						if (t != null) {
-							Map<Critter, Position> map = ((TowerFeatureDecorator) t).getCrittersLocation();
+							Map<Critter, Position> map = ((TowerFeatureDecorator) t)
+									.getCrittersLocation();
 
 							map.remove(c);
-							((TowerFeatureDecorator) t).setCrittersLocation(map);
+							((TowerFeatureDecorator) t)
+									.setCrittersLocation(map);
 							System.out.println(c.Id);
 						}
 					}
@@ -588,8 +724,11 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	}
 	
 	/**
-	 * when a critter reaches the end of the path, it decreases the player's life. 
-	 * @param escapedCritters the number of critters that have reached the exit point.
+	 * when a critter reaches the end of the path, it decreases the player's
+	 * life.
+	 * 
+	 * @param escapedCritters
+	 *            the number of critters that have reached the exit point.
 	 */
 	private void updatePlayerLife(int escapedCritters) {
 		LifeManager lifeManager = LifeManager.getInstance();
@@ -606,7 +745,29 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 		System.out.println("Game Over");
 		JOptionPane.showMessageDialog(null, "Game Over");
 		// mapT.stop();
+		saveScore();
 		System.exit(0);
+	}
+
+	private void saveScore() {
+		grid.addPlayLog(new Date().toString(), this.bank.getBalance() - this.bank.getCurrentBalance());
+
+		VisualGrid vg = new VisualGrid((Grid) grid);
+		removeTowers(vg);
+		(new MapManager()).savePlayLog(vg, mainFrame.mapFilePath);
+
+	}
+
+	private void removeTowers(VisualGrid vg) {
+		for(int i=0; i<vg.getWidth(); i++){
+			for(int j=0; j<vg.getHeight(); j++){
+				if(vg.getCell(i, j)== GridCellContentType.TOWER){
+					vg.setCell(i, j, GridCellContentType.SCENERY);
+				}
+			}
+		}
+			
+		
 	}
 
 	@SuppressWarnings("deprecation")
@@ -644,7 +805,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 	public void startFoolishWave() {
 		WaveFactory waveFactory = new WaveFactory();
 		Position[] path = new PathService().pathFinder(grid.getContent());
-		wave = waveFactory.getWave("FoolishCritter", calcCritterStartingPoint(), path);
+		wave = waveFactory.getWave("FoolishCritter",
+				calcCritterStartingPoint(), path);
 
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file;
@@ -655,13 +817,16 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 		}
 
 		for (int i = 0; i < currentWaveAlienList.size(); i++) {
-			((RegularMove) (currentWaveAlienList.get(i).getMovingBehaviour())).setFreezeTime(i * 100);
+			((RegularMove) (currentWaveAlienList.get(i).getMovingBehaviour()))
+					.setFreezeTime(i * 100);
 
-			file = new File(classLoader.getResource(currentWaveAlienList.get(i).display()).getFile());
+			file = new File(classLoader.getResource(
+					currentWaveAlienList.get(i).display()).getFile());
 			critterImage[i] = new ImageIcon(file.getPath());
 		}
 		waveStarted = true;
-		GameLogManager.getInstance().addWaveLog(waveNumber, "Critters entered the map.");
+		GameLogManager.getInstance().addWaveLog(waveNumber,
+				"Critters entered the map.");
 	}
 
 	@SuppressWarnings("deprecation")

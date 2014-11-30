@@ -2,13 +2,15 @@ package test.core.domain.warriors;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import core.applicationservice.warriorservices.TowerFactory;
-import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.features.FirePower;
 import core.domain.warriors.defenders.towers.features.FireRange;
@@ -84,7 +86,31 @@ public class FactoriesTest {
 		}
 	}
 	@Test
-	public void testGetTowerByLevel(){
+	public void testGetTowerByLevelThree(){
+		try {
+			Tower tower = towerFactory.getTower("ModernTower", TowerLevel.three);
+
+			// expected
+			Tower expected = towerFactory.getTower("ModernTower");
+			Tower expDecorated = new FirePower(expected);
+			expDecorated = new FireRange(expDecorated);
+			expDecorated = new FireSpeed(expDecorated);
+			expDecorated = new FirePower(expDecorated);
+			expDecorated = new FireRange(expDecorated);
+			expDecorated = new FireSpeed(expDecorated);
+			expDecorated = new FirePower(expDecorated);
+			expDecorated = new FireRange(expDecorated);
+			expDecorated = new FireSpeed(expDecorated);
+			
+			// assert part
+			assertEquals(expDecorated.cost(), tower.cost());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	@Test
+	public void testGetTowerByLevelTwo(){
 		try {
 			Tower tower = towerFactory.getTower("ModernTower", TowerLevel.two);
 
@@ -105,13 +131,37 @@ public class FactoriesTest {
 		}
 	}
 	@Test
+	public void testGetTowerByLevelOne(){
+		try {
+			Tower tower = towerFactory.getTower("ModernTower", TowerLevel.one);
+
+			// expected
+			Tower expected = towerFactory.getTower("ModernTower");
+			Tower expDecorated = new FirePower(expected);
+			expDecorated = new FireRange(expDecorated);
+			expDecorated = new FireSpeed(expDecorated);
+			
+			// assert part
+			assertEquals(expDecorated.cost(), tower.cost());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	@Test
 	public void testGetRange(){
 		try {
 			Tower expected = towerFactory.getTower("ModernTower");
+			List<Tower> lst = expected.getTowers();
 			Tower expDecorated = new FireRange(expected);
+			lst.add(expDecorated);
 			expDecorated = new FireRange(expDecorated);
+			lst.add(expDecorated);
 			expDecorated = new FireRange(expDecorated);
+			lst.add(expDecorated);
 			expDecorated = new FireRange(expDecorated);
+			lst.add(expDecorated);
+			expDecorated.setTowers(lst);
 			double range = towerFactory.getRange(expDecorated);
 			double expecteRange = 4;
 			assertEquals((Double)expecteRange, (Double)range);
@@ -124,10 +174,16 @@ public class FactoriesTest {
 	public void testGetSpeed(){
 		try {
 			Tower expected = towerFactory.getTower("ModernTower");
+			List<Tower> lst = expected.getTowers();
 			Tower expDecorated = new FireSpeed(expected);
+			lst.add(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
+			lst.add(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
+			lst.add(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
+			lst.add(expDecorated);
+			expDecorated.setTowers(lst);
 			double speed = towerFactory.getSpeed(expDecorated);
 			double expectedSpeed = 4;
 			assertEquals((Double)expectedSpeed, (Double)speed);
@@ -140,10 +196,16 @@ public class FactoriesTest {
 	public void testGetPower(){
 		try {
 			Tower expected = towerFactory.getTower("ModernTower");
+			List<Tower> lst = expected.getTowers();
 			Tower expDecorated = new FirePower(expected);
+			lst.add(expDecorated);
 			expDecorated = new FirePower(expDecorated);
+			lst.add(expDecorated);
 			expDecorated = new FirePower(expDecorated);
+			lst.add(expDecorated);
 			expDecorated = new FirePower(expDecorated);
+			lst.add(expDecorated);
+			expDecorated.setTowers(lst);
 			double power = towerFactory.getPower(expDecorated);
 			double expectePower = 4;
 			assertEquals((Double)expectePower, (Double)power);

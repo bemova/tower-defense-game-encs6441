@@ -39,7 +39,7 @@ public class TowerInfoPanel extends JPanel {
 
 		this.tower = tower;
 
-		List<Tower> towerList = tower.objectDetials();
+		List<Tower> towerList = tower.getTowers();
 		TowerFactory f = new TowerFactory();
 		this.towertype = f.getDecoratedName(towerList);
 
@@ -152,7 +152,7 @@ public class TowerInfoPanel extends JPanel {
 		gbc_sellPriceCount.insets = new Insets(0, 0, 5, 0);
 		gbc_sellPriceCount.gridx = 2;
 		gbc_sellPriceCount.gridy = 8;
-		List<Tower> towerDetails = tower.objectDetials();
+		List<Tower> towerDetails = tower.getTowers();
 		TowerFactory factory = new TowerFactory();
 
 		// set texboxes with current feature informations

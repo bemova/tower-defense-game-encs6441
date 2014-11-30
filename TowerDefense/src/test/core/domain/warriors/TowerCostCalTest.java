@@ -127,6 +127,60 @@ public class TowerCostCalTest {
 		}
 
 	}
+	@Test
+	public void testThreeTimesComboFeature() {
+		try {
+			long specialModern = DefenderConstants.MODERN_TOWER
+					+ DefenderConstants.FIRE_POWER
+					+ DefenderConstants.FIRE_RANGE
+					+ DefenderConstants.FIRE_SPEED
+					+ DefenderConstants.FIRE_POWER
+					+ DefenderConstants.FIRE_RANGE
+					+ DefenderConstants.FIRE_SPEED
+					+ DefenderConstants.FIRE_POWER
+					+ DefenderConstants.FIRE_RANGE
+					+ DefenderConstants.FIRE_SPEED;
+			long specialAncient = DefenderConstants.ANCIENT_TOWER
+					+ DefenderConstants.FIRE_POWER
+					+ DefenderConstants.FIRE_RANGE
+					+ DefenderConstants.FIRE_SPEED
+					+ DefenderConstants.FIRE_POWER
+					+ DefenderConstants.FIRE_RANGE
+					+ DefenderConstants.FIRE_SPEED
+					+ DefenderConstants.FIRE_POWER
+					+ DefenderConstants.FIRE_RANGE
+					+ DefenderConstants.FIRE_SPEED;
+			// crate modern with three features
+			Tower modernCombo = new FirePower(modern);
+			modernCombo = new FireRange(modernCombo);
+			modernCombo = new FireSpeed(modernCombo);
+			modernCombo = new FireRange(modernCombo);
+			modernCombo = new FireSpeed(modernCombo);
+			modernCombo = new FireRange(modernCombo);
+			modernCombo = new FireSpeed(modernCombo);
+			modernCombo = new FirePower(modernCombo);
+			modernCombo = new FirePower(modernCombo);
+
+			// crate ancient with three features
+			Tower ancientCombo = new FirePower(ancient);
+			ancientCombo = new FireRange(ancientCombo);
+			ancientCombo = new FireSpeed(ancientCombo);
+			ancientCombo = new FireRange(ancientCombo);
+			ancientCombo = new FireSpeed(ancientCombo);
+			ancientCombo = new FireRange(ancientCombo);
+			ancientCombo = new FireSpeed(ancientCombo);
+			ancientCombo = new FirePower(ancientCombo);
+			ancientCombo = new FirePower(ancientCombo);
+
+			// assert part
+			assertEquals(specialModern, modernCombo.cost());
+			assertEquals(specialAncient, ancientCombo.cost());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
 
 	@Test
 	public void testObjectDetails() {

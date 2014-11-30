@@ -127,8 +127,8 @@ public class GameControllerPanel extends JPanel {
 		(mapPanel.getGameInfoPanel()).setWave(waveNumber);
 //		(mapPanel.getGameInfoPanel()).setLife(life);
 		LifeManager lifeManager = LifeManager.getInstance();
-		lifeManager.addLife(5);
-		(mapPanel.getGameInfoPanel()).setLife(lifeManager.getLife());
+//		lifeManager.addLife(5);
+//		(mapPanel.getGameInfoPanel()).setLife(lifeManager.getLife());
 		(mapPanel.getGameInfoPanel()).repaint();
 	}
 }

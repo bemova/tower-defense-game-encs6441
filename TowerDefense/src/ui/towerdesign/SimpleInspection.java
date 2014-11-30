@@ -29,6 +29,7 @@ import core.contract.DefenderConstants;
 import core.domain.account.BankManager;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
+import core.domain.waves.Position;
 
 /**
  * <b>This class is an Observable class</b>
@@ -102,7 +103,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 		dialog.getContentPane().setLayout(new FlowLayout());
 		dialog.setTitle("Tower Inspection");
 
-		List<Tower> towerList = tower.objectDetials();
+		List<Tower> towerList = tower.getTowers();
 		TowerFactory f = new TowerFactory();
 		this.towertype = f.getDecoratedName(towerList);
 		this.bank = BankManager.getInstance();
@@ -269,7 +270,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 		gbc_sellPriceCount.gridx = 2;
 		gbc_sellPriceCount.gridy = 9;
 		panel.add(sellPriceCount, gbc_sellPriceCount);
-		List<Tower> towerDetails = tower.objectDetials();
+		List<Tower> towerDetails = tower.getTowers();
 		TowerFactory factory = new TowerFactory();
 
 		// set texboxes with current feature informations
@@ -359,9 +360,13 @@ public class SimpleInspection extends Observable implements ActionListener {
 			str = powerCount.getText();
 			int powerCount = Integer.parseInt(str) + 1;
 
-			Tower newTower = upgradeLevel(tower, towertype, speedCount,
+			String tempId = tower.Id;
+			Position p = tower.getTowerPosition();
+			Tower newTower = upgradeLevel(this.tower, speedCount,
 					rangeCount, powerCount);
 			if (newTower != null) {
+				newTower.Id = tempId;
+				newTower.setTowerPosition(p);
 				this.tower = newTower;
 				this.speedCount.setText(new Integer(speedCount++).toString());
 				this.rangeCount.setText(new Integer(rangeCount++).toString());
@@ -378,6 +383,7 @@ public class SimpleInspection extends Observable implements ActionListener {
 				if (newTower.getLevel().equals(TowerLevel.three)) {
 					this.upgradeBtn.setEnabled(false);
 				}
+				this.tower = newTower;
 			}
 		}
 
@@ -392,31 +398,34 @@ public class SimpleInspection extends Observable implements ActionListener {
 		return this.tower;
 	}
 
-	private Tower upgradeLevel(Tower tower, String towertype, int speedCount,
+	private Tower upgradeLevel(Tower tower, int speedCount,
 			int rangeCount, int powerCount) {
 		TowerFactory factory = new TowerFactory();
-
-		Tower createdTower = factory.updateLevel(towertype, speedCount,
-				rangeCount, powerCount);
-
+		List<Tower> towerList = tower.getTowers();
+		this.towertype = factory.getDecoratedName(towerList);
 		long value = tower.cost();
-		Tower tempTower = createdTower;
-		long delta = tempTower.cost() - value;
+		TowerLevel level = tower.getLevel();
+		Tower createdTower = null;
+//		if(level == TowerLevel.one)
+			createdTower = factory.updateLevel(tower, this.towertype, speedCount,
+				rangeCount, powerCount);
+//		else 
+//			createdTower = factory.getTower(towertype, TowerLevel.three);
+			
+		long delta = createdTower.cost() - value;
 		if (delta < bank.getBalance() - bank.getCurrentBalance()) {
 			bank.setCurrentBalance(delta);
-			switch (tower.getLevel()) {
+			switch (level) {
 			case one:
-				tempTower.setLevel(TowerLevel.two);
+				createdTower.setLevel(TowerLevel.two);
 				break;
 			case two:
-				tempTower.setLevel(TowerLevel.three);
+				createdTower.setLevel(TowerLevel.three);
 				break;
 			default:
 				break;
 			}
-
-			tower = tempTower;
-			return tower;
+			return createdTower;
 		} else {
 			JOptionPane.showMessageDialog(new JFrame(),
 					"you don't have enough money :(", "Alert",
