@@ -5,6 +5,7 @@ import java.awt.Point;
 
 import javax.swing.JLayeredPane;
 
+import core.applicationservice.gameservices.GameStateManager;
 import core.domain.account.BankManager;
 import core.domain.maps.Grid;
 import core.domain.warriors.defenders.towers.Tower;
@@ -45,7 +46,7 @@ public class LayeredMapPanel extends JLayeredPane {
 		setMapButtomRight(new Point(0, 0));
 		
 		gridLayer = new LayeredMapPanelGrid(dimension);
-		otherItemsLayer = new LayeredMapPanelOtherItems(dimension, gameInfoPanel, mainFrame);
+		otherItemsLayer = new LayeredMapPanelOtherItems(dimension, gameInfoPanel, mainFrame, this);
 		add(gridLayer,new Integer(1));
 		add(otherItemsLayer,new Integer(2));
 	}
@@ -64,7 +65,10 @@ public class LayeredMapPanel extends JLayeredPane {
 	public Grid getGrid() {
 		return gridLayer.getGrid();
 	}
-
+	
+	public GridMap getGridMap() {
+		return otherItemsLayer.getGrid();
+	}
 
 	public void setTowers(Tower[][] towers) {
 		otherItemsLayer.setTowers(towers);		
@@ -172,14 +176,25 @@ public class LayeredMapPanel extends JLayeredPane {
 	}
 
 
-	public void saveGame() {
-		otherItemsLayer.saveGame();
+//	public void saveGame(String fileName) {
+//		otherItemsLayer.saveGame(fileName);
+//		
+//	}
+
+
+//	public void loadGame(String fileName) {
+//		otherItemsLayer.loadGame(fileName);
+//		
+//	}
+
+
+	public void setGameInfo(GameStateManager game) {
+		otherItemsLayer.setGameInfo(game);
 		
 	}
 
 
-	public void loadGame() {
-		otherItemsLayer.loadGame();
-		
+	public int getWaveNumber() {
+		return otherItemsLayer.getWaveNumber();
 	}
 }

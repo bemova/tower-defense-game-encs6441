@@ -2,13 +2,13 @@ package ui.game;
 
 import infrastructure.loggin.Log4jLogger;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -90,7 +90,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private Tower defender;
 	private Critter target;
 
-	private int escapedCritter = 0;
+//	private int escapedCritter = 0;
 
 	private Map<Tower, Critter> defenderTargetPair;
 
@@ -104,6 +104,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 	private MainFrame mainFrame;
 	private static final Log4jLogger logger = new Log4jLogger();
+	
+	private LifeManager life = LifeManager.getInstance();
+	
+	private LayeredMapPanel parent;
 
 	/**
 	 * @param dimension
@@ -116,7 +120,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 *            components.
 	 */
 	public LayeredMapPanelOtherItems(Dimension dimension,
-			GameInfoPanel gameInfoPanel, MainFrame mainFrame) {
+			GameInfoPanel gameInfoPanel, MainFrame mainFrame, LayeredMapPanel parent) {
 		this.mainFrame = mainFrame;
 		this.gameInfoPanel = gameInfoPanel;
 		this.grid = new GridMap(1, 1);
@@ -134,6 +138,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		critterImage = new Icon[WaveConstants.WAVE_SIZE];
 		informer = new DefenderInformer();
 		defenderTargetPair = new HashMap<Tower, Critter>();
+		
+		gameInfoPanel.setWave(waveNumber);
+		
+		this.parent = parent;
 
 	}
 
@@ -223,13 +231,13 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				* grid.getUnitSize(), initY + grid.getHeight()
 				* grid.getUnitSize()));
 
+		if (grid.getTowers() == null) {
+			grid.setTowers(new Tower[1][1]);
+		}
 		for (int x = 0; x < grid.getWidth(); x++) {
 			for (int y = 0; y < grid.getHeight(); y++) {
 				int xCoordinate = grid.getUnitSize() * x + initX;
 				int yCoordinate = grid.getUnitSize() * y + initY;
-				if (grid.getTowers() == null) {
-					grid.setTowers(new Tower[1][1]);
-				}
 				if (grid.getCell(x, y) == GridCellContentType.TOWER) {
 					cell.draw(g, grid.getCell(x, y), grid.getTowers(),
 							xCoordinate, yCoordinate, x, y,true);
@@ -431,7 +439,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	}
 
 	public void setTowers(Tower[][] towers) {
-		this.towers = towers;
+		this.towers = Arrays.copyOf(towers, towers.length);
+//		this.towers = towers;
 	}
 
 	public BankManager getBank() {
@@ -637,8 +646,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 					} else {
 						System.out.println("At exit point.");
-						escapedCritter++;
-						updatePlayerLife(escapedCritter);
+//						escapedCritter++;
+						updatePlayerLife(1);
 						currentWaveAlienList.remove(j);
 						if (isWaveComplete()) {
 							waveCompleted();
@@ -706,22 +715,37 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		mainFrame.getGameControllerPanel().wavaCompleted(waveNumber++);
 		GameLogManager.getInstance().addWaveLog(waveNumber, "New wave started");
 		waveStarted = false;
-//		GameSaver game = new GameSaver(grid, waveNumber);
-//		GameSaver.save(game);
-//		game = GameSaver.load();
+		mainFrame.enableSaveLoadMenu();
 	}
 
-	public void saveGame(){
-		GameStateManager game = new GameStateManager(grid, waveNumber);
-		GameStateManager.save(game);
-	}
-	
-	public void loadGame(){
-		GameStateManager game = GameStateManager.load();
-		grid = game.getMap();
-		waveNumber = game.getWaveNum();
-		towers = grid.getTowers();
-	}
+//	public void saveGame(String fileName){
+//		
+//		GameStateManager game = new GameStateManager(grid, waveNumber, map);
+//		GameStateManager.save(fileName, game);
+//	}
+//	
+//	public void loadGame(String fileName){
+//		GameStateManager game = GameStateManager.load(fileName);
+//		setGrid(game.getMap());
+////		this.grid = game.getMap();
+//		
+//		this.waveNumber = game.getWaveNum();
+//		this.towers = grid.getTowers();
+//		this.bank.setBalance(game.getBalance());
+//		this.bank.setCurrentBalance(game.getCurrentBalance());
+//		this.availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
+//		life.setLife(game.getLife());
+//		gameInfoPanel.setLife(life.getLife());
+//		gameInfoPanel.setBank(availFunds);
+//		gameInfoPanel.setWave(waveNumber);
+//		
+//		
+////		mapPanel.setTowers(new Tower[(mapPanel.getGrid()).getWidth()][(mapPanel
+////				.getGrid()).getHeight()]);
+////		mapPanel.getBank().resetCurrentBalance();
+//		parent.resetSize(mainFrame.getMapPanelDimention());
+//		repaint();
+//	}
 	
 	/**
 	 * when a critter reaches the end of the path, it decreases the player's
@@ -731,12 +755,11 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 *            the number of critters that have reached the exit point.
 	 */
 	private void updatePlayerLife(int escapedCritters) {
-		LifeManager lifeManager = LifeManager.getInstance();
 
-		int life = lifeManager.getLife() - escapedCritters;
-		System.out.println("life: " + life);
-		gameInfoPanel.setLife(life);
-		if (life <= 0) {
+		life.setLife(life.getLife() - escapedCritters);
+		System.out.println("life: " + life.getLife());
+		gameInfoPanel.setLife(life.getLife());
+		if (life.getLife() <= 0) {
 			gameOver();
 		}
 	}
@@ -754,7 +777,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 		VisualGrid vg = new VisualGrid((Grid) grid);
 		removeTowers(vg);
-		(new MapManager()).savePlayLog(vg, mainFrame.mapFilePath);
+		(new MapManager()).savePlayLog(vg, mainFrame.getMapFilePath());
 
 	}
 
@@ -803,6 +826,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 * This method is called when the user clicks on the "new wave" button.
 	 */
 	public void startFoolishWave() {
+		mainFrame.disableSaveLoadMenu();
 		WaveFactory waveFactory = new WaveFactory();
 		Position[] path = new PathService().pathFinder(grid.getContent());
 		wave = waveFactory.getWave("FoolishCritter",
@@ -832,6 +856,23 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	@SuppressWarnings("deprecation")
 	public void resumeGame() {
 		mapT.resume();
+	}
+
+	public void setGameInfo(GameStateManager game) {
+		this.waveNumber = game.getWaveNum();
+//		this.towers = grid.getTowers();
+		setTowers(grid.getTowers());
+		this.bank.setBalance(game.getBalance());
+		this.bank.setCurrentBalance(game.getCurrentBalance());
+		this.availFunds = this.bank.getBalance() - this.bank.getCurrentBalance();
+		life.setLife(game.getLife());
+		gameInfoPanel.setLife(life.getLife());
+		gameInfoPanel.setBank(availFunds);
+		gameInfoPanel.setWave(waveNumber);
+	}
+
+	public int getWaveNumber() {
+		return this.waveNumber;
 	}
 
 }

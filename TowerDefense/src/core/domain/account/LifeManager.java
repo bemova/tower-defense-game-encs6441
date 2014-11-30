@@ -1,8 +1,10 @@
 package core.domain.account;
 
+import java.io.Serializable;
+
 import core.contract.AccountConstants;
 
-public class LifeManager {
+public class LifeManager implements Serializable {
 	private static LifeManager instance = null;
 	public static int life;
 	private static int idManager;

@@ -132,11 +132,11 @@ public class GameInfoPanel extends JPanel {
 	 * 
 	 * @param bank amount of gold
 	 */
-	public void setBank(int bank) {
-		lblBank.setText(new Integer(bank).toString());
+	public void setBank(long availFunds) {
+		lblBank.setText(new Long(availFunds).toString());
 	}
-	public int getBank() {
-		return Integer.parseInt(lblBank.getText());
+	public long getBank() {
+		return Long.parseLong(lblBank.getText());
 	}
 
 	

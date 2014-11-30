@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 
 import ui.Constants;
 import core.applicationservice.gameservices.GameLogManager;
+import core.applicationservice.gameservices.GameStateManager;
 import core.applicationservice.mapservices.MapManager;
 import core.domain.account.LifeManager;
 import core.domain.maps.Grid;
@@ -42,20 +43,23 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JMenu mapMenu;
 	private JMenuItem openMenuItem;
 	private JMenuItem loadGameMenutItem;
-	private JMenuItem saveGameMenuItem; 
+	private JMenuItem saveGameMenuItem;
 
 	private GameInfoPanel gameInfoPanel;
 	private EmptyBarPanel emptyBarPanel;
 	private GameControllerPanel gameControllerPanel;
 	private JMenuItem mntmLogViewer;
-	
+
 	private LogViewer logViewerDialog;
 	private ScoreBoard scoreBoardDialog;
-	
-	public String mapFilePath = "";
+
+	private String mapFilePath = "";
+
 	/**
 	 * Launch the application.
-	 * @param args for running
+	 * 
+	 * @param args
+	 *            for running
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -74,9 +78,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		
-		
-		
 
 		setUpMenuBar();
 
@@ -99,58 +100,53 @@ public class MainFrame extends JFrame implements ActionListener {
 		EmptyBarPanel emptyBarPanel_1 = new EmptyBarPanel();
 		contentPane.add(emptyBarPanel_1, BorderLayout.EAST);
 
-		
-
-		
 		// mapPanel = new MapPanel();
-		mapPanel = new LayeredMapPanel(getMapPanelDimention(),gameInfoPanel, this);
+		mapPanel = new LayeredMapPanel(getMapPanelDimention(), gameInfoPanel,
+				this);
 		// mapPanel.setBackground(Color.RED);
 		contentPane.add(mapPanel, BorderLayout.CENTER);
 
 		gameControllerPanel = new GameControllerPanel(mapPanel);
 		contentPane.add(gameControllerPanel, BorderLayout.SOUTH);
-		
+
 		addMouseListener(new Handler(mapPanel));
 		addMouseMotionListener(new Handler(mapPanel));
 
-
 		setSize(713, 508);
-//		 setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setVisible(true);
-		
-		
-		
-		
+
 		this.addComponentListener(new ComponentListener() {
-		    public void componentResized(ComponentEvent e) {
-		        System.out.println("resized");    
-		        mapPanel.resetSize(getMapPanelDimention());
-		    }
+			public void componentResized(ComponentEvent e) {
+				System.out.println("resized");
+				mapPanel.resetSize(getMapPanelDimention());
+			}
 
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentMoved(ComponentEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentShown(ComponentEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 	}
 
-	public GameControllerPanel getGameControllerPanel(){
+	public GameControllerPanel getGameControllerPanel() {
 		return gameControllerPanel;
 	}
+
 	public Dimension getMapPanelDimention() {
 		int width = gameInfoPanel.getWidth() - (emptyBarPanel.getWidth() * 2);
 		int height = emptyBarPanel.getHeight();
@@ -176,22 +172,23 @@ public class MainFrame extends JFrame implements ActionListener {
 		saveGameMenuItem = new JMenuItem(Constants.SAVE_GAME);
 		saveGameMenuItem.addActionListener(this);
 		mapMenu.add(saveGameMenuItem);
-		
+
 		mntmLogViewer = new JMenuItem("Log Viewer");
 		mntmLogViewer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				try {
-					
-					if(logViewerDialog != null){
-						logViewerDialog.dispose();
-					}
-					logViewerDialog = new LogViewer(GameLogManager.getInstance());
-					logViewerDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					logViewerDialog.setSize(500, 500);
-					logViewerDialog.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
+				// try {
+
+				if (logViewerDialog != null) {
+					logViewerDialog.dispose();
+				}
+				logViewerDialog = new LogViewer(GameLogManager.getInstance());
+				logViewerDialog
+						.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				logViewerDialog.setSize(500, 500);
+				logViewerDialog.setVisible(true);
+				// } catch (Exception e) {
+				// e.printStackTrace();
+				// }
 			}
 		});
 		mapMenu.add(mntmLogViewer);
@@ -207,7 +204,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		switch (menuItem) {
 		case Constants.LOAD_MAP:
 			loadMap();
-			// continueMapDesign();
 			break;
 		case Constants.SAVE_GAME:
 			saveGame();
@@ -225,7 +221,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
 				MapManager mapManager = new MapManager();
 				mapFilePath = openFile.getSelectedFile().getAbsolutePath();
-				GridMap grid = new GridMap((Grid) mapManager.loadMapFromFile(mapFilePath));
+				GridMap grid = new GridMap(
+						(Grid) mapManager.loadMapFromFile(mapFilePath));
 				displayScoreBoard(grid);
 				mapPanel.setGrid(grid);
 				resetGameState();
@@ -238,9 +235,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 
 	}
-	
+
 	private void displayScoreBoard(Grid grid) {
-		if(scoreBoardDialog != null){
+		if (scoreBoardDialog != null) {
 			scoreBoardDialog.dispose();
 		}
 		scoreBoardDialog = new ScoreBoard(grid);
@@ -249,82 +246,37 @@ public class MainFrame extends JFrame implements ActionListener {
 		scoreBoardDialog.setVisible(true);
 	}
 
-	protected void saveGame(){
-		mapPanel.saveGame();
-//		try {
-//			mapPanel.getOtherItemsPanel().pauseGame();
-//			JFileChooser openFile = new JFileChooser();
-//			if (JFileChooser.APPROVE_OPTION == openFile.showSaveDialog(null)) {
-//				
-//				try {
-//					FileOutputStream fileOut = new FileOutputStream(openFile.getSelectedFile().getAbsolutePath());
-//					ObjectOutputStream out = new ObjectOutputStream(fileOut);
-//					out.writeObject(mapPanel.getGrid());
-//					out.writeObject(mapPanel.getBank().getBalance());
-//					out.writeObject(mapPanel.getBank().getCurrentBalance());
-//					out.writeObject(LifeManager.getInstance().getLife());
-//					out.writeObject(mapPanel.getGameInfoPanel().getWave());
-//					out.writeObject(mapPanel.getOtherItemsPanel().getWave());
-//					out.close();
-//					fileOut.close();
-//					System.out.printf("Serialized data is saved in /tmp/employee.ser");
-//				} catch (IOException i) {
-//					i.printStackTrace();
-//				}
-//				
+	protected void saveGame() {
+		JFileChooser saveFile = new JFileChooser();
+
+		if (saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+			String fileName = saveFile.getSelectedFile().getAbsolutePath();
+//			mapPanel.saveGame(fileName);
+			
+//			public void saveGame(String fileName){
+				
+				GameStateManager game = new GameStateManager(mapPanel.getGridMap(), mapPanel.getWaveNumber(), mapFilePath);
+				GameStateManager.save(fileName, game);
 //			}
-//			mapPanel.getOtherItemsPanel().resumeGame();
-//		} catch (java.lang.Exception ex) {
-//			JOptionPane.showMessageDialog(null, ex.getMessage());
-//		}
+			
+			
+		}
 	}
-	
-	protected void loadGame(){
-		mapPanel.loadGame();
-//		try {
-//			mapPanel.getOtherItemsPanel().pauseGame();
-//			JFileChooser saveFile = new JFileChooser();
-//			if (JFileChooser.APPROVE_OPTION == saveFile.showOpenDialog(null)) {
-//				try {
-//					FileInputStream fileIn = new FileInputStream(saveFile.getSelectedFile().getAbsolutePath());
-//					ObjectInputStream in = new ObjectInputStream(fileIn);
-//
-//					GridMap map = (GridMap)in.readObject();
-//					mapPanel.setGrid(map);
-//										
-//					mapPanel.getBank().setBalance((long)in.readObject());
-//					mapPanel.getBank().setCurrentBalance((long)in.readObject());
-//					int life = (int)in.readObject();
-//					LifeManager.getInstance().setLife(life);
-//					mapPanel.getOtherItemsPanel().getGameInfoPanel().setLife(life);
-//					
-//					int wave = (int)in.readObject();
-//					mapPanel.getGameInfoPanel().setWave(wave);
-//					
-//					mapPanel.getOtherItemsPanel().setWave((Wave)in.readObject());
-//					int bank = (int)(mapPanel.getBank().getBalance() - mapPanel.getBank().getCurrentBalance());
-//					mapPanel.getOtherItemsPanel().getGameInfoPanel().setBank(bank);
-//					
-//					mapPanel.setTowers(map.getTowers());
-//					mapPanel.resetSize(getMapPanelDimention());
-//					
-//					mapPanel.repaint();
-//					in.close();
-//					fileIn.close();
-//				} catch (IOException i) {
-//					i.printStackTrace();
-//					return;
-//				} catch (ClassNotFoundException c) {
-//					System.out.println("Employee class not found");
-//					c.printStackTrace();
-//					return;
-//				}
-//			}
-//			mapPanel.getOtherItemsPanel().resumeGame();
-//		} catch (java.lang.Exception ex) {
-//			JOptionPane.showMessageDialog(null, ex.getMessage());
-//		}
-		
+
+	protected void loadGame() {
+		JFileChooser openFile = new JFileChooser();
+		if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
+			String fileName = openFile.getSelectedFile().getAbsolutePath();
+			GameStateManager game = GameStateManager.load(fileName);
+//			resetGameState();
+			this.mapFilePath = game.getMapLocation();
+			mapPanel.setGrid(game.getMap());
+			mapPanel.setGameInfo(game);
+//			resetGameState();
+			mapPanel.resetSize(getMapPanelDimention());
+			mapPanel.repaint();
+		}
+
 	}
 
 	private void resetGameState() {
@@ -334,5 +286,18 @@ public class MainFrame extends JFrame implements ActionListener {
 		mapPanel.resetSize(getMapPanelDimention());
 	}
 
-	
+	public void disableSaveLoadMenu() {
+		loadGameMenutItem.setEnabled(false);
+		saveGameMenuItem.setEnabled(false);
+	}
+
+	public void enableSaveLoadMenu() {
+		loadGameMenutItem.setEnabled(true);
+		saveGameMenuItem.setEnabled(true);
+	}
+
+	public String getMapFilePath() {
+		return mapFilePath;
+	}
+
 }
