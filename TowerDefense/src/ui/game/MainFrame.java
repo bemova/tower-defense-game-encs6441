@@ -237,78 +237,80 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	protected void saveGame(){
-		try {
-			mapPanel.getOtherItemsPanel().pauseGame();
-			JFileChooser openFile = new JFileChooser();
-			if (JFileChooser.APPROVE_OPTION == openFile.showSaveDialog(null)) {
-				
-				try {
-					FileOutputStream fileOut = new FileOutputStream(openFile.getSelectedFile().getAbsolutePath());
-					ObjectOutputStream out = new ObjectOutputStream(fileOut);
-					out.writeObject(mapPanel.getGrid());
-					out.writeObject(mapPanel.getBank().getBalance());
-					out.writeObject(mapPanel.getBank().getCurrentBalance());
-					out.writeObject(LifeManager.getInstance().getLife());
-					out.writeObject(mapPanel.getGameInfoPanel().getWave());
-					out.writeObject(mapPanel.getOtherItemsPanel().getWave());
-					out.close();
-					fileOut.close();
-					System.out.printf("Serialized data is saved in /tmp/employee.ser");
-				} catch (IOException i) {
-					i.printStackTrace();
-				}
-				
-			}
-			mapPanel.getOtherItemsPanel().resumeGame();
-		} catch (java.lang.Exception ex) {
-			JOptionPane.showMessageDialog(null, ex.getMessage());
-		}
+		mapPanel.saveGame();
+//		try {
+//			mapPanel.getOtherItemsPanel().pauseGame();
+//			JFileChooser openFile = new JFileChooser();
+//			if (JFileChooser.APPROVE_OPTION == openFile.showSaveDialog(null)) {
+//				
+//				try {
+//					FileOutputStream fileOut = new FileOutputStream(openFile.getSelectedFile().getAbsolutePath());
+//					ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//					out.writeObject(mapPanel.getGrid());
+//					out.writeObject(mapPanel.getBank().getBalance());
+//					out.writeObject(mapPanel.getBank().getCurrentBalance());
+//					out.writeObject(LifeManager.getInstance().getLife());
+//					out.writeObject(mapPanel.getGameInfoPanel().getWave());
+//					out.writeObject(mapPanel.getOtherItemsPanel().getWave());
+//					out.close();
+//					fileOut.close();
+//					System.out.printf("Serialized data is saved in /tmp/employee.ser");
+//				} catch (IOException i) {
+//					i.printStackTrace();
+//				}
+//				
+//			}
+//			mapPanel.getOtherItemsPanel().resumeGame();
+//		} catch (java.lang.Exception ex) {
+//			JOptionPane.showMessageDialog(null, ex.getMessage());
+//		}
 	}
 	
 	protected void loadGame(){
-		try {
-			mapPanel.getOtherItemsPanel().pauseGame();
-			JFileChooser saveFile = new JFileChooser();
-			if (JFileChooser.APPROVE_OPTION == saveFile.showOpenDialog(null)) {
-				try {
-					FileInputStream fileIn = new FileInputStream(saveFile.getSelectedFile().getAbsolutePath());
-					ObjectInputStream in = new ObjectInputStream(fileIn);
-
-					GridMap map = (GridMap)in.readObject();
-					mapPanel.setGrid(map);
-										
-					mapPanel.getBank().setBalance((long)in.readObject());
-					mapPanel.getBank().setCurrentBalance((long)in.readObject());
-					int life = (int)in.readObject();
-					LifeManager.getInstance().setLife(life);
-					mapPanel.getOtherItemsPanel().getGameInfoPanel().setLife(life);
-					
-					int wave = (int)in.readObject();
-					mapPanel.getGameInfoPanel().setWave(wave);
-					
-					mapPanel.getOtherItemsPanel().setWave((Wave)in.readObject());
-					int bank = (int)(mapPanel.getBank().getBalance() - mapPanel.getBank().getCurrentBalance());
-					mapPanel.getOtherItemsPanel().getGameInfoPanel().setBank(bank);
-					
-					mapPanel.setTowers(map.getTowers());
-					mapPanel.resetSize(getMapPanelDimention());
-					
-					mapPanel.repaint();
-					in.close();
-					fileIn.close();
-				} catch (IOException i) {
-					i.printStackTrace();
-					return;
-				} catch (ClassNotFoundException c) {
-					System.out.println("Employee class not found");
-					c.printStackTrace();
-					return;
-				}
-			}
-			mapPanel.getOtherItemsPanel().resumeGame();
-		} catch (java.lang.Exception ex) {
-			JOptionPane.showMessageDialog(null, ex.getMessage());
-		}
+		mapPanel.loadGame();
+//		try {
+//			mapPanel.getOtherItemsPanel().pauseGame();
+//			JFileChooser saveFile = new JFileChooser();
+//			if (JFileChooser.APPROVE_OPTION == saveFile.showOpenDialog(null)) {
+//				try {
+//					FileInputStream fileIn = new FileInputStream(saveFile.getSelectedFile().getAbsolutePath());
+//					ObjectInputStream in = new ObjectInputStream(fileIn);
+//
+//					GridMap map = (GridMap)in.readObject();
+//					mapPanel.setGrid(map);
+//										
+//					mapPanel.getBank().setBalance((long)in.readObject());
+//					mapPanel.getBank().setCurrentBalance((long)in.readObject());
+//					int life = (int)in.readObject();
+//					LifeManager.getInstance().setLife(life);
+//					mapPanel.getOtherItemsPanel().getGameInfoPanel().setLife(life);
+//					
+//					int wave = (int)in.readObject();
+//					mapPanel.getGameInfoPanel().setWave(wave);
+//					
+//					mapPanel.getOtherItemsPanel().setWave((Wave)in.readObject());
+//					int bank = (int)(mapPanel.getBank().getBalance() - mapPanel.getBank().getCurrentBalance());
+//					mapPanel.getOtherItemsPanel().getGameInfoPanel().setBank(bank);
+//					
+//					mapPanel.setTowers(map.getTowers());
+//					mapPanel.resetSize(getMapPanelDimention());
+//					
+//					mapPanel.repaint();
+//					in.close();
+//					fileIn.close();
+//				} catch (IOException i) {
+//					i.printStackTrace();
+//					return;
+//				} catch (ClassNotFoundException c) {
+//					System.out.println("Employee class not found");
+//					c.printStackTrace();
+//					return;
+//				}
+//			}
+//			mapPanel.getOtherItemsPanel().resumeGame();
+//		} catch (java.lang.Exception ex) {
+//			JOptionPane.showMessageDialog(null, ex.getMessage());
+//		}
 		
 	}
 

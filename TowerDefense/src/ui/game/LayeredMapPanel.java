@@ -170,4 +170,16 @@ public class LayeredMapPanel extends JLayeredPane {
 		otherItemsLayer.calcCritterStartingPoint();
 		
 	}
+
+
+	public void saveGame() {
+		otherItemsLayer.saveGame();
+		
+	}
+
+
+	public void loadGame() {
+		otherItemsLayer.loadGame();
+		
+	}
 }

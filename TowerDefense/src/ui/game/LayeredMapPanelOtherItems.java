@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 
 import ui.towerdesign.SimpleInspection;
 import core.applicationservice.gameservices.GameLogManager;
+import core.applicationservice.gameservices.GameStateManager;
 import core.applicationservice.informerservices.imp.DefenderInformer;
 import core.applicationservice.locationservices.PositionService;
 import core.applicationservice.mapservices.pathfinder.PathService;
@@ -569,9 +570,23 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer, Runna
 		mainFrame.getGameControllerPanel().wavaCompleted(waveNumber++);
 		GameLogManager.getInstance().addWaveLog(waveNumber, "New wave started");
 		waveStarted = false;
-
+//		GameSaver game = new GameSaver(grid, waveNumber);
+//		GameSaver.save(game);
+//		game = GameSaver.load();
 	}
 
+	public void saveGame(){
+		GameStateManager game = new GameStateManager(grid, waveNumber);
+		GameStateManager.save(game);
+	}
+	
+	public void loadGame(){
+		GameStateManager game = GameStateManager.load();
+		grid = game.getMap();
+		waveNumber = game.getWaveNum();
+		towers = grid.getTowers();
+	}
+	
 	/**
 	 * when a critter reaches the end of the path, it decreases the player's life. 
 	 * @param escapedCritters the number of critters that have reached the exit point.
