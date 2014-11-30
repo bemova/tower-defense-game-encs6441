@@ -91,6 +91,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private static final Log4jLogger logger = new Log4jLogger();
 
 	private LifeManager life = LifeManager.getInstance();
+	
+	private int bulletCounter = 0;
+	private int sleepLength = 10;
+	private HashMap<Tower, Integer> shootingSchedule = new HashMap<Tower, Integer>();
 
 	/**
 	 * @param dimension
@@ -252,7 +256,6 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		return new Dimension(width, height);
 	}
 
-
 	/**
 	 * Displays the tower upgrade panel.
 	 */
@@ -389,7 +392,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 		// shoot
 		if (subject instanceof TowerFeatureDecorator) {
-			shootingOps((TowerFeatureDecorator)subject);
+			shootingOps((TowerFeatureDecorator) subject);
 		}
 	}
 
@@ -433,7 +436,11 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 *            critter (to be shot)
 	 */
 	private void shoot(Tower defender, Critter target) {
+		if(defenderTargetPair.get(defender) != null){
+			defenderTargetPair.remove(defender);
+		}
 		defenderTargetPair.put(defender, target);
+		
 		TowerFactory factory = new TowerFactory();
 		String defenderType = factory.getDecoratedName(defender.getTowers());
 		switch (defenderType) {
@@ -463,6 +470,18 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	}
 
 	private void splash(Tower defender, Critter target) {
+		int power = 1;
+		switch (defender.getLevel()){
+		case one:
+			power = 1;
+			break;
+		case two:
+			power = 2;
+			break;
+		case three:
+			power = 3;
+			break;
+		}
 		int gridX = path[target.getCurrentPosition()].getX();
 		int gridY = path[target.getCurrentPosition()].getY();
 		Position pixel = convertCellToPixel(new Position(gridX, gridY));
@@ -486,7 +505,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			Rectangle critterRect = new Rectangle(cX, cY, l, l);
 
 			if (critterRect.intersects(areaOfEffect)) {
-				c.setLife(c.getLife() - 1);// must be: -tower power/impact
+				c.setLife(c.getLife() - power);
 			}
 
 		}
@@ -540,6 +559,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		while (true) {
 			System.out.print("");
 			if (waveStarted) {
+				updateBulletCounter();
 				for (int j = 0; j < currentWaveAlienList.size(); j++) {
 					Critter critter = currentWaveAlienList.get(j);
 					if (critter.getCurrentPosition() != ((RegularMove) critter
@@ -566,11 +586,20 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 				}
 				repaint();
 				try {
-					Thread.sleep(10);
+					Thread.sleep(sleepLength);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+
+	private void updateBulletCounter() {
+		if(this.bulletCounter >= sleepLength*100){
+			this.bulletCounter = 0;
+		}
+		else {
+			this.bulletCounter++;
 		}
 	}
 
