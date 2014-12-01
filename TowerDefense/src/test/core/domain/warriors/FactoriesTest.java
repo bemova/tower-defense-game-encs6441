@@ -155,7 +155,39 @@ public class FactoriesTest {
 			List<Tower> lst = expected.getTowers();
 			Tower expDecorated = new FireRange(expected);
 			lst.add(expDecorated);
+			expDecorated.setTowers(lst);
+			double range = towerFactory.getRange(expDecorated);
+			double expecteRange = 1;
+			assertEquals((Double)expecteRange, (Double)range);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+	@Test
+	public void testGet2levelRange(){
+		try {
+			Tower expected = towerFactory.getTower("ModernTower");
+			List<Tower> lst = expected.getTowers();
+			Tower expDecorated = new FireRange(expected);
+			lst.add(expDecorated);
 			expDecorated = new FireRange(expDecorated);
+			lst.add(expDecorated);
+			expDecorated.setTowers(lst);
+			double range = towerFactory.getRange(expDecorated);
+			double expecteRange = 2;
+			assertEquals((Double)expecteRange, (Double)range);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+	@Test
+	public void testGet3levelRange(){
+		try {
+			Tower expected = towerFactory.getTower("ModernTower");
+			List<Tower> lst = expected.getTowers();
+			Tower expDecorated = new FireRange(expected);
 			lst.add(expDecorated);
 			expDecorated = new FireRange(expDecorated);
 			lst.add(expDecorated);
@@ -163,8 +195,26 @@ public class FactoriesTest {
 			lst.add(expDecorated);
 			expDecorated.setTowers(lst);
 			double range = towerFactory.getRange(expDecorated);
-			double expecteRange = 4;
+			double expecteRange = 3;
 			assertEquals((Double)expecteRange, (Double)range);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+	@Test
+	public void testGet2LevelSpeed(){
+		try {
+			Tower expected = towerFactory.getTower("ModernTower");
+			List<Tower> lst = expected.getTowers();
+			Tower expDecorated = new FireSpeed(expected);
+			lst.add(expDecorated);
+			expDecorated = new FireSpeed(expDecorated);
+			lst.add(expDecorated);
+			expDecorated.setTowers(lst);
+			double speed = towerFactory.getSpeed(expDecorated);
+			double expectedSpeed = 2;
+			assertEquals((Double)expectedSpeed, (Double)speed);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -177,7 +227,21 @@ public class FactoriesTest {
 			List<Tower> lst = expected.getTowers();
 			Tower expDecorated = new FireSpeed(expected);
 			lst.add(expDecorated);
-			expDecorated = new FireSpeed(expDecorated);
+			expDecorated.setTowers(lst);
+			double speed = towerFactory.getSpeed(expDecorated);
+			double expectedSpeed = 1;
+			assertEquals((Double)expectedSpeed, (Double)speed);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+	@Test
+	public void testGet3LevelSpeed(){
+		try {
+			Tower expected = towerFactory.getTower("ModernTower");
+			List<Tower> lst = expected.getTowers();
+			Tower expDecorated = new FireSpeed(expected);
 			lst.add(expDecorated);
 			expDecorated = new FireSpeed(expDecorated);
 			lst.add(expDecorated);
@@ -185,7 +249,7 @@ public class FactoriesTest {
 			lst.add(expDecorated);
 			expDecorated.setTowers(lst);
 			double speed = towerFactory.getSpeed(expDecorated);
-			double expectedSpeed = 4;
+			double expectedSpeed = 3;
 			assertEquals((Double)expectedSpeed, (Double)speed);
 		} catch (Exception e) {
 			// TODO: handle exception
