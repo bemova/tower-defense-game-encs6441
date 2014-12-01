@@ -91,7 +91,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private static final Log4jLogger logger = new Log4jLogger();
 
 	private LifeManager life = LifeManager.getInstance();
-	
+
 	private int bulletCounter = 0;
 	private int sleepLength = 10;
 	private HashMap<Tower, Integer> shootingSchedule = new HashMap<Tower, Integer>();
@@ -228,22 +228,25 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 						pos.getY(), currentWaveAlienList.get(i).getLife());
 			}
 
-			Map<Tower, Critter> map = defenderTargetPair;
+			// Map<Tower, Critter> map = defenderTargetPair;
 			Iterable<Entry<Tower, Critter>> its = defenderTargetPair.entrySet();
 			for (Entry<Tower, Critter> pairs : its) {
 				Tower t2 = pairs.getKey();
 				Critter c = pairs.getValue();
-
-				PositionService positionService = new PositionService();
-				TowerFactory factory = new TowerFactory();
-				int range = factory.getRange(t2);
-				if (positionService.isInRange(t2.getTowerPosition(),
-						c.getPath()[c.getCurrentPosition()], range)) {
-					new LineBullet().draw(g,
-							convertCellToPixel(t2.getTowerPosition()),
-							convertCellToPixel(path[c.getCurrentPosition()]));
+				if (isWithinRateOfFire(t2)) {
+					PositionService positionService = new PositionService();
+					TowerFactory factory = new TowerFactory();
+					int range = factory.getRange(t2);
+					if (positionService.isInRange(t2.getTowerPosition(),
+							c.getPath()[c.getCurrentPosition()], range)) {
+						new LineBullet()
+								.draw(g, convertCellToPixel(t2
+										.getTowerPosition()),
+										convertCellToPixel(path[c
+												.getCurrentPosition()]));
+					}
 				}
-				defenderTargetPair = map;
+				// defenderTargetPair = map;
 			}
 		}
 	}
@@ -319,6 +322,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 						"Placement");
 				informer.registerObserver((TowerFeatureDecorator) tower);
 				((TowerFeatureDecorator) tower).addObserver(this);
+				shootingSchedule.put(tower, 0);
 				repaint();
 			} else {
 				JOptionPane.showMessageDialog(new JFrame(),
@@ -436,42 +440,67 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 *            critter (to be shot)
 	 */
 	private void shoot(Tower defender, Critter target) {
-		if(defenderTargetPair.get(defender) != null){
-			defenderTargetPair.remove(defender);
-		}
 		defenderTargetPair.put(defender, target);
-		
-		TowerFactory factory = new TowerFactory();
-		String defenderType = factory.getDecoratedName(defender.getTowers());
-		switch (defenderType) {
-		case DefenderConstants.KING_TOWER_TYPE:
-			target.setLife(target.getLife() / 2);
-			break;
-		case DefenderConstants.MODERN_TOWER_TYPE:
-			splash(defender, target);
-			break;
-		case DefenderConstants.ANCIENT_TOWER_TYPE:
-			PositionService positionService = new PositionService();
-			int range = factory.getRange(defender);
-			if (positionService.isInRange(defender.getTowerPosition(),
-					target.getPath()[target.getCurrentPosition()], range))
-				((RegularMove) target.getMovingBehaviour()).setFreezeTime(100);
-			break;
+		if (shootingSchedule.get(defender) >= 100) {
+			shootingSchedule.put(defender, 0);
+		} else {
+			shootingSchedule.put(defender, shootingSchedule.get(defender) + 1);
 		}
-		try {
-		} catch (Exception e2) {
-			logger.writer("shooting :" + defender.Id + " --> " + target.Id
-					+ "(" + target.getCurrentPosition() + ")", e2);
 
-			System.out.println("shooting :" + defender.Id + " --> " + target.Id
-					+ "(" + target.getCurrentPosition() + ")");
+		if (isWithinRateOfFire(defender)) {
+			TowerFactory factory = new TowerFactory();
+			String defenderType = factory
+					.getDecoratedName(defender.getTowers());
+			switch (defenderType) {
+			case DefenderConstants.KING_TOWER_TYPE:
+				target.setLife(target.getLife() / 2);
+				break;
+			case DefenderConstants.MODERN_TOWER_TYPE:
+				splash(defender, target);
+				break;
+			case DefenderConstants.ANCIENT_TOWER_TYPE:
+				PositionService positionService = new PositionService();
+				int range = factory.getRange(defender);
+				if (positionService.isInRange(defender.getTowerPosition(),
+						target.getPath()[target.getCurrentPosition()], range))
+					((RegularMove) target.getMovingBehaviour())
+							.setFreezeTime(100);
+				break;
+			}
+			try {
+			} catch (Exception e2) {
+				logger.writer("shooting :" + defender.Id + " --> " + target.Id
+						+ "(" + target.getCurrentPosition() + ")", e2);
+
+				System.out.println("shooting :" + defender.Id + " --> "
+						+ target.Id + "(" + target.getCurrentPosition() + ")");
+			}
 		}
 
 	}
 
+	private boolean isWithinRateOfFire(Tower defender) {
+		int rateOfFire = 1;
+		switch (defender.getLevel()) {
+		case one:
+			rateOfFire = 1;
+			break;
+		case two:
+			rateOfFire = 2;
+			break;
+		case three:
+			rateOfFire = 3;
+			break;
+		}
+		if (shootingSchedule.get(defender) <= rateOfFire * sleepLength * 3) {
+			return true;
+		}
+		return false;
+	}
+
 	private void splash(Tower defender, Critter target) {
 		int power = 1;
-		switch (defender.getLevel()){
+		switch (defender.getLevel()) {
 		case one:
 			power = 1;
 			break;
@@ -543,10 +572,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 			informer.removeObserver((TowerFeatureDecorator) towers[x][y]);
 			defenderTargetPair.remove(towers[x][y]);
+			shootingSchedule.remove(towers[x][y]);
 			towers[x][y] = null;
 			grid.setTowers(towers);
 			grid.setCell(x, y, GridCellContentType.SCENERY);
-
 			repaint();
 		}
 	}
@@ -595,10 +624,9 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	}
 
 	private void updateBulletCounter() {
-		if(this.bulletCounter >= sleepLength*100){
+		if (this.bulletCounter >= sleepLength * 100) {
 			this.bulletCounter = 0;
-		}
-		else {
+		} else {
 			this.bulletCounter++;
 		}
 	}
