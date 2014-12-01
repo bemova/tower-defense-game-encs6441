@@ -189,6 +189,7 @@ public class InspectionPanel extends Observable implements ActionListener {
 		strategyModel.addElement(DefenderConstants.NearToStart_Strategy);
 		strategyModel.addElement(DefenderConstants.Strangest_Strategy);
 		strategyModel.addElement(DefenderConstants.Weakest_Strategy);
+		strategyModel.addElement(DefenderConstants.NearToTower_Strategy);
 		strategyCombo.setModel(strategyModel);
 		if(tower != null){
 			strategyCombo.setSelectedItem(tower.getShootingStrategy());

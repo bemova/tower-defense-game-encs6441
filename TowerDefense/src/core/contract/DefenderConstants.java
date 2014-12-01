@@ -25,6 +25,7 @@ public class DefenderConstants {
 	public static final String NearToStart_Strategy = "Nearest To Start";
 	public static final String Weakest_Strategy = "Weakest";
 	public static final String Strangest_Strategy = "Strangest";
+	public static final String NearToTower_Strategy = "Nearest To Tower";
 	
 
 }

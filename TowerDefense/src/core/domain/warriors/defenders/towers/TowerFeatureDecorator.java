@@ -94,6 +94,10 @@ public abstract class TowerFeatureDecorator extends Tower implements Observer {
 					case DefenderConstants.Weakest_Strategy:
 						c = service.weakestCritter(this);
 						break;
+
+					case DefenderConstants.NearToTower_Strategy:
+						c = service.nearestCritter(this);
+						break;
 					}
 				}
 				if(c !=null){
