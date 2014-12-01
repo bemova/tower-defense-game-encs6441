@@ -96,6 +96,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private int sleepLength = 10;
 	private HashMap<Tower, Integer> shootingSchedule = new HashMap<Tower, Integer>();
 
+	private HashMap<Critter, Integer> burningCritters = new HashMap<Critter, Integer>();
+
 	/**
 	 * @param dimension
 	 *            height and width of the panel
@@ -453,7 +455,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 					.getDecoratedName(defender.getTowers());
 			switch (defenderType) {
 			case DefenderConstants.KING_TOWER_TYPE:
-				target.setLife(target.getLife() / 2);
+				// target.setLife(target.getLife() / 2);
+				shootAndBurn(defender, target);
 				break;
 			case DefenderConstants.MODERN_TOWER_TYPE:
 				splash(defender, target);
@@ -476,6 +479,11 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 						+ target.Id + "(" + target.getCurrentPosition() + ")");
 			}
 		}
+
+	}
+
+	private void shootAndBurn(Tower defender2, Critter target2) {
+		// target.setLife(target.getLife() / 2);
 
 	}
 
@@ -805,6 +813,15 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		gameInfoPanel.setLife(life.getLife());
 		gameInfoPanel.setBank(availFunds);
 		gameInfoPanel.setWave(waveNumber);
+		for (Tower[] t : towers) {
+			for (Tower tower : t) {
+				if (tower != null) {
+					informer.registerObserver((TowerFeatureDecorator) tower);
+					((TowerFeatureDecorator) tower).addObserver(this);
+					shootingSchedule.put(tower, 0);
+				}
+			}
+		}
 	}
 
 	public int getWaveNumber() {
