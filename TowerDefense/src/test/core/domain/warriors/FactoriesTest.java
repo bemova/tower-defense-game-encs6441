@@ -263,7 +263,39 @@ public class FactoriesTest {
 			List<Tower> lst = expected.getTowers();
 			Tower expDecorated = new FirePower(expected);
 			lst.add(expDecorated);
+			expDecorated.setTowers(lst);
+			double power = towerFactory.getPower(expDecorated);
+			double expectePower = 1;
+			assertEquals((Double)expectePower, (Double)power);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+	@Test
+	public void testGet2LevelPower(){
+		try {
+			Tower expected = towerFactory.getTower("ModernTower");
+			List<Tower> lst = expected.getTowers();
+			Tower expDecorated = new FirePower(expected);
+			lst.add(expDecorated);
 			expDecorated = new FirePower(expDecorated);
+			lst.add(expDecorated);
+			expDecorated.setTowers(lst);
+			double power = towerFactory.getPower(expDecorated);
+			double expectePower = 2;
+			assertEquals((Double)expectePower, (Double)power);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+	@Test
+	public void testGet3LevelPower(){
+		try {
+			Tower expected = towerFactory.getTower("ModernTower");
+			List<Tower> lst = expected.getTowers();
+			Tower expDecorated = new FirePower(expected);
 			lst.add(expDecorated);
 			expDecorated = new FirePower(expDecorated);
 			lst.add(expDecorated);
@@ -271,7 +303,7 @@ public class FactoriesTest {
 			lst.add(expDecorated);
 			expDecorated.setTowers(lst);
 			double power = towerFactory.getPower(expDecorated);
-			double expectePower = 4;
+			double expectePower = 3;
 			assertEquals((Double)expectePower, (Double)power);
 		} catch (Exception e) {
 			// TODO: handle exception
