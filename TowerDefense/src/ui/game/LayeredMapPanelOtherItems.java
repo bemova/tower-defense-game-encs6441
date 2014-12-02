@@ -5,13 +5,11 @@ import infrastructure.loggin.Log4jLogger;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -29,12 +27,14 @@ import core.applicationservice.gameservices.GameLogManager;
 import core.applicationservice.gameservices.GameStateManager;
 import core.applicationservice.informerservices.imp.DefenderInformer;
 import core.applicationservice.locationservices.PositionService;
+import core.applicationservice.mapservices.MapCellService;
 import core.applicationservice.mapservices.MapManager;
 import core.applicationservice.mapservices.pathfinder.PathService;
+import core.applicationservice.warriorservices.SpecialDamageEffectsServiceBurn;
+import core.applicationservice.warriorservices.SpecialDamageEffectsServiceSplash;
 import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.WaveFactory;
 import core.contract.DefenderConstants;
-import core.contract.MapConstants;
 import core.contract.WaveConstants;
 import core.domain.account.BankManager;
 import core.domain.account.LifeManager;
@@ -64,8 +64,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private int x, y;
 	private BankManager bank;
 	private long availFunds;
-	private Point mapTopLeft;
-	private Point mapButtomRight;
+//	private Point mapTopLeft;
+//	private Point mapButtomRight;
 	private GridMap grid;
 	private InspectionPanel inspection;
 	public Thread critterT, mapT;
@@ -97,7 +97,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private int sleepLength = 10;
 	private HashMap<Tower, Integer> shootingSchedule = new HashMap<Tower, Integer>();
 
-	private HashMap<Critter, Integer> burningCritters = new HashMap<Critter, Integer>();
+	private SpecialDamageEffectsServiceBurn burnEffect = new SpecialDamageEffectsServiceBurn();
+	private SpecialDamageEffectsServiceSplash splashEffect = new SpecialDamageEffectsServiceSplash();
+	
+	private MapCellService mapCellService = new MapCellService();
 
 	/**
 	 * @param dimension
@@ -156,39 +159,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 		PathService pathService = new PathService();
 		this.path = pathService.pathFinder(grid.getContent());
 		// end
-		return getCellPixel(grid.getEntranceLocation());
-	}
-
-	protected Position getCellPixel(Position cell) {
-		int initX = (int) mapTopLeft.getX();
-		int initY = (int) mapTopLeft.getY();
-
-		Position pixel;
-		if (cell != null) {
-			pixel = new Position(
-					(int) (initX + (cell.getX() * grid.getUnitSize())),
-					(int) (initY + (cell.getY() * grid.getUnitSize())));
-
-			return pixel;
-		}
-		return null;
-	}
-
-	/**
-	 * This method converts a map cell to a pixel position on the screen
-	 * 
-	 * @param cell
-	 *            a cell position on the grid
-	 * @return pixel position on the screen
-	 */
-	protected Position convertCellToPixel(Position cell) {
-		Position pixel = getCellPixel(cell);
-		if (pixel != null) {
-			pixel.setX(pixel.getX() + grid.getUnitSize() / 2);
-			pixel.setY(pixel.getY() + grid.getUnitSize() / 2);
-			return pixel;
-		}
-		return null;
+		return mapCellService.getCellPixel(grid.getEntranceLocation());
 	}
 
 	/**
@@ -201,8 +172,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 		super.paintComponent(g);
 
-		int initX = (int) mapTopLeft.getX();
-		int initY = (int) mapTopLeft.getY();
+		int initX = (int) mapCellService.getMapTopLeft().getX();
+		int initY = (int) mapCellService.getMapTopLeft().getY();
 
 		setMapTopLeft(new Point(initX, initY));
 		setMapButtomRight(new Point(initX + grid.getWidth()
@@ -231,7 +202,6 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 						pos.getY(), currentWaveAlienList.get(i).getLife());
 			}
 
-			// Map<Tower, Critter> map = defenderTargetPair;
 			Iterable<Entry<Tower, Critter>> its = defenderTargetPair.entrySet();
 			for (Entry<Tower, Critter> pairs : its) {
 				Tower t2 = pairs.getKey();
@@ -243,13 +213,12 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 					if (positionService.isInRange(t2.getTowerPosition(),
 							c.getPath()[c.getCurrentPosition()], range)) {
 						new LineBullet()
-								.draw(g, convertCellToPixel(t2
+								.draw(g, mapCellService.convertCellToPixel(t2
 										.getTowerPosition()),
-										convertCellToPixel(path[c
+										mapCellService.convertCellToPixel(path[c
 												.getCurrentPosition()]));
 					}
 				}
-				// defenderTargetPair = map;
 			}
 		}
 	}
@@ -358,9 +327,9 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 *            y coordinate of mouse pointer
 	 */
 	public void setCellLocation(int mouseX, int mouseY) {
-		int i = (mouseX - (int) mapTopLeft.getX() - 75 / 2)
+		int i = (mouseX - (int) mapCellService.getMapTopLeft().getX() - 75 / 2)
 				/ grid.getUnitSize();
-		int j = (mouseY - (int) mapTopLeft.getY() - 120) / grid.getUnitSize();
+		int j = (mouseY - (int) mapCellService.getMapTopLeft().getY() - 120) / grid.getUnitSize();
 		this.x = i;
 		this.y = j;
 	}
@@ -456,11 +425,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 					.getDecoratedName(defender.getTowers());
 			switch (defenderType) {
 			case DefenderConstants.KING_TOWER_TYPE:
-				// target.setLife(target.getLife() / 2);
 				shootAndBurn(defender, target);
 				break;
 			case DefenderConstants.MODERN_TOWER_TYPE:
-				splash(defender, target);
+				splashEffect.splash(defender, target, wave, getTowerPropertyBasedOnLevel(defender), path);
 				break;
 			case DefenderConstants.ANCIENT_TOWER_TYPE:
 				PositionService positionService = new PositionService();
@@ -486,28 +454,11 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	private void shootAndBurn(Tower defender, Critter target) {
 		int power = getTowerPropertyBasedOnLevel(defender);
 		target.setLife(target.getLife() - power);
-		burningCritters.put(target, getTowerPropertyBasedOnLevel(defender)
-				* sleepLength);
-
+		burnEffect.addBurningCritter(target, getTowerPropertyBasedOnLevel(defender) * sleepLength);
 	}
 	
 	private void burn() {
-		Iterable<Entry<Critter, Integer>> its = burningCritters.entrySet();
-		for (Entry<Critter, Integer> pairs : its) {
-			Critter critter = pairs.getKey();
-			critter.setLife(critter.getLife()-1);
-			pairs.setValue(pairs.getValue()-1);
-		}
-
-
-		
-		for(Iterator<Map.Entry<Critter, Integer>> it = burningCritters.entrySet().iterator(); it.hasNext(); ) {
-		      Map.Entry<Critter, Integer> entry = it.next();
-		      if(entry.getValue().equals(0)) {
-		        it.remove();
-		      }
-		    }
-		
+		burnEffect.burn();
 		removeDeadCritters();
 	}
 
@@ -531,38 +482,6 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			return true;
 		}
 		return false;
-	}
-
-	private void splash(Tower defender, Critter target) {
-		int power = getTowerPropertyBasedOnLevel(defender);
-
-		int gridX = path[target.getCurrentPosition()].getX();
-		int gridY = path[target.getCurrentPosition()].getY();
-		Position pixel = convertCellToPixel(new Position(gridX, gridY));
-
-		int len = (4) * MapConstants.UNIT_SIZE;
-		int cornerX = pixel.getX() - MapConstants.UNIT_SIZE
-				- (MapConstants.UNIT_SIZE / 2);
-		int cornerY = pixel.getY() - MapConstants.UNIT_SIZE
-				- (MapConstants.UNIT_SIZE / 2);
-		Rectangle areaOfEffect = new Rectangle(cornerX, cornerY, len, len);
-
-		ArrayList<Critter> critters = new ArrayList<Critter>();
-		critters.addAll(wave.getAliens());
-		for (Critter c : wave.getAliens()) {
-			int gX = path[c.getCurrentPosition()].getX();
-			int gY = path[c.getCurrentPosition()].getY();
-			Position p = convertCellToPixel(new Position(gX, gY));
-			int l = (1) * MapConstants.UNIT_SIZE;
-			int cX = (p.getX());
-			int cY = p.getY();
-			Rectangle critterRect = new Rectangle(cX, cY, l, l);
-
-			if (critterRect.intersects(areaOfEffect)) {
-				c.setLife(c.getLife() - power);
-			}
-
-		}
 	}
 
 	/**
@@ -761,19 +680,19 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	}
 
 	protected Point getMapTopLeft() {
-		return mapTopLeft;
+		return mapCellService.getMapTopLeft();
 	}
 
 	protected void setMapTopLeft(Point mapTopLeft) {
-		this.mapTopLeft = mapTopLeft;
+		mapCellService.setMapTopLeft(mapTopLeft);
 	}
 
 	protected Point getMapButtomRight() {
-		return mapButtomRight;
+		return mapCellService.getMapButtomRight();
 	}
 
 	protected void setMapButtomRight(Point mapButtomRight) {
-		this.mapButtomRight = mapButtomRight;
+		mapCellService.setMapButtomRight(mapButtomRight);
 	}
 
 	protected void setDimension(Dimension mapPanelDimension) {

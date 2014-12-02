@@ -128,6 +128,7 @@ public class RegularMove implements MovingBehaviour, java.io.Serializable {
 		this.freezeTime = freezeTime;
 	}
 
+	
 	private void setPath(Position[] path) {
 		this.path = path;
 	}
@@ -156,7 +157,7 @@ public class RegularMove implements MovingBehaviour, java.io.Serializable {
 		this.currentPosition = currentPosition;
 	}
 
-	private int getFreezeTime() {
+	public int getFreezeTime() {
 		return freezeTime;
 	}
 
