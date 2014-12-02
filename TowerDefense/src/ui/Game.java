@@ -4,6 +4,11 @@ import javax.swing.SwingUtilities;
 
 import ui.game.MainFrame;
 
+/**
+ * this class is used for a game driver
+ * @author team5
+ *
+ */
 public class Game {
 
 	private Game() {

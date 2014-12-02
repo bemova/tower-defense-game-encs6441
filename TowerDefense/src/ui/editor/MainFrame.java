@@ -18,7 +18,11 @@ import javax.swing.JTextField;
 
 import ui.Constants;
 import core.applicationservice.mapservices.connectivity.imp.StartEndChecker;
-
+/**
+ * this class is used for a game frame. Is the main part of user interface
+ * @author vika
+ *
+ */
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
 
@@ -43,6 +47,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
+	/**
+	 * this method is used for initial  set up parameters, like layout of a game frame
+	 */
 	private void setup() {
 		setTitle(Constants.EDITOR_TITLE);
 		refresh();
@@ -54,7 +61,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		mapPanel = new MapEditorPanel(8,8);
 	}
 
-	
+	/**
+	 * this method is used when there is a need to change the size of a game frame 
+	 */
 	private void refresh() {
 		setSize(700, 500);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -62,7 +71,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * 
+	 * this method constracts a menue for a game
 	 */
 	private void setUpMenuBar() {
 		menuBar = new JMenuBar();
@@ -114,11 +123,17 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * is used when the size of a map is set and dialog has to be closed
+	 */
 	private void closeMapSizeDialog() {
 		mapSizeDialog.dispose();
 		
 	}
 
+	/**
+	 * is used when external user needs to change the size of a map
+	 */
 	private void setMapSize() {
 		try {
 			width = (new Integer(widthTextField.getText())).intValue();
@@ -134,12 +149,18 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * is called when used needs to design a new map for a game
+	 */
 	private void startMapDesign() {
 		mapPanel.setGridSize(width, height);
 		mapPanel.setMapSize(width, height);
 		continueMapDesign();
 	}
 
+	/**
+	 * is used when user wants to make change on akready designed map
+	 */
 	private void continueMapDesign() {
 		add(mapPanel, BorderLayout.CENTER);
 		refresh();

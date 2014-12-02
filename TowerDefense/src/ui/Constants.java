@@ -1,7 +1,11 @@
 package ui;
 
 
-
+/**
+ * this class is used to encapsulate all the states and constant variables used in the application 
+ * @author  Team5
+ *
+ */
 public class Constants {
 	public static final String TAG_ENTRY_POINT = "Entery Point";
 	public static final String TAG_EXIT_POINTS = "Exit Point";

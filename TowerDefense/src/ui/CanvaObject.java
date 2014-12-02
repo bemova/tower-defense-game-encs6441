@@ -18,6 +18,10 @@ public class CanvaObject extends Canvas {
 	Dimension dimension = new Dimension();
 	Graphics imageGraphic = null;
 
+	/**
+	 * public constructore of the class
+	 * @param newGrid new value for newGrid member varuable
+	 */
 	public CanvaObject(Grid newGrid) {
 		grid = newGrid;
 	}

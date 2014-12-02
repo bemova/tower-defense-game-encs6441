@@ -108,6 +108,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
+	/**
+	 *is used to initialize  user interface tools when user needs to design a new map 
+	 * @param width width of an initial map
+	 * @param height heihgt of an initial map
+	 */
 	private void initialize(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -129,6 +134,12 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
+	/**
+	 * this class is used to create a specific point as part of a map 
+	 * @author team5
+	 *
+	 */
+	
 	@SuppressWarnings("serial")
 	public class CanvasCoordinate extends Point {
 		public CanvasCoordinate(int x, int y) {
@@ -282,6 +293,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private void path() {
 		try {
 
@@ -292,6 +306,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		}
 	}
 
+	/**
+	 * 
+	 * @param width
+	 * @param height
+	 */
 	protected void setMapSize(int width, int height) {
 		try {
 			// validation part
@@ -312,6 +331,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
+	/**
+	 * gets the cellContent of for an exit point
+	 */
 	private void exit() {
 		try {
 			cellContent = GridCellContentType.EXIT;
@@ -322,6 +344,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
+	/**
+	 * gets cell content for an entry point
+	 */
 	private void entrance() {
 		try {
 
@@ -332,6 +357,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
+	/**
+	 * this method checks whether a given cell type exists in a grid or not
+	 * @param cellContent
+	 * @return returns true if a given cell exists in a grid
+	 */
 	private boolean isSingle(GridCellContentType cellContent) {
 		for (int x = 0; x < grid.getWidth(); x++) {
 			for (int y = 0; y < grid.getHeight(); y++) {
@@ -343,6 +373,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	private void scenery() {
 		try {
 
@@ -355,6 +388,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
+	/**
+	 * this method is used to save map into the file. 
+	 */
 	protected void saveMap() {
 		try {
 
@@ -378,6 +414,11 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
+	/**
+	 * checks whether a given grid is a valid map or not
+	 * @param matrix
+	 * @return returns true if it is a valid map
+	 */
 	private boolean isValid(GridCellContentType[][] matrix) {
 		StartEndChecker startChecker = new StartEndChecker();
 		ConnectivityService conn = new ConnectivityService();
@@ -399,6 +440,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 		return true;
 	}
 
+	/**
+	 * leads map from a given file
+	 */
 	protected void loadMap() {
 		try {
 			JFileChooser openFile = new JFileChooser();
@@ -420,6 +464,9 @@ public class MapEditorPanel extends JPanel implements ActionListener,
 
 	}
 
+	/**
+	 * 
+	 */
 	protected void designMap() {
 		try {
 			canvas.setGrid(grid);
