@@ -8,7 +8,6 @@ import java.util.Map;
 
 import core.applicationservice.warriorservices.TowerFactory;
 import core.domain.warriors.defenders.towers.Tower;
-import core.domain.warriors.defenders.towers.towertype.TowerType;
 
 public class GameLogManager {
 

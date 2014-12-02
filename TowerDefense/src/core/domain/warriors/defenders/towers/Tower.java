@@ -111,7 +111,7 @@ public abstract class Tower extends Defender {
 	}
 	/**
 	 * towers tower description
-	 *
+	 * @param towers tower's details that contains the decorator object and decorated object
 	 */
 	public void setTowers(List<Tower> towers) {
 		this.towers = towers;
