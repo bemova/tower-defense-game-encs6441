@@ -21,12 +21,17 @@ public class Handler implements MouseListener, MouseMotionListener{
 		this.mapPanel = mapPanel;
 	}
 	
+	/**
+	 * 
+	 */
 	public void mouseDragged(MouseEvent e) {
 //		Screen.mouse = new Point(e.getX() - ((Frame.size.width-Screen.myWidth)/2),(e.getY())+((Frame.size.height-(Screen.myHeight))-(Frame.size.width- Screen.myWidth)/2));
 		
 	}
 
-	
+	/**
+	 * 
+	 */
 	public void mouseMoved(MouseEvent e) {
 //		Screen.mouse = new Point(e.getX() - ((Frame.size.width-Screen.myWidth)/2),(e.getY())-((Frame.size.height-(Screen.myHeight))-(Frame.size.width- Screen.myWidth)/2));
 		
@@ -47,25 +52,33 @@ public class Handler implements MouseListener, MouseMotionListener{
 		}
 	}
 
-	
+	/**
+	 * 
+	 */
 	public void mousePressed(MouseEvent e) {
 //		Screen.store.click(e.getButton());
 		
 	}
 
-	
+	/**
+	 * 
+	 */
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	
+	/**
+	 * 
+	 */
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	
+	/**
+	 * 
+	 */
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		

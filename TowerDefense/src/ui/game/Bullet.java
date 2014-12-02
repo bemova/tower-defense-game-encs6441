@@ -9,37 +9,55 @@ import javax.swing.JComponent;
 
 import core.contract.MapConstants;
 
+/**
+ * 
+ * @author team5
+ *
+ */
 public class Bullet extends JComponent implements Runnable {
-	public int xC=0,yC=0;
+	public int xC = 0, yC = 0;
 	int xPos = 50;
-	int x,y;
+	int x, y;
 	Icon critterImg;
 
 	Icon pathImg;
-	
-	public Bullet(int initX, int initY){
+
+	/**
+	 * public constructor of the class
+	 * 
+	 * @param initX destination x for shooting
+	 * @param initY destination y for shooting
+	 */
+	public Bullet(int initX, int initY) {
 		this.x = initX;
 		this.y = initY;
 		this.xPos = initX;
-		
+
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("bullet.png").getFile());
-//		critterImg = new ImageIcon(file.getPath()).getImage();
+		// critterImg = new ImageIcon(file.getPath()).getImage();
 		this.critterImg = new ImageIcon(file.getPath());
-		
-		file = new File(classLoader.getResource(MapConstants.PATH_IMG).getFile());
+
+		file = new File(classLoader.getResource(MapConstants.PATH_IMG)
+				.getFile());
 		pathImg = new ImageIcon(file.getPath());
 	}
-	
-	public void physic(){
-		if (xPos > x+500){
+
+	/**
+	 * computes the current position for shooting
+	 */
+	public void physic() {
+		if (xPos > x + 500) {
 			xPos = x;
 		}
 		xPos++;
 	}
-	
+
+	/** 
+	 * 
+	 */
 	public void run() {
-		
+
 		while (true) {
 			try {
 				Thread.sleep(10);
@@ -48,31 +66,30 @@ public class Bullet extends JComponent implements Runnable {
 				e.printStackTrace();
 			}
 			repaint();
-			if (xPos > x+200){
+			if (xPos > x + 200) {
 				xPos = x;
 			}
 			xPos++;
 		}
 	}
-	
+
+	/**
+	 * draws a bullet in a current given position
+	 */
 	public void paintComponent(Graphics g) {
-//		super.paintComponent(g);
-		draw(g);//, xPos, y);
-		
+
+		draw(g);
+
 	}
-	
-	public void draw(Graphics g){//, int x, int y){
+
+	/**
+	 * draws the bullet
+	 * @param g - graphics object for drawing
+	 */
+	public void draw(Graphics g) {
 		super.paintComponent(g);
-//		pathImg.paintIcon(this, g, xPos-1, y);
+
 		critterImg.paintIcon(this, g, xPos, y);
-		
-//		g.drawImage(critterImg, xPos, y, MapConstants.UNIT_SIZE,
-//				MapConstants.UNIT_SIZE, null);
-//		this.y = y;
-//		if (x > 1000){
-//			x = 100;
-//		}
-//		x++;
-		
+
 	}
 }

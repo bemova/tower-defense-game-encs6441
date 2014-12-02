@@ -13,7 +13,11 @@ import javax.swing.SwingConstants;
 
 import core.applicationservice.warriorservices.TowerFactory;
 import core.domain.warriors.defenders.towers.Tower;
-
+/**
+ * thus is tower information panel
+ * @author team5
+ *
+ */
 @SuppressWarnings("serial")
 public class TowerInfoPanel extends JPanel {
 	private JLabel speedCount;

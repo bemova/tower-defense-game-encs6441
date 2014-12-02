@@ -15,8 +15,8 @@ import core.domain.warriors.defenders.towers.Tower;
 /**
  * 
  * @author Team5
- *<b>Cell class updates a cell with its image , meaning that if a cell is path , it will put</b>
- *<b> path image , if a cell is place a specific tower it will put that tower ...</b>
+ * <b>Cell class updates a cell with its image , meaning that if a cell is path , it will put</b>
+ * <b> path image , if a cell is place a specific tower it will put that tower ...</b>
  */
 public class Cell extends Rectangle {
 
@@ -31,12 +31,10 @@ public class Cell extends Rectangle {
 	public Cell(){
 		setupImages();
 	}
+	
     /**
      * This method is called by the constructor to prepare the images
      */
-	/**
-	 * 
-	 */
 	private void setupImages(){
 		file = new File(classLoader.getResource(MapConstants.SCENERY_IMG).getFile());
 		sceneryImg = new ImageIcon(file.getPath()).getImage();
@@ -73,9 +71,8 @@ public class Cell extends Rectangle {
 	 * @param y  y coordinate of the cell
 	 * @param gridX grid x coordinate 
 	 * @param gridY grid y coordinate
-	 * 
+	 * @param isTower indicates if is a tower
 	 */
-	
 	public void draw(Graphics g, GridCellContentType cellType, Tower[][] towers, int x, int y, int gridX, int gridY, boolean isTower) {
 		Image image = setup(cellType, towers, gridX, gridY);
 		
@@ -104,7 +101,7 @@ public class Cell extends Rectangle {
 	 * @param towers array of towers which are 3 types for now Modern,ancient,king
 	 * @param x x location to draw
 	 * @param y y location to draw
-	 * @return Image depnding on its type 
+	 * @return Image depending on its type 
 	 */
 	/**
 	 * @param cellType

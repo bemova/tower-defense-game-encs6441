@@ -340,7 +340,9 @@ public class InspectionPanel extends Observable implements ActionListener {
 		return performedAction;
 
 	}
-
+/**
+ * method is used to sell and compute  a current balance
+ */
 	private void sell() {
 		String str = sellPriceCount.getText();
 		long temp = bank.getCurrentBalance();
@@ -351,7 +353,9 @@ public class InspectionPanel extends Observable implements ActionListener {
 		performedAction = "Sell";
 		closeInspector();
 	}
-
+/**
+ * 
+ */
 	private void upgrade() {
 		if (!tower.getLevel().equals(TowerLevel.three)) {
 			String str = this.speedCount.getText();
@@ -398,7 +402,14 @@ public class InspectionPanel extends Observable implements ActionListener {
 	public Tower getTower() {
 		return this.tower;
 	}
-
+/**
+ * Upgrades a level of towers
+ * @param tower that is need to be upgraded 
+ * @param speedCount new value for speed
+ * @param rangeCount new value for range
+ * @param powerCount new value for power
+ * @return
+ */
 	private Tower upgradeLevel(Tower tower, int speedCount,
 			int rangeCount, int powerCount) {
 		TowerFactory factory = new TowerFactory();
@@ -441,12 +452,16 @@ public class InspectionPanel extends Observable implements ActionListener {
 	public void close() {
 		dialog.dispose();
 	}
-
+/**
+ * 
+ */
 	private void closeInspector() {
 		sendUpdateSignal();
 		dialog.dispose();
 	}
-
+/**
+ * 
+ */
 	private void sendUpdateSignal() {
 		setChanged();
 		notifyObservers();

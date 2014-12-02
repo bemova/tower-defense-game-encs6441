@@ -16,7 +16,11 @@ import core.applicationservice.gameservices.GameLogManager;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * 
+ * @author team5
+ *
+ */
 public class LogViewer extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -37,8 +41,11 @@ public class LogViewer extends JDialog {
 	// }
 	// }
 
+
+	
 	/**
-	 * Create the dialog.
+	 * Create the dialog
+	 * @param gameLogManager is used for game log 
 	 */
 	public LogViewer(GameLogManager gameLogManager) {
 		this.gameLogManager = gameLogManager;
@@ -81,7 +88,11 @@ public class LogViewer extends JDialog {
 		}
 		getGlobalGameLog();
 	}
-
+	
+	/**
+	 * 
+	 * @param selectedItem
+	 */
 	protected void getLog(Object selectedItem) {
 		try {
 			if (selectedItem instanceof String) {
@@ -126,7 +137,10 @@ public class LogViewer extends JDialog {
 
 		return list.toArray();
 	}
-
+	
+	/**
+	 * 
+	 */
 	private void getGlobalGameLog() {
 		textArea.setText(gameLogManager.getGlobalLog());
 	}

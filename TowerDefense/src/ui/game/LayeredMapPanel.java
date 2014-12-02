@@ -29,17 +29,28 @@ public class LayeredMapPanel extends JLayeredPane {
 	private LayeredMapPanelOtherItems otherItemsLayer;
 	private GameInfoPanel gameInfoPanel;
 
-
+	/**
+	 * 
+	 * @return game information panel
+	 */
 	public GameInfoPanel getGameInfoPanel() {
 		return gameInfoPanel;
 	}
 
-
+	/**
+	 * set the game information panel
+	 * @param gameInfoPanel - game information panel
+	 */
 	public void setGameInfoPanel(GameInfoPanel gameInfoPanel) {
 		this.gameInfoPanel = gameInfoPanel;
 	}
 
-
+	/**
+	 * represents some of the components of user interface
+	 * @param dimension - map panel dimension
+	 * @param gameInfoPanel - game information panel
+	 * @param mainFrame - the main frame
+	 */
 	public LayeredMapPanel(Dimension dimension, GameInfoPanel gameInfoPanel, MainFrame mainFrame) {
 		this.gameInfoPanel = gameInfoPanel;
 		this.grid = new GridMap(1, 1);
@@ -52,30 +63,52 @@ public class LayeredMapPanel extends JLayeredPane {
 		add(otherItemsLayer,new Integer(2));
 	}
 
-
+	/**
+	 * 
+	 * @return other items panel
+	 */
 	public LayeredMapPanelOtherItems getOtherItemsPanel(){
 		return otherItemsLayer;
 	}
+	
+	/**
+	 * sets a new value of a grid
+	 * @param  grid new grid is being used in a game 
+	 */
 	public void setGrid(GridMap grid) {
 		this.grid = grid;
 		gridLayer.setGrid(grid);
 		otherItemsLayer.setGrid(grid);
 	}
 
-
+	/**
+	 * 
+	 * @return current grid
+	 */
 	public Grid getGrid() {
 		return gridLayer.getGrid();
 	}
-	
+
+	/**
+	 * 
+	 * @return current map
+	 */
 	public GridMap getGridMap() {
 		return otherItemsLayer.getGrid();
 	}
 
+	/**
+	 * 
+	 * @param towers new tower to be set
+	 */
 	public void setTowers(Tower[][] towers) {
 		otherItemsLayer.setTowers(towers);		
 	}
 
-
+	/**
+	 * 
+	 * @return bank amount
+	 */
 	public BankManager getBank() {
 		return otherItemsLayer.getBank();
 	}
@@ -131,7 +164,9 @@ public class LayeredMapPanel extends JLayeredPane {
 		return new Point(initX, initY);
 	}
 	
-
+	/**
+	 * computes the size of a grid by given width and height 
+	 */
 	@Override
 	public Dimension getPreferredSize() {
 		int width = grid.getWidth() * grid.getUnitSize();
@@ -140,18 +175,33 @@ public class LayeredMapPanel extends JLayeredPane {
 		return new Dimension(width, height);
 	}
 
+	/**
+	 * 
+	 * @return top left corner of a map
+	 */
 	public Point getMapTopLeft() {
 		return mapTopLeft;
 	}
-
+	/**
+	 * 
+	 * @param mapTopLeft sets top left corner of a map
+	 */
 	private void setMapTopLeft(Point mapTopLeft) {
 		this.mapTopLeft = mapTopLeft;
 	}
-
+	
+	/**
+	 * 
+	 * @return map buttem right corner of a map
+	 */
 	public Point getMapButtomRight() {
 		return mapButtomRight;
 	}
-
+	
+	/**
+	 * sets buttem right corner of a map
+	 * @param mapButtomRight buttem right corner of a map
+	 */
 	private void setMapButtomRight(Point mapButtomRight) {
 		this.mapButtomRight = mapButtomRight;
 	}
@@ -176,25 +226,19 @@ public class LayeredMapPanel extends JLayeredPane {
 		
 	}
 
-
-//	public void saveGame(String fileName) {
-//		otherItemsLayer.saveGame(fileName);
-//		
-//	}
-
-
-//	public void loadGame(String fileName) {
-//		otherItemsLayer.loadGame(fileName);
-//		
-//	}
-
-
+	/**
+	 * 
+	 * @param game information of a game
+	 */
 	public void setGameInfo(GameStateManager game) {
 		otherItemsLayer.setGameInfo(game);
 		
 	}
 
-
+	/**
+	 * 
+	 * @return current wave number
+	 */
 	public int getWaveNumber() {
 		return otherItemsLayer.getWaveNumber();
 	}

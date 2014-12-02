@@ -124,17 +124,25 @@ public class GameInfoPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * 
+	 * @return the amount of life left
+	 */
 	public int getLife() {
 		return Integer.parseInt(lblLife.getText());
 	}
 	
 	/**
 	 * 
-	 * @param bank amount of gold
+	 * @param availFunds amount of a bank 
 	 */
 	public void setBank(long availFunds) {
 		lblBank.setText(new Long(availFunds).toString());
 	}
+	/**
+	 * 
+	 * @return the current amount of a bank
+	 */
 	public long getBank() {
 		return Long.parseLong(lblBank.getText());
 	}

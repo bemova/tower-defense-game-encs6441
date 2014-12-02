@@ -33,6 +33,10 @@ public class LayeredMapPanelGrid extends JPanel {
 		setDimension(dimension);
 	}
 
+	/**
+	 * 
+	 * @param grid new value of a grid
+	 */
 	public void setGrid(GridMap grid) {
 		cell = new Cell();
 		this.grid = grid;
@@ -53,25 +57,26 @@ public class LayeredMapPanelGrid extends JPanel {
 				* grid.getUnitSize(), initY + grid.getHeight()
 				* grid.getUnitSize()));
 
-		if (grid.getWidth() > 1) {
-				
-				for (int x = 0; x < grid.getWidth(); x++) {
-					for (int y = 0; y < grid.getHeight(); y++) {
-						int xCoordinate = grid.getUnitSize() * x + initX;
-						int yCoordinate = grid.getUnitSize() * y + initY;
-						if (grid.getTowers() == null) {
-							grid.setTowers(new Tower[1][1]);
-						}
-						cell.draw(g, grid.getCell(x, y), grid.getTowers(),
-								xCoordinate, yCoordinate, x, y, false);
+		if (grid.getWidth() > 1) {				
+			for (int x = 0; x < grid.getWidth(); x++) {
+				for (int y = 0; y < grid.getHeight(); y++) {
+					int xCoordinate = grid.getUnitSize() * x + initX;
+					int yCoordinate = grid.getUnitSize() * y + initY;
+					if (grid.getTowers() == null) {
+						grid.setTowers(new Tower[1][1]);
 					}
+					cell.draw(g, grid.getCell(x, y), grid.getTowers(),
+							xCoordinate, yCoordinate, x, y, false);
 				}
+			}
 		}
 
 	}
 
 
-	
+	/**
+	 * 
+	 */
 	@Override
 	public Dimension getPreferredSize() {
 		int width = grid.getWidth() * grid.getUnitSize();
@@ -80,28 +85,46 @@ public class LayeredMapPanelGrid extends JPanel {
 		return new Dimension(width, height);
 	}
 
-
+/**
+ * 
+ * @return 
+ */
 	protected Point getMapTopLeft() {
 		return mapTopLeft;
 	}
-
+/**
+ * 
+ * @param mapTopLeft
+ */
 	protected void setMapTopLeft(Point mapTopLeft) {
 		this.mapTopLeft = mapTopLeft;
 	}
-
+/**
+ * 
+ * @return
+ */
 	protected Point getMapButtomRight() {
 		return mapButtomRight;
 	}
-
+/**
+ * 
+ * @param mapButtomRight
+ */
 	protected void setMapButtomRight(Point mapButtomRight) {
 		this.mapButtomRight = mapButtomRight;
 	}
 
-
+/**
+ * 
+ * @return grid object
+ */
 	public GridMap getGrid() {
 		return grid;
 	}
-
+/**
+ * 
+ * @param mapPanelDimension
+ */
 	protected void setDimension(Dimension mapPanelDimension) {
 		setSize(mapPanelDimension);
 		

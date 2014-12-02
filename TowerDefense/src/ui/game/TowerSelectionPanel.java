@@ -22,7 +22,11 @@ import core.contract.DefenderConstants;
 import core.contract.MapConstants;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.warriors.defenders.towers.towertype.TowerLevel;
-
+/**
+ * creates a panel for selecting towers
+ * @author team5
+ *
+ */
 public class TowerSelectionPanel extends JPanel {
 
 	private boolean addTowerFlag;
@@ -168,6 +172,10 @@ public class TowerSelectionPanel extends JPanel {
 //		}
 //	}
 
+	/**
+	 * creates a tower of a given type
+	 * @param towerType
+	 */
 	private void tower(String towerType) {
 		TowerFactory towerFactory = new TowerFactory();
 		Tower tower = towerFactory.getTower(towerType, TowerLevel.one);

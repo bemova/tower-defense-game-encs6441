@@ -18,6 +18,7 @@ public class TowerPanel extends JPanel {
 
 	private TowerSelectionPanel towerSelectionPanel;
 	private TowerInfoPanel towerInfoPanel;
+	
 	/**
 	 * Create the panel.
 	 */

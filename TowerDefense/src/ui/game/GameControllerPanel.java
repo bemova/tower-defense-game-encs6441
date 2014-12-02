@@ -15,7 +15,7 @@ import core.domain.account.LifeManager;
 /**
  * 
  * @author Team5
- *
+ * <b>creates a panel for a game controller</b>
  */
 public class GameControllerPanel extends JPanel {
 
@@ -66,7 +66,6 @@ public class GameControllerPanel extends JPanel {
 		add(tglbtnNewToggleButton_1, gbc_tglbtnNewToggleButton_1);
 		tglbtnNewToggleButton_1.addMouseListener(new MouseAdapter() {
 			@Override
-			
 			/**
 			 * @param arg0 catches event from mouse once clicked it will start the game
 			 */
@@ -86,6 +85,7 @@ public class GameControllerPanel extends JPanel {
 		add(towerPanel, gbc_towerPanel);
 
 	}
+	
 	/**
 	 * The user can can pause a game and later resume it
 	 * this gets the current state and acts accordingly
@@ -116,9 +116,11 @@ public class GameControllerPanel extends JPanel {
 		}
 		
 	}
+	
 	/**
 	 * Once a wave is completed , enable the user to start a new wave
 	 * and reinitialize some instances
+	 * @param waveNumber - the wave number
 	 */
 	public void wavaCompleted(int waveNumber) {
 		this.gameState = "completed";

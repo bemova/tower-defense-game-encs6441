@@ -281,7 +281,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	 * This method adds a tower to the map and also displays in the UI. Before
 	 * adding the tower it makes sure the user has enough money.
 	 * 
-	 * @param x
+	 * @param x 
 	 *            x coordinate of the cell that towers is going to be placed.
 	 * @param y
 	 *            y coordinate of the cell that towers is going to be placed.

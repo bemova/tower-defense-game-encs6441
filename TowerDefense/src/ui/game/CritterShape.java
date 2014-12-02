@@ -3,16 +3,18 @@ package ui.game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-
 import javax.swing.Icon;
 import javax.swing.JComponent;
 
+/**
+ *  
+ * @author Team5
+ * <b>This class is responsible for drawing a critter. It receives an image (icon) and the coordinates of where it's supposed to be displayed.</b>
+ */
 @SuppressWarnings("serial")
 public class CritterShape extends JComponent {
 
-	/**
-	 * This class is responsible for drawing a critter. It receives an image (icon) and the coordinates of where it's supposed to be displayed.
-	 */
+
 	public CritterShape() {
 
 	}

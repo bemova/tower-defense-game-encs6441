@@ -33,6 +33,11 @@ import core.domain.maps.GridMap;
 import core.domain.warriors.defenders.towers.Tower;
 import core.domain.waves.Wave;
 
+/**
+ * 
+ * @author team5
+ *
+ */
 public class MainFrame extends JFrame implements ActionListener {
 
 	// MapPanel mapPanel;
@@ -144,10 +149,19 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * 
+	 * @return game control panel object 
+	 * 
+	 */
 	public GameControllerPanel getGameControllerPanel() {
 		return gameControllerPanel;
 	}
 
+	/**
+	 * 
+	 * @return computes the actual dimention of a map panel
+	 */
 	public Dimension getMapPanelDimention() {
 		int width = gameInfoPanel.getWidth() - (emptyBarPanel.getWidth() * 2);
 		int height = emptyBarPanel.getHeight();
@@ -155,6 +169,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		return new Dimension(width, height);
 	}
 
+	/**
+	 * 
+	 */
 	private void setUpMenuBar() {
 		menuBar = new JMenuBar();
 
@@ -197,7 +214,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		setJMenuBar(menuBar);
 
 	}
-
+	
+	/**
+	 * event that specifies which type of acr=tion is performed for a map
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String menuItem = event.getActionCommand();
@@ -215,7 +235,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 
 	}
-
+	
+	/**
+	 * loads map from a file
+	 */
 	protected void loadMap() {
 		try {
 			JFileChooser openFile = new JFileChooser();
@@ -236,7 +259,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 
 	}
-
+	
+	/**
+	 * displays some user interface components 
+	 * @param grid
+	 */
 	private void displayScoreBoard(Grid grid) {
 		if (scoreBoardDialog != null) {
 			scoreBoardDialog.dispose();
@@ -246,17 +273,24 @@ public class MainFrame extends JFrame implements ActionListener {
 		scoreBoardDialog.setSize(500, 500);
 		scoreBoardDialog.setVisible(true);
 	}
-
+	
+	/**
+	 * saves game into a file
+	 */
 	protected void saveGame() {
 		JFileChooser saveFile = new JFileChooser();
 
 		if (saveFile.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 			String fileName = saveFile.getSelectedFile().getAbsolutePath();
-				GameStateManager game = new GameStateManager(mapPanel.getGridMap(), mapPanel.getWaveNumber(), mapFilePath);
-				GameStateManager.save(fileName, game);
+			GameStateManager game = new GameStateManager(mapPanel.getGridMap(),
+					mapPanel.getWaveNumber(), mapFilePath);
+			GameStateManager.save(fileName, game);
 		}
 	}
-
+	
+	/**
+	 * loads game from a file
+	 */
 	protected void loadGame() {
 		JFileChooser openFile = new JFileChooser();
 		if (JFileChooser.APPROVE_OPTION == openFile.showOpenDialog(null)) {
@@ -270,26 +304,38 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 
 	}
-
+	
+	/**
+	 * 
+	 */
 	private void resetGameState() {
 		mapPanel.setTowers(new Tower[(mapPanel.getGrid()).getWidth()][(mapPanel
 				.getGrid()).getHeight()]);
 		mapPanel.getBank().resetCurrentBalance();
 		mapPanel.resetSize(getMapPanelDimention());
 	}
-
+	
+	/**
+	 * 
+	 */
 	public void disableSaveLoadMenu() {
 		loadGameMenutItem.setEnabled(false);
 		saveGameMenuItem.setEnabled(false);
 	}
-
+	
+	/**
+	 * 
+	 */
 	public void enableSaveLoadMenu() {
 		loadGameMenutItem.setEnabled(true);
 		saveGameMenuItem.setEnabled(true);
 	}
-
+	
+	/**
+	 * 
+	 * @return valied path of a map
+	 */
 	public String getMapFilePath() {
 		return mapFilePath;
 	}
-
 }

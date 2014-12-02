@@ -10,7 +10,11 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 import core.domain.maps.Grid;
-
+/**
+ * 
+ * @author team5
+ *
+ */
 public class ScoreBoard extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -30,9 +34,10 @@ public class ScoreBoard extends JDialog {
 //		}
 //	}
 
-	/**
-	 * Create the dialog.
-	 */
+/**
+ * Create the dialog
+ * @param grid current grid used
+ */
 	public ScoreBoard(Grid grid) {
 		this.grid = grid;
 		setTitle("Score Board");
@@ -64,7 +69,11 @@ public class ScoreBoard extends JDialog {
 			}
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @return
+	 */
 	private String getHighScores() {
 		return grid.getHighestScores(5);
 	}
