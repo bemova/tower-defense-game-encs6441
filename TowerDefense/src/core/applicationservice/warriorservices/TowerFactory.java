@@ -275,6 +275,7 @@ public class TowerFactory {
 	 * @param speedCount speed feature count
 	 * @param rangeCount range feature count
 	 * @param powerCount power feature count
+	 * @param tower the tower that has to upgrade 
 	 * @return Tower 
 	 */
 	public Tower updateLevel(Tower tower, String towertype, int speedCount, int rangeCount,
