@@ -1,7 +1,5 @@
 package test.core.applicationservice.warriorservices;
 
-import java.io.File;
-
 import junit.framework.Assert;
 
 import org.junit.AfterClass;
@@ -9,14 +7,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import core.applicationservice.mapservices.MapManager;
 import core.applicationservice.mapservices.pathfinder.PathService;
 import core.applicationservice.warriorservices.SpecialDamageEffectsServiceBurn;
 import core.applicationservice.warriorservices.SpecialDamageEffectsServiceSplash;
 import core.applicationservice.warriorservices.TowerFactory;
 import core.applicationservice.warriorservices.WaveFactory;
 import core.contract.DefenderConstants;
-import core.domain.maps.Grid;
+import core.domain.maps.GridCellContentType;
 import core.domain.maps.GridMap;
 import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.aliens.behaviourimp.RegularMove;
@@ -31,12 +28,13 @@ public class SpecialDamageEffectsTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		MapManager mapManager = new MapManager();
-		ClassLoader classLoader = (new SpecialDamageEffectsTest().getClass())
-				.getClassLoader();
-		String file = new File(classLoader.getResource("map").getFile())
-				.getPath();
-		grid = new GridMap((Grid) mapManager.loadMapFromFile(file));
+		grid = new GridMap(10,10);
+		grid.setSize(10, 10);
+		grid.setCell(0, 5, GridCellContentType.ENTRANCE);
+		for(int i=1; i<9; i++){
+			grid.setCell(i, 5, GridCellContentType.PATH);
+		}
+		grid.setCell(9, 5, GridCellContentType.EXIT);
 	}
 
 	@AfterClass
