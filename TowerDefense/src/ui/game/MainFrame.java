@@ -264,7 +264,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	 * displays some user interface components 
 	 * @param grid
 	 */
-	private void displayScoreBoard(Grid grid) {
+	public void displayScoreBoard(Grid grid) {
 		if (scoreBoardDialog != null) {
 			scoreBoardDialog.dispose();
 		}

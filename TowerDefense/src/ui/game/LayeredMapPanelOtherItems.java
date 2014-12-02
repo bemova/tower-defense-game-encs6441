@@ -647,9 +647,10 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	}
 
 	private void gameOver() {
-		System.out.println("Game Over");
-		JOptionPane.showMessageDialog(null, "Game Over");
 		saveScore();
+		System.out.println("Game Over");
+		mainFrame.displayScoreBoard(grid);
+		JOptionPane.showMessageDialog(null, "Game Over");
 		System.exit(0);
 	}
 
