@@ -6,6 +6,7 @@ package core.domain.warriors.aliens;
  * @author Team5
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public abstract class CritterFeatureDecorator extends Critter {
 	/**
 	 * string definition of decorated object that contains the creator and the all features

@@ -8,6 +8,7 @@ import core.domain.warriors.aliens.CritterFeatureDecorator;
  * @author Team5
  *@version 0.1
  */
+@SuppressWarnings("serial")
 public class MovingSpeed extends CritterFeatureDecorator {
 
 	private Critter critter;

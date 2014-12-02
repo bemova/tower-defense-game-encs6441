@@ -2,9 +2,7 @@ package core.domain.warriors.defenders.towers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import core.domain.Subject;
 import core.domain.warriors.defenders.Defender;
 import core.domain.warriors.defenders.towers.behaviours.BulletShootingBehaviour;
 import core.domain.warriors.defenders.towers.behaviours.IceShootingBehaviour;

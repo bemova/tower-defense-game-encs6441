@@ -1,8 +1,5 @@
 package core.domain.warriors.aliens.behaviourimp;
 
-import core.applicationservice.informerservices.imp.DefenderInformer;
-import core.applicationservice.locationservices.PositionService;
-import core.applicationservice.warriorservices.ShootingService;
 import core.contract.MapConstants;
 import core.domain.warriors.aliens.behaviours.MovingBehaviour;
 import core.domain.waves.Position;
@@ -21,23 +18,25 @@ public class RegularMove implements MovingBehaviour, java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7111897498315966069L;
-	
-	
+
 	private Position[] path;
 	private int xStep;
 	private int yStep;
 	private Position PixelPosition;
 	private int currentPosition;
 	private int freezeTime;
+
 	/**
 	 * Set PixelPosition and path for regular move
-	 * @param path valid path
-	 * @param initialPixel initial path pixel
+	 * 
+	 * @param path
+	 *            valid path
+	 * @param initialPixel
+	 *            initial path pixel
 	 */
 	public RegularMove(Position[] path, Position initialPixel) {
 		this.setPixelPosition(initialPixel);
 		this.setPath(path);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -50,8 +49,8 @@ public class RegularMove implements MovingBehaviour, java.io.Serializable {
 			int xPixel = PixelPosition.getX();
 			int yPixel = PixelPosition.getY();
 			int currPathCell = currentPosition;
-			if (currPathCell != path.length-1) {
-				
+			if (currPathCell != path.length - 1) {
+
 				Position currCell = path[currPathCell];
 				Position nextCell = path[currPathCell + 1];
 
@@ -100,6 +99,7 @@ public class RegularMove implements MovingBehaviour, java.io.Serializable {
 
 	/**
 	 * Return pixel position
+	 * 
 	 * @return PixelPosition
 	 */
 	public Position getPixelPosition() {
@@ -108,53 +108,38 @@ public class RegularMove implements MovingBehaviour, java.io.Serializable {
 
 	/**
 	 * Return current position in map
+	 * 
 	 * @return currentPosition
 	 */
 	public int getCurrentPosition() {
 		return currentPosition;
 	}
+
 	/**
 	 * Return path in array of positions
+	 * 
 	 * @return path
 	 */
-	public Position[] getPath(){
+	public Position[] getPath() {
 		return path;
 	}
+
 	/**
 	 * Set freez time for ice tower
-	 * @param freezeTime time for freezing a critter
+	 * 
+	 * @param freezeTime
+	 *            time for freezing a critter
 	 */
 	public void setFreezeTime(int freezeTime) {
 		this.freezeTime = freezeTime;
 	}
 
-	
 	private void setPath(Position[] path) {
 		this.path = path;
 	}
 
-	private int getxStep() {
-		return xStep;
-	}
-
-	private void setxStep(int xStep) {
-		this.xStep = xStep;
-	}
-
-	private int getyStep() {
-		return yStep;
-	}
-
-	private void setyStep(int yStep) {
-		this.yStep = yStep;
-	}
-
 	private void setPixelPosition(Position pixelPosition) {
 		PixelPosition = pixelPosition;
-	}
-
-	private void setCurrentPosition(int currentPosition) {
-		this.currentPosition = currentPosition;
 	}
 
 	public int getFreezeTime() {

@@ -12,12 +12,8 @@ import core.domain.waves.Position;
  *
  */
 
+@SuppressWarnings("serial")
 public class Grid implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3267090270961396525L;
 
 	private int width;
 	private int height;
@@ -101,27 +97,12 @@ public class Grid implements Serializable {
 	}
 
 	/**
-	 * <b>Draws the grid</b>
+	 * <b>This method can not be used directly. It allows drawing the grid through VisualGrid</b>
 	 * 
 	 * @param g
 	 *            draw graphics after iteration
 	 */
-	public void draw(Graphics g) {
-		//
-		// for (int i = 0; i < width * unitSize; i += unitSize) {
-		// for (int j = 0; j < height * unitSize; j += unitSize) {
-		// g.drawLine(i, 0, i, height * unitSize);
-		// g.drawLine(0, j, width * unitSize, j);
-		// }
-		// }
-		//
-		// g.drawLine(width * unitSize - 1, height * unitSize - 1, width
-		// * unitSize - 1, 0); // x1y1 x2y2
-		//
-		// g.drawLine(0, height * unitSize - 1, width * unitSize - 1, height
-		// * unitSize - 1);
-
-	}
+	public void draw(Graphics g) {}
 
 	/**
 	 * @return height of map
@@ -130,6 +111,9 @@ public class Grid implements Serializable {
 		return height;
 	}
 
+	/**
+	 * @param value grid height
+	 */
 	public void setHeight(int value) {
 		height = value;
 	}
@@ -141,6 +125,9 @@ public class Grid implements Serializable {
 		return width;
 	}
 
+	/**
+	 * @param value grid width
+	 */
 	public void setWidth(int value) {
 		width = value;
 	}
@@ -152,6 +139,9 @@ public class Grid implements Serializable {
 		return content;
 	}
 
+	/**
+	 * @param value grid content
+	 */
 	public void setContent(GridCellContentType[][] value) {
 		content = value;
 	}
@@ -161,10 +151,6 @@ public class Grid implements Serializable {
 	 */
 	public int getUnitSize() {
 		return unitSize;
-	}
-
-	public void setUnitSize(int value) {
-		unitSize = value;
 	}
 
 	/**
@@ -213,6 +199,9 @@ public class Grid implements Serializable {
 		return null;
 	}
 
+	/**
+	 * @return position of the grid entry point  
+	 */
 	public Position getEntranceLocation() {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
@@ -224,6 +213,9 @@ public class Grid implements Serializable {
 		return null;
 	}
 
+	/**
+	 * @return position of the grid exit point  
+	 */
 	public Position getExitLocation() {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
@@ -235,34 +227,77 @@ public class Grid implements Serializable {
 		return null;
 	}
 
+	/**
+	 * @return grid creation time 
+	 */
 	public String getCreationTime() {
 		return creationTime;
 	}
 
+	/**
+	 * @param creationTime grid creation time 
+	 */
 	public void setCreationTime(String creationTime) {
 		this.creationTime = creationTime;
 	}
 
+	/**
+	 * @return grid modification time
+	 */
 	public ArrayList<String> getModificationTime() {
 		return modificationTime;
 	}
 
+	/**
+	 * @param modificationTime grid modification time
+	 */
 	public void setModificationTime(ArrayList<String> modificationTime) {
 		this.modificationTime = modificationTime;
 	}
 
+	/**
+	 * @param modificationTime modification time
+	 */
 	public void addModificationTime(String modificationTime) {
 		this.modificationTime.add(modificationTime);
 	}
 
+	/**
+	 * @return play log of the grid
+	 */
 	public ArrayList<PlayLog> getPlayLog() {
 		return playLog;
 	}
 
+	/**
+	 * This method is only for testing pueposes
+	 * @param toCompare another grid to compare its play log
+	 * @return true if toCompare has the same play log 
+	 */
+	public boolean comparePlayLog(Grid toCompare) {
+		if (playLog.size() != toCompare.getPlayLog().size()) {
+			return false;
+		}
+		for (int i = 0; i < playLog.size(); i++) {
+			if (playLog.get(i).toString()
+					.compareToIgnoreCase(toCompare.getPlayLog().get(i).toString()) != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @param playLog play log
+	 */
 	public void setPlayLog(ArrayList<PlayLog> playLog) {
 		this.playLog = playLog;
 	}
 
+	/**
+	 * @param time time of play
+	 * @param score score of play
+	 */
 	public void addPlayLog(String time, long score) {
 		if (playLog == null) {
 			playLog = new ArrayList<PlayLog>();
@@ -271,8 +306,14 @@ public class Grid implements Serializable {
 
 	}
 
+	/**
+	 * Returns the highest scores to display in log viewer.
+	 * 
+	 * @param size number of highest scores to return
+	 * @return the highest scores in string format
+	 */
 	public String getHighestScores(int size) {
-		if (size > playLog.size()){
+		if (size > playLog.size()) {
 			size = playLog.size();
 		}
 		ArrayList<PlayLog> scores = new ArrayList<PlayLog>();
@@ -298,6 +339,11 @@ public class Grid implements Serializable {
 		return str;
 	}
 
+	/**
+	 * This is an internal class for PlayLog object
+	 * @author Team 5
+	 *
+	 */
 	class PlayLog implements Serializable {
 		String time;
 		long score;
@@ -307,11 +353,20 @@ public class Grid implements Serializable {
 			score = -1;
 		}
 
+		/**
+		 * constructor with two params
+		 * 
+		 * @param time time of play
+		 * @param score score of play
+		 */
 		PlayLog(String time, long score) {
 			this.time = time;
 			this.score = score;
 		}
 
+		/**
+		 * returns the PlayLog as "Time: time - Score: score"
+		 */
 		public String toString() {
 			return "Time: " + time + " - Score: " + score;
 		}

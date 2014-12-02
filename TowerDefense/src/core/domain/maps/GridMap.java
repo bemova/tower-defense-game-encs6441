@@ -12,12 +12,8 @@ import core.domain.warriors.defenders.towers.Tower;
  *
  */
 
+@SuppressWarnings("serial")
 public class GridMap extends Grid {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6655562505652432949L;
 
 	private Tower[][] towers;
 
@@ -92,6 +88,9 @@ public class GridMap extends Grid {
 
 	}
 
+	/**
+	 * @return 2D array of Tower
+	 */
 	public Tower[][] getTowers() {
 		return towers;
 	}

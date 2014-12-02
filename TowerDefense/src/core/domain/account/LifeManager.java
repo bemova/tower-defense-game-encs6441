@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import core.contract.AccountConstants;
 
+@SuppressWarnings("serial")
 public class LifeManager implements Serializable {
 	private static LifeManager instance = null;
 	public static int life;
@@ -43,6 +44,7 @@ public class LifeManager implements Serializable {
 	public int getIdManager() {
 		return idManager;
 	}
+	@SuppressWarnings("static-access")
 	public void setIdManager(int idManager) {
 		this.idManager = idManager;
 	}

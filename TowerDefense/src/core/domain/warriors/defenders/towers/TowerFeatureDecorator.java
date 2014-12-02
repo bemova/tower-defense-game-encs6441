@@ -21,6 +21,7 @@ import core.domain.waves.Position;
  * @author Team5
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public abstract class TowerFeatureDecorator extends Tower implements Observer {
 	private Critter target;
 	public Map<Critter, Position> crittersLocation;

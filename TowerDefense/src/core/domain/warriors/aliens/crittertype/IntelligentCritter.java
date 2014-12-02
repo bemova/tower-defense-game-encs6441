@@ -7,6 +7,7 @@ import core.domain.warriors.aliens.Critter;
  * @author Team5
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class IntelligentCritter extends Critter {
 	
 	/**

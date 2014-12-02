@@ -15,6 +15,7 @@ import core.domain.waves.Position;
  * @author Team5
  * @version 0.1
  */
+@SuppressWarnings("serial")
 public class FireSpeed extends TowerFeatureDecorator {
 	private Tower tower;
 	/**
