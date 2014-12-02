@@ -262,7 +262,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	/**
 	 * displays some user interface components 
-	 * @param grid
+	 * @param grid the grid object
 	 */
 	public void displayScoreBoard(Grid grid) {
 		if (scoreBoardDialog != null) {
