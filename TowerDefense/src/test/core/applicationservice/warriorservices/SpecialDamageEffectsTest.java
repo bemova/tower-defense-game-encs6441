@@ -1,4 +1,4 @@
-package test.ui.game;
+package test.core.applicationservice.warriorservices;
 
 import java.io.File;
 
@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import core.applicationservice.locationservices.PositionService;
 import core.applicationservice.mapservices.MapManager;
 import core.applicationservice.mapservices.pathfinder.PathService;
 import core.applicationservice.warriorservices.SpecialDamageEffectsServiceBurn;
@@ -28,11 +27,7 @@ import core.domain.waves.Position;
 import core.domain.waves.Wave;
 
 public class SpecialDamageEffectsTest {
-	private Position p;
-	private Position q;
-	private PositionService positionService;
 	private static GridMap grid;
-	private Position[] path;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -56,11 +51,8 @@ public class SpecialDamageEffectsTest {
 	@Test
 	public void testBurningSpecialEffect() {
 		PathService pathService = new PathService();
-		TowerFactory factory = new TowerFactory();
 		FoolishCritter critter = new FoolishCritter(grid.getEntranceLocation(), pathService.pathFinder(grid.getContent()));
 		int initLife = critter.getLife();
-		Tower tower = factory.getTower(DefenderConstants.KING_TOWER_TYPE,
-				TowerLevel.one);
 		
 		SpecialDamageEffectsServiceBurn burningEffect = new SpecialDamageEffectsServiceBurn();
 		burningEffect.addBurningCritter(critter, 1);
@@ -73,8 +65,6 @@ public class SpecialDamageEffectsTest {
 	
 	@Test
 	public void testSplashSpecialEffect(){
-		PathService pathService = new PathService();
-		path = pathService.pathFinder(grid.getContent());
 		TowerFactory factory = new TowerFactory();
 		Critter[] critters = new Critter[3];
 		

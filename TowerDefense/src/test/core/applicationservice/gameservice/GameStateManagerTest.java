@@ -42,7 +42,7 @@ public class GameStateManagerTest {
 		
 		int wave = 2;
 		String path = ".\\";
-		String fileName = "test.txt";
+		String fileName = "test.fil";
 		GameStateManager stateManager = new GameStateManager(map, wave, path);
 		GameStateManager.save(fileName, stateManager);
 		GameStateManager loadedGame = GameStateManager.load(fileName);
@@ -56,7 +56,7 @@ public class GameStateManagerTest {
 		assertEquals(loadedGame.getMap().getUnitSize(), stateManager.getMap().getUnitSize());
 		int width = loadedGame.getMap().getWidth();
 		int height = loadedGame.getMap().getHeight();
-		for(int x = 0; x < width; x++){ // checks all the sinery and path cells
+		for(int x = 0; x < width; x++){ // checks all the scenery and path cells
 			for(int y = 0; y < height; y++){
 				assertEquals(loadedGame.getMap().getCell(x, y), stateManager.getMap().getCell(x, y));
 			}
