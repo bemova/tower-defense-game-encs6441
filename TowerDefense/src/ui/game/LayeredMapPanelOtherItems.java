@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -482,24 +483,50 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 
 	}
 
-	private void shootAndBurn(Tower defender2, Critter target2) {
-		// target.setLife(target.getLife() / 2);
+	private void shootAndBurn(Tower defender, Critter target) {
+		int power = getTowerPropertyBasedOnLevel(defender);
+		target.setLife(target.getLife() - power);
+		burningCritters.put(target, getTowerPropertyBasedOnLevel(defender)
+				* sleepLength);
 
+	}
+	
+	private void burn() {
+		Iterable<Entry<Critter, Integer>> its = burningCritters.entrySet();
+		for (Entry<Critter, Integer> pairs : its) {
+			Critter critter = pairs.getKey();
+			critter.setLife(critter.getLife()-1);
+			pairs.setValue(pairs.getValue()-1);
+		}
+
+
+		
+		for(Iterator<Map.Entry<Critter, Integer>> it = burningCritters.entrySet().iterator(); it.hasNext(); ) {
+		      Map.Entry<Critter, Integer> entry = it.next();
+		      if(entry.getValue().equals(0)) {
+		        it.remove();
+		      }
+		    }
+		
+		removeDeadCritters();
+	}
+
+
+	private int getTowerPropertyBasedOnLevel(Tower defender) {
+		switch (defender.getLevel()) {
+		case one:
+			return 1;
+		case two:
+			return 2;
+		case three:
+			return 3;
+		}
+		return 1;
 	}
 
 	private boolean isWithinRateOfFire(Tower defender) {
-		int rateOfFire = 1;
-		switch (defender.getLevel()) {
-		case one:
-			rateOfFire = 1;
-			break;
-		case two:
-			rateOfFire = 2;
-			break;
-		case three:
-			rateOfFire = 3;
-			break;
-		}
+		int rateOfFire = getTowerPropertyBasedOnLevel(defender);
+
 		if (shootingSchedule.get(defender) <= rateOfFire * sleepLength * 3) {
 			return true;
 		}
@@ -507,18 +534,8 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 	}
 
 	private void splash(Tower defender, Critter target) {
-		int power = 1;
-		switch (defender.getLevel()) {
-		case one:
-			power = 1;
-			break;
-		case two:
-			power = 2;
-			break;
-		case three:
-			power = 3;
-			break;
-		}
+		int power = getTowerPropertyBasedOnLevel(defender);
+
 		int gridX = path[target.getCurrentPosition()].getX();
 		int gridY = path[target.getCurrentPosition()].getY();
 		Position pixel = convertCellToPixel(new Position(gridX, gridY));
@@ -610,7 +627,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 							informer.setAlienPosition(p.getX(), p.getY(),
 									critter, towers[x][y].getShootingStrategy());
 						}
-
+						burn();
 					} else {
 						System.out.println("At exit point.");
 						updatePlayerLife(1);
@@ -630,6 +647,7 @@ public class LayeredMapPanelOtherItems extends JPanel implements Observer,
 			}
 		}
 	}
+
 
 	private void updateBulletCounter() {
 		if (this.bulletCounter >= sleepLength * 100) {
