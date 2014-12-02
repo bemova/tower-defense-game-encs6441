@@ -12,7 +12,6 @@ import core.applicationservice.warriorservices.WaveFactory;
 import core.contract.WaveConstants;
 import core.domain.warriors.aliens.Critter;
 import core.domain.warriors.aliens.crittertype.FoolishCritter;
-import core.domain.warriors.aliens.crittertype.IntelligentCritter;
 import core.domain.warriors.aliens.features.Resistance;
 import core.domain.waves.Position;
 import core.domain.waves.Wave;

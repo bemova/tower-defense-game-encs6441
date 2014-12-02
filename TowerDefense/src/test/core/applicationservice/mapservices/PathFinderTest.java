@@ -1,6 +1,6 @@
 package test.core.applicationservice.mapservices;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -10,7 +10,6 @@ import org.junit.Test;
 import core.applicationservice.mapservices.pathfinder.PathService;
 import core.domain.maps.GridCellContentType;
 import core.domain.waves.Position;
-import static junit.framework.Assert.assertEquals;
 
 public class PathFinderTest {
 	private int[][] matrix;
