@@ -1,4 +1,4 @@
-package test.core.applicationservice.gameservice;
+package test.core.applicationservice.gameservices;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
