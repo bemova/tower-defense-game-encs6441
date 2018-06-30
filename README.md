@@ -2,5 +2,8 @@
 Automatically exported from code.google.com/p/tower-defense-encs6441
 
 
-### This project is developed for Advanced programming practices course for master program at Concordia University.
+# Implementation of Tower Defense Game as a strategy game.
+
+
+### This project is developed for Advanced programming Practices Course (Graduate Course - Master Program) at Concordia University.
 
